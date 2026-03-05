@@ -1,11 +1,8 @@
 ---
 
-const url = import.meta.env.WP_URL;
-console.log(`${url}/posts`);
+const url = import.meta.env.PUBLIC_WP_URL;
 const res = await fetch(`${url}/posts`);
-
 const posts = await res.json();
-console.log(posts);
 const postsArray = Array.isArray(posts) ? posts : [];
 ---
 <h1>Astro + WordPress 🚀</h1>

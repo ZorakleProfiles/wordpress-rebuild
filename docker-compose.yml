@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  astro:
+    image: astro-dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4321:4321"
+    volumes:
+      - ./site:/app
+    environment:
+      - NODE_ENV=development
+

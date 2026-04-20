@@ -1,0 +1,17 @@
+---
+const {data = {}} = Astro.props;
+---
+<div data-link={data.link}
+     class="link border p-2 w-full md:w-1/4 rounded-lg shadow-md bg-white cursor-pointer text-black flex flex-col items-center">
+    <div class="title-color font-semibold text-xl md:text-2xl text-center mb-1">{data.title}</div>
+    <div class="text-base md:text-xl text-center">{data.description}</div>
+</div>
+
+<script>
+    document.querySelectorAll('.link').forEach(el => {
+        el.addEventListener('click', () => {
+            const href = el.getAttribute('data-link');
+            if (href) window.location.href = `/joe_kidushim/services#${href}`;
+        });
+    });
+</script>

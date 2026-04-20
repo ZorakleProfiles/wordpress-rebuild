@@ -1,0 +1,64 @@
+---
+import logo from '../assets/logo.png';
+---
+<header class="shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-row items-center justify-between h-auto py-3 gap-4">
+            <div class="flex items-center gap-3">
+                <img class="h-12 w-auto sm:h-16" src={logo.src} alt="logo"/>
+            </div>
+            <button id="burger"
+                    class="md:hidden flex items-center px-2 py-1 border rounded text-gray-700 focus:outline-none"
+                    aria-label="Open menu">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-l inecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+            <nav id="nav-menu" class="hidden md:flex items-center gap-3 text-lg">
+                <a href="/wp-update/">HOME</a>
+                <a class="ml-2" href="#about">ABOUT</a>
+                <a class="ml-2" href="#pricing">PRICING</a>
+                <a class="ml-2" href="#services">SERVICES</a>
+                <a class="ml-2" href="#testimonials">TESTIMONIALS</a>
+                <a class="ml-2" href="/wp-update/training">Training</a>
+                <a class="ml-2" href="/wp-update/blog">BLOG</a>
+                <a class="ml-2" href="#contact">CONTACT</a>
+                <a class="ml-2" href="/wp-update/training">LOGIN</a>
+            </nav>
+        </div>
+        <nav id="mobile-menu"
+             class="fixed inset-0 z-50 md:hidden hidden bg-white flex flex-col justify-center items-center transition-all duration-300 ease-in-out">
+            <button id="close-menu"
+                    class="absolute top-6 right-6 p-2 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none"
+                    aria-label="Close menu">
+                <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
+                     viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+            <div class="flex flex-col gap-6 w-full max-w-xs mx-auto">
+                <a href="/joe_kidushim/" class="py-4 text-2xl border-b border-gray-200 text-center">HOME</a>
+                <a href="/joe_kidushim/about" class="py-4 text-2xl border-b border-gray-200 text-center">ABOUT</a>
+                <a href="/joe_kidushim/services" class="py-4 text-2xl border-b border-gray-200 text-center">SERVICES</a>
+                <a href="/joe_kidushim/contact" class="py-4 text-2xl text-center">CONTACT</a>
+            </div>
+        </nav>
+    </div>
+</header>
+<script>
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const closeMenu = document.getElementById('close-menu');
+    burger?.addEventListener('click', () => {
+        if (mobileMenu) {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('opacity-100');
+        }
+    });
+    closeMenu?.addEventListener('click', () => {
+        if (mobileMenu) {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('opacity-100');
+        }
+    });
+</script>

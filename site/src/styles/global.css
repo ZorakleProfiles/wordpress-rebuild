@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+.title-color {
+    color: #38ca9d;
+}
+
+.section-bg-light {
+    background-color: rgb(56, 202, 157,.07);
+}
+
+.hero-overlay {
+    background-color: rgb(56, 202, 157);
+    opacity: .6;
+}

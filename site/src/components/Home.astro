@@ -1,0 +1,41 @@
+---
+import ServiceThumb from "./ServiceThumb.astro";
+import {services} from "../data/services.js";
+---
+<section class="py-8 px-4 md:py-12 md:px-0 mx-auto section-bg-light">
+    <div class="title-color text-xl sm:text-2xl md:text-4xl bg-blend-color text-center w-full md:w-3/4 mx-auto leading-relaxed">
+        Since 1983 we have made it our mission to educate our clients on the intricacies of insurance contracts and how
+        to best use them. As your personal guide and expert advisor, our firm takes the time to demystify the fine print
+        to get to the optimal coverage that lets you focus on living your best life.
+    </div>
+</section>
+<section class="py-8 px-4 md:py-12 md:px-0 mx-auto w-full md:w-3/4">
+    <div class="title-color text-2xl sm:text-3xl md:text-5xl text-center">
+        Client Knowledge Is Power
+    </div>
+    <div class="text-base sm:text-xl md:text-2xl mt-7 text-center leading-relaxed">
+        With over 35 years in the industry and access to 99% of the insurance companies in the United States, we help
+        individuals, business owners, and their professional advisors cut through the noise to understand the use and
+        value of their insurance options.
+    </div>
+    <div class="flex items-center justify-center mt-12">
+        <a class="font-semibold text-xl md:text-2xl py-4 px-5 border rounded bg-[#3A6EA5] text-white"
+           href="/joe_kidushim/about">Meet the Team</a>
+    </div>
+</section>
+<section class="py-8 px-2 md:py-12 md:px-0 w-full bg-[#3A6EA5] text-white">
+    <div class="text-2xl sm:text-3xl md:text-5xl text-center mb-10">
+        Services
+    </div>
+    <div class="flex flex-col md:flex-row flex-wrap justify-around gap-6">
+        {
+            services.map((data) =>
+                    <ServiceThumb data={data}/>
+            )
+        }
+    </div>
+    <div class="flex items-center justify-center mt-12">
+        <a class="title-color font-semibold text-xl md:text-2xl py-4 px-5 border rounded bg-white text-black"
+           href="/joe_kidushim/services">Learn More</a>
+    </div>
+</section>

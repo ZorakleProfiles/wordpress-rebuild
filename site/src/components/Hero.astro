@@ -1,0 +1,19 @@
+---
+import {Image} from 'astro:assets';
+import defaultImage from '../assets/home-hero.webp';
+// Props for dynamic hero
+const {image} = Astro.props;
+const heroImage = image || defaultImage;
+---
+<section class="relative w-full h-[50vh] md:h-[60vh] lg:h-[70vh] flex items-center">
+    <div class="absolute inset-0 z-0 pointer-events-none h-full w-full">
+        <Image src={heroImage} alt="Hero background" layout="full-width" class="h-full w-full object-cover"
+               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw" fit="cover" quality={90}/>
+    </div>
+    <div class="absolute top-0 left-0 z-20 hero-overlay w-full h-full"></div>
+    <div class="relative z-40 h-full flex flex-col justify-center px-4 sm:px-8 md:px-16 lg:px-24 max-w-7xl mx-auto w-full text-center md:text-left">
+        <div class="w-full">
+            <slot/>
+        </div>
+    </div>
+</section>

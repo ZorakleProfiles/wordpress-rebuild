@@ -1,0 +1,143 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const url = import.meta.env.PUBLIC_WP_URL;
+const { slug } = Astro.params;
+
+if (!url) throw new Error('PUBLIC_WP_URL is not defined. Please set it in your .env file or environment.');
+const res = await fetch(`${url}/posts?slug=${slug}&_embed`);
+let [post] = await res.json();
+
+export async function getStaticPaths() {
+    const url = import.meta.env.PUBLIC_WP_URL;
+    let data = await fetch(`${url}/posts`);
+    let posts = await data.json();
+
+    return posts.map((post) => ({
+        params: { slug: post.slug },
+        props: { post: post },
+    }));
+}
+
+const publishDate = new Date(post.date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+});
+---
+<Layout title={post.title.rendered}>
+    <article class="py-10">
+        <div class="mx-auto w-full max-w-4xl px-6">
+            <header class="mb-12">
+                <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">
+                    {publishDate}
+                </p>
+                <h1 class="mt-2 text-4xl md:text-5xl font-light tracking-tight text-gray-900">
+                    {post.title.rendered}
+                </h1>
+            </header>
+
+            
+            <div class="prose prose-lg max-w-none text-gray-700">
+                <Fragment set:html={post.content.rendered} />
+            </div>
+        </div>
+    </article>
+</Layout>
+
+<style is:global>
+    .prose {
+        --tw-prose-body: rgb(55, 65, 81);
+        --tw-prose-headings: rgb(17, 24, 39);
+        --tw-prose-lead: rgb(75, 85, 99);
+        --tw-prose-links: #38ca9d;
+        --tw-prose-bold: rgb(17, 24, 39);
+        --tw-prose-counters: rgb(107, 114, 128);
+        --tw-prose-bullets: rgb(209, 213, 219);
+        --tw-prose-hr: rgb(229, 231, 235);
+        --tw-prose-quotes: rgb(55, 65, 81);
+        --tw-prose-quote-borders: #38ca9d;
+        --tw-prose-captions: rgb(107, 114, 128);
+        --tw-prose-code: rgb(17, 24, 39);
+        --tw-prose-pre-bg: rgb(31, 41, 55);
+        --tw-prose-pre-code: rgb(229, 231, 235);
+        --tw-prose-th-borders: rgb(209, 213, 219);
+        --tw-prose-td-borders: rgb(229, 231, 235);
+    }
+    
+    .prose a {
+        transition-property: color;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 200ms;
+    }
+    
+    .prose a:hover {
+        color: #2da88f;
+    }
+    
+    .prose h2, .prose h3, .prose h4 {
+        font-weight: 600;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+    
+    .prose h2 {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+    }
+    
+    .prose h3 {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+    
+    .prose p {
+        margin-bottom: 1.25rem;
+        line-height: 1.75;
+    }
+    
+    .prose blockquote {
+        border-left: 4px solid #38ca9d;
+        padding-left: 1.5rem;
+        font-style: italic;
+        color: rgb(75, 85, 99);
+    }
+    
+    .prose code {
+        background-color: rgb(243, 244, 246);
+        padding: 0.125rem 0.375rem;
+        border-radius: 0.25rem;
+        font-size: 0.875em;
+    }
+    
+    .prose pre {
+        background-color: rgb(31, 41, 55);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        overflow-x: auto;
+    }
+    
+    .prose pre code {
+        background-color: transparent;
+        color: rgb(229, 231, 235);
+        padding: 0;
+    }
+    
+    /* Responsive videos */
+    .prose iframe {
+        max-width: 100% !important;
+    }
+    
+    .prose video,
+    .prose embed {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* Images responsive */
+    .prose img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 0.5rem;
+    }
+</style>

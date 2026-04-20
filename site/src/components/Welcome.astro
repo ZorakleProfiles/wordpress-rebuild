@@ -1,13 +1,14 @@
 ---
-
-const url = import.meta.env.PUBLIC_WP_URL;
-if (!url) throw new Error('PUBLIC_WP_URL is not defined. Please set it in your .env file or environment.');
-const res = await fetch(`${url}/posts`);
-const posts = await res.json();
-const postsArray = Array.isArray(posts) ? posts : [];
+import About from "./About.astro";
+import Hero from "./Hero.astro";
+import Contact from "./Contact.astro";
+import BlogList from "./BlogList.astro";
 ---
-<h1>Astro + WordPress 🚀</h1>
-{postsArray.map((post) => (
-  <h2 set:html={post.title.rendered} />
-  <p set:html={post.content.rendered} />
-))}
+<Hero>
+  <h1 class="w-3/4 text-5xl text-white mb-6 mx-auto font-semibold">
+    Use Science-Backed Insights to Find the Right Franchisees
+  </h1>
+</Hero>
+<About></About>
+<BlogList></BlogList>
+<Contact></Contact>

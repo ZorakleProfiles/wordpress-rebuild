@@ -1,0 +1,71 @@
+---
+const url = import.meta.env.PUBLIC_WP_URL;
+if (!url) throw new Error('PUBLIC_WP_URL is not defined. Please set it in your .env file or environment.');
+const res = await fetch(`${url}/posts?_embed`);
+const posts = await res.json();
+const postsArray = Array.isArray(posts) ? posts : [];
+const recentPosts = postsArray.slice(0, 4);
+---
+<section class="py-12">
+    <div class="mx-auto w-full max-w-6xl px-6">
+        <h2 class="mb-8 text-3xl md:text-4xl font-light tracking-tight text-gray-900">Latest News</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {
+                recentPosts.map((post) => {
+                    const featuredImage = post._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes?.medium?.source_url;
+                    const title = post.title.rendered;
+                    const excerpt = post.excerpt.rendered.replace(/<[^>]*>/g, '').replace(/&[a-z]+;/gi, ' ').substring(0, 80);
+                    const publishDate = new Date(post.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+                    
+                    return (
+                        <a 
+                            href={`/wp-update/blog/${post.slug}/`}
+                            class="group flex flex-col transition-opacity hover:opacity-70"
+                        >
+                            <div class="mb-4 overflow-hidden rounded-lg">
+                                <img
+                                    class="h-48 w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                    src={featuredImage}
+                                    alt={title}
+                                />
+                            </div>
+                            <div class="flex flex-col flex-1">
+                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                                    {publishDate}
+                                </p>
+                                <h3 class="mt-2 text-lg font-semibold text-gray-900 group-hover:text-title-color transition-colors line-clamp-2">
+                                    {title}
+                                </h3>
+                                <p class="mt-2 text-sm text-gray-600 line-clamp-2">
+                                    {excerpt}...
+                                </p>
+                                <p class="mt-4 text-xs font-medium text-gray-900">
+                                    Read more →
+                                </p>
+                            </div>
+                        </a>
+                    );
+                })
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    :global(.title-color) {
+        color: #38ca9d;
+    }
+    
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
+

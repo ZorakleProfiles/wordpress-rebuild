@@ -8,7 +8,7 @@ import icon from "astro-icon";
 
 export default defineConfig({
     site: "https://zorakleprofiles.github.io",
-    base: "/wp-update/",
+    base: "/wordpress-rebuild/",
     vite: {
         plugins: [tailwindcss()],
     },

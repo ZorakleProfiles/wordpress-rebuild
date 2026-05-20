@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 
 
@@ -14,4 +14,16 @@ export default defineConfig({
     },
 
     integrations: [icon()],
+    fonts: [{
+        provider: fontProviders.local(),
+        name: "Monterey",
+        cssVariable: "--font-monterey",
+        options: {
+            variants: [{
+                src: ['./src/assets/fonts/montereyflf-webfont.woff2'],
+                weight: 'normal',
+                style: 'normal'
+            }]
+        }
+    }]
 });

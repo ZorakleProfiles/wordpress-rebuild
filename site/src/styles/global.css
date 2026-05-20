@@ -1,14 +1,19 @@
 @import "tailwindcss";
 
+/* Use Astro-configured local font globally. */
+:root {
+    font-family: var(--font-monterey), system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
 .title-color {
     color: #38ca9d;
 }
 
 .section-bg-light {
-    background-color: rgb(56, 202, 157,.07);
+    background-color: rgb(244, 246, 248);
 }
 
 .hero-overlay {
-    background-color: rgb(56, 202, 157);
+    background-color: rgb(68, 81, 76);
     opacity: .6;
 }

@@ -1,0 +1,78 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import PricingCards from "../../components/PricingCards.astro";
+import FaqList from "../../components/FaqList.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import TestimonialGrid from "../../components/TestimonialGrid.astro";
+import { franchisorFaq } from "../../data/siteData";
+
+const plans = [
+  {
+    name: "Emerging Franchisor",
+    subtitle: "For systems with fewer than 30 franchisees",
+    price: "$4,266/year | $395/month",
+    features: [
+      "Emerging Franchisor Blueprint",
+      "Unlimited SpotOn! Profiles",
+      "Unlimited Eclipse Reports",
+      "Multi-user dashboard",
+      "Ongoing Zorakle support"
+    ],
+    cta: "Get Started"
+  },
+  {
+    name: "Established Franchisor",
+    subtitle: "For systems with more than 30 franchisees",
+    price: "$7,506/year | $695/month",
+    features: [
+      "Everything in Emerging",
+      "Current franchisee assessment",
+      "Custom performance algorithms",
+      "Priority support",
+      "Advanced lead analytics"
+    ],
+    cta: "Get Started"
+  },
+  {
+    name: "Enterprise",
+    subtitle: "Large or multi-brand organizations",
+    price: "Custom - Let's Talk",
+    features: [
+      "Everything in Established",
+      "Quarterly blueprint refinement",
+      "Custom integrations",
+      "Custom reporting and dashboards",
+      "SLA-backed support"
+    ],
+    cta: "Contact Sales"
+  }
+];
+---
+
+<MainLayout title="Pricing for Franchisors">
+  <Header />
+
+  <section class="page-hero container">
+    <p class="eyebrow">Pricing</p>
+    <h1>Choose the plan that matches your growth stage.</h1>
+    <p>
+      Investment that pays for itself in the first right award. Pick monthly or annual terms, and scale when your system grows.
+    </p>
+  </section>
+
+  <PricingCards plans={plans} />
+  <FaqList items={franchisorFaq} />
+  <TestimonialGrid />
+
+  <CtaBand
+    title="Stop awarding on instinct. Start awarding on evidence."
+    body="See exactly how Zorakle would work for your system in a 30-minute demo."
+    secondaryLabel="Talk to Our Team"
+    secondaryHref="mailto:support@zorakle.net"
+  />
+
+  <Footer />
+</MainLayout>
+

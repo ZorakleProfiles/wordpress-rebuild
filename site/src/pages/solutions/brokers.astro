@@ -1,0 +1,55 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import TestimonialGrid from "../../components/TestimonialGrid.astro";
+---
+
+<MainLayout title="Solutions for Brokers">
+  <Header />
+
+  <section class="page-hero page-hero-solutions container">
+    <p class="eyebrow">For Brokers</p>
+    <h1>Match every client to the right brand and close more deals doing it.</h1>
+    <p>
+      SpotOn! Match gives brokers ranked, science-backed candidate-to-brand recommendations so introductions land faster and close stronger.
+    </p>
+  </section>
+
+  <section class="section dark-section solutions-workflow">
+    <div class="container">
+      <p class="eyebrow">The Broker Workflow</p>
+      <h2>From client conversation to confident match in four steps.</h2>
+      <div class="grid-2 mt-4">
+        <article class="card card-pad-md">
+          <h3>1. Join the network</h3>
+          <p>Get platform access, training, and visibility to franchisors using blueprints.</p>
+        </article>
+        <article class="card card-pad-md">
+          <h3>2. Client takes assessment</h3>
+          <p>Clients complete a single 20-minute assessment through your broker link.</p>
+        </article>
+        <article class="card card-pad-md">
+          <h3>3. See ranked matches</h3>
+          <p>Review fit scores and reasoning across franchise concepts in minutes.</p>
+        </article>
+        <article class="card card-pad-md">
+          <h3>4. Close with conviction</h3>
+          <p>Use clear data to guide clients and increase close confidence.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <TestimonialGrid />
+
+  <CtaBand
+    title="Ready to match smarter?"
+    body="Book a broker demo and we will show real match reports and how to use them in live client calls."
+    secondaryLabel="Join the Broker Network"
+    secondaryHref="/pricing/broker"
+  />
+
+  <Footer />
+</MainLayout>

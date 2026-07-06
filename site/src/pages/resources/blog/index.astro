@@ -1,0 +1,37 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+import { blogPosts } from "../../../data/siteData";
+import cover from "../../../assets/figma/blog-feature.png";
+import { withBase } from "../../../utils/paths";
+---
+
+<MainLayout title="Resources Blog">
+  <Header />
+
+  <section class="page-hero container">
+    <p class="eyebrow">Resources</p>
+    <h1>Insights from The Franchise Woman and the Zorakle team.</h1>
+    <p>Articles, interviews, and practical strategy for franchise operators, consultants, and growth teams.</p>
+  </section>
+
+  <section class="section">
+    <div class="container blog-list">
+      {blogPosts.map((post) => (
+        <article class="card blog-card">
+          <img class="feature-image" src={cover.src} alt={post.title} />
+          <div>
+            <h2><a href={withBase(`/resources/blog/${post.slug}`)}>{post.title}</a></h2>
+            <p class="meta mt-1">Posted on {post.date} in {post.category}</p>
+            <p class="mt-2">{post.excerpt}</p>
+            <p class="mt-2"><a class="btn btn-outline" href={withBase(`/resources/blog/${post.slug}`)}>Read Article</a></p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <Footer />
+</MainLayout>
+

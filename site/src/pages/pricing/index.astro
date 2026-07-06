@@ -1,0 +1,37 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { withBase } from "../../utils/paths";
+---
+
+<MainLayout title="Pricing">
+  <Header />
+
+  <section class="page-hero container">
+    <p class="eyebrow">Pricing</p>
+    <h1>Choose pricing by role and growth stage.</h1>
+    <p>Franchisor and broker plans are designed around usage patterns and operational complexity.</p>
+  </section>
+
+  <section class="section">
+    <div class="container grid-2">
+      <article class="card card-pad-lg">
+        <p class="eyebrow">Franchisors</p>
+        <h2>Stage-based plans</h2>
+        <p class="mt-3">Emerging, established, and enterprise pricing aligned to system maturity.</p>
+        <p class="mt-3"><a class="btn btn-outline" href={withBase("/pricing/franchisor")}>View Franchisor Pricing</a></p>
+      </article>
+
+      <article class="card card-pad-lg">
+        <p class="eyebrow">Brokers</p>
+        <h2>Membership or pay-as-you-go</h2>
+        <p class="mt-3">Flexible options to match volume while keeping high-quality recommendations.</p>
+        <p class="mt-3"><a class="btn btn-outline" href={withBase("/pricing/broker")}>View Broker Pricing</a></p>
+      </article>
+    </div>
+  </section>
+
+  <Footer />
+</MainLayout>
+

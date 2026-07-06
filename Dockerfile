@@ -1,14 +1,15 @@
-FROM node:22-alpine
+FROM node:22
 
-WORKDIR /app
+WORKDIR /app/site
 
-# Install dependencies first (cached)
+# Install dependencies using Yarn, then explicitly install missing optional bindings
 COPY site/package*.json ./
-RUN npm install
+RUN rm -rf node_modules package-lock.json && yarn install && \
+    yarn add --dev @rollup/rollup-linux-arm64-gnu @rolldown/binding-linux-arm64-gnu 2>/dev/null || true
 
 # Copy the rest of the site
 COPY site .
 
 EXPOSE 4321
 
-CMD ["npm", "run", "dev", "--", "--host"]
+CMD ["yarn", "dev"]

@@ -1,0 +1,37 @@
+---
+import { withBase } from "../utils/paths";
+import { HUBSPOT_MEETINGS_URL } from "../config/site";
+
+interface Props {
+  title: string;
+  body: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+
+const {
+  title,
+  body,
+  primaryLabel = "Book a Demo",
+  primaryHref = HUBSPOT_MEETINGS_URL,
+  secondaryLabel = "Talk to Our Team",
+  secondaryHref = "/about"
+} = Astro.props;
+
+const primaryUrl = withBase(primaryHref);
+const secondaryUrl = withBase(secondaryHref);
+---
+
+<section class="cta-band">
+  <div class="container">
+    <h2>{title}</h2>
+    <p>{body}</p>
+    <div class="cta-actions">
+      <a class="btn btn-primary" href={primaryUrl} target={primaryUrl.startsWith("http") ? "_blank" : undefined} rel={primaryUrl.startsWith("http") ? "noopener noreferrer" : undefined}>{primaryLabel}</a>
+      <a class="btn btn-outline" href={secondaryUrl}>{secondaryLabel}</a>
+    </div>
+  </div>
+</section>
+

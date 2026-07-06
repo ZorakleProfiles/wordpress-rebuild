@@ -1,0 +1,36 @@
+---
+import { testimonials } from "../data/siteData";
+import avatarJeffrey from "../assets/figma/avatar-jeffrey.png";
+import avatarSeth from "../assets/figma/avatar-seth.png";
+import avatarMargaret from "../assets/figma/avatar-margaret.png";
+import avatarKeith from "../assets/figma/avatar-keith.png";
+
+const avatarMap: Record<string, string> = {
+  "avatar-jeffrey": avatarJeffrey.src,
+  "avatar-seth": avatarSeth.src,
+  "avatar-margaret": avatarMargaret.src,
+  "avatar-keith": avatarKeith.src
+};
+---
+
+<section class="section testimonials">
+  <div class="container">
+    <p class="eyebrow">Real Systems. Real Results.</p>
+    <h2>Franchise leaders use Zorakle to make their biggest decisions.</h2>
+    <div class="testimonial-grid">
+      {testimonials.map((item) => (
+        <article class="card testimonial">
+          <p class="quote">"{item.quote}"</p>
+          <div class="person">
+            <img src={avatarMap[item.avatar] ?? avatarJeffrey.src} alt={item.name} width="64" height="64" loading="lazy" />
+            <div>
+              <h3>{item.name}</h3>
+              <p>{item.org}</p>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+

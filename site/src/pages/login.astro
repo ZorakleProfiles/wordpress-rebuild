@@ -1,0 +1,33 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<MainLayout title="Login">
+  <Header />
+
+  <section class="hero">
+    <div class="container" style="display:grid; place-items:center;">
+      <form class="card" style="width:min(560px,100%); padding:2rem; display:grid; gap:1rem; background:#ebecf0; color:#22252a;">
+        <h1>Log In</h1>
+        <label>
+          Email*
+          <input type="email" required placeholder="Email" />
+        </label>
+        <label>
+          Password*
+          <input type="password" required placeholder="Password" />
+        </label>
+        <label style="display:flex; align-items:center; gap:.5rem;">
+          <input type="checkbox" /> Remember Me
+        </label>
+        <button class="btn btn-primary" type="submit">Log In</button>
+        <a href="#" style="text-decoration:underline; color:#fd7730;">Forgot your password?</a>
+      </form>
+    </div>
+  </section>
+
+  <Footer />
+</MainLayout>
+

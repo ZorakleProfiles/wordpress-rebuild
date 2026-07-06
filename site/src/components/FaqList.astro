@@ -1,0 +1,29 @@
+---
+interface Item {
+  q: string;
+  a: string;
+}
+
+interface Props {
+  title?: string;
+  items: Item[];
+}
+
+const { title = "Common Questions", items } = Astro.props;
+---
+
+<section class="section faq-wrap">
+  <div class="container">
+    <p class="eyebrow">{title}</p>
+    <h2>Pricing questions, answered.</h2>
+    <div class="faq-list">
+      {items.map((item, index) => (
+        <details class="faq-item" open={index === 0}>
+          <summary>{item.q}</summary>
+          <p>{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+

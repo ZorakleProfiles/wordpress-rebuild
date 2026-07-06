@@ -9,7 +9,8 @@ services:
     ports:
       - "4321:4321"
     volumes:
-      - ./site:/app
+      - ./site:/app/site
+      - /app/site/node_modules
     environment:
       - NODE_ENV=development
 

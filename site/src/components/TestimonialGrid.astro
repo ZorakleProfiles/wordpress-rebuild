@@ -1,36 +1,329 @@
 ---
-import { testimonials } from "../data/siteData";
-import avatarJeffrey from "../assets/figma/avatar-jeffrey.png";
-import avatarSeth from "../assets/figma/avatar-seth.png";
-import avatarMargaret from "../assets/figma/avatar-margaret.png";
-import avatarKeith from "../assets/figma/avatar-keith.png";
+import { testimonials } from "../data/site-content";
 
-const avatarMap: Record<string, string> = {
-  "avatar-jeffrey": avatarJeffrey.src,
-  "avatar-seth": avatarSeth.src,
-  "avatar-margaret": avatarMargaret.src,
-  "avatar-keith": avatarKeith.src
-};
 ---
 
-<section class="section testimonials">
-  <div class="container">
-    <p class="eyebrow">Real Systems. Real Results.</p>
-    <h2>Franchise leaders use Zorakle to make their biggest decisions.</h2>
-    <div class="testimonial-grid">
-      {testimonials.map((item) => (
-        <article class="card testimonial">
-          <p class="quote">"{item.quote}"</p>
-          <div class="person">
-            <img src={avatarMap[item.avatar] ?? avatarJeffrey.src} alt={item.name} width="64" height="64" loading="lazy" />
-            <div>
-              <h3>{item.name}</h3>
-              <p>{item.org}</p>
+<section id="testimonials" class="bg-white py-20 md:py-24">
+  <div class="section-shell">
+    <p class="section-eyebrow">Real Systems. Real Results.</p>
+    <h2 class="section-title max-w-5xl">
+      Franchise leaders use Zorakle to make
+      their <span class="text-[#09cc9c]">biggest decisions.</span>
+    </h2>
+    <p class="mt-4 text-sm text-[#666a73]">Here's what they're saying.</p>
+
+    <div class="mt-10 md:mt-12" data-testimonial-carousel tabindex="0" aria-label="Testimonials carousel">
+      <div class="testimonial-stage">
+        {testimonials.map((item, idx) => (
+          <article
+            class={`testimonial-card ${
+              idx === 1 ? "is-active order-center" : idx === 0 ? "is-left order-left" : idx === 2 ? "is-right order-right" : "is-hidden order-hidden"
+            }`}
+            data-index={idx}
+          >
+            <div class="testimonial-card-head">
+              <p class="testimonial-type">{item.type}</p>
+              <span class="testimonial-quote-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.5 16.5C5.57 16.5 4 14.93 4 13C4 11.07 5.57 9.5 7.5 9.5H8.5V6.5H5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M16.5 16.5C14.57 16.5 13 14.93 13 13C13 11.07 14.57 9.5 16.5 9.5H17.5V6.5H14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
             </div>
-          </div>
-        </article>
-      ))}
+
+            <div class="mt-3 flex items-center gap-3">
+              <div class="min-w-0">
+                <p class="truncate text-base font-bold text-[#22252a]">{item.name}</p>
+                <p class="truncate text-sm text-[#3b3e47]">{item.company}</p>
+              </div>
+            </div>
+
+            <p class="mt-4 text-sm leading-6 text-[#22252a] md:text-[0.95rem] md:leading-7">{item.quote}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="mt-7 flex items-center justify-center gap-6">
+        <button type="button" class="carousel-arrow" data-prev aria-label="Previous testimonial">&larr;</button>
+        <div class="carousel-dots" aria-label="Testimonial slides">
+          {testimonials.map((_, idx) => (
+            <button
+              type="button"
+              class={`carousel-dot ${idx === 1 ? "is-active" : ""}`}
+              data-dot-index={idx}
+              aria-label={`Go to testimonial ${idx + 1}`}
+              aria-current={idx === 1 ? "true" : "false"}
+            ></button>
+          ))}
+        </div>
+        <button type="button" class="carousel-arrow" data-next aria-label="Next testimonial">&rarr;</button>
+      </div>
     </div>
   </div>
 </section>
 
+<script>
+  function initTestimonialCarousel() {
+    const root = document.querySelector("[data-testimonial-carousel]");
+    if (!root) return;
+    if (root.dataset.carouselBound === "true") return;
+    root.dataset.carouselBound = "true";
+
+    const cards = Array.from(root.querySelectorAll(".testimonial-card"));
+    if (cards.length === 0) return;
+
+    const prevButton = root.querySelector("[data-prev]");
+    const nextButton = root.querySelector("[data-next]");
+    const dots = Array.from(root.querySelectorAll(".carousel-dot"));
+    let active = cards.length > 1 ? 1 : 0;
+    const autoplayMs = 5000;
+    let autoplayId = 0;
+    let touchStartX = 0;
+
+    function next() {
+      active = (active + 1) % cards.length;
+      render();
+    }
+
+    function prev() {
+      active = (active - 1 + cards.length) % cards.length;
+      render();
+    }
+
+    function stopAutoplay() {
+      if (autoplayId !== 0) {
+        window.clearInterval(autoplayId);
+        autoplayId = 0;
+      }
+    }
+
+    function startAutoplay() {
+      if (cards.length < 2) return;
+      stopAutoplay();
+      autoplayId = window.setInterval(next, autoplayMs);
+    }
+
+    dots.forEach((dot, idx) => {
+      dot.addEventListener("click", () => {
+        active = idx;
+        render();
+        startAutoplay();
+      });
+    });
+
+    function render() {
+      cards.forEach((card, idx) => {
+        const right = (active + 1) % cards.length;
+        const left = (active - 1 + cards.length) % cards.length;
+
+        card.classList.remove("is-left", "is-active", "is-right", "is-hidden", "order-left", "order-center", "order-right", "order-hidden");
+
+        if (idx === active) {
+          card.classList.add("is-active");
+          card.classList.add("order-center");
+        } else if (idx === left) {
+          card.classList.add("is-left");
+          card.classList.add("order-left");
+        } else if (idx === right) {
+          card.classList.add("is-right");
+          card.classList.add("order-right");
+        } else {
+          card.classList.add("is-hidden");
+          card.classList.add("order-hidden");
+        }
+      });
+
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle("is-active", idx === active);
+        dot.setAttribute("aria-current", idx === active ? "true" : "false");
+      });
+    }
+
+    prevButton?.addEventListener("click", () => {
+      prev();
+      startAutoplay();
+    });
+
+    nextButton?.addEventListener("click", () => {
+      next();
+      startAutoplay();
+    });
+
+    root.addEventListener("mouseenter", stopAutoplay);
+    root.addEventListener("mouseleave", startAutoplay);
+    root.addEventListener("focusin", stopAutoplay);
+    root.addEventListener("focusout", startAutoplay);
+
+    root.addEventListener("keydown", (event) => {
+      const key = event.key;
+      if (key === "ArrowLeft") {
+        prev();
+        startAutoplay();
+      }
+      if (key === "ArrowRight") {
+        next();
+        startAutoplay();
+      }
+    });
+
+    root.addEventListener("touchstart", (event) => {
+      touchStartX = event.changedTouches[0]?.clientX || 0;
+    }, { passive: true });
+
+    root.addEventListener("touchend", (event) => {
+      const touchEndX = event.changedTouches[0]?.clientX || 0;
+      const deltaX = touchEndX - touchStartX;
+
+      if (Math.abs(deltaX) < 30) return;
+      if (deltaX > 0) {
+        prev();
+      } else {
+        next();
+      }
+      startAutoplay();
+    }, { passive: true });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        stopAutoplay();
+      } else {
+        startAutoplay();
+      }
+    });
+
+    render();
+    startAutoplay();
+  }
+
+  initTestimonialCarousel();
+  document.addEventListener("astro:page-load", initTestimonialCarousel);
+</script>
+
+<style is:global>
+  [data-testimonial-carousel] .testimonial-stage {
+    display: flex;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  [data-testimonial-carousel] .testimonial-card {
+    border-radius: 1rem;
+    border: 1px solid #d1d4dd;
+    background: #f3f3f3;
+    padding: 1.1rem;
+    min-height: 13.5rem;
+    flex: 1 1 0;
+    opacity: 0.55;
+    transform: scale(0.95);
+    transition: transform 220ms ease, opacity 220ms ease, border-color 220ms ease;
+  }
+
+  [data-testimonial-carousel] .testimonial-card-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  [data-testimonial-carousel] .testimonial-type {
+    margin: 0;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #666a73;
+  }
+
+  [data-testimonial-carousel] .testimonial-quote-mark {
+    margin: 0;
+    width: 1.3rem;
+    height: 1.3rem;
+    color: #fd7730;
+    flex-shrink: 0;
+  }
+
+  [data-testimonial-carousel] .testimonial-quote-mark svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  [data-testimonial-carousel] .testimonial-card.is-active {
+    opacity: 1;
+    transform: scale(1);
+    border-color: #09cc9c;
+  }
+
+  [data-testimonial-carousel] .testimonial-card.is-left,
+  [data-testimonial-carousel] .testimonial-card.is-right {
+    display: none;
+  }
+
+  [data-testimonial-carousel] .testimonial-card.order-left {
+    order: 1;
+  }
+
+  [data-testimonial-carousel] .testimonial-card.order-center {
+    order: 2;
+  }
+
+  [data-testimonial-carousel] .testimonial-card.order-right {
+    order: 3;
+  }
+
+  [data-testimonial-carousel] .testimonial-card.order-hidden {
+    order: 4;
+  }
+
+  [data-testimonial-carousel] .carousel-arrow {
+    border: 0;
+    background: transparent;
+    color: #3b3e47;
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.25rem 0.35rem;
+  }
+
+  [data-testimonial-carousel]:focus-visible {
+    outline: 2px solid #09cc9c;
+    outline-offset: 8px;
+    border-radius: 0.5rem;
+  }
+
+  [data-testimonial-carousel] .carousel-dots {
+    display: flex;
+    gap: 0.35rem;
+    align-items: center;
+  }
+
+  [data-testimonial-carousel] .carousel-dot {
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 9999px;
+    border: 0;
+    background: #9ca3af;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  [data-testimonial-carousel] .carousel-dot.is-active {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #09cc9c;
+  }
+
+  @media (min-width: 1024px) {
+    [data-testimonial-carousel] .testimonial-stage {
+      gap: 1.2rem;
+    }
+
+    [data-testimonial-carousel] .testimonial-card {
+      min-height: 14.5rem;
+      padding: 1.3rem;
+    }
+
+    [data-testimonial-carousel] .testimonial-card.is-left,
+    [data-testimonial-carousel] .testimonial-card.is-right {
+      display: block;
+    }
+  }
+</style>

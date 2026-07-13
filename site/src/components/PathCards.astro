@@ -1,0 +1,32 @@
+---
+import { pathCards } from "../data/site-content";
+---
+
+<section id="solutions" class="bg-[#f3f3f3] py-20 md:py-24">
+  <div class="section-shell">
+    <p class="section-eyebrow">Find Your Path</p>
+    <h2 class="section-title max-w-4xl">
+      Zorakle works for <span class="text-[#09cc9c]">both sides</span> of the franchise relationship.
+    </h2>
+    <p class="section-copy max-w-3xl">
+      Pick where you fit. We'll show you exactly how Zorakle helps.
+    </p>
+
+    <div class="mt-10 grid gap-6 md:mt-12 lg:grid-cols-2 lg:gap-8">
+      {pathCards.map((card) => (
+        <article class="rounded-2xl border border-[#d1d4dd] bg-white p-8 shadow-sm md:p-10">
+          <div class="text-lg font-bold">
+            <span class="text-[#22252a]">I am a </span>
+            <span class="text-[#09cc9c]">{card.role}</span>
+          </div>
+          <h3 class="mt-4 text-3xl font-bold text-[#22252a] md:text-4xl">{card.title}</h3>
+          <p class="mt-4 text-lg text-[#3b3e47] leading-relaxed">{card.description}</p>
+          <a class="mt-8 inline-flex items-center text-lg font-bold text-[#fd7730] hover:text-[#fd7730]/80 transition" href="#">
+            {card.cta}
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+

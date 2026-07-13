@@ -1,0 +1,123 @@
+---
+import { trustStats } from "../data/site-content";
+
+const portalUrl = import.meta.env.PORTAL_URL || 'http://localhost:3000';
+---
+
+<section class=" py-20 md:py-24">
+  <div class="section-shell">
+    <div class="border-b-[#f3f3f3] border-b-4 pb-12 mb-12 grid gap-8 md:mb-16 lg:grid-cols-[1fr_auto] lg:items-start lg:gap-12">
+      <div>
+        <p class="section-eyebrow">Trusted Across</p>
+        <h2 class="mt-3 font-display text-5xl  md:text-6xl">The Franchise<br class="hidden md:block" />Industry</h2>
+      </div>
+
+      <ul class="space-y-4 text-base  lg:pt-2">
+        {trustStats.map((item) => (
+          <li class="flex items-start gap-3">
+            <span class="mt-1 h-2 w-2 rounded-full bg-[#09cc9c] shrink-0"></span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="mb-6 font-display text-xl">Brands We Serve</div>
+    <div class="overflow-hidden">
+      <div class="logo-ticker" id="logo-ticker" data-portal-url={portalUrl}>
+        <!-- Logos will be loaded here -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  async function loadLogos() {
+    try {
+      const ticker = document.getElementById("logo-ticker");
+      if (!ticker) return;
+
+      const portalUrl = ticker.getAttribute("data-portal-url");
+      const endpoint = `${portalUrl}/website-logos`;
+
+      console.log("Fetching logos from:", endpoint);
+      const response = await fetch(endpoint);
+
+      if (!response.ok) {
+        console.error("Failed to fetch logos - Status:", response.status);
+        return;
+      }
+
+      const data = await response.json();
+      type BrandLogo = { logo_path: string; name?: string };
+      const logos = (Array.isArray(data?.accounts) ? data.accounts : Array.isArray(data) ? data : []) as BrandLogo[];
+      const brandLogos = logos.filter((logo: BrandLogo) => logo?.logo_path);
+
+      if (brandLogos.length === 0) {
+        console.error("No logos returned from endpoint");
+        return;
+      }
+
+      const logoMarkup = brandLogos
+        .map(
+          (logo: BrandLogo) => `
+            <div class="logo-item">
+              <div class="flex h-auto w-60 items-center justify-center rounded-xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm">
+                <img src="${logo.logo_path}" alt="${logo.name || "Brand logo"}" class="max-h-12 w-auto object-contain" />
+              </div>
+            </div>
+          `
+        )
+        .join("");
+
+      // Two identical groups let us animate exactly half-width with no visible seam.
+      ticker.innerHTML = `
+        <div class="logo-track" aria-label="Trusted brand logos">
+          <div class="logo-group">${logoMarkup}</div>
+          <div class="logo-group" aria-hidden="true">${logoMarkup}</div>
+        </div>
+      `;
+    } catch (error) {
+      console.error("Failed to load brand logos:", error);
+    }
+  }
+
+  loadLogos();
+</script>
+
+<style is:global>
+  .logo-ticker {
+    overflow: hidden;
+  }
+
+  .logo-ticker .logo-track {
+    display: flex;
+    width: max-content;
+    animation: ticker-scroll 200s linear infinite;
+    will-change: transform;
+  }
+
+  .logo-ticker .logo-group {
+    display: flex;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+
+  .logo-ticker .logo-item {
+    flex-shrink: 0;
+  }
+
+  @keyframes ticker-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-ticker .logo-track {
+      animation: none;
+    }
+  }
+</style>

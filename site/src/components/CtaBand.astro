@@ -1,37 +1,28 @@
 ---
-import { withBase } from "../utils/paths";
-import { HUBSPOT_MEETINGS_URL } from "../config/site";
-
-interface Props {
-  title: string;
-  body: string;
-  primaryLabel?: string;
-  primaryHref?: string;
-  secondaryLabel?: string;
-  secondaryHref?: string;
-}
-
-const {
-  title,
-  body,
-  primaryLabel = "Book a Demo",
-  primaryHref = HUBSPOT_MEETINGS_URL,
-  secondaryLabel = "Talk to Our Team",
-  secondaryHref = "/about"
-} = Astro.props;
-
-const primaryUrl = withBase(primaryHref);
-const secondaryUrl = withBase(secondaryHref);
+import { Image } from "astro:assets";
+import faviconCircle from "../assets/figma-import/favicon-circle.png";
 ---
 
-<section class="cta-band">
-  <div class="container">
-    <h2>{title}</h2>
-    <p>{body}</p>
-    <div class="cta-actions">
-      <a class="btn btn-primary" href={primaryUrl} target={primaryUrl.startsWith("http") ? "_blank" : undefined} rel={primaryUrl.startsWith("http") ? "noopener noreferrer" : undefined}>{primaryLabel}</a>
-      <a class="btn btn-outline" href={secondaryUrl}>{secondaryLabel}</a>
+<section class="bg-[#09cc9c] py-16 md:py-20 footer-cta">
+  <div class="section-shell flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+    <div class="max-w-3xl">
+      <h2 class="font-display text-5xl leading-[1.05] text-white md:text-6xl font-bold">
+        Stop hoping. <br class="hidden md:block" />Start predicting.
+      </h2>
+      <p class="mt-5 text-lg text-white/85">
+        See how Zorakle works in a 30-minute demo tailored to your franchise system, your performance data, and your specific selection challenges.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+         <a class="inline-flex items-center justify-center rounded-lg bg-[#fd7730] px-7 py-3 text-base font-bold text-white transition hover:brightness-95 whitespace-nowrap" href="#">Book a Demo</a>
+         <a class="inline-flex items-center justify-center rounded-lg border border-white/40 bg-transparent px-7 py-3 text-base font-bold text-white transition hover:bg-white/10 whitespace-nowrap" href="#">Talk to Our Team</a>
+       </div>
     </div>
+    <Image src={faviconCircle} alt="Zorakle icon" class="h-32 w-32 shrink-0" />
   </div>
 </section>
+<style is:global>
+    .footer-cta {
+        margin-bottom: -50px;
+    }
+    </style>
 

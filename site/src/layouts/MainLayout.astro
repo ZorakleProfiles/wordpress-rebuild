@@ -2,11 +2,15 @@
 import "../styles/global.css";
 
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
 }
 
-const { title, description = "Zorakle franchise assessment platform" } = Astro.props;
+const {
+  title = "Zorakle | Franchise Performance Intelligence",
+  description = "Science-backed tools for franchise awarding and broker matching decisions."
+} = Astro.props;
+
 const faviconHref = `${import.meta.env.BASE_URL}favicon.svg`;
 ---
 
@@ -14,12 +18,12 @@ const faviconHref = `${import.meta.env.BASE_URL}favicon.svg`;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href={faviconHref} />
     <title>{title}</title>
   </head>
-  <body>
+  <body class="antialiased">
     <slot />
   </body>
 </html>

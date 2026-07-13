@@ -1,0 +1,27 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/figma-import/logo.png";
+import { navLinks } from "../data/site-content";
+---
+
+<header class="sticky top-0 z-40 border-b border-[#d1d4dd] bg-white/95 backdrop-blur">
+  <div class="section-shell flex h-20 items-center justify-between gap-4">
+    <a href="#" class="shrink-0" aria-label="Zorakle home">
+      <Image src={logo} alt="Zorakle" class="h-9 w-auto" />
+    </a>
+
+    <nav aria-label="Primary" class="hidden items-center gap-8 lg:flex">
+      {navLinks.map((link) => (
+        <a href={link.href} class="text-base font-bold text-[#22252a] transition hover:text-[#fd7730]">
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="hidden items-center gap-4 md:flex">
+      <a class="btn-secondary border-[#d1d4dd] text-[#22252a]" href="#">Book a Demo</a>
+      <a class="text-base font-bold text-[#22252a] transition hover:text-[#fd7730]" href="#">Login</a>
+    </div>
+  </div>
+</header>
+

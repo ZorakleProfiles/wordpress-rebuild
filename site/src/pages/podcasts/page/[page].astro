@@ -1,0 +1,47 @@
+---
+import CategoryArchivePage from "../../../components/CategoryArchivePage.astro";
+import {
+  DEFAULT_ARCHIVE_PAGE_SIZE,
+  getCategoryPostPageCount,
+  getPaginatedPostsByCategorySlug,
+  type PaginatedPosts
+} from "../../../lib/wordpress";
+
+export async function getStaticPaths() {
+  const totalPages = await getCategoryPostPageCount("podcasts", DEFAULT_ARCHIVE_PAGE_SIZE);
+  if (totalPages <= 1) {
+    return [];
+  }
+
+  const paths: Array<{ params: { page: string }; props: { pageData: PaginatedPosts } }> = [];
+  for (let pageNumber = 2; pageNumber <= totalPages; pageNumber += 1) {
+    paths.push({
+      params: { page: String(pageNumber) },
+      props: {
+        pageData: await getPaginatedPostsByCategorySlug("podcasts", pageNumber, DEFAULT_ARCHIVE_PAGE_SIZE)
+      }
+    });
+  }
+
+  return paths;
+}
+
+interface Props {
+  pageData: PaginatedPosts;
+}
+
+const { pageData } = Astro.props;
+const pageTitle = `Podcasts - Page ${pageData.page} | Zorakle`;
+---
+
+<CategoryArchivePage
+  title={pageTitle}
+  description="Podcast episodes and franchise conversations from the Zorakle network."
+  heading="Podcasts"
+  emptyStateMessage="No posts were found in the Podcasts category."
+  basePath="/podcasts"
+  posts={pageData.posts}
+  currentPage={pageData.page}
+  totalPages={pageData.totalPages}
+/>
+

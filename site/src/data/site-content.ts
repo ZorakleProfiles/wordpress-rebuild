@@ -1,9 +1,53 @@
 export const navLinks = [
-  { href: "#", label: "Home" },
-  { href: "#solutions", label: "Solutions ▾" },
+  { href: "/", label: "Home" },
+  {
+    label: "Solutions",
+    items: [
+      { href: "/solutions/franchisors", label: "For Franchisors" },
+      { href: "/solutions/brokers", label: "For Brokers" }
+    ]
+  },
   { href: "#pricing", label: "Pricing" },
-  { href: "#resources", label: "Resources ▾" },
+  {
+    label: "Resources",
+    items: [
+      { href: "/news", label: "News" },
+      { href: "/podcasts", label: "Podcasts" },
+      { href: "#", label: "Training & Support" },
+      { href: "/partnerships", label: "Partnerships" }
+    ]
+  },
   { href: "#about", label: "About" }
+];
+
+export const partnerships = [
+  {
+    shortName: "IFPG",
+    name: "International Franchise Professionals Group (IFPG)",
+    description: "Supporting the consultant community with science-backed tools to better serve their clients.",
+    featured: true
+  },
+  {
+    shortName: "FBA",
+    name: "Franchise Brokers Association (FBA)",
+    description: "Connecting Zorakle with the broker community nationwide supporting brokers as they help clients find the right franchise match."
+  },
+  {
+    shortName: "IFA",
+    name: "International Franchise Association (IFA)",
+    description: "The industry's largest membership organization. Zorakle is a long-standing member and contributor to IFA programs that support emerging and established franchisors."
+  },
+  {
+    shortName: "FBR",
+    name: "Franchise Business Review",
+    description: "Independent franchisee satisfaction research. Zorakle's work complements FBR's mission of transparency in the franchise industry."
+  },
+  {
+    shortName: "IBA",
+    name: "International Business Brokers Association (IBA)",
+    description: "Information needed from Rebecca.",
+    pending: true
+  }
 ];
 
 export const hero = {
@@ -29,14 +73,16 @@ export const pathCards = [
     title: "I award franchises.",
     description:
       "Predict performance before you sign the agreement. Cut bad-fit awards, raise validation scores, and protect your Item 19.",
-    cta: "Solutions for Franchisors →"
+    cta: "Solutions for Franchisors →",
+    href: "/solutions/franchisors"
   },
   {
     role: "Broker",
     title: "I match candidates to brands.",
     description:
       "Stop guessing which brands fit your client. Match with data, recommend confidently, and close more deals.",
-    cta: "Solutions for Brokers →"
+    cta: "Solutions for Brokers →",
+    href: "/solutions/brokers"
   }
 ];
 
@@ -90,4 +136,3 @@ export const footer = {
   email: "support@zorakle.net",
   copyright: "© 2026 Zorakle. All Rights Reserved."
 };
-

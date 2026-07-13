@@ -4,7 +4,7 @@ import logo from "../assets/figma-import/logo.png";
 import { navLinks } from "../data/site-content";
 ---
 
-<header class="sticky top-0 z-40 border-b border-[#d1d4dd] bg-white/95 backdrop-blur">
+<header class="sticky top-0 z-40 border-b border-[#d1d4dd] bg-white/95 backdrop-blur" data-site-header>
   <div class="section-shell flex h-20 items-center justify-between gap-4">
     <a href="#" class="shrink-0" aria-label="Zorakle home">
       <Image src={logo} alt="Zorakle" class="h-9 w-auto" />
@@ -12,9 +12,24 @@ import { navLinks } from "../data/site-content";
 
     <nav aria-label="Primary" class="hidden items-center gap-8 lg:flex">
       {navLinks.map((link) => (
-        <a href={link.href} class="text-base font-bold text-[#22252a] transition hover:text-[#fd7730]">
-          {link.label}
-        </a>
+        link.items ? (
+          <details class="group relative" data-nav-dropdown>
+            <summary class="list-none cursor-pointer text-base font-bold text-[#22252a] transition hover:text-[#fd7730] [&::-webkit-details-marker]:hidden">
+              {link.label} <span aria-hidden="true">▾</span>
+            </summary>
+            <div class="pointer-events-none invisible absolute left-0 top-full z-50 min-w-55 rounded-xl border border-[#d1d4dd] bg-white p-2 opacity-0 shadow-lg transition duration-150 group-open:pointer-events-auto group-open:visible group-open:opacity-100 lg:group-hover:pointer-events-auto lg:group-hover:visible lg:group-hover:opacity-100">
+              {link.items.map((item) => (
+                <a href={item.href} class="block rounded-lg px-3 py-2 text-sm font-semibold text-[#22252a] transition hover:bg-[#f4f6f9] hover:text-[#fd7730]">
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        ) : (
+          <a href={link.href} class="text-base font-bold text-[#22252a] transition hover:text-[#fd7730]">
+            {link.label}
+          </a>
+        )
       ))}
     </nav>
 
@@ -24,4 +39,52 @@ import { navLinks } from "../data/site-content";
     </div>
   </div>
 </header>
+
+<script>
+  function initHeaderDropdowns() {
+    const header = document.querySelector("[data-site-header]");
+    if (!header) return;
+    if (header.dataset.dropdownInit === "true") return;
+    header.dataset.dropdownInit = "true";
+
+    const dropdowns = Array.from(header.querySelectorAll("[data-nav-dropdown]"));
+    const isDesktop = () => window.matchMedia("(min-width: 1024px)").matches;
+
+    dropdowns.forEach((dropdown) => {
+      const summary = dropdown.querySelector("summary");
+      if (!summary) return;
+
+      dropdown.addEventListener("mouseenter", () => {
+        if (isDesktop()) dropdown.open = true;
+      });
+
+      dropdown.addEventListener("mouseleave", () => {
+        if (isDesktop()) dropdown.open = false;
+      });
+
+      summary.addEventListener("click", (event) => {
+        if (isDesktop()) {
+          event.preventDefault();
+        }
+      });
+
+      dropdown.addEventListener("toggle", () => {
+        if (!dropdown.open) return;
+        dropdowns.forEach((other) => {
+          if (other !== dropdown) other.open = false;
+        });
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      if (header.contains(event.target)) return;
+      dropdowns.forEach((dropdown) => {
+        dropdown.open = false;
+      });
+    });
+  }
+
+  initHeaderDropdowns();
+  document.addEventListener("astro:page-load", initHeaderDropdowns);
+</script>
 

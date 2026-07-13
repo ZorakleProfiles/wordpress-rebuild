@@ -1,0 +1,54 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { partnerships } from "../data/site-content";
+
+function getLogoTextSize(shortName: string): string {
+  if (shortName.length <= 3) return "text-[80px]";
+  if (shortName.length === 4) return "text-[72px]";
+  return "text-[64px]";
+}
+---
+
+<MainLayout
+  title="Partnerships | Zorakle"
+  description="Organizations and strategic partnerships that support Zorakle's work across franchising."
+>
+  <SiteHeader />
+
+  <main class="bg-[#e8e8ea] py-14 md:py-16">
+    <section class="section-shell">
+      <h1 class="font-display text-[40px] leading-tight text-[#22252a] md:text-[52px]">
+        Partnerships
+      </h1>
+      <div class="mt-6 space-y-6">
+        {partnerships.map((partner) => (
+          <article
+            class={`rounded-[22px] border bg-[#f6f6f7] p-5 shadow-[0_4px_10px_rgba(34,37,42,0.18)] md:px-8 md:py-7 ${partner.featured ? "border-[#09cc9c]" : "border-[#b8bcc6]"}`}
+          >
+            <div class="grid gap-5 md:grid-cols-[300px_1fr] md:items-center md:gap-8">
+              <div class="flex h-32 w-full items-center justify-center rounded-lg px-3 md:h-36 md:w-72 md:justify-start md:px-0">
+                <span class={`font-display leading-none tracking-tight text-[#575b65] ${getLogoTextSize(partner.shortName)}`}>
+                  {partner.shortName}
+                </span>
+              </div>
+
+              <div class="text-[#3b3e47]">
+                <p class="text-[20px] leading-[1.45] md:text-[22px]">
+                  <span class="font-semibold text-[#22252a]">{partner.name}</span>
+                  <span class="text-[#22252a]">: </span>
+                  <span class={partner.pending ? "text-[#fd7730]" : "text-[#3b3e47]"}>{partner.description}</span>
+                </p>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter />
+</MainLayout>
+
+

@@ -1,0 +1,306 @@
+---
+import { Image } from "astro:assets";
+import MainLayout from "../../layouts/MainLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+
+import avatarJackJill from "../../assets/figma-import/avatar-jack-jill.png";
+import avatarSean from "../../assets/figma-import/avatar-sean.png";
+import avatarMarcos from "../../assets/figma-import/avatar-marcos.png";
+import faviconCircle from "../../assets/figma-import/favicon-circle.png";
+
+const workflowSteps = [
+  {
+    title: "Join the broker network.",
+    body:
+      "Sign up as a Zorakle broker partner to access the SpotOn! platform, margin benefits, and candidate-brand tools your team can use immediately."
+  },
+  {
+    title: "Your client takes the assessment.",
+    body:
+      "One simple profile captures fit, temperament, and business-owner indicators so every recommendation starts with objective insight."
+  },
+  {
+    title: "See ranked brand matches. Instantly.",
+    body:
+      "Within minutes, discover best-fit brands based on validated fit indicators, values alignment, and development readiness."
+  },
+  {
+    title: "Close with conviction.",
+    body:
+      "Walk clients through evidence-backed recommendations and move from uncertainty to confidence faster in every deal cycle."
+  }
+];
+
+const tools = [
+  {
+    title: "SpotOn! Profile",
+    subtitle: "Your foundation for fit.",
+    body:
+      "Build a complete candidate picture across ownership traits, motivation patterns, and behavioral indicators that matter for franchise success.",
+    cta: "Explore SpotOn! Profile"
+  },
+  {
+    title: "SpotOn! Match",
+    subtitle: "How brokers win with speed.",
+    body:
+      "Match candidates against real franchise requirements in minutes and present ranked recommendations backed by data clients can trust.",
+    cta: "Explore SpotOn! Match"
+  }
+];
+
+const outcomes = [
+  {
+    title: "Faster, more confident closes.",
+    body:
+      "Reduce indecision and deal drift by giving clients clear, explainable recommendations tied to their profile results."
+  },
+  {
+    title: "Stronger client retention and referrals.",
+    body:
+      "When clients feel guided by evidence, trust increases and your process becomes a differentiator they talk about."
+  },
+  {
+    title: "Differentiation from the competition.",
+    body:
+      "Lead with a scientific approach that turns your advisory process into a premium experience in crowded markets."
+  },
+  {
+    title: "Pre-qualified leads from franchisors.",
+    body:
+      "Better candidate-brand fit creates cleaner handoffs and stronger collaboration with development teams."
+  }
+];
+
+const brokerTestimonials = [
+  {
+    quote:
+      "This gives our team a better framework for helping candidates compare opportunities and commit with confidence.",
+    name: "Kim Marinoff",
+    company: "FranNet",
+    avatar: avatarSean,
+    featured: false
+  },
+  {
+    quote:
+      "Zorakle helps us ask smarter questions and guide clients to the right brand faster. It has become part of our core process.",
+    name: "Jack & Jill Johnson",
+    company: "Franchise Insiders",
+    avatar: avatarJackJill,
+    featured: true
+  },
+  {
+    quote:
+      "Seeing candidate fit this clearly makes recommendation calls easier and improves trust at every stage of the journey.",
+    name: "Angela Cote",
+    company: "AC Inc.",
+    avatar: avatarMarcos,
+    featured: false
+  }
+];
+
+const pricing = [
+  {
+    tier: "Brokers",
+    intro: "Annual access for active brokerage teams.",
+    price: "$1,610/year",
+    points: ["SpotOn! Profile", "Broker brand matcher", "SpotOn! Match"],
+    cta: "Get started"
+  },
+  {
+    tier: "Pay as you go!",
+    intro: "Flexible for low-volume advisory teams.",
+    price: "$49/assessment",
+    points: ["SpotOn! Profile", "Broker brand matcher", "SpotOn! Match"],
+    cta: "Start per-assessment"
+  }
+];
+---
+
+<MainLayout
+  title="For Brokers | Zorakle"
+  description="Match every client to the right franchise brand with data-backed fit scoring, ranked matches, and broker-ready insights."
+>
+  <SiteHeader />
+
+  <main>
+    <section class="border-b border-[#d1d4dd] bg-[#d5dbeb] py-16 md:py-20 lg:py-24">
+      <div class="section-shell">
+        <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">For Brokers</p>
+        <h1 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-6xl">
+          Match every client to the right brand and close more deals doing it.
+        </h1>
+        <p class="mt-6 max-w-3xl text-base leading-relaxed text-[#3b3e47] md:text-lg">
+          Clients trust brokers who can explain fit clearly, not just speak in broad probabilities. SpotOn! gives you science-backed candidate-to-brand recommendations so every intro feels grounded and credible.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#" class="btn-primary">Book a Demo</a>
+          <a href="#pricing" class="btn-primary">Join the Broker Network</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
+      <div class="section-shell">
+        <h2 class="max-w-3xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-5xl">
+          The broker <span class="text-[#09cc9c]">math has changed.</span>
+        </h2>
+        <p class="mt-6 max-w-4xl text-base leading-relaxed text-[#3b3e47] md:text-lg">
+          Instead of relying on opinion or guesswork, modern brokers can match clients with data-backed confidence. The result is stronger conversations, faster decisions, and better-fit brand outcomes that compound over time.
+        </p>
+      </div>
+    </section>
+
+    <section class="bg-[radial-gradient(90%_120%_at_90%_0%,#157f73_0%,#1f232a_55%,#12151c_100%)] py-16 text-white md:py-20">
+      <div class="section-shell">
+        <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">The Broker Workflow</p>
+        <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight md:text-5xl">
+          From client conversation to confident match in four steps.
+        </h2>
+        <p class="mt-5 max-w-3xl text-base text-white/80 md:text-lg">
+          Simple for clients and powerful for advisors. The workflow is built to help brokers move quickly without sacrificing quality.
+        </p>
+
+        <div class="mt-10 space-y-4">
+          {workflowSteps.map((step, idx) => (
+            <article class="flex gap-4 rounded-xl border border-white/20 bg-[#1f232a]/70 p-5 shadow-lg md:items-start md:p-6">
+              <div class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#09cc9c] text-sm font-bold text-[#10272a]">
+                {idx + 1}
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-white md:text-xl">{step.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-white/75 md:text-base">{step.body}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div class="mt-8">
+          <a class="btn-primary" href="#pricing">Become a Broker Partner</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[#f3f3f3] py-16 md:py-20">
+      <div class="section-shell">
+        <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">The Broker Toolkit</p>
+        <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-5xl">
+          The tools that turn candidates into perfect matches.
+        </h2>
+        <p class="mt-5 max-w-3xl text-base text-[#3b3e47] md:text-lg">
+          Two connected tools help you understand each client and then map them to the brands where they are most likely to win.
+        </p>
+
+        <div class="mt-10 grid gap-4 md:grid-cols-2">
+          {tools.map((tool, idx) => (
+            <article class="rounded-xl border border-[#d1d4dd] bg-white p-6 shadow-sm">
+              <div class="mb-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#09cc9c] text-sm font-bold text-[#10272a]">{idx + 1}</div>
+              <p class="text-2xl font-bold text-[#1f232a]">{tool.title}</p>
+              <p class="mt-2 text-sm font-semibold text-[#09cc9c]">{tool.subtitle}</p>
+              <p class="mt-3 text-sm leading-relaxed text-[#3b3e47] md:text-base">{tool.body}</p>
+              <a href="#" class="mt-5 inline-flex rounded-md bg-[#fd7730] px-4 py-2 text-sm font-bold text-white transition hover:brightness-95">
+                {tool.cta}
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[radial-gradient(90%_140%_at_100%_0%,#158072_0%,#1f232a_55%,#12151c_100%)] py-16 text-white md:py-20">
+      <div class="section-shell">
+        <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">What Happens When You Match With Science</p>
+        <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight md:text-5xl">
+          Better matches. Faster closes. Stronger client relationships.
+        </h2>
+
+        <div class="mt-10 grid gap-4 md:grid-cols-2">
+          {outcomes.map((item) => (
+            <article class="rounded-xl border border-white/20 bg-[#1f232a]/65 p-5 md:p-6">
+              <h3 class="text-xl font-bold text-white">{item.title}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-white/75 md:text-base">{item.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[#f3f3f3] py-16 md:py-20">
+      <div class="section-shell">
+        <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">What Brokers Say</p>
+        <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-5xl">
+          Brokers who match with science. And the deals they are closing because of it.
+        </h2>
+
+        <div class="mt-10 grid gap-4 lg:grid-cols-3">
+          {brokerTestimonials.map((item) => (
+            <article class={`rounded-xl border p-5 ${item.featured ? "border-[#09cc9c] bg-white shadow-lg" : "border-[#d1d4dd] bg-white/85"}`}>
+              <div class="flex items-center gap-3">
+                <Image src={item.avatar} alt={item.name} class="h-10 w-10 rounded-full object-cover" />
+                <div>
+                  <p class="text-sm font-bold text-[#1f232a]">{item.name}</p>
+                  <p class="text-xs text-[#666a73]">{item.company}</p>
+                </div>
+              </div>
+              <p class="mt-4 text-sm leading-relaxed text-[#3b3e47] md:text-base">"{item.quote}"</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="bg-white py-16 md:py-20">
+      <div class="section-shell">
+        <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">Joining the Network</p>
+        <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-5xl">
+          What it costs to match with science.
+        </h2>
+
+        <div class="mt-10 grid gap-4 md:grid-cols-2">
+          {pricing.map((plan) => (
+            <article class="rounded-2xl border border-[#d1d4dd] bg-white p-6">
+              <h3 class="text-2xl font-bold text-[#1f232a]">{plan.tier}</h3>
+              <p class="mt-3 text-sm text-[#666a73]">{plan.intro}</p>
+              <p class="mt-5 text-3xl font-bold text-[#1f232a]">{plan.price}</p>
+
+              <ul class="mt-5 space-y-2">
+                {plan.points.map((point) => (
+                  <li class="flex gap-2 text-sm text-[#3b3e47]">
+                    <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#09cc9c]"></span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <a class="mt-6 inline-flex rounded-md bg-[#fd7730] px-4 py-2 text-sm font-bold text-white transition hover:brightness-95" href="#">
+                {plan.cta}
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[#09cc9c] py-14 md:py-16">
+      <div class="section-shell flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
+        <div class="max-w-3xl">
+          <h2 class="font-display text-4xl font-bold leading-tight text-white md:text-5xl">Ready to match smarter?</h2>
+          <p class="mt-4 text-base text-white/90 md:text-lg">
+            See how brokers use SpotOn! to guide clients with confidence and move qualified candidates to the right opportunities, faster.
+          </p>
+          <div class="mt-7 flex flex-wrap gap-3">
+            <a class="btn-primary" href="#">Book a Demo</a>
+            <a class="inline-flex items-center justify-center rounded-lg border border-white/50 px-7 py-3 text-base font-bold text-white transition hover:bg-white/10" href="#">
+              Talk to our team
+            </a>
+          </div>
+        </div>
+
+        <Image src={faviconCircle} alt="Zorakle mark" class="h-24 w-24 shrink-0" />
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter />
+</MainLayout>
+

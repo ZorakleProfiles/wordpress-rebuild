@@ -21,7 +21,7 @@ import { pathCards } from "../data/site-content";
           </div>
           <h3 class="mt-4 text-3xl font-bold text-[#22252a] md:text-4xl">{card.title}</h3>
           <p class="mt-4 text-lg text-[#3b3e47] leading-relaxed">{card.description}</p>
-          <a class="mt-8 inline-flex items-center text-lg font-bold text-[#fd7730] hover:text-[#fd7730]/80 transition" href="#">
+          <a class="mt-8 inline-flex items-center text-lg font-bold text-[#fd7730] hover:text-[#fd7730]/80 transition" href={card.href}>
             {card.cta}
           </a>
         </article>
@@ -29,4 +29,3 @@ import { pathCards } from "../data/site-content";
     </div>
   </div>
 </section>
-

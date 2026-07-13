@@ -1,0 +1,119 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import { getPostsByCategorySlug, type BlogPost } from "../../lib/wordpress";
+
+export async function getStaticPaths() {
+  const posts = await getPostsByCategorySlug("news");
+  const paths: Array<{ params: { slug: string }; props: { post: BlogPost } }> = [];
+
+  posts.forEach((post) => {
+    paths.push({
+      params: { slug: post.slug },
+      props: { post }
+    });
+
+    // Some WordPress slugs include percent-encoded Unicode; Astro can request the decoded form while crawling.
+    try {
+      const decodedSlug = decodeURIComponent(post.slug);
+      if (decodedSlug !== post.slug) {
+        paths.push({
+          params: { slug: decodedSlug },
+          props: { post }
+        });
+      }
+    } catch {
+      // Keep the encoded slug only when decodeURIComponent fails.
+    }
+  });
+
+  return paths;
+}
+
+interface Props {
+  post: BlogPost;
+}
+
+const { post } = Astro.props;
+
+const publishedDate = new Intl.DateTimeFormat("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric"
+}).format(new Date(post.publishedAt));
+
+const pageDescription = post.excerpt || `Read ${post.title} on Zorakle News.`;
+---
+
+<MainLayout title={`${post.title} | Zorakle`} description={pageDescription}>
+  <SiteHeader />
+
+  <main class="bg-[#f7f8fb] py-14 md:py-16">
+    <article class="section-shell rounded-xl bg-white px-6 py-8 shadow-sm md:px-10 md:py-10">
+      <a href="/news/" class="inline-flex text-sm font-semibold text-[#fd7730] transition hover:text-[#fd7730]/80">&larr; Back to News</a>
+
+      <h1 class="mt-4 max-w-5xl font-display text-[42px] leading-tight text-[#22252a] md:text-[56px]">{post.title}</h1>
+      <p class="mt-4 text-sm font-semibold text-[#22252a]">Posted on {publishedDate}</p>
+
+      <div class="mt-6 text-sm text-[#3b3e47]">
+        {post.categories.length > 0 && <span>Posted in {post.categories.join(", ")}</span>}
+        {post.categories.length > 0 && post.tags.length > 0 && <span> | </span>}
+        {post.tags.length > 0 && <span>Tagged {post.tags.join(", ")}</span>}
+      </div>
+
+      <div class="news-content mt-8 border-t border-[#d1d4dd] pt-8" set:html={post.contentHtml}></div>
+    </article>
+  </main>
+
+  <SiteFooter />
+</MainLayout>
+
+<style is:global>
+  .news-content {
+    color: #3b3e47;
+    line-height: 1.8;
+    font-size: 1rem;
+  }
+
+  .news-content > * + * {
+    margin-top: 1.25rem;
+  }
+
+  .news-content h1,
+  .news-content h2,
+  .news-content h3,
+  .news-content h4 {
+    font-family: "MontereyFLF", "Century Gothic", "Avenir Next", sans-serif;
+    color: #22252a;
+    line-height: 1.25;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .news-content a {
+    color: #fd7730;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .news-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+  }
+
+  .news-content iframe {
+    width: 100%;
+    min-height: 320px;
+    border: 0;
+    border-radius: 0.75rem;
+  }
+
+  @media (min-width: 768px) {
+    .news-content iframe {
+      min-height: 420px;
+    }
+  }
+</style>
+

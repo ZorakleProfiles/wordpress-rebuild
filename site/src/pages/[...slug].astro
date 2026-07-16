@@ -31,9 +31,6 @@ const publishedDate = new Intl.DateTimeFormat("en-US", {
 }).format(new Date(post.publishedAt));
 
 const pageDescription = post.excerpt || `Read ${post.title} on Zorakle Blog.`;
-const normalizedTags = post.tags.map((tag) => tag.trim().toLowerCase());
-const backHref = normalizedTags.includes("podcasts") ? "/podcasts" : "/news";
-const backLabel = normalizedTags.includes("podcasts") ? "Back to Podcasts" : "Back to News";
 ---
 
 <MainLayout title={`${post.title} | Zorakle`} description={pageDescription}>
@@ -41,7 +38,6 @@ const backLabel = normalizedTags.includes("podcasts") ? "Back to Podcasts" : "Ba
 
   <main class="bg-[#f7f8fb] py-14 md:py-16">
     <article class="section-shell rounded-xl bg-white px-6 py-8 shadow-sm md:px-10 md:py-10">
-      <a href={backHref} class="inline-flex text-sm font-semibold text-[#fd7730] transition hover:text-[#fd7730]/80">&larr; {backLabel}</a>
 
       <h1 class="mt-4 max-w-5xl font-display text-[42px] leading-tight text-[#22252a] md:text-[56px]">{post.title}</h1>
       <p class="mt-4 text-sm font-semibold text-[#22252a]">Posted on {publishedDate}</p>

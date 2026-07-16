@@ -1,0 +1,13 @@
+{
+  "name": "zorakle-wp-update",
+  "private": true,
+  "workspaces": [
+    "site"
+  ],
+  "scripts": {
+    "build": "npm --prefix site run build && rm -rf dist && cp -R site/dist dist",
+    "dev": "npm --prefix site run dev",
+    "preview": "npm --prefix site run preview"
+  }
+}
+

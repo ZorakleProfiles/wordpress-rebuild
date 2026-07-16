@@ -1,17 +1,19 @@
 ---
-import CategoryArchivePage from "../../components/CategoryArchivePage.astro";
-import { DEFAULT_ARCHIVE_PAGE_SIZE, getPaginatedPostsByCategorySlug } from "../../lib/wordpress";
+import BlogList from "../../components/BlogList.astro";
+import { DEFAULT_ARCHIVE_PAGE_SIZE, getPaginatedPostsByTag } from "../../lib/wordpress";
 
-const pageData = await getPaginatedPostsByCategorySlug("podcasts", 1, DEFAULT_ARCHIVE_PAGE_SIZE);
+const pageData = await getPaginatedPostsByTag("podcasts", 1, DEFAULT_ARCHIVE_PAGE_SIZE);
 ---
 
-<CategoryArchivePage
+<BlogList
   title="Podcasts | Zorakle"
   description="Podcast episodes and franchise conversations from the Zorakle network."
   heading="Podcasts"
-  emptyStateMessage="No posts were found in the Podcasts category."
+  emptyStateMessage="No podcast posts were found."
   basePath="/podcasts"
+  postBasePath=""
   posts={pageData.posts}
   currentPage={pageData.page}
   totalPages={pageData.totalPages}
 />
+

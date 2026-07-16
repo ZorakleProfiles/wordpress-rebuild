@@ -1,21 +1,21 @@
 ---
-import CategoryArchivePage from "../../../components/CategoryArchivePage.astro";
+import BlogList from "../../../components/BlogList.astro";
 import {
   DEFAULT_ARCHIVE_PAGE_SIZE,
-  getCategoryPostPageCount,
-  getPaginatedPostsByCategorySlug,
+  getPaginatedPostsByTag,
+  getTaggedPostPageCount,
   type PaginatedPosts
 } from "../../../lib/wordpress";
 
 export async function getStaticPaths() {
-  const totalPages = await getCategoryPostPageCount("podcasts", DEFAULT_ARCHIVE_PAGE_SIZE);
+  const totalPages = await getTaggedPostPageCount("podcasts", DEFAULT_ARCHIVE_PAGE_SIZE);
   if (totalPages <= 1) {
     return [];
   }
 
   const pageNumbers = Array.from({ length: totalPages - 1 }, (_unused, index) => index + 2);
   const pageDataByPage = await Promise.all(
-    pageNumbers.map((pageNumber) => getPaginatedPostsByCategorySlug("podcasts", pageNumber, DEFAULT_ARCHIVE_PAGE_SIZE))
+    pageNumbers.map((pageNumber) => getPaginatedPostsByTag("podcasts", pageNumber, DEFAULT_ARCHIVE_PAGE_SIZE))
   );
 
   return pageNumbers.map((pageNumber, index) => ({
@@ -32,12 +32,13 @@ const { pageData } = Astro.props;
 const pageTitle = `Podcasts - Page ${pageData.page} | Zorakle`;
 ---
 
-<CategoryArchivePage
+<BlogList
   title={pageTitle}
   description="Podcast episodes and franchise conversations from the Zorakle network."
   heading="Podcasts"
-  emptyStateMessage="No posts were found in the Podcasts category."
+  emptyStateMessage="No podcast posts were found."
   basePath="/podcasts"
+  postBasePath=""
   posts={pageData.posts}
   currentPage={pageData.page}
   totalPages={pageData.totalPages}

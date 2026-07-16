@@ -13,4 +13,9 @@ services:
       - /app/site/node_modules
     environment:
       - NODE_ENV=development
+    networks:
+      - zorakle-new_sail
+networks:
+  zorakle-new_sail:
+    external: true
 

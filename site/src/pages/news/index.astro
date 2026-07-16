@@ -1,17 +1,19 @@
 ---
-import CategoryArchivePage from "../../components/CategoryArchivePage.astro";
-import { DEFAULT_ARCHIVE_PAGE_SIZE, getPaginatedPostsByCategorySlug } from "../../lib/wordpress";
+import BlogList from "../../components/BlogList.astro";
+import { DEFAULT_ARCHIVE_PAGE_SIZE, getPaginatedPostsByTag } from "../../lib/wordpress";
 
-const pageData = await getPaginatedPostsByCategorySlug("news", 1, DEFAULT_ARCHIVE_PAGE_SIZE);
+const pageData = await getPaginatedPostsByTag("news", 1, DEFAULT_ARCHIVE_PAGE_SIZE);
 ---
 
-<CategoryArchivePage
-  title="News | Zorakle"
-  description="Franchise news and updates from the Zorakle team and network."
-  heading="News"
-  emptyStateMessage="No posts were found in the News category."
-  basePath="/news"
-  posts={pageData.posts}
-  currentPage={pageData.page}
-  totalPages={pageData.totalPages}
+<BlogList
+        title="News | Zorakle"
+        description="News from the Zorakle network."
+        heading="News"
+        emptyStateMessage="No news posts were found."
+        basePath="/news"
+        postBasePath=""
+        posts={pageData.posts}
+        currentPage={pageData.page}
+        totalPages={pageData.totalPages}
 />
+

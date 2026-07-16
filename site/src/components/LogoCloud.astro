@@ -37,7 +37,7 @@ const portalUrl = import.meta.env.PORTAL_URL || 'http://localhost:3000';
       if (!ticker) return;
 
       const portalUrl = ticker.getAttribute("data-portal-url");
-      const endpoint = `${portalUrl}/website-logos`;
+      const endpoint = `${portalUrl}/website/logos`;
 
       console.log("Fetching logos from:", endpoint);
       const response = await fetch(endpoint);

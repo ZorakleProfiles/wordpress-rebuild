@@ -8,7 +8,7 @@ interface Props {
 const { basePath, currentPage, totalPages } = Astro.props;
 
 const buildPageHref = (page: number): string => {
-  return page <= 1 ? `${basePath}/` : `${basePath}/page/${page}/`;
+  return page <= 1 ? `${basePath}` : `${basePath}/page/${page}`;
 };
 
 const pagesToRender = new Set<number>([1, totalPages, currentPage - 1, currentPage, currentPage + 1]);

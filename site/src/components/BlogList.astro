@@ -12,6 +12,7 @@ interface Props {
   heading: string;
   emptyStateMessage: string;
   basePath: string;
+  postBasePath?: string;
   posts: BlogPost[];
   currentPage: number;
   totalPages: number;
@@ -23,6 +24,7 @@ const {
   heading,
   emptyStateMessage,
   basePath,
+  postBasePath = basePath,
   posts,
   currentPage,
   totalPages
@@ -40,7 +42,7 @@ const {
         posts.length > 0 ? (
           <div class="mt-6 rounded-xl bg-white px-6 py-2 shadow-sm md:px-8">
             {posts.map((post) => (
-              <BlogCard post={post} basePath={basePath} />
+              <BlogCard post={post} basePath={postBasePath} />
             ))}
           </div>
         ) : (

@@ -49,6 +49,8 @@ interface WpPost {
 const wpApiBase = import.meta.env.PUBLIC_WP_URL?.replace(/\/$/, "");
 const DEFAULT_WP_FETCH_PAGE_SIZE = 100;
 const categoryIdBySlugCache = new Map<string, number | null>();
+const postsByCategorySlugCache = new Map<string, Promise<BlogPost[]>>();
+let allPostsCache: Promise<BlogPost[]> | null = null;
 
 export const DEFAULT_ARCHIVE_PAGE_SIZE = 12;
 
@@ -175,32 +177,72 @@ function mapPost(post: WpPost): BlogPost {
 }
 
 export async function getAllPosts(): Promise<BlogPost[]> {
-  const firstPage = await fetchWpPostsPage(1);
-  const allPosts = [...firstPage.posts];
-
-  for (let page = 2; page <= firstPage.totalPages; page += 1) {
-    const result = await fetchWpPostsPage(page);
-    allPosts.push(...result.posts);
+  if (allPostsCache) {
+    return allPostsCache;
   }
 
-  return allPosts.map(mapPost);
+  const postsPromise = (async () => {
+    const firstPage = await fetchWpPostsPage(1);
+    const remainingPageRequests = Array.from({ length: Math.max(0, firstPage.totalPages - 1) }, (_unused, index) => {
+      return fetchWpPostsPage(index + 2);
+    });
+
+    const remainingPages = await Promise.all(remainingPageRequests);
+    const allPosts = [
+      ...firstPage.posts,
+      ...remainingPages.flatMap((result) => result.posts)
+    ];
+
+    return allPosts.map(mapPost);
+  })();
+
+  allPostsCache = postsPromise;
+  postsPromise.catch(() => {
+    if (allPostsCache === postsPromise) {
+      allPostsCache = null;
+    }
+  });
+
+  return postsPromise;
 }
 
 export async function getPostsByCategorySlug(categorySlug: string): Promise<BlogPost[]> {
-  const categoryId = await getCategoryIdBySlug(categorySlug);
-  if (!categoryId) {
+  const normalizedCategorySlug = categorySlug.trim().toLowerCase();
+  if (!normalizedCategorySlug) {
     return [];
   }
 
-  const firstPage = await fetchWpCategoryPostsPage(categoryId, 1, DEFAULT_WP_FETCH_PAGE_SIZE);
-  const allPosts = [...firstPage.posts];
-
-  for (let page = 2; page <= firstPage.totalPages; page += 1) {
-    const result = await fetchWpCategoryPostsPage(categoryId, page, DEFAULT_WP_FETCH_PAGE_SIZE);
-    allPosts.push(...result.posts);
+  const cachedPosts = postsByCategorySlugCache.get(normalizedCategorySlug);
+  if (cachedPosts) {
+    return cachedPosts;
   }
 
-  return allPosts.map(mapPost);
+  const postsPromise = (async () => {
+    const categoryId = await getCategoryIdBySlug(normalizedCategorySlug);
+    if (!categoryId) {
+      return [];
+    }
+
+    const firstPage = await fetchWpCategoryPostsPage(categoryId, 1, DEFAULT_WP_FETCH_PAGE_SIZE);
+    const remainingPageRequests = Array.from({ length: Math.max(0, firstPage.totalPages - 1) }, (_unused, index) => {
+      return fetchWpCategoryPostsPage(categoryId, index + 2, DEFAULT_WP_FETCH_PAGE_SIZE);
+    });
+
+    const remainingPages = await Promise.all(remainingPageRequests);
+    const allPosts = [
+      ...firstPage.posts,
+      ...remainingPages.flatMap((result) => result.posts)
+    ];
+
+    return allPosts.map(mapPost);
+  })();
+
+  postsByCategorySlugCache.set(normalizedCategorySlug, postsPromise);
+  postsPromise.catch(() => {
+    postsByCategorySlugCache.delete(normalizedCategorySlug);
+  });
+
+  return postsPromise;
 }
 
 export async function getCategoryPostPageCount(
@@ -208,13 +250,8 @@ export async function getCategoryPostPageCount(
   pageSize = DEFAULT_ARCHIVE_PAGE_SIZE
 ): Promise<number> {
   const safePageSize = Math.max(1, Math.floor(pageSize));
-  const categoryId = await getCategoryIdBySlug(categorySlug);
-  if (!categoryId) {
-    return 0;
-  }
-
-  const firstPage = await fetchWpCategoryPostsPage(categoryId, 1, safePageSize);
-  return firstPage.totalPages;
+  const posts = await getPostsByCategorySlug(categorySlug);
+  return Math.ceil(posts.length / safePageSize);
 }
 
 export async function getPaginatedPostsByCategorySlug(
@@ -224,17 +261,17 @@ export async function getPaginatedPostsByCategorySlug(
 ): Promise<PaginatedPosts> {
   const safePage = Math.max(1, Math.floor(page));
   const safePageSize = Math.max(1, Math.floor(pageSize));
-  const categoryId = await getCategoryIdBySlug(categorySlug);
-  if (!categoryId) {
-    return { posts: [], page: safePage, totalPages: 0, totalPosts: 0 };
-  }
-
-  const result = await fetchWpCategoryPostsPage(categoryId, safePage, safePageSize);
+  const allPosts = await getPostsByCategorySlug(categorySlug);
+  const totalPosts = allPosts.length;
+  const totalPages = Math.ceil(totalPosts / safePageSize);
+  const startIndex = (safePage - 1) * safePageSize;
+  const endIndex = startIndex + safePageSize;
+  const posts = startIndex >= totalPosts ? [] : allPosts.slice(startIndex, endIndex);
 
   return {
-    posts: result.posts.map(mapPost),
+    posts,
     page: safePage,
-    totalPages: result.totalPages,
-    totalPosts: result.totalPosts
+    totalPages,
+    totalPosts
   };
 }

@@ -15,5 +15,8 @@
   },
   "overrides": {
     "vite": "^7.1.11"
+  },
+  "devDependencies": {
+    "wrangler": "^4.111.0"
   }
 }

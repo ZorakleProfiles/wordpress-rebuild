@@ -61,7 +61,7 @@ const portalUrl = import.meta.env.PORTAL_URL || 'http://localhost:3000';
         .map(
           (logo: BrandLogo) => `
             <div class="logo-item">
-              <div class="flex h-auto w-60 items-center justify-center rounded-xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm">
+              <div class="flex h-auto items-center justify-center rounded-xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm">
                 <img src="${logo.logo_path}" alt="${logo.name || "Brand logo"}" class="max-h-12 w-auto object-contain" />
               </div>
             </div>

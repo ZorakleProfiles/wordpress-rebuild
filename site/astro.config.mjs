@@ -5,8 +5,8 @@ import tailwindcss from "@tailwindcss/vite";
 
 
 export default defineConfig({
-  site: "https://zorakleprofiles.github.io",
-  base: process.env.NODE_ENV === "production" ? "/wordpress-rebuild/" : "/",
+  site: "https://zorakle-website.mike-94b.workers.dev",
+  base: "/",
   vite: {
     plugins: [tailwindcss()],
     resolve: {

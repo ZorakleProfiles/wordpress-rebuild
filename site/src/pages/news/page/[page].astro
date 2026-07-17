@@ -5,7 +5,7 @@ import {
   getPaginatedPostsByTag,
   getTaggedPostPageCount,
   type PaginatedPosts
-} from "../../../lib/wordpress";
+} from "../../../lib/blog.ts";
 
 export async function getStaticPaths() {
   const totalPages = await getTaggedPostPageCount("news", DEFAULT_ARCHIVE_PAGE_SIZE);

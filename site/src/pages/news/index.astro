@@ -1,6 +1,6 @@
 ---
 import BlogList from "../../components/BlogList.astro";
-import { DEFAULT_ARCHIVE_PAGE_SIZE, getPaginatedPostsByTag } from "../../lib/wordpress";
+import { DEFAULT_ARCHIVE_PAGE_SIZE, getPaginatedPostsByTag } from "../../lib/blog.ts";
 
 const pageData = await getPaginatedPostsByTag("news", 1, DEFAULT_ARCHIVE_PAGE_SIZE);
 ---

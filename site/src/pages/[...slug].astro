@@ -2,7 +2,7 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
-import { getAllPosts, type BlogPost } from "../lib/wordpress";
+import { getAllPosts, type BlogPost } from "../lib/blog.ts";
 
 export async function getStaticPaths() {
   const posts = await getAllPosts();

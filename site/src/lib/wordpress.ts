@@ -207,6 +207,7 @@ async function fetchPortalBlogPosts(tag?: string): Promise<BlogPost[]> {
 
   const response = await fetch(endpoint.toString());
   if (!response.ok) {
+    console.log(endpoint.toString());
     throw new Error(`Failed to fetch blog posts from portal API: ${response.status} ${response.statusText}`);
   }
 

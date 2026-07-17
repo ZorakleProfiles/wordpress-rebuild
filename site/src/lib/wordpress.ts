@@ -205,10 +205,16 @@ async function fetchPortalBlogPosts(tag?: string): Promise<BlogPost[]> {
     endpoint.searchParams.set("tag", normalizedTag);
   }
 
-  const response = await fetch(endpoint.toString());
+  const response = await fetch(endpoint.toString(), {
+    headers: {
+      Accept: "application/json"
+    }
+  });
   if (!response.ok) {
-    console.log(endpoint.toString());
-    throw new Error(`Failed to fetch blog posts from portal API: ${response.status} ${response.statusText}`);
+    const responseBody = await response.text();
+    throw new Error(
+      `Failed to fetch blog posts from portal API: ${response.status} ${response.statusText}. URL: ${endpoint.toString()}. Body: ${responseBody.slice(0, 500)}`
+    );
   }
 
   let payload = (await response.json()) as unknown;

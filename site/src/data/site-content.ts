@@ -17,7 +17,7 @@ export const navLinks = [
       { href: "/partnerships", label: "Partnerships" }
     ]
   },
-  { href: "#about", label: "About" }
+  { href: "/about", label: "About" }
 ];
 
 export const partnerships = [
@@ -55,13 +55,13 @@ export const hero = {
   titlePrefix: "Award franchises with",
   titleAccent: "science not gut feeling.",
   description:
-    "For 33 years, Zorakle has been the franchise industry's go-to assessment platform. Seven validated sciences. One purpose-built methodology. Built exclusively for franchising — never adapted from a generic HR tool.",
+    "For 12 years, franchise systems have trusted Zorakle to make smarter awards decisions. Seven validated sciences. One methodology built exclusively for franchising.",
   primaryCta: { href: "#", label: "Franchisors" },
   secondaryCta: { href: "#", label: "Brokers" }
 };
 
 export const trustStats = [
-  "33 Years in Franchising",
+  "12 Years in Franchising",
   "7 Validated Sciences Built into Every Profile",
   "[X+] Franchise Systems Served to Date",
   "[X+] Client Retention Across Our Subscriber Base"
@@ -89,21 +89,21 @@ export const pathCards = [
 export const differenceCards = [
   {
     index: "01",
-    title: "Built for franchise not for HR.",
+    title: "Built for franchisees, not employees.",
     description:
-      "99% of assessment tools measure employees. We measure business owners. That single distinction changes everything what we test, how we score, and what we predict. Franchisees aren't employees, and they shouldn't be assessed like them."
+      "I've seen too many great candidates fail with off-the-shelf HR tools. Why? Because a franchisee's job is fundamentally different. They own the business, they're accountable for P&L, they manage teams. Our assessment measures what actually predicts franchise success."
   },
   {
     index: "02",
-    title: "Seven sciences. Not one.",
+    title: "Real science. Real depth.",
     description:
-      "While competitors rely on a single personality model, Zorakle integrates seven statistically validated sciences from Stanford, Harvard, Gallup, and the leading research institutions in psychology and organizational behavior combined through meta-analysis for accuracy no single test can match."
+      "We didn't cobble this together from one personality test. Seven validated sciences from Stanford, Harvard, and Gallup. Rigorous. Proven. When you're making a multi-million dollar decision, you deserve better than a single data point."
   },
   {
     index: "03",
-    title: "Two scoring methods. One unified prediction.",
+    title: "Performance prediction. Not personality profiles.",
     description:
-      "We use both normative and ipsative scoring, plus topological and dimensional analysis. That's the science behind why Zorakle predicts performance not just personality."
+      "Anyone can tell you someone's personality type. We go deeper. We show you who will actually thrive in your franchise system. That's the difference between a good candidate and a successful franchisee."
   }
 ];
 

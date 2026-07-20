@@ -3,11 +3,13 @@ import { Image } from "astro:assets";
 import MainLayout from "../../layouts/MainLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
+import PageHero from "../../components/PageHero.astro";
 
 import avatarJackJill from "../../assets/figma-import/avatar-jack-jill.png";
 import avatarSean from "../../assets/figma-import/avatar-sean.png";
 import avatarMarcos from "../../assets/figma-import/avatar-marcos.png";
 import faviconCircle from "../../assets/figma-import/favicon-circle.png";
+import CtaBand from "../../components/CtaBand.astro";
 
 const workflowSteps = [
   {
@@ -124,21 +126,14 @@ const pricing = [
   <SiteHeader />
 
   <main>
-    <section class="border-b border-[#d1d4dd] bg-[#d5dbeb] py-16 md:py-20 lg:py-24">
-      <div class="section-shell">
-        <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">For Brokers</p>
-        <h1 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-6xl">
-          Match every client to the right brand and close more deals doing it.
-        </h1>
-        <p class="mt-6 max-w-3xl text-base leading-relaxed text-[#3b3e47] md:text-lg">
-          Clients trust brokers who can explain fit clearly, not just speak in broad probabilities. SpotOn! gives you science-backed candidate-to-brand recommendations so every intro feels grounded and credible.
-        </p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href="#" class="btn-primary">Book a Demo</a>
-          <a href="#pricing" class="btn-primary">Join the Broker Network</a>
-        </div>
-      </div>
-    </section>
+    <PageHero
+      titlePrefix="Match every client to the right brand and close more deals doing it."
+      description="Clients trust brokers who can explain fit clearly, not just speak in broad probabilities. SpotOn! gives you science-backed candidate-to-brand recommendations so every intro feels grounded and credible."
+      primaryCta={{ href: "#", label: "Book a Demo" }}
+      secondaryCta={{ href: "#pricing", label: "Join the Broker Network" }}
+      backgroundColor="#d5dbeb"
+      minHeightClass="min-h-[620px]"
+    />
 
     <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
       <div class="section-shell">
@@ -281,24 +276,10 @@ const pricing = [
       </div>
     </section>
 
-    <section class="bg-[#09cc9c] py-14 md:py-16">
-      <div class="section-shell flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
-        <div class="max-w-3xl">
-          <h2 class="font-display text-4xl font-bold leading-tight text-white md:text-5xl">Ready to match smarter?</h2>
-          <p class="mt-4 text-base text-white/90 md:text-lg">
-            See how brokers use SpotOn! to guide clients with confidence and move qualified candidates to the right opportunities, faster.
-          </p>
-          <div class="mt-7 flex flex-wrap gap-3">
-            <a class="btn-primary" href="#">Book a Demo</a>
-            <a class="inline-flex items-center justify-center rounded-lg border border-white/50 px-7 py-3 text-base font-bold text-white transition hover:bg-white/10" href="#">
-              Talk to our team
-            </a>
-          </div>
-        </div>
 
-        <Image src={faviconCircle} alt="Zorakle mark" class="h-24 w-24 shrink-0" />
-      </div>
-    </section>
+<CtaBand
+    title="Ready to match smarter?"
+text="See how brokers use SpotOn! to guide clients with confidence and move qualified candidates to the right opportunities, faster."></CtaBand>
   </main>
 
   <SiteFooter />

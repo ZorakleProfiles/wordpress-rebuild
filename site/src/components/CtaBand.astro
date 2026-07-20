@@ -1,20 +1,38 @@
 ---
 import { Image } from "astro:assets";
 import faviconCircle from "../assets/figma-import/favicon-circle.png";
+
+interface Props {
+    title: string;
+    text?: string;
+    primaryLabel?: string;
+    primaryHref?: string;
+    secondaryLabel?: string;
+    secondaryHref?: string;
+}
+
+const {
+    title = 'Stop hoping. <br class="hidden md:block" />Start predicting.',
+    text = "See how Zorakle solves your specific franchise selection challenges in a tailored, 30-minute demo.",
+    primaryLabel = "Book a Demo",
+    primaryHref = "#",
+    secondaryLabel = "Talk to Our Team",
+    secondaryHref = "#"
+} = Astro.props;
 ---
 
 <section class="bg-[#09cc9c] py-16 md:py-20 footer-cta">
   <div class="section-shell flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
     <div class="max-w-3xl">
-      <h2 class="font-display text-5xl leading-[1.05] text-white md:text-6xl font-bold">
-        Stop hoping. <br class="hidden md:block" />Start predicting.
+      <h2 set:html={title}
+              class="font-display text-5xl leading-[1.05] text-white md:text-6xl font-bold">
       </h2>
       <p class="mt-5 text-lg text-white/85">
-        See how Zorakle works in a 30-minute demo tailored to your franchise system, your performance data, and your specific selection challenges.
+          {text}
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
-         <a class="inline-flex items-center justify-center rounded-lg bg-[#fd7730] px-7 py-3 text-base font-bold text-white transition hover:brightness-95 whitespace-nowrap" href="#">Book a Demo</a>
-         <a class="inline-flex items-center justify-center rounded-lg border border-white/40 bg-transparent px-7 py-3 text-base font-bold text-white transition hover:bg-white/10 whitespace-nowrap" href="#">Talk to Our Team</a>
+         <a class="inline-flex items-center justify-center rounded-lg bg-[#fd7730] px-7 py-3 text-base font-bold text-white transition hover:brightness-95 whitespace-nowrap" href={primaryHref}>{primaryLabel}</a>
+         <a class="inline-flex items-center justify-center rounded-lg border border-white/40 bg-transparent px-7 py-3 text-base font-bold text-white transition hover:bg-white/10 whitespace-nowrap" href={secondaryHref}>{secondaryLabel}</a>
        </div>
     </div>
     <Image src={faviconCircle} alt="Zorakle icon" class="h-32 w-32 shrink-0" />

@@ -1,0 +1,92 @@
+---
+import { Image } from "astro:assets";
+import MainLayout from "../layouts/MainLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import CtaBand from "../components/CtaBand.astro";
+import PageHero from "../components/PageHero.astro";
+import heroBackground from "../assets/figma-import/hero-background-about.png";
+import rebeccaPortrait from "../assets/figma-import/about-rebecca-monet.png";
+---
+
+<MainLayout
+  title="About | Zorakle"
+  description="Learn why Zorakle was built and how Rebecca Monet helps franchise systems award with more confidence and better outcomes."
+>
+  <SiteHeader />
+
+  <main>
+    <PageHero
+      eyebrow="About Zorakle"
+      titlePrefix=""
+      titleHighlight="12 years"
+      titleSuffix="building the science of franchise fit."
+      description="Zorakle exists because awarding a franchise is too important to leave to a hunch. Founded by Rebecca Monet, we have spent over a decade helping franchise systems make better, clearer, science-backed decisions."
+      backgroundImage={heroBackground}
+      dark={true}
+      minHeightClass="min-h-[620px]"
+    />
+
+    <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
+      <div class="section-shell">
+        <h2 class="max-w-4xl font-display text-4xl font-bold leading-tight text-[#22252a] md:text-5xl">
+          How Zorakle started, and why it is still the only franchise-specific assessment platform.
+        </h2>
+        <div class="mt-7 max-w-5xl space-y-5 text-base leading-relaxed text-[#3b3e47] md:text-lg">
+          <p>
+            In the early 1990s, the franchise industry had plenty of personality tests, but none built
+            for business owners. Every available tool was designed to assess employees. People working
+            for an organization, not people investing their savings to run one.
+          </p>
+          <p>
+            Over the past 12 years, we refined a methodology that integrates seven validated sciences
+            from top research institutions into one practical, franchise-specific framework.
+          </p>
+          <p>
+            Today, Zorakle is the go-to assessment partner for franchisors, brokers, and franchisees
+            who want to predict performance, reduce risk, and build stronger systems.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-b border-[#d1d4dd] bg-[#f4f5f7] py-16 md:py-20">
+      <div class="section-shell grid gap-8 lg:grid-cols-[1.35fr_0.9fr] lg:items-center">
+        <div>
+          <p class="font-display text-lg text-[#22252a] md:text-xl">Meet</p>
+          <h2 class="mt-2 font-display text-5xl font-bold leading-tight text-[#09cc9c] md:text-6xl">
+            Rebecca Monet.
+          </h2>
+          <p class="mt-2 text-xl font-semibold text-[#22252a]">CEO and Chief Scientist</p>
+          <p class="mt-6 max-w-3xl text-base leading-relaxed text-[#3b3e47] md:text-lg">
+            Rebecca Monet is the founder and chief scientist behind Zorakle Profiles. With more than
+            three decades of experience in psychometrics, assessment, and franchise development, she has
+            built her career proving that the right science, applied to the right industry, produces
+            measurable results. Her work gives franchisors and brokers practical clarity for one of the
+            biggest decisions in their business.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="/podcasts" class="btn-secondary border-[#fd7730] text-[#22252a]">Listen to The Franchise Woman Podcast</a>
+            <a href="/news" class="btn-secondary border-[#fd7730] text-[#22252a]">Read Rebecca's Insights</a>
+          </div>
+        </div>
+
+        <aside class="rounded-2xl border border-[#d1d4dd] bg-[#e6e8ec] p-4 shadow-[0_10px_25px_rgba(34,37,42,0.12)]">
+          <Image
+            src={rebeccaPortrait}
+            alt="Rebecca Monet"
+            class="h-105 w-full rounded-xl object-cover"
+          />
+        </aside>
+      </div>
+    </section>
+
+    <CtaBand
+      title="Let's talk."
+      text="Whether you are awarding franchises, matching candidates, or evaluating your own team, we can show you what Zorakle can do for your system."
+    />
+  </main>
+
+  <SiteFooter />
+</MainLayout>
+

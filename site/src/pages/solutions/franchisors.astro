@@ -3,11 +3,13 @@ import { Image } from "astro:assets";
 import MainLayout from "../../layouts/MainLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
+import PageHero from "../../components/PageHero.astro";
 
 import avatarJackJill from "../../assets/figma-import/avatar-jack-jill.png";
 import avatarSean from "../../assets/figma-import/avatar-sean.png";
 import avatarMarcos from "../../assets/figma-import/avatar-marcos.png";
 import faviconCircle from "../../assets/figma-import/favicon-circle.png";
+import CtaBand from "../../components/CtaBand.astro";
 
 const processSteps = [
   {
@@ -157,21 +159,16 @@ const pricingColumns = [
   <SiteHeader />
 
   <main>
-    <section class="border-b border-[#d1d4dd] bg-[#d5dbeb] py-16 md:py-20 lg:py-24">
-      <div class="section-shell">
-        <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">For Franchisors</p>
-        <h1 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-6xl">
-          Award franchises with the confidence of <span class="text-[#09cc9c]">data</span>, not the doubt of a gut feeling.
-        </h1>
-        <p class="mt-6 max-w-3xl text-base leading-relaxed text-[#3b3e47] md:text-lg">
-          Selecting the wrong owner creates expensive downstream friction. Zorakle gives your team a repeatable, validated framework to predict fit before contracts are signed.
-        </p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href="#" class="btn-primary">Book a Demo</a>
-          <a href="#sample-report" class="btn-primary">See a Sample Report</a>
-        </div>
-      </div>
-    </section>
+    <PageHero
+      titlePrefix="Award franchises with the confidence of"
+      titleHighlight="data,"
+      titleSuffix="not the doubt of a gut feeling."
+      description="Selecting the wrong owner creates expensive downstream friction. Zorakle gives your team a repeatable, validated framework to predict fit before contracts are signed."
+      primaryCta={{ href: "#", label: "Book a Demo" }}
+      secondaryCta={{ href: "#sample-report", label: "See a Sample Report" }}
+      backgroundColor="#d5dbeb"
+      minHeightClass="min-h-[620px]"
+    />
 
     <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
       <div class="section-shell">
@@ -335,26 +332,7 @@ const pricingColumns = [
       </div>
     </section>
 
-    <section class="bg-[#09cc9c] py-14 md:py-16">
-      <div class="section-shell flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
-        <div class="max-w-3xl">
-          <h2 class="font-display text-4xl font-bold leading-tight text-white md:text-5xl">
-            Stop awarding on instinct. <br class="hidden md:block" />Start awarding on evidence.
-          </h2>
-          <p class="mt-4 text-base text-white/90 md:text-lg">
-            Get a walkthrough of the exact workflow franchisors use to improve award quality, shorten time-to-decision, and reduce avoidable support costs.
-          </p>
-          <div class="mt-7 flex flex-wrap gap-3">
-            <a class="btn-primary" href="#">Book a Demo</a>
-            <a class="inline-flex items-center justify-center rounded-lg border border-white/50 px-7 py-3 text-base font-bold text-white transition hover:bg-white/10" href="#">
-              Talk to our team
-            </a>
-          </div>
-        </div>
-
-        <Image src={faviconCircle} alt="Zorakle mark" class="h-24 w-24 shrink-0" />
-      </div>
-    </section>
+    <CtaBand />
   </main>
 
   <SiteFooter />

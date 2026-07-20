@@ -1,28 +1,17 @@
 ---
 import heroBackground from "../assets/figma-import/hero-background.png";
 import { hero } from "../data/site-content";
+import PageHero from "./PageHero.astro";
 ---
 
-<section
-  class="relative overflow-hidden border-b border-[#d1d4dd] bg-cover bg-center bg-no-repeat"
-  style={`background-image: url(${heroBackground.src});`}
->
-  <div class="absolute inset-0 z-0 bg-gradient-to-r from-[#1f232a]/88 via-[#2d3239]/62 to-[#2d3239]/20"></div>
-
-  <div class="section-shell relative z-10 flex min-h-[620px] items-center py-18 md:py-20">
-    <div class="max-w-[620px] space-y-5 text-white md:space-y-6">
-      <p class="font-display text-[16px] leading-tight text-white/90 md:text-[18px]">{hero.eyebrow}</p>
-      <h1 class="font-display text-[48px] font-bold leading-[1.1] text-white md:text-[64px]">
-        {hero.titlePrefix} <span class="text-[#09cc9c]">{hero.titleAccent}</span>
-      </h1>
-      <p class="max-w-[560px] text-[15px] leading-relaxed text-white/80 md:text-[17px]">{hero.description}</p>
-      <div class="flex flex-wrap gap-2 pt-1">
-        <a class="inline-flex h-9 items-center justify-center rounded-md border border-[#fd7730] bg-[#242a31]/85 px-4 text-sm font-semibold text-white transition hover:bg-[#2f3740]" href={hero.primaryCta.href}>{hero.primaryCta.label}</a>
-        <a class="inline-flex h-9 items-center justify-center rounded-md border border-[#fd7730] bg-[#242a31]/85 px-4 text-sm font-semibold text-white transition hover:bg-[#2f3740]" href={hero.secondaryCta.href}
-          >{hero.secondaryCta.label}</a
-        >
-      </div>
-    </div>
-  </div>
-</section>
+<PageHero
+  eyebrow={hero.eyebrow}
+  titlePrefix={hero.titlePrefix}
+  titleHighlight={hero.titleAccent}
+  description={hero.description}
+  primaryCta={hero.primaryCta}
+  secondaryCta={hero.secondaryCta}
+  backgroundImage={heroBackground}
+  dark={true}
+/>
 

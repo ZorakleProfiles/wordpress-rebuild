@@ -1,0 +1,81 @@
+---
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  eyebrow?: string;
+  titlePrefix: string;
+  titleHighlight?: string;
+  titleSuffix?: string;
+  description?: string;
+  primaryCta?: { href: string; label: string };
+  secondaryCta?: { href: string; label: string };
+  backgroundImage?: ImageMetadata;
+  backgroundColor?: string;
+  dark?: boolean;
+  overlayClass?: string;
+  minHeightClass?: string;
+}
+
+const {
+  eyebrow,
+  titlePrefix,
+  titleHighlight,
+  titleSuffix,
+  description,
+  primaryCta,
+  secondaryCta,
+  backgroundImage,
+  backgroundColor = "#d5dbeb",
+  dark = false,
+  overlayClass = "bg-gradient-to-r from-[#1f232a]/88 via-[#2d3239]/62 to-[#2d3239]/20",
+  minHeightClass = "min-h-[620px]"
+} = Astro.props;
+
+const sectionStyle = backgroundImage
+  ? `background-image: url(${backgroundImage.src});`
+  : `background-color: ${backgroundColor};`;
+
+const textColorClass = dark ? "text-white" : "text-[#1f232a]";
+const bodyColorClass = dark ? "text-white/80" : "text-[#3b3e47]";
+---
+
+<section
+  class="relative overflow-hidden border-b border-[#d1d4dd] bg-cover bg-center bg-no-repeat"
+  style={sectionStyle}
+>
+  {backgroundImage && <div class={`absolute inset-0 z-0 ${overlayClass}`}></div>}
+
+  <div class={`section-shell relative z-10 flex ${minHeightClass} items-center py-18 md:py-20`}>
+    <div class="max-w-[70%] space-y-5 md:space-y-6">
+      {eyebrow && (
+        <p class={`font-display text-[17px] md:text-[20px] ${dark ? "text-white/90" : "text-[#09cc9c]"}`}>
+          {eyebrow}
+        </p>
+      )}
+
+      <h1 class={`font-display text-4xl font-bold leading-tight md:text-6xl ${textColorClass}`}>
+        {titlePrefix}
+        {titleHighlight && <span class="text-[#09cc9c]"> {titleHighlight}</span>}
+        {titleSuffix && ` ${titleSuffix}`}
+      </h1>
+
+      {description && <p class={`max-w-[560px] text-base leading-relaxed md:text-lg ${bodyColorClass}`}>{description}</p>}
+
+      {(primaryCta || secondaryCta) && (
+        <div class="flex flex-wrap gap-3 pt-1">
+          {primaryCta && (
+            <a href={primaryCta.href} class="btn-primary">
+              {primaryCta.label}
+            </a>
+          )}
+          {secondaryCta && (
+            <a href={secondaryCta.href} class="btn-primary">
+              {secondaryCta.label}
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+

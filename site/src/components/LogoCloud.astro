@@ -21,7 +21,7 @@ const portalUrl = import.meta.env.PORTAL_URL || 'http://localhost:3000';
         ))}
       </ul>
     </div>
-    <div class="mb-6 font-display text-xl">Brands We Serve</div>
+    <div class="mb-6 font-display text-2xl font-bold">Brands We Serve</div>
     <div class="overflow-hidden">
       <div class="logo-ticker" id="logo-ticker" data-portal-url={portalUrl}>
         <!-- Logos will be loaded here -->
@@ -60,9 +60,9 @@ const portalUrl = import.meta.env.PORTAL_URL || 'http://localhost:3000';
       const logoMarkup = brandLogos
         .map(
           (logo: BrandLogo) => `
-            <div class="logo-item">
-              <div class="flex h-auto items-center justify-center rounded-xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm">
-                <img src="${logo.logo_path}" alt="${logo.name || "Brand logo"}" class="max-h-12 w-auto object-contain" />
+            <div class="logo-item flex items-center justify-center border-s-4 border-[#f3f3f3] backdrop-blur-sm">
+              <div class="flex h-auto items-center justify-center p-3">
+                <img src="${logo.logo_path}" alt="${logo.name || "Brand logo"}" class="w-auto max-h-[120px] object-contain" />
               </div>
             </div>
           `

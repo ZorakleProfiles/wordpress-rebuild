@@ -76,8 +76,6 @@ import { testimonials } from "../data/site-content";
     const nextButton = root.querySelector("[data-next]");
     const dots = Array.from(root.querySelectorAll(".carousel-dot"));
     let active = cards.length > 1 ? 1 : 0;
-    const autoplayMs = 5000;
-    let autoplayId = 0;
     let touchStartX = 0;
 
     function next() {
@@ -90,24 +88,10 @@ import { testimonials } from "../data/site-content";
       render();
     }
 
-    function stopAutoplay() {
-      if (autoplayId !== 0) {
-        window.clearInterval(autoplayId);
-        autoplayId = 0;
-      }
-    }
-
-    function startAutoplay() {
-      if (cards.length < 2) return;
-      stopAutoplay();
-      autoplayId = window.setInterval(next, autoplayMs);
-    }
-
     dots.forEach((dot, idx) => {
       dot.addEventListener("click", () => {
         active = idx;
         render();
-        startAutoplay();
       });
     });
 
@@ -141,28 +125,19 @@ import { testimonials } from "../data/site-content";
 
     prevButton?.addEventListener("click", () => {
       prev();
-      startAutoplay();
     });
 
     nextButton?.addEventListener("click", () => {
       next();
-      startAutoplay();
     });
-
-    root.addEventListener("mouseenter", stopAutoplay);
-    root.addEventListener("mouseleave", startAutoplay);
-    root.addEventListener("focusin", stopAutoplay);
-    root.addEventListener("focusout", startAutoplay);
 
     root.addEventListener("keydown", (event) => {
       const key = event.key;
       if (key === "ArrowLeft") {
         prev();
-        startAutoplay();
       }
       if (key === "ArrowRight") {
         next();
-        startAutoplay();
       }
     });
 
@@ -180,19 +155,8 @@ import { testimonials } from "../data/site-content";
       } else {
         next();
       }
-      startAutoplay();
     }, { passive: true });
-
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) {
-        stopAutoplay();
-      } else {
-        startAutoplay();
-      }
-    });
-
     render();
-    startAutoplay();
   }
 
   initTestimonialCarousel();

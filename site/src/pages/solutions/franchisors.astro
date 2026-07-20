@@ -9,23 +9,29 @@ import avatarJackJill from "../../assets/figma-import/avatar-jack-jill.png";
 import avatarSean from "../../assets/figma-import/avatar-sean.png";
 import avatarMarcos from "../../assets/figma-import/avatar-marcos.png";
 import faviconCircle from "../../assets/figma-import/favicon-circle.png";
+import heroGraphic from "../../assets/figma-import/Hero Graphic-selection.png";
 import CtaBand from "../../components/CtaBand.astro";
 
 const processSteps = [
   {
-    title: "Define what success looks like in your system.",
+    title: "Complete your Franchisor Benchmark Audit.",
     body:
-      "We calibrate your profile target using top performers, Item 19 outcomes, and brand-specific requirements so every score is tied to real business results."
+      "Work with our team to build your brand-specific success profile using your top performers, Item 19 outcomes, and system-specific requirements."
   },
   {
-    title: "Profile every candidate against your blueprint.",
+    title: "Get your assessment link and Blueprint.",
     body:
-      "Candidates complete the assessment once. Zorakle maps fit, coachability, and risk factors against your benchmark using seven validated sciences."
+      "Receive your personalized assessment and Blueprint that defines exactly who succeeds in your system based on real data from your operators."
   },
   {
-    title: "See the match instantly, and decide with clarity.",
+    title: "Send assessments to candidates.",
     body:
-      "Review clear scoring, role-fit breakdowns, and interview guidance in minutes so your team can award with confidence, not intuition."
+      "Share your assessment link with prospective franchisees during your development and validation process."
+  },
+  {
+    title: "Review detailed fit reports.",
+    body:
+      "Instantly see how well each candidate matches your franchise model, with clear scoring, coachability insights, and decision guidance for your team."
   }
 ];
 
@@ -165,9 +171,10 @@ const pricingColumns = [
       titleSuffix="not the doubt of a gut feeling."
       description="Selecting the wrong owner creates expensive downstream friction. Zorakle gives your team a repeatable, validated framework to predict fit before contracts are signed."
       primaryCta={{ href: "#", label: "Book a Demo" }}
-      secondaryCta={{ href: "#sample-report", label: "See a Sample Report" }}
-      backgroundColor="#d5dbeb"
+      secondaryCta={{ href: "#sample-report", label: "Take Sample Assessment" }}
+      backgroundColor="#f3f3f3"
       minHeightClass="min-h-[620px]"
+      rightImage={heroGraphic}
     />
 
     <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
@@ -220,7 +227,7 @@ const pricingColumns = [
         </div>
 
         <div class="mt-8">
-          <a id="sample-report" class="btn-primary" href="#">See Sample Assessment</a>
+          <a id="sample-report" class="btn-primary" href="#">Take Sample Assessment</a>
         </div>
       </div>
     </section>

@@ -10,18 +10,28 @@ import avatarSean from "../../assets/figma-import/avatar-sean.png";
 import avatarMarcos from "../../assets/figma-import/avatar-marcos.png";
 import faviconCircle from "../../assets/figma-import/favicon-circle.png";
 import heroGraphic from "../../assets/figma-import/Hero Graphic-selection.png";
+import businessBuilderReport from "../../assets/figma-import/business_builder.png";
+import spotOnProfileReport from "../../assets/figma-import/spoton.png";
+import eclipseReport from "../../assets/figma-import/eclipse.png";
+import blueprintReport from "../../assets/figma-import/blueprint.png";
 import CtaBand from "../../components/CtaBand.astro";
+import spotonReferral from "../../assets/figma-import/referrall.png";
 
 const processSteps = [
   {
     title: "Complete your Franchisor Benchmark Audit.",
     body:
-      "Work with our team to build your brand-specific success profile using your top performers, Item 19 outcomes, and system-specific requirements."
+      "Your team completes an audit of key development and operational metrics to establish a benchmark for your system."
+  },
+  {
+    title: "Have your franchisees complete research assessments.",
+    body:
+      "Franchisees complete a short, validated assessment that measures markers across our 7 sciences. This data is then used to generate your personalized algorithm."
   },
   {
     title: "Get your assessment link and Blueprint.",
     body:
-      "Receive your personalized assessment and Blueprint that defines exactly who succeeds in your system based on real data from your operators."
+      "Receive your personalized assessment link and Blueprint, which defines who succeeds in your system based on real data from your operators."
   },
   {
     title: "Send assessments to candidates.",
@@ -29,40 +39,52 @@ const processSteps = [
       "Share your assessment link with prospective franchisees during your development and validation process."
   },
   {
-    title: "Review detailed fit reports.",
+    title: "Review detailed reports for each completed assessment.",
     body:
-      "Instantly see how well each candidate matches your franchise model, with clear scoring, coachability insights, and decision guidance for your team."
+      "Instantly see how well each candidate matches your franchise model, with clear scoring and decision guidance for your team."
   }
 ];
 
 const productCards = [
   {
-    title: "SpotOn! Profile",
-    subtitle: "Award better from day one.",
+    title: "SpotOn! Business Builder",
+    subtitle: "Candidate breakdown (Candidate view).",
     body:
-      "Score candidate fit before you sign. Identify likely top performers, flag hidden risks, and reduce costly mismatches early.",
-    cta: "Explore SpotOn! Profiles"
+      "Business Builder gives candidates a clear, candidate-friendly breakdown across all 7 sciences. It helps them understand their style, strengths, and growth path in practical, self-awareness language.",
+    image: businessBuilderReport,
+    imageAlt: "Business Builder Report"
+  },
+  {
+    title: "SpotOn! Profile",
+    subtitle: "Candidate breakdown (Franchisor view).",
+    body:
+      "SpotOn! Profile gives your team the franchisor-only view of those same 7 sciences, with deeper selection insight so you can compare candidates and make award decisions with confidence.",
+    image: spotOnProfileReport,
+    imageAlt: "SpotOn! Profile"
+  },
+  {
+    title: "Eclipse Report",
+    subtitle: "System fit breakdown.",
+    body:
+      "Eclipse shows overall fit compatibility to your specific system, including how each science contributes to fit, so your team can quickly spot strong alignment and potential risk areas.",
+    image: eclipseReport,
+    imageAlt: "Eclipse report"
   },
   {
     title: "SpotOn! Blueprint",
-    subtitle: "Define your top-performer profile.",
+    subtitle: "Your custom fit algorithm explained.",
     body:
-      "Build your brand-specific success benchmark from real operators so every future candidate is measured against what actually works.",
-    cta: "Explore SpotOn! Blueprint"
+      "The SpotOn! Blueprint documents exactly how your custom fit algorithm is built from benchmark data, top performers, and brand requirements so your selection process stays consistent over time.",
+    image: blueprintReport,
+    imageAlt: "SpotOn Blueprint report cover"
   },
   {
-    title: "SpotOn! Eclipse",
-    subtitle: "See blind spots before they show up in P&L.",
+    title: "SpotOn! Referrals",
+    subtitle: "Pre-qualified candidates from brokers.",
+    image: spotonReferral,
+    imageAlt: "SpotOn! Referral screenshot",
     body:
-      "Uncover derailers, stress triggers, and leadership gaps early so onboarding and coaching plans can be tailored for success.",
-    cta: "Explore SpotOn! Eclipse"
-  },
-  {
-    title: "SpotOn! Match",
-    subtitle: "Match people to the right opportunity.",
-    body:
-      "Compare candidate profiles against territories, models, and brand demands to improve long-term alignment and validation outcomes.",
-    cta: "Explore SpotOn! Match"
+      "SpotOn! Match runs on the broker side. When brokers assess candidates and find strong system alignment, you receive pre-qualified SpotOn! referrals directly for review."
   }
 ];
 
@@ -202,17 +224,17 @@ const pricingColumns = [
       </div>
     </section>
 
-    <section class="bg-[radial-gradient(90%_120%_at_90%_0%,#157f73_0%,#1f232a_55%,#12151c_100%)] py-16 text-white md:py-20">
+    <section class="bg-[#f3f3f3] py-16 md:py-20">
       <div class="section-shell">
         <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">How Zorakle Works</p>
         <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight md:text-5xl">
           A repeatable, science-backed selection process.
         </h2>
-        <p class="mt-5 max-w-3xl text-base text-white/80 md:text-lg">
+        <p class="mt-5 max-w-3xl text-base md:text-lg">
           Build one standard across development, leadership, and validation so every candidate is evaluated with the same objective lens.
         </p>
 
-        <div class="mt-10 space-y-4">
+        <div class="mt-10 space-y-4 text-white">
           {processSteps.map((step, idx) => (
             <article class="flex gap-4 rounded-xl border border-white/20 bg-[#1f232a]/70 p-5 shadow-lg md:items-start md:p-6">
               <div class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#09cc9c] text-sm font-bold text-[#10272a]">
@@ -227,37 +249,45 @@ const pricingColumns = [
         </div>
 
         <div class="mt-8">
-          <a id="sample-report" class="btn-primary" href="#">Take Sample Assessment</a>
+          <a id="sample-report" class="btn-primary" href="#">Get Started!</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 md:py-20">
+      <div class="section-shell">
+        <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">What Every Franchisor Gets</p>
+        <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-5xl">
+          Comprehensive tools included with every plan.
+        </h2>
+        <p class="mt-5 max-w-3xl text-base text-[#3b3e47] md:text-lg">
+          Every franchisor gets both sides of the 7-science assessment (candidate-facing Business Builder and franchisor-facing SpotOn! Profile), Eclipse fit scoring for system alignment, a SpotOn! Blueprint of your custom algorithm, and broker-generated SpotOn! referrals.
+        </p>
+
+        <div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {productCards.map((card) => (
+            <article class="rounded-xl border border-[#d1d4dd] bg-white p-6 shadow-sm">
+              {card.image && (
+                <div class="mb-5 overflow-hidden rounded-lg border border-[#e3e6ec] bg-[#f8f9fb] p-2">
+                  <Image src={card.image} alt={card.imageAlt} class="h-44 w-full object-contain object-top" />
+                </div>
+              )}
+              <p class="text-2xl font-bold text-[#1f232a]">{card.title}</p>
+              <p class="mt-2 text-sm font-semibold text-[#09cc9c]">{card.subtitle}</p>
+              <p class="mt-3 text-sm leading-relaxed text-[#3b3e47] md:text-base">{card.body}</p>
+            </article>
+          ))}
+        </div>
+
+        <div class="mt-10">
+          <a href="#" class="inline-flex rounded-md bg-[#fd7730] px-6 py-3 text-base font-bold text-white transition hover:brightness-95">
+            View Sample Reports
+          </a>
         </div>
       </div>
     </section>
 
     <section class="bg-[#f3f3f3] py-16 md:py-20">
-      <div class="section-shell">
-        <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">The Tools Franchisors Use Most</p>
-        <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-5xl">
-          The Zorakle products franchise systems use most.
-        </h2>
-        <p class="mt-5 max-w-3xl text-base text-[#3b3e47] md:text-lg">
-          Choose one product or combine multiple products to support your full candidate evaluation workflow.
-        </p>
-
-        <div class="mt-10 grid gap-4 md:grid-cols-2">
-          {productCards.map((card) => (
-            <article class="rounded-xl border border-[#d1d4dd] bg-white p-6 shadow-sm">
-              <p class="text-2xl font-bold text-[#1f232a]">{card.title}</p>
-              <p class="mt-2 text-sm font-semibold text-[#09cc9c]">{card.subtitle}</p>
-              <p class="mt-3 text-sm leading-relaxed text-[#3b3e47] md:text-base">{card.body}</p>
-              <a href="#" class="mt-5 inline-flex rounded-md bg-[#fd7730] px-4 py-2 text-sm font-bold text-white transition hover:brightness-95">
-                {card.cta}
-              </a>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <section class="bg-[radial-gradient(90%_140%_at_100%_0%,#158072_0%,#1f232a_55%,#12151c_100%)] py-16 text-white md:py-20">
       <div class="section-shell">
         <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">What Franchisors Gain When Awarding Through Data</p>
         <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight md:text-5xl">
@@ -266,16 +296,16 @@ const pricingColumns = [
 
         <div class="mt-10 grid gap-4 md:grid-cols-2">
           {metrics.map((metric) => (
-            <article class="rounded-xl border border-white/20 bg-[#1f232a]/65 p-5 md:p-6">
+            <article class="rounded-xl border border-white/20 bg-white p-5 md:p-6">
               <h3 class="text-xl font-bold text-white">{metric.title}</h3>
-              <p class="mt-3 text-sm leading-relaxed text-white/75 md:text-base">{metric.body}</p>
+              <p class="mt-3 text-sm leading-relaxed md:text-base">{metric.body}</p>
             </article>
           ))}
         </div>
       </div>
     </section>
 
-    <section class="bg-[#f3f3f3] py-16 md:py-20">
+    <section class=" py-16 md:py-20">
       <div class="section-shell">
         <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">What Franchisors Say</p>
         <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-5xl">
@@ -299,7 +329,7 @@ const pricingColumns = [
       </div>
     </section>
 
-    <section id="pricing" class="bg-white py-16 md:py-20">
+    <section id="pricing" class="bg-[#f3f3f3] py-16 md:py-20">
       <div class="section-shell">
         <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">Pricing</p>
         <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-5xl">

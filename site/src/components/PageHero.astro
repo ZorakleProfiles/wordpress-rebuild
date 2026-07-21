@@ -48,7 +48,7 @@ const bodyColorClass = dark ? "text-white/80" : "text-[#3b3e47]";
 >
   {backgroundImage && <div class={`absolute inset-0 z-0 ${overlayClass}`}></div>}
 
-  <div class={`section-shell relative z-10 flex ${minHeightClass} gap-8 py-18 md:py-20`}>
+  <div class={`section-shell relative z-10 flex ${minHeightClass} items-start gap-8 py-18 md:py-20`}>
     <div class={`${rightImage ? "max-w-[50%]" : "max-w-[70%]"} space-y-5 md:space-y-6`}>
       {eyebrow && (
         <p class={`font-display text-[17px] md:text-[20px] ${dark ? "text-white/90" : "text-[#09cc9c]"}`}>
@@ -80,8 +80,8 @@ const bodyColorClass = dark ? "text-white/80" : "text-[#3b3e47]";
       )}
     </div>
     {rightImage && (
-      <div class="hidden flex-1 items-center justify-center overflow-hidden md:flex">
-        <Image src={rightImage} alt="Hero Visual" class="max-w-full max-h-[620px] h-auto object-contain" />
+      <div class="hidden flex-1 items-center justify-center md:flex">
+        <Image src={rightImage} alt="Hero Visual" class="max-w-full h-auto object-contain" />
       </div>
     )}
   </div>

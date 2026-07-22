@@ -9,6 +9,8 @@ import avatarJackJill from "../../assets/figma-import/avatar-jack-jill.png";
 import avatarSean from "../../assets/figma-import/avatar-sean.png";
 import avatarMarcos from "../../assets/figma-import/avatar-marcos.png";
 import faviconCircle from "../../assets/figma-import/favicon-circle.png";
+import spotOnProfileReport from "../../assets/figma-import/spoton.png";
+import spotonReferral from "../../assets/figma-import/referrall.png";
 import CtaBand from "../../components/CtaBand.astro";
 
 const workflowSteps = [
@@ -40,14 +42,16 @@ const tools = [
     subtitle: "Your foundation for fit.",
     body:
       "Build a complete candidate picture across ownership traits, motivation patterns, and behavioral indicators that matter for franchise success.",
-    cta: "Explore SpotOn! Profile"
+    image: spotOnProfileReport,
+    imageAlt: "SpotOn! Profile"
   },
   {
     title: "SpotOn! Match",
     subtitle: "How brokers win with speed.",
     body:
-      "Match candidates against real franchise requirements in minutes and present ranked recommendations backed by data clients can trust.",
-    cta: "Explore SpotOn! Match"
+      "Match candidates against real franchise requirements in minutes and present ranked recommendations backed by data clients can trust. When matches are strong, send pre-qualified SpotOn! referrals directly to franchisors.",
+    image: spotonReferral,
+    imageAlt: "SpotOn! Referral screenshot"
   }
 ];
 
@@ -100,23 +104,6 @@ const brokerTestimonials = [
     featured: false
   }
 ];
-
-const pricing = [
-  {
-    tier: "Brokers",
-    intro: "Annual access for active brokerage teams.",
-    price: "$1,610/year",
-    points: ["SpotOn! Profile", "Broker brand matcher", "SpotOn! Match"],
-    cta: "Get started"
-  },
-  {
-    tier: "Pay as you go!",
-    intro: "Flexible for low-volume advisory teams.",
-    price: "$49/assessment",
-    points: ["SpotOn! Profile", "Broker brand matcher", "SpotOn! Match"],
-    cta: "Start per-assessment"
-  }
-];
 ---
 
 <MainLayout
@@ -131,7 +118,7 @@ const pricing = [
       description="Clients trust brokers who can explain fit clearly, not just speak in broad probabilities. SpotOn! gives you science-backed candidate-to-brand recommendations so every intro feels grounded and credible."
       primaryCta={{ href: "#", label: "Book a Demo" }}
       secondaryCta={{ href: "#pricing", label: "Join the Broker Network" }}
-      backgroundColor="#d5dbeb"
+      backgroundColor="#f3f3f3"
       minHeightClass="min-h-[620px]"
     />
 
@@ -146,28 +133,44 @@ const pricing = [
       </div>
     </section>
 
-    <section class="bg-[radial-gradient(90%_120%_at_90%_0%,#157f73_0%,#1f232a_55%,#12151c_100%)] py-16 text-white md:py-20">
+    <section class="bg-[#f3f3f3] py-16  md:py-20">
       <div class="section-shell">
         <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">The Broker Workflow</p>
         <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight md:text-5xl">
           From client conversation to confident match in four steps.
         </h2>
-        <p class="mt-5 max-w-3xl text-base text-white/80 md:text-lg">
+        <p class="mt-5 max-w-3xl text-base  md:text-lg">
           Simple for clients and powerful for advisors. The workflow is built to help brokers move quickly without sacrificing quality.
         </p>
 
-        <div class="mt-10 space-y-4">
+        <div class="mt-10 grid gap-4 text-white md:grid-cols-2 lg:hidden">
           {workflowSteps.map((step, idx) => (
-            <article class="flex gap-4 rounded-xl border border-white/20 bg-[#1f232a]/70 p-5 shadow-lg md:items-start md:p-6">
-              <div class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#09cc9c] text-sm font-bold text-[#10272a]">
-                {idx + 1}
-              </div>
-              <div>
-                <h3 class="text-lg font-bold text-white md:text-xl">{step.title}</h3>
-                <p class="mt-2 text-sm leading-relaxed text-white/75 md:text-base">{step.body}</p>
+            <article class="rounded-xl border border-white/20 bg-[#1f232a]/70 p-5 shadow-lg md:p-6">
+              <div class="flex items-start gap-4">
+                <div class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#09cc9c] text-sm font-bold text-[#10272a]">
+                  {idx + 1}
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-white md:text-xl">{step.title}</h3>
+                  <p class="mt-2 text-sm leading-relaxed text-white/75 md:text-base">{step.body}</p>
+                </div>
               </div>
             </article>
           ))}
+        </div>
+
+        <div class="mt-12 hidden lg:block">
+          <div class="broker-workflow-circle">
+            <div class="workflow-ring" aria-hidden="true"></div>
+
+            {workflowSteps.map((step, idx) => (
+              <article class={`workflow-node workflow-node-${idx + 1}`}>
+                <div class="workflow-node-chip">Step {idx + 1}</div>
+                <h3 class="workflow-node-title">{step.title}</h3>
+                <p class="workflow-node-body">{step.body}</p>
+              </article>
+            ))}
+          </div>
         </div>
 
         <div class="mt-8">
@@ -176,7 +179,113 @@ const pricing = [
       </div>
     </section>
 
-    <section class="bg-[#f3f3f3] py-16 md:py-20">
+    <style>
+      .broker-workflow-circle {
+        position: relative;
+        height: 42rem;
+        max-width: 70rem;
+        margin: 0 auto;
+      }
+
+      .workflow-ring {
+        position: absolute;
+        inset: 50% auto auto 50%;
+        width: min(30rem, 62vw);
+        height: min(30rem, 62vw);
+        transform: translate(-50%, -50%);
+        border: 2px dashed #9ca3af;
+        border-radius: 9999px;
+      }
+
+      .workflow-node {
+        position: absolute;
+        width: min(18.25rem, 28vw);
+        border-radius: 0.9rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(31, 35, 42, 0.74);
+        box-shadow: 0 12px 26px rgba(0, 0, 0, 0.16);
+        padding: 1.1rem 1.15rem;
+      }
+
+      .workflow-node-chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9999px;
+        background: #09cc9c;
+        color: #10272a;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 0.2rem 0.65rem;
+      }
+
+      .workflow-node-title {
+        margin: 0.65rem 0 0;
+        color: #ffffff;
+        font-size: 1.05rem;
+        line-height: 1.35;
+        font-weight: 700;
+      }
+
+      .workflow-node-body {
+        margin: 0.5rem 0 0;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 0.89rem;
+        line-height: 1.52;
+      }
+
+      .workflow-node-1 {
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .workflow-node-2 {
+        top: 50%;
+        left: 65%;
+        transform: translateY(-50%);
+      }
+
+      .workflow-node-3 {
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .workflow-node-4 {
+        top: 50%;
+        right: 65%;
+        transform: translateY(-50%);
+      }
+
+      @media (min-width: 1024px) and (max-width: 1199px) {
+        .broker-workflow-circle {
+          height: 38rem;
+          max-width: 64rem;
+        }
+
+        .workflow-node {
+          width: 16rem;
+          padding: 1rem;
+        }
+
+        .workflow-node-title {
+          font-size: 1rem;
+        }
+
+        .workflow-node-body {
+          font-size: 0.84rem;
+        }
+      }
+
+      @media (min-width: 1200px) {
+        .workflow-node {
+          width: 19rem;
+        }
+      }
+    </style>
+
+    <section class=" py-16 md:py-20">
       <div class="section-shell">
         <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">The Broker Toolkit</p>
         <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-5xl">
@@ -186,23 +295,24 @@ const pricing = [
           Two connected tools help you understand each client and then map them to the brands where they are most likely to win.
         </p>
 
-        <div class="mt-10 grid gap-4 md:grid-cols-2">
-          {tools.map((tool, idx) => (
+        <div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {tools.map((tool) => (
             <article class="rounded-xl border border-[#d1d4dd] bg-white p-6 shadow-sm">
-              <div class="mb-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#09cc9c] text-sm font-bold text-[#10272a]">{idx + 1}</div>
+              {tool.image && (
+                <div class="mb-5 overflow-hidden rounded-lg border border-[#e3e6ec] bg-[#f8f9fb] p-2">
+                  <Image src={tool.image} alt={tool.imageAlt} class="h-44 w-full object-contain object-top" />
+                </div>
+              )}
               <p class="text-2xl font-bold text-[#1f232a]">{tool.title}</p>
               <p class="mt-2 text-sm font-semibold text-[#09cc9c]">{tool.subtitle}</p>
               <p class="mt-3 text-sm leading-relaxed text-[#3b3e47] md:text-base">{tool.body}</p>
-              <a href="#" class="mt-5 inline-flex rounded-md bg-[#fd7730] px-4 py-2 text-sm font-bold text-white transition hover:brightness-95">
-                {tool.cta}
-              </a>
             </article>
           ))}
         </div>
       </div>
     </section>
 
-    <section class="bg-[radial-gradient(90%_140%_at_100%_0%,#158072_0%,#1f232a_55%,#12151c_100%)] py-16 text-white md:py-20">
+    <section class="bg-[#f3f3f3] py-16  md:py-20">
       <div class="section-shell">
         <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">What Happens When You Match With Science</p>
         <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight md:text-5xl">
@@ -244,42 +354,11 @@ const pricing = [
       </div>
     </section>
 
-    <section id="pricing" class="bg-white py-16 md:py-20">
-      <div class="section-shell">
-        <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">Joining the Network</p>
-        <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-5xl">
-          What it costs to match with science.
-        </h2>
-
-        <div class="mt-10 grid gap-4 md:grid-cols-2">
-          {pricing.map((plan) => (
-            <article class="rounded-2xl border border-[#d1d4dd] bg-white p-6">
-              <h3 class="text-2xl font-bold text-[#1f232a]">{plan.tier}</h3>
-              <p class="mt-3 text-sm text-[#666a73]">{plan.intro}</p>
-              <p class="mt-5 text-3xl font-bold text-[#1f232a]">{plan.price}</p>
-
-              <ul class="mt-5 space-y-2">
-                {plan.points.map((point) => (
-                  <li class="flex gap-2 text-sm text-[#3b3e47]">
-                    <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#09cc9c]"></span>
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <a class="mt-6 inline-flex rounded-md bg-[#fd7730] px-4 py-2 text-sm font-bold text-white transition hover:brightness-95" href="#">
-                {plan.cta}
-              </a>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
 
 
 <CtaBand
     title="Ready to match smarter?"
-text="See how brokers use SpotOn! to guide clients with confidence and move qualified candidates to the right opportunities, faster."></CtaBand>
+text=""></CtaBand>
   </main>
 
   <SiteFooter />

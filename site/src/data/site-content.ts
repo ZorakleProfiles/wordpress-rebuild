@@ -13,7 +13,8 @@ export const navLinks = [
     items: [
       { href: "/news", label: "News" },
       { href: "/podcasts", label: "Podcasts" },
-      { href: "#", label: "Training & Support" },
+      { href: "/webinars", label: "Webinars" },
+      { href: "/support", label: "Training & Support" },
       { href: "/partnerships", label: "Partnerships" }
     ]
   },

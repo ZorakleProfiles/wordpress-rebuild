@@ -60,9 +60,9 @@ const portalUrl = import.meta.env.PORTAL_URL || 'http://localhost:3000';
       const logoMarkup = brandLogos
         .map(
           (logo: BrandLogo) => `
-            <div class="logo-item flex items-center justify-center border-s-4 border-[#f3f3f3] backdrop-blur-sm">
-              <div class="flex h-auto items-center justify-center p-3">
-                <img src="${logo.logo_path}" alt="${logo.name || "Brand logo"}" class="w-auto max-h-[120px] object-contain" />
+            <div class="w-[200px] h-[100px] logo-item flex items-center justify-center backdrop-blur-sm">
+              <div class="flex items-center justify-center p-3 w-full h-full">
+                <img src="${logo.logo_path}" alt="${logo.name || "Brand logo"}" class="max-w-full max-h-full object-contain" />
               </div>
             </div>
           `
@@ -92,7 +92,7 @@ const portalUrl = import.meta.env.PORTAL_URL || 'http://localhost:3000';
   .logo-ticker .logo-track {
     display: flex;
     width: max-content;
-    animation: ticker-scroll 200s linear infinite;
+    animation: ticker-scroll 40s linear infinite;
     will-change: transform;
   }
 

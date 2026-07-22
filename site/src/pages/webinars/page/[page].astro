@@ -1,0 +1,46 @@
+---
+import BlogList from "../../../components/BlogList.astro";
+import {
+  DEFAULT_ARCHIVE_PAGE_SIZE,
+  getPaginatedPostsByTag,
+  getTaggedPostPageCount,
+  type PaginatedPosts
+} from "../../../lib/blog.ts";
+
+export async function getStaticPaths() {
+  const totalPages = await getTaggedPostPageCount("webinars", DEFAULT_ARCHIVE_PAGE_SIZE);
+  if (totalPages <= 1) {
+    return [];
+  }
+
+  const pageNumbers = Array.from({ length: totalPages - 1 }, (_unused, index) => index + 2);
+  const pageDataByPage = await Promise.all(
+    pageNumbers.map((pageNumber) => getPaginatedPostsByTag("webinars", pageNumber, DEFAULT_ARCHIVE_PAGE_SIZE))
+  );
+
+  return pageNumbers.map((pageNumber, index) => ({
+    params: { page: String(pageNumber) },
+    props: { pageData: pageDataByPage[index] }
+  }));
+}
+
+interface Props {
+  pageData: PaginatedPosts;
+}
+
+const { pageData } = Astro.props;
+const pageTitle = `webinars - Page ${pageData.page} | Zorakle`;
+---
+
+<BlogList
+  title={pageTitle}
+  description="Webinars from the Zorakle network."
+  heading="webinars"
+  emptyStateMessage="No webinar posts were found."
+  basePath="/webinars"
+  postBasePath=""
+  posts={pageData.posts}
+  currentPage={pageData.page}
+  totalPages={pageData.totalPages}
+/>
+

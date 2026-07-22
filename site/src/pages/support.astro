@@ -1,0 +1,41 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import CtaBand from "../components/CtaBand.astro";
+import PageHero from "../components/PageHero.astro";
+import heroBackground from "../assets/figma-import/hero-background-about.png";
+---
+<MainLayout
+        title="About | Zorakle"
+        description="Learn why Zorakle was built and how Rebecca Monet helps franchise systems award with more confidence and better outcomes."
+>
+    <SiteHeader />
+
+    <main>
+
+        <section class="border-b border-[#d1d4dd] bg-white py-10">
+            <div class="section-shell">
+                <div class="iframe-container h-[100vh] w-[100%]">
+                    <iframe
+                            src="http://localhost/support"
+                            title="Embedded External Site"
+                            width="100%"
+                            height="100%"
+                            frameborder="0"
+                            sandbox="allow-scripts allow-same-origin"
+                    >
+                        <p>Your browser does not support iframes. Please visit <a href="https://example.com">the external site</a> directly.</p>
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <CtaBand
+                title="Let's talk."
+                text="Whether you are awarding franchises, matching candidates, or evaluating your own team, we can show you what Zorakle can do for your system."
+        />
+    </main>
+
+    <SiteFooter />
+</MainLayout>

@@ -1,0 +1,19 @@
+---
+import BlogList from "../../components/BlogList.astro";
+import { DEFAULT_ARCHIVE_PAGE_SIZE, getPaginatedPostsByTag } from "../../lib/blog.ts";
+
+const pageData = await getPaginatedPostsByTag("webinars", 1, DEFAULT_ARCHIVE_PAGE_SIZE);
+---
+
+<BlogList
+        title="Webinars | Zorakle"
+        description="Webinars from the Zorakle network."
+        heading="Webinars"
+        emptyStateMessage="No webinar posts were found."
+        basePath="/webinars"
+        postBasePath=""
+        posts={pageData.posts}
+        currentPage={pageData.page}
+        totalPages={pageData.totalPages}
+/>
+

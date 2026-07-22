@@ -34,12 +34,12 @@ p {
 }
 
 .section-eyebrow {
-  font-family: "MontereyMediumFLF", "Century Gothic", "Avenir Next", sans-serif;
+  font-family: "MontereyFLF", "Century Gothic", "Avenir Next", sans-serif;
   @apply text-lg md:text-xl text-[#09cc9c] font-medium;
 }
 
 .section-title {
-  font-family: "MontereyMediumFLF", "Century Gothic", "Avenir Next", sans-serif;
+  font-family: "MontereyFLF", "Century Gothic", "Avenir Next", sans-serif;
   @apply mt-3 text-5xl text-[#22252a] md:text-6xl font-bold;
 }
 

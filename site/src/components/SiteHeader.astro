@@ -37,20 +37,64 @@ import { navLinks } from "../data/site-content";
       <a class="btn-secondary border-[#d1d4dd] text-[#22252a]" href="/schedule">Book a Demo</a>
       <a class="text-base font-bold text-[#22252a] transition hover:text-[#fd7730]" href="#">Login</a>
     </div>
+
+    <button
+      class="lg:hidden p-2 text-[#22252a] hover:text-[#fd7730]"
+      aria-label="Toggle menu"
+      data-menu-toggle
+    >
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
   </div>
+
+  <nav
+    aria-label="Mobile"
+    class="max-h-0 overflow-hidden bg-white transition-all duration-300 lg:hidden"
+    data-mobile-menu
+  >
+    <div class="section-shell flex flex-col gap-2 py-4">
+      {navLinks.map((link) => (
+        link.items ? (
+          <details class="group" data-mobile-dropdown>
+            <summary class="list-none cursor-pointer px-3 py-2 text-base font-bold text-[#22252a] transition hover:text-[#fd7730] [&::-webkit-details-marker]:hidden">
+              {link.label} <span aria-hidden="true">▾</span>
+            </summary>
+            <div class="bg-[#f4f6f9] pl-6">
+              {link.items.map((item) => (
+                <a href={item.href} class="block px-3 py-2 text-sm font-semibold text-[#22252a] transition hover:text-[#fd7730]">
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </details>
+        ) : (
+          <a href={link.href} class="block px-3 py-2 text-base font-bold text-[#22252a] transition hover:text-[#fd7730]">
+            {link.label}
+          </a>
+        )
+      ))}
+      <div class="mt-2 flex flex-col gap-2 border-t border-[#d1d4dd] pt-4">
+        <a class="btn-secondary border-[#d1d4dd] text-[#22252a] text-center" href="/schedule">Book a Demo</a>
+        <a class="block px-3 py-2 text-center text-base font-bold text-[#22252a] transition hover:text-[#fd7730]" href="#">Login</a>
+      </div>
+    </div>
+  </nav>
 </header>
 
 <script>
-  function initHeaderDropdowns() {
-    const header = document.querySelector("[data-site-header]");
+  function initHeader() {
+    const header = document.querySelector("[data-site-header]") as any;
     if (!header) return;
-    if (header.dataset.dropdownInit === "true") return;
-    header.dataset.dropdownInit = "true";
+    if (header.dataset.headerInit === "true") return;
+    header.dataset.headerInit = "true";
 
-    const dropdowns = Array.from(header.querySelectorAll("[data-nav-dropdown]"));
+    // Desktop dropdown handling
+    const dropdowns = Array.from(header.querySelectorAll("[data-nav-dropdown]")) as HTMLDetailsElement[];
     const isDesktop = () => window.matchMedia("(min-width: 1024px)").matches;
 
-    dropdowns.forEach((dropdown) => {
+    dropdowns.forEach((dropdown: HTMLDetailsElement) => {
       const summary = dropdown.querySelector("summary");
       if (!summary) return;
 
@@ -62,7 +106,7 @@ import { navLinks } from "../data/site-content";
         if (isDesktop()) dropdown.open = false;
       });
 
-      summary.addEventListener("click", (event) => {
+      summary.addEventListener("click", (event: Event) => {
         if (isDesktop()) {
           event.preventDefault();
         }
@@ -70,21 +114,67 @@ import { navLinks } from "../data/site-content";
 
       dropdown.addEventListener("toggle", () => {
         if (!dropdown.open) return;
-        dropdowns.forEach((other) => {
+        dropdowns.forEach((other: HTMLDetailsElement) => {
           if (other !== dropdown) other.open = false;
         });
       });
     });
 
-    document.addEventListener("click", (event) => {
+    document.addEventListener("click", (event: MouseEvent) => {
+      if (!(event.target instanceof Node)) return;
       if (header.contains(event.target)) return;
-      dropdowns.forEach((dropdown) => {
+      dropdowns.forEach((dropdown: HTMLDetailsElement) => {
         dropdown.open = false;
       });
     });
+
+    // Mobile menu handling
+    const menuToggle = header.querySelector("[data-menu-toggle]") as HTMLButtonElement | null;
+    const mobileMenu = header.querySelector("[data-mobile-menu]") as any;
+    const mobileDropdowns = Array.from(header.querySelectorAll("[data-mobile-dropdown]")) as HTMLDetailsElement[];
+
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener("click", () => {
+        const isOpen = mobileMenu.dataset.open === "true";
+        if (isOpen) {
+          closeMobileMenu();
+        } else {
+          openMobileMenu();
+        }
+      });
+
+      mobileDropdowns.forEach((dropdown: HTMLDetailsElement) => {
+        dropdown.addEventListener("toggle", () => {
+          mobileDropdowns.forEach((other: HTMLDetailsElement) => {
+            if (other !== dropdown) other.open = false;
+          });
+        });
+      });
+
+      // Close menu when clicking a link
+      const mobileNavLinks = mobileMenu.querySelectorAll("a");
+      mobileNavLinks.forEach((link: Element) => {
+        link.addEventListener("click", () => {
+          closeMobileMenu();
+        });
+      });
+    }
+
+    function openMobileMenu() {
+      if (!mobileMenu) return;
+      mobileMenu.dataset.open = "true";
+      mobileMenu.style.maxHeight = mobileMenu.scrollHeight + "px";
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeMobileMenu() {
+      if (!mobileMenu) return;
+      mobileMenu.dataset.open = "false";
+      mobileMenu.style.maxHeight = "0";
+      document.body.style.overflow = "";
+    }
   }
 
-  initHeaderDropdowns();
-  document.addEventListener("astro:page-load", initHeaderDropdowns);
+  initHeader();
+  document.addEventListener("astro:page-load", initHeader);
 </script>
-

@@ -1,14 +1,27 @@
 ---
+import { Image } from "astro:assets";
 import MainLayout from "../layouts/MainLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import { partnerships } from "../data/site-content";
+import logoFba from "../assets/figma-import/logo-fba-grey.png";
+import logoFbr from "../assets/figma-import/logo-fbr-grey-3971c1.png";
+import logoIba from "../assets/figma-import/logo-iba-grey.png";
+import logoIfa from "../assets/figma-import/logo-ifa-grey.png";
+import logoIfpg from "../assets/figma-import/logo-ifpg-grey.png";
 
-function getLogoTextSize(shortName: string): string {
-  if (shortName.length <= 3) return "text-[80px]";
-  if (shortName.length === 4) return "text-[72px]";
-  return "text-[64px]";
-}
+const partnerLogos = {
+  FBA: logoFba,
+  FBR: logoFbr,
+  IBA: logoIba,
+  IFA: logoIfa,
+  IFPG: logoIfpg
+};
+
+const partnershipsWithLogos = partnerships.map((partner) => ({
+  ...partner,
+  logo: partnerLogos[partner.shortName as keyof typeof partnerLogos]
+}));
 ---
 
 <MainLayout
@@ -19,32 +32,36 @@ function getLogoTextSize(shortName: string): string {
 
   <main class="bg-[#e8e8ea] py-14 md:py-16">
     <section class="section-shell">
-      <h1 class="font-display text-[40px] leading-tight text-[#22252a] md:text-[52px]">
+      <p class="section-eyebrow">Industry Network</p>
+      <h1 class="font-display mt-3 text-[40px] leading-tight text-[#22252a] md:text-[52px]">
         Partnerships
       </h1>
-      <div class="mt-6 space-y-6">
-        {partnerships.map((partner) => (
-          <article
-            class={`rounded-[22px] border bg-[#f6f6f7] p-5 shadow-[0_4px_10px_rgba(34,37,42,0.18)] md:px-8 md:py-7 ${partner.featured ? "border-[#09cc9c]" : "border-[#b8bcc6]"}`}
-          >
-            <div class="grid gap-5 md:grid-cols-[300px_1fr] md:items-center md:gap-8">
-              <div class="flex h-32 w-full items-center justify-center rounded-lg px-3 md:h-36 md:w-72 md:justify-start md:px-0">
-                <span class={`font-display leading-none tracking-tight text-[#575b65] ${getLogoTextSize(partner.shortName)}`}>
+      <p class="mt-5 max-w-3xl text-lg text-[#3b3e47] md:text-xl">
+        We work alongside broker associations, franchise organizations, and research partners to raise award quality across the franchise lifecycle.
+      </p>
+
+      <ul class="mt-10 grid gap-x-10 gap-y-12 md:grid-cols-2">
+        {partnershipsWithLogos.map((partner) => (
+          <li class="relative border-t border-[#b8bcc6] pt-8">
+            <div class="flex flex-wrap items-end gap-5">
+              {partner.logo ? (
+                <Image src={partner.logo} alt={`${partner.name} logo`} class="h-12 w-auto max-w-[150px] object-contain" />
+              ) : (
+                <span class="font-display text-[44px] leading-none tracking-tight text-[#5a5f69]">
                   {partner.shortName}
                 </span>
-              </div>
-
-              <div class="text-[#3b3e47]">
-                <p class="text-[20px] leading-[1.45] md:text-[22px]">
-                  <span class="font-semibold text-[#22252a]">{partner.name}</span>
-                  <span class="text-[#22252a]">: </span>
-                  <span class={partner.pending ? "text-[#fd7730]" : "text-[#3b3e47]"}>{partner.description}</span>
-                </p>
-              </div>
+              )}
+              <h2 class="pb-1 text-[22px] font-semibold leading-tight text-[#22252a] md:text-[26px]">
+                {partner.name}
+              </h2>
             </div>
-          </article>
+
+            <p class="mt-4 text-[18px] leading-[1.6] text-[#3b3e47] md:text-[20px]">
+              {partner.description}
+            </p>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   </main>
 

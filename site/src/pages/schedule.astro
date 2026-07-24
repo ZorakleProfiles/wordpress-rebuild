@@ -1,0 +1,14 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+---
+<MainLayout
+        title="Schedule a Demo | Zorakle"
+        description="Schedule a demo for zorakle profiles"
+>
+    <SiteHeader />
+<!-- Start of Meetings Embed Script -->
+<div class="meetings-iframe-container" data-src="https://meetings.hubspot.com/rebecca12/schedule-a-demo?embed=true"></div>
+<script type="text/javascript" src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"></script>
+<!-- End of Meetings Embed Script -->
+</MainLayout>

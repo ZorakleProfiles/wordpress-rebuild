@@ -1,0 +1,49 @@
+---
+interface MetricItem {
+  title: string;
+  body: string;
+}
+
+interface Props {
+  eyebrow: string;
+  titlePrefix: string;
+  titleHighlight?: string;
+  titleSuffix?: string;
+  items: MetricItem[];
+  sectionClass?: string;
+}
+
+const {
+  eyebrow,
+  titlePrefix,
+  titleHighlight,
+  titleSuffix = "",
+  items,
+  sectionClass = "bg-[#f3f3f3] py-16 md:py-20"
+} = Astro.props;
+---
+
+<section class={sectionClass}>
+  <div class="section-shell">
+    <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">{eyebrow}</p>
+    <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-5xl">
+      {titlePrefix}
+      {titleHighlight && <span class="text-[#09cc9c]">{titleHighlight}</span>}
+      {titleSuffix}
+    </h2>
+
+    <div class="mt-12 border-l-4 border-[#09cc9c]/30 pl-6 md:pl-10">
+      {items.map((item, idx) => (
+        <article class={`relative ${idx !== items.length - 1 ? "pb-8 md:pb-12" : ""}`}>
+          <div class="absolute left-[-2.1rem] top-1 h-4 w-4 rounded-full border-2 border-[#09cc9c]/60 bg-white md:left-[-3.1rem]"></div>
+
+          <div>
+            <h3 class="text-xl font-bold leading-tight text-[#1f232a] md:text-2xl">{item.title}</h3>
+            <p class="mt-2 max-w-3xl text-sm leading-relaxed text-[#3b3e47] md:text-base">{item.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+

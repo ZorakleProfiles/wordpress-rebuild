@@ -1,0 +1,289 @@
+---
+import { testimonials } from "../data/site-content";
+
+type TestimonialFilterType = "brokers" | "franchisors" | null;
+
+interface Props {
+  type?: TestimonialFilterType;
+}
+
+const { type = null } = Astro.props;
+const filterType = type ?? null;
+
+const filteredTestimonials = testimonials.filter((item) => {
+  if (filterType === null) return true;
+  if (filterType === "brokers") return item.type === "Broker";
+  return item.type === "Franchisor";
+});
+
+const totalTestimonials = filteredTestimonials.length;
+const defaultActive = totalTestimonials > 0 ? 0 : 0;
+const defaultLeft = totalTestimonials > 0 ? (defaultActive - 1 + totalTestimonials) % totalTestimonials : 0;
+const defaultRight = totalTestimonials > 0 ? (defaultActive + 1) % totalTestimonials : 0;
+
+function getInitialCardClass(idx: number) {
+  if (idx === defaultActive) return "is-active order-center";
+  if (idx === defaultLeft && totalTestimonials > 1) return "is-left order-left";
+  if (idx === defaultRight && totalTestimonials > 2) return "is-right order-right";
+  return "is-hidden order-hidden";
+}
+---
+
+{totalTestimonials === 0 ? (
+  <p class="mt-10 text-sm text-[#666a73]">No testimonials available for this audience yet.</p>
+) : (
+  <div class="mt-10 md:mt-12" data-testimonial-carousel tabindex="0" aria-label="Testimonials carousel">
+    <div class="testimonial-stage">
+      {filteredTestimonials.map((item, idx) => (
+        <article class={`testimonial-card ${getInitialCardClass(idx)}`} data-index={idx}>
+          <div class="testimonial-card-head">
+            <p class="testimonial-type">{item.type}</p>
+            <span class="testimonial-quote-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.5 16.5C5.57 16.5 4 14.93 4 13C4 11.07 5.57 9.5 7.5 9.5H8.5V6.5H5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M16.5 16.5C14.57 16.5 13 14.93 13 13C13 11.07 14.57 9.5 16.5 9.5H17.5V6.5H14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </div>
+
+          <div class="mt-3 flex items-center gap-3">
+            <div class="min-w-0">
+              <p class="truncate text-base font-bold text-[#22252a]">{item.name}</p>
+              <p class="truncate text-sm text-[#3b3e47]">{item.company}</p>
+            </div>
+          </div>
+
+          <p class="mt-4 text-sm leading-6 text-[#22252a] md:text-[0.95rem] md:leading-7">{item.quote}</p>
+        </article>
+      ))}
+    </div>
+
+    {totalTestimonials > 1 && (
+      <div class="mt-7 flex items-center justify-center gap-8">
+        <button type="button" class="carousel-arrow" data-prev aria-label="Previous testimonial">&larr;</button>
+        <a href="/testimonials" class="carousel-view-more">View More</a>
+        <button type="button" class="carousel-arrow" data-next aria-label="Next testimonial">&rarr;</button>
+      </div>
+    )}
+  </div>
+)}
+
+<script is:inline>
+  function bindTestimonialCarousel(root) {
+    if (root.dataset.carouselBound === "true") return;
+    root.dataset.carouselBound = "true";
+
+    const cards = Array.from(root.querySelectorAll(".testimonial-card"));
+    if (cards.length === 0) return;
+
+    const prevButton = root.querySelector("[data-prev]");
+    const nextButton = root.querySelector("[data-next]");
+    let active = cards.length > 0 ? 0 : 0;
+    let touchStartX = 0;
+
+    function next() {
+      active = (active + 1) % cards.length;
+      render();
+    }
+
+    function prev() {
+      active = (active - 1 + cards.length) % cards.length;
+      render();
+    }
+
+    function render() {
+      cards.forEach((card, idx) => {
+        const right = (active + 1) % cards.length;
+        const left = (active - 1 + cards.length) % cards.length;
+
+        card.classList.remove("is-left", "is-active", "is-right", "is-hidden", "order-left", "order-center", "order-right", "order-hidden");
+
+        if (idx === active) {
+          card.classList.add("is-active", "order-center");
+        } else if (idx === left) {
+          card.classList.add("is-left", "order-left");
+        } else if (idx === right) {
+          card.classList.add("is-right", "order-right");
+        } else {
+          card.classList.add("is-hidden", "order-hidden");
+        }
+      });
+    }
+
+    prevButton?.addEventListener("click", prev);
+    nextButton?.addEventListener("click", next);
+
+    root.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") prev();
+      if (event.key === "ArrowRight") next();
+    });
+
+    root.addEventListener(
+      "touchstart",
+      (event) => {
+        touchStartX = event.changedTouches[0]?.clientX || 0;
+      },
+      { passive: true }
+    );
+
+    root.addEventListener(
+      "touchend",
+      (event) => {
+        const touchEndX = event.changedTouches[0]?.clientX || 0;
+        const deltaX = touchEndX - touchStartX;
+
+        if (Math.abs(deltaX) < 30) return;
+        if (deltaX > 0) {
+          prev();
+        } else {
+          next();
+        }
+      },
+      { passive: true }
+    );
+
+    render();
+  }
+
+  function initTestimonialCarousels() {
+    const roots = Array.from(document.querySelectorAll("[data-testimonial-carousel]"));
+    roots.forEach((root) => bindTestimonialCarousel(root));
+  }
+
+  initTestimonialCarousels();
+  document.addEventListener("astro:page-load", initTestimonialCarousels);
+</script>
+
+<style is:global>
+  [data-testimonial-carousel] .testimonial-stage {
+    display: flex;
+    gap: 1rem;
+    align-items: stretch;
+    /* Keep the row height stable between testimonial changes. */
+    min-height: clamp(18rem, 52vw, 23rem);
+    max-height: clamp(18rem, 52vw, 23rem);
+  }
+
+  [data-testimonial-carousel] .testimonial-card {
+    border-radius: 1rem;
+    border: 1px solid #d1d4dd;
+    background: #f3f3f3;
+    padding: 1.1rem;
+    min-height: 13.5rem;
+    height: 100%;
+    flex: 1 1 0;
+    transition: border-color 220ms ease;
+  }
+
+  [data-testimonial-carousel] .testimonial-card-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  [data-testimonial-carousel] .testimonial-type {
+    margin: 0;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #666a73;
+  }
+
+  [data-testimonial-carousel] .testimonial-quote-mark {
+    margin: 0;
+    width: 1.3rem;
+    height: 1.3rem;
+    color: #fd7730;
+    flex-shrink: 0;
+  }
+
+  [data-testimonial-carousel] .testimonial-quote-mark svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  [data-testimonial-carousel] .testimonial-card.is-active {
+    border-color: #d1d4dd;
+  }
+
+  [data-testimonial-carousel] .testimonial-card.is-left,
+  [data-testimonial-carousel] .testimonial-card.is-right {
+    display: none;
+  }
+
+  [data-testimonial-carousel] .testimonial-card.is-hidden {
+    display: none;
+  }
+
+  [data-testimonial-carousel] .testimonial-card.order-left {
+    order: 1;
+  }
+
+  [data-testimonial-carousel] .testimonial-card.order-center {
+    order: 2;
+  }
+
+  [data-testimonial-carousel] .testimonial-card.order-right {
+    order: 3;
+  }
+
+  [data-testimonial-carousel] .testimonial-card.order-hidden {
+    order: 4;
+  }
+
+  [data-testimonial-carousel] .carousel-arrow {
+    border: 0;
+    background: transparent;
+    color: #3b3e47;
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.25rem 0.35rem;
+  }
+
+  [data-testimonial-carousel] .carousel-view-more {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 1px solid #d1d4dd;
+    padding: 0.45rem 0.95rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #22252a;
+    text-decoration: none;
+    transition: border-color 180ms ease, color 180ms ease, background-color 180ms ease;
+  }
+
+  [data-testimonial-carousel] .carousel-view-more:hover {
+    border-color: #09cc9c;
+    color: #10272a;
+    background-color: #ecfdf8;
+  }
+
+  [data-testimonial-carousel]:focus-visible {
+    outline: 2px solid #09cc9c;
+    outline-offset: 8px;
+    border-radius: 0.5rem;
+  }
+
+
+  @media (min-width: 1024px) {
+    [data-testimonial-carousel] .testimonial-stage {
+      gap: 1.2rem;
+      min-height: clamp(16rem, 24vw, 19rem);
+      max-height: clamp(16rem, 24vw, 19rem);
+    }
+
+    [data-testimonial-carousel] .testimonial-card {
+      min-height: 14.5rem;
+      padding: 1.3rem;
+    }
+
+    [data-testimonial-carousel] .testimonial-card.is-left,
+    [data-testimonial-carousel] .testimonial-card.is-right {
+      display: block;
+    }
+  }
+</style>

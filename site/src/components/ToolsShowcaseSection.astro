@@ -1,0 +1,68 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface ToolCard {
+  title: string;
+  subtitle: string;
+  body: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  cards: ToolCard[];
+  sectionClass?: string;
+  ctaHref?: string;
+  ctaLabel?: string;
+  ctaClass?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  cards,
+  sectionClass = "py-16 md:py-20",
+  ctaHref,
+  ctaLabel,
+  ctaClass = "inline-flex rounded-md bg-[#fd7730] px-6 py-3 text-base font-bold text-white transition hover:brightness-95"
+} = Astro.props;
+---
+
+<section class={sectionClass}>
+  <div class="section-shell">
+    <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">{eyebrow}</p>
+    <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-5xl">
+      {title}
+    </h2>
+    <p class="mt-5 max-w-3xl text-base text-[#3b3e47] md:text-lg">
+      {description}
+    </p>
+
+    <div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {cards.map((card) => (
+        <article class="rounded-xl border border-[#d1d4dd] bg-white p-6 shadow-sm">
+          {card.image && (
+            <div class="mb-5 overflow-hidden rounded-lg border border-[#e3e6ec] bg-[#f8f9fb] p-2">
+              <Image src={card.image} alt={card.imageAlt ?? card.title} class="h-44 w-full object-contain object-top" />
+            </div>
+          )}
+          <p class="text-2xl font-bold text-[#1f232a]">{card.title}</p>
+          <p class="mt-2 text-sm font-semibold text-[#09cc9c]">{card.subtitle}</p>
+          <p class="mt-3 text-sm leading-relaxed text-[#3b3e47] md:text-base">{card.body}</p>
+        </article>
+      ))}
+    </div>
+
+    {ctaHref && ctaLabel && (
+      <div class="mt-10">
+        <a href={ctaHref} class={ctaClass}>{ctaLabel}</a>
+      </div>
+    )}
+  </div>
+</section>
+

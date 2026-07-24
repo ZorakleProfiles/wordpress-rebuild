@@ -13,7 +13,7 @@ export interface BlogPost {
 }
 
 const portalUrl = import.meta.env.PORTAL_URL?.trim();
-const portalBlogApiUrl = import.meta.env.PORTAL_BLOG_API_URL?.trim();
+const portalBlogApiUrl = `${portalUrl}/website/hubspot/blogs`;
 const postsByCategorySlugCache = new Map<string, Promise<BlogPost[]>>();
 const postsByTagCache = new Map<string, Promise<BlogPost[]>>();
 let allPostsCache: Promise<BlogPost[]> | null = null;

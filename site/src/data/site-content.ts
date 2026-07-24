@@ -57,8 +57,8 @@ export const hero = {
   titleAccent: "science not gut feeling.",
   description:
     "For 12 years, franchise systems have trusted Zorakle to make smarter awards decisions. Seven validated sciences. One methodology built exclusively for franchising.",
-  primaryCta: { href: "#", label: "Franchisors" },
-  secondaryCta: { href: "#", label: "Brokers" }
+  primaryCta: { href: "/solutions/franchisors", label: "Franchisors" },
+  secondaryCta: { href: "/solutions/brokers", label: "Brokers" }
 };
 
 export const trustStats = [
@@ -108,32 +108,192 @@ export const differenceCards = [
   }
 ];
 
-export const testimonials = [
-  {
-    name: "Jack & Jill Johnson",
-    company: "Franchise Insiders",
-    type: "Broker",
-    quote:
-      "This tool is worth 100x what we pay for it."
-  },
-  {
-    name: "Sean Hart",
-    type: "Franchisor",
-    company: "American Family Care",
-    quote:
-      "You guys have given me the tools to see the inner workings of our franchise candidates. I had the \"gut\" but the unbiased, scientific data gives us direction. I believe in this stuff. It gives me control to create my corporate culture and that leads to every kind of success. Zorakle Profiles is like the key to reading a foreign language of personality."
-  },
-  {
-    name: "Marcos Moura",
-    type: "Franchisor",
-    company: "Amada Senior Care",
-    quote:
-      "Awarding franchises is too big of a decision to leave to chance and a \"gut feeling\". With Zorakle, we're able to make the decision to award a franchise based fit, values, and aptitude."
-  }
-];
-
 export const footer = {
   address: "Zorakle Profiles, LLC 8782 S. Park Road Rogers, AR 72756",
   email: "support@zorakle.net",
   copyright: "© 2026 Zorakle. All Rights Reserved."
 };
+
+
+export const testimonials = [
+  {
+    name: "Jack & Jill Johnson",
+    company: "Franchise Insiders",
+    type: "Broker",
+    quote: "Worth every penny."
+  },
+  {
+    name: "Kim Marinoff",
+    company: "FranNet",
+    type: "Broker",
+    quote: "I can explain fit in plain language now."
+  },
+  {
+    name: "Sean Hart",
+    company: "American Family Care",
+    type: "Franchisor",
+    quote: "The scientific data gives us clear direction, and it helps us protect culture while we expand into new markets and onboard larger ownership groups."
+  },
+  {
+    name: "Marcos Moura",
+    company: "Amada Senior Care",
+    type: "Franchisor",
+    quote: "We stopped relying on guesswork."
+  },
+  {
+    name: "Angela Cote",
+    company: "AC Inc.",
+    type: "Broker",
+    quote: "Recommendation meetings are faster because the profile tells a complete story our candidates actually understand."
+  },
+  {
+    name: "Keith Mathias",
+    company: "WIN Home Inspection",
+    type: "Franchisor",
+    quote: "We see stronger operator alignment before signing, which saves time later."
+  },
+  {
+    name: "Denis Kurdi",
+    company: "The Franchise Builders",
+    type: "Broker",
+    quote: "Better matches. Less friction."
+  },
+  {
+    name: "Gerry Henley",
+    company: "LaunchPad Franchising",
+    type: "Broker",
+    quote: "The fit score removes opinion and keeps everyone focused on facts instead of preferences."
+  },
+  {
+    name: "Shannon McInnis",
+    company: "Growth Capital Partners",
+    type: "Franchisor",
+    quote: "Our development team now has one repeatable standard for candidate review, and that consistency has improved handoffs from development to operations."
+  },
+  {
+    name: "Jeffrey Polino",
+    company: "Franchise Dynamics",
+    type: "Broker",
+    quote: "Clients feel seen."
+  },
+  {
+    name: "Margaret Maclay",
+    company: "Neighborly Ventures",
+    type: "Franchisor",
+    quote: "Better fit upfront reduced support strain across our operations team."
+  },
+  {
+    name: "Seth Lederman",
+    company: "Summit Franchise Group",
+    type: "Broker",
+    quote: "I can defend every recommendation with data, which has raised trust in our process and shortened decision cycles."
+  },
+  {
+    name: "Rebecca Monet",
+    company: "Zorakle Profiles",
+    type: "Franchisor",
+    quote: "When teams stop guessing, they award stronger owners and scale with less risk. That one shift changes everything downstream."
+  },
+  {
+    name: "Jenna Law",
+    company: "Franchise Advisory Co.",
+    type: "Broker",
+    quote: "The ranked matches are clear and easy to explain."
+  },
+  {
+    name: "Olivia Turner",
+    company: "Crescent Foods Franchise",
+    type: "Franchisor",
+    quote: "Validation improved because candidates can clearly see why they are a fit for our model."
+  },
+  {
+    name: "Ethan Brooks",
+    company: "Momentum Franchise Advisors",
+    type: "Broker",
+    quote: "Our close rate improved once we started leading with objective fit indicators, not generic sales language."
+  },
+  {
+    name: "Priya Shah",
+    company: "BrightPath Fitness",
+    type: "Franchisor",
+    quote: "Fewer late-stage surprises. Better screening."
+  },
+  {
+    name: "Lucas Bennett",
+    company: "Prime Match Brokerage",
+    type: "Broker",
+    quote: "Candidates appreciate the structure, and our discovery calls are far more productive from the first meeting."
+  },
+  {
+    name: "Nora Alvarez",
+    company: "Hearthstone Home Services",
+    type: "Franchisor",
+    quote: "This is now a core part of our award process and development training playbook."
+  },
+  {
+    name: "Caleb Ross",
+    company: "Waypoint Franchise Partners",
+    type: "Broker",
+    quote: "Less debating. More momentum."
+  },
+  {
+    name: "Monica Hale",
+    company: "CleanWave Commercial",
+    type: "Franchisor",
+    quote: "The fit insights align leadership, development, and operations around one decision model, which makes execution much cleaner after award."
+  },
+  {
+    name: "Tyler Nguyen",
+    company: "BridgePoint Franchise Group",
+    type: "Broker",
+    quote: "Clients trust the recommendations because the rationale is transparent."
+  },
+  {
+    name: "Avery Collins",
+    company: "Harbor Senior Living",
+    type: "Franchisor",
+    quote: "Award quality improved, and the downstream impact on support has been meaningful across onboarding and field coaching."
+  },
+  {
+    name: "Jordan Patel",
+    company: "Keystone Franchise Advisors",
+    type: "Broker",
+    quote: "It helps us deliver a premium advisory experience in a competitive market."
+  },
+  {
+    name: "Hannah Reed",
+    company: "Northstar Education Centers",
+    type: "Franchisor",
+    quote: "The reports make difficult decisions easier to communicate across departments and leadership levels."
+  },
+  {
+    name: "Mason Webb",
+    company: "Catalyst Franchise Brokerage",
+    type: "Broker",
+    quote: "From first call to brand intro, we now have a repeatable framework that keeps deals moving."
+  },
+  {
+    name: "Elena Ruiz",
+    company: "Urban Pet Collective",
+    type: "Franchisor",
+    quote: "We are seeing stronger early performance from owners selected through this process, especially in the first year."
+  },
+  {
+    name: "Owen Price",
+    company: "Franchise Access Network",
+    type: "Broker",
+    quote: "Pipeline quality improved because candidate-brand fit is measured, not assumed."
+  },
+  {
+    name: "Chloe Martin",
+    company: "Evergreen Wellness Clinics",
+    type: "Franchisor",
+    quote: "It gives our team confidence to make big decisions with less bias and better evidence, even when the stakes are high and timelines are tight."
+  },
+  {
+    name: "Noah Simmons",
+    company: "PartnerPath Advisors",
+    type: "Broker",
+    quote: "Essential for long-term matching."
+  }
+];

@@ -1,0 +1,239 @@
+---
+interface StepItem {
+  title: string;
+  body: string;
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  steps: StepItem[];
+  ctaHref: string;
+  ctaLabel: string;
+  ctaId?: string;
+  variant: "broker" | "franchisor";
+  sectionClass?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  steps,
+  ctaHref,
+  ctaLabel,
+  ctaId,
+  variant,
+  sectionClass = "bg-[#f3f3f3] py-16 md:py-20"
+} = Astro.props;
+
+const mobileLayoutClass = variant === "broker" ? "lg:hidden" : "xl:hidden";
+const desktopLayoutClass = variant === "broker" ? "hidden lg:block" : "hidden xl:block";
+---
+
+<section class={sectionClass}>
+  <div class="section-shell">
+    <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px]">{eyebrow}</p>
+    <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight md:text-5xl">
+      {title}
+    </h2>
+    <p class="mt-5 max-w-3xl text-base md:text-lg">
+      {description}
+    </p>
+
+    <div class={`mt-10 grid gap-4 text-white md:grid-cols-2 ${mobileLayoutClass}`}>
+      {steps.map((step, idx) => (
+        <article class="rounded-xl border border-white/20 bg-[#1f232a]/70 p-5 shadow-lg md:p-6">
+          <div class="flex items-start gap-4">
+            <div class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#09cc9c] text-sm font-bold text-[#10272a]">
+              {idx + 1}
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-white md:text-xl">{step.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-white/75 md:text-base">{step.body}</p>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class={`mt-12 ${desktopLayoutClass}`}>
+      <div class="workflow-circle" data-workflow-variant={variant}>
+        <div class="workflow-ring" aria-hidden="true"></div>
+
+        {steps.map((step, idx) => (
+          <article class={`workflow-node workflow-node-${idx + 1}`}>
+            <div class="workflow-node-chip">Step {idx + 1}</div>
+            <h3 class="workflow-node-title">{step.title}</h3>
+            <p class="workflow-node-body">{step.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <a id={ctaId} class="btn-primary" href={ctaHref}>{ctaLabel}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .workflow-circle {
+    position: relative;
+    margin: 0 auto;
+  }
+
+  .workflow-circle[data-workflow-variant="broker"] {
+    height: 42rem;
+    max-width: 70rem;
+  }
+
+  .workflow-circle[data-workflow-variant="franchisor"] {
+    height: 52rem;
+    max-width: 76rem;
+  }
+
+  .workflow-ring {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%);
+    border: 2px dashed #9ca3af;
+    border-radius: 9999px;
+  }
+
+  .workflow-circle[data-workflow-variant="broker"] .workflow-ring {
+    width: min(30rem, 62vw);
+    height: min(30rem, 62vw);
+  }
+
+  .workflow-circle[data-workflow-variant="franchisor"] .workflow-ring {
+    width: 34rem;
+    height: 34rem;
+  }
+
+  .workflow-node {
+    position: absolute;
+    border-radius: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(31, 35, 42, 0.74);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.16);
+    padding: 1.1rem 1.15rem;
+  }
+
+  .workflow-circle[data-workflow-variant="broker"] .workflow-node {
+    width: min(18.25rem, 28vw);
+  }
+
+  .workflow-circle[data-workflow-variant="franchisor"] .workflow-node {
+    width: 20.5rem;
+  }
+
+  .workflow-node-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: #09cc9c;
+    color: #10272a;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.65rem;
+  }
+
+  .workflow-node-title {
+    margin: 0.65rem 0 0;
+    color: #ffffff;
+    font-size: 1.05rem;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+
+  .workflow-node-body {
+    margin: 0.5rem 0 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.89rem;
+    line-height: 1.52;
+  }
+
+  .workflow-circle[data-workflow-variant="broker"] .workflow-node-1 {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .workflow-circle[data-workflow-variant="broker"] .workflow-node-2 {
+    top: 50%;
+    left: 65%;
+    transform: translateY(-50%);
+  }
+
+  .workflow-circle[data-workflow-variant="broker"] .workflow-node-3 {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .workflow-circle[data-workflow-variant="broker"] .workflow-node-4 {
+    top: 50%;
+    right: 65%;
+    transform: translateY(-50%);
+  }
+
+  .workflow-circle[data-workflow-variant="franchisor"] .workflow-node-1 {
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .workflow-circle[data-workflow-variant="franchisor"] .workflow-node-2 {
+    top: 40%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+  }
+
+  .workflow-circle[data-workflow-variant="franchisor"] .workflow-node-3 {
+    top: 80%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+  }
+
+  .workflow-circle[data-workflow-variant="franchisor"] .workflow-node-4 {
+    top: 80%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+  }
+
+  .workflow-circle[data-workflow-variant="franchisor"] .workflow-node-5 {
+    top: 40%;
+    left: 18%;
+    transform: translate(-50%, -50%);
+  }
+
+  @media (min-width: 1024px) and (max-width: 1199px) {
+    .workflow-circle[data-workflow-variant="broker"] {
+      height: 38rem;
+      max-width: 64rem;
+    }
+
+    .workflow-circle[data-workflow-variant="broker"] .workflow-node {
+      width: 16rem;
+      padding: 1rem;
+    }
+
+    .workflow-circle[data-workflow-variant="broker"] .workflow-node-title {
+      font-size: 1rem;
+    }
+
+    .workflow-circle[data-workflow-variant="broker"] .workflow-node-body {
+      font-size: 0.84rem;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .workflow-circle[data-workflow-variant="broker"] .workflow-node {
+      width: 19rem;
+    }
+  }
+</style>
+

@@ -13,7 +13,7 @@ import logoIfpg from "../assets/figma-import/logo-ifpg-grey.png";
 const partnerLogos = {
   FBA: logoFba,
   FBR: logoFbr,
-  IBA: logoIba,
+  BAI: logoIba,
   IFA: logoIfa,
   IFPG: logoIfpg
 };
@@ -37,28 +37,35 @@ const partnershipsWithLogos = partnerships.map((partner) => ({
         Partnerships
       </h1>
       <p class="mt-5 max-w-3xl text-lg text-[#3b3e47] md:text-xl">
-        We work alongside broker associations, franchise organizations, and research partners to raise award quality across the franchise lifecycle.
+        We work with broker associations, franchise organizations, technology partners, consultants, researchers, and strategic industry partners to improve decision quality at every stage of the franchise lifecycle.
       </p>
 
-      <ul class="mt-10 grid gap-x-10 gap-y-12 md:grid-cols-2">
+      <ul class="mt-10 grid gap-x-10 gap-y-12 md:grid-cols-1">
         {partnershipsWithLogos.map((partner) => (
-          <li class="relative border-t border-[#b8bcc6] pt-8">
-            <div class="flex flex-wrap items-end gap-5">
+          <li class="relative border-t-2 border-[#09cc9c] pt-8">
+            <div class="flex items-center gap-6">
               {partner.logo ? (
-                <Image src={partner.logo} alt={`${partner.name} logo`} class="h-12 w-auto max-w-[150px] object-contain" />
+                <Image
+                  src={partner.logo}
+                  alt={`${partner.name} logo`}
+                  class="h-16 w-auto min-w-48 max-w-48 shrink-0 object-contain"
+                />
               ) : (
                 <span class="font-display text-[44px] leading-none tracking-tight text-[#5a5f69]">
                   {partner.shortName}
                 </span>
               )}
-              <h2 class="pb-1 text-[22px] font-semibold leading-tight text-[#22252a] md:text-[26px]">
-                {partner.name}
-              </h2>
-            </div>
+              <div class="min-w-0 flex-1">
+                <h2 class="font-display pb-1 text-[22px] font-semibold leading-tight text-[#22252a] md:text-[26px]">
+                  {partner.name}
+                </h2>
+                <a href={partner.linkUrl} target="_blank">{partner.linkName}</a>
+                <p class="mt-4 text-[18px] leading-[1.6] text-[#3b3e47] md:text-[20px]">
+                  {partner.description}
+                </p>
+              </div>
 
-            <p class="mt-4 text-[18px] leading-[1.6] text-[#3b3e47] md:text-[20px]">
-              {partner.description}
-            </p>
+            </div>
           </li>
         ))}
       </ul>
@@ -67,5 +74,3 @@ const partnershipsWithLogos = partnerships.map((partner) => ({
 
   <SiteFooter />
 </MainLayout>
-
-

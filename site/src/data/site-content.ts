@@ -24,42 +24,40 @@ export const navLinks = [
 export const partnerships = [
   {
     shortName: "IFPG",
-    name: "International Franchise Professionals Group (IFPG)",
+    name: "International Franchise Professionals Group",
     description: "Supporting the consultant community with science-backed tools to better serve their clients.",
-    featured: true
+    linkName: "Learn more about IFPG →",
+    linkUrl: "https://www.ifpg.org/"
   },
   {
     shortName: "FBA",
-    name: "Franchise Brokers Association (FBA)",
-    description: "Connecting Zorakle with the broker community nationwide supporting brokers as they help clients find the right franchise match."
+    name: "Franchise Brokers Association",
+    description: "Connecting Zorakle with the broker community nationwide supporting brokers as they help clients find the right franchise match.",
+    linkName: "Learn more about FBA →",
+    linkUrl: "https://www.franchisebrokersassociation.com/"
   },
   {
     shortName: "IFA",
-    name: "International Franchise Association (IFA)",
-    description: "The industry's largest membership organization. Zorakle is a long-standing member and contributor to IFA programs that support emerging and established franchisors."
+    name: "International Franchise Association",
+    description: "The industry's largest membership organization. Zorakle is a long-standing member and contributor to IFA programs that support emerging and established franchisors.",
+    linkName: "Learn more about IFA →",
+    linkUrl: "https://www.franchise.org/"
   },
   {
     shortName: "FBR",
     name: "Franchise Business Review",
-    description: "Independent franchisee satisfaction research. Zorakle's work complements FBR's mission of transparency in the franchise industry."
+    description: "Independent franchisee satisfaction research. Zorakle's work complements FBR's mission of transparency in the franchise industry.",
+    linkName: "Learn more about FBR →",
+    linkUrl: "https://franchisebusinessreview.com/"
   },
   {
-    shortName: "IBA",
-    name: "International Business Brokers Association (IBA)",
+    shortName: "BAI",
+    name: "Business Alliance Incorporated",
     description: "Information needed from Rebecca.",
-    pending: true
+    linkName: "Learn more about BAI →",
+    linkUrl: "https://www.businessallianceinc.com/"
   }
 ];
-
-export const hero = {
-  eyebrow: "The Franchise Industry's Assessment Authority — Since 2014",
-  titlePrefix: "Award franchises with",
-  titleAccent: "science not gut feeling.",
-  description:
-    "For 12 years, franchise systems have trusted Zorakle to make smarter awards decisions. Seven validated sciences. One methodology built exclusively for franchising.",
-  primaryCta: { href: "/solutions/franchisors", label: "Franchisors" },
-  secondaryCta: { href: "/solutions/brokers", label: "Brokers" }
-};
 
 export const trustStats = [
   "12 Years in Franchising",

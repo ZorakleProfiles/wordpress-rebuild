@@ -7,7 +7,7 @@ import TestimonialCarousel from "../../components/TestimonialCarousel.astro";
 import WorkflowStepsSection from "../../components/WorkflowStepsSection.astro";
 import ToolsShowcaseSection from "../../components/ToolsShowcaseSection.astro";
 import MetricsTimelineSection from "../../components/MetricsTimelineSection.astro";
-
+import heroBackground from "../../assets/figma-import/broker-hero.png";
 import faviconCircle from "../../assets/figma-import/favicon-circle.png";
 import spotOnProfileReport from "../../assets/figma-import/spoton.png";
 import spotonReferral from "../../assets/figma-import/referrall.png";
@@ -91,8 +91,8 @@ const metrics = [
       description="Clients trust brokers who can explain fit clearly, not just speak in broad probabilities. SpotOn! gives you science-backed candidate-to-brand recommendations so every intro feels grounded and credible."
       primaryCta={{ href: "/schedule", label: "Book a Demo" }}
       secondaryCta={{ href: "#pricing", label: "Join the Broker Network" }}
-      backgroundColor="#f3f3f3"
-      minHeightClass="min-h-[620px]"
+      backgroundImage={heroBackground}
+      dark={true}
     />
 
     <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">

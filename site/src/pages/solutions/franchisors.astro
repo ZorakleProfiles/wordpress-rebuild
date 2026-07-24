@@ -16,6 +16,7 @@ import CtaBand from "../../components/CtaBand.astro";
 import spotonReferral from "../../assets/figma-import/referrall.png";
 import marketingBlueprint from "../../assets/figma-import/marketing_blueprint.png";
 import alignmentReport from "../../assets/figma-import/alignment_report.png";
+import heroBackground from "../../assets/figma-import/franchisor-hero.png";
 
 const steps = [
   {
@@ -129,15 +130,14 @@ const metrics = [
 
   <main>
     <PageHero
-      titlePrefix="Award franchises with the confidence of"
-      titleHighlight="statistically validated science and data."
+      titlePrefix="Award franchises"
+      titleHighlight="with the confidence of \nstatistically validated science and data."
       titleSuffix=""
       description="Selecting the wrong owner creates expensive downstream friction. Zorakle gives your team a repeatable, validated framework to predict fit before contracts are signed."
       primaryCta={{ href: "/schedule", label: "Book a Demo" }}
       secondaryCta={{ href: "#sample-report", label: "Sign Up Now!" }}
-      backgroundColor="#f3f3f3"
-      minHeightClass="min-h-[620px]"
-      rightImage={heroGraphic}
+      backgroundImage={heroBackground}
+      dark={true}
     />
 
     <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">

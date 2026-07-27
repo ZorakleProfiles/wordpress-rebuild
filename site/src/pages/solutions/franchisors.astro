@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import MainLayout from "../../layouts/MainLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
@@ -8,7 +7,6 @@ import TestimonialCarousel from "../../components/TestimonialCarousel.astro";
 import WorkflowStepsSection from "../../components/WorkflowStepsSection.astro";
 import ToolsShowcaseSection from "../../components/ToolsShowcaseSection.astro";
 import MetricsTimelineSection from "../../components/MetricsTimelineSection.astro";
-import heroGraphic from "../../assets/figma-import/Hero Graphic-selection.png";
 import spotOnProfileReport from "../../assets/figma-import/spoton.png";
 import eclipseReport from "../../assets/figma-import/eclipse.png";
 import blueprintReport from "../../assets/figma-import/blueprint.png";
@@ -17,6 +15,7 @@ import spotonReferral from "../../assets/figma-import/referrall.png";
 import marketingBlueprint from "../../assets/figma-import/marketing_blueprint.png";
 import alignmentReport from "../../assets/figma-import/alignment_report.png";
 import heroBackground from "../../assets/figma-import/franchisor-hero.png";
+import franchisorModelFitComparison from "../../assets/figma-import/franchisor-model-fit-comparison.svg";
 
 const steps = [
   {
@@ -143,8 +142,14 @@ const metrics = [
     <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
       <div class="section-shell">
         <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
-          <div class="rounded-2xl border border-[#d1d4dd] bg-[#f8f9fb] p-4 md:p-6">
-            <Image src={heroGraphic} alt="Wrong fit versus right fit comparison" class="h-auto w-full object-contain" />
+          <div class="rounded-2xl bg-transparent p-0">
+            <img
+              src={franchisorModelFitComparison.src}
+              alt="Model-fit comparison showing cost risk versus confidence outcomes"
+              class="h-auto w-full"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
 
           <div class="">
@@ -216,4 +221,3 @@ const metrics = [
 
   <SiteFooter />
 </MainLayout>
-

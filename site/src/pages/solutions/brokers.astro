@@ -12,6 +12,7 @@ import faviconCircle from "../../assets/figma-import/favicon-circle.png";
 import spotOnProfileReport from "../../assets/figma-import/spoton.png";
 import spotonReferral from "../../assets/figma-import/referrall.png";
 import CtaBand from "../../components/CtaBand.astro";
+import brokerMathShiftGraphic from "../../assets/figma-import/broker-math-shift.svg";
 
 const steps = [
   {
@@ -96,13 +97,25 @@ const metrics = [
     />
 
     <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
-      <div class="section-shell">
-        <h2 class="max-w-3xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-5xl">
-          The broker <span class="text-[#09cc9c]">math has changed.</span>
-        </h2>
-        <p class="mt-6 max-w-4xl text-base leading-relaxed text-[#3b3e47] md:text-lg">
-          Instead of relying on opinion or guesswork, modern brokers can match clients with data-backed confidence. The result is stronger conversations, faster decisions, and better-fit brand outcomes that compound over time.
-        </p>
+      <div class="section-shell grid items-center gap-10 md:grid-cols-[440px_minmax(0,1fr)] md:gap-14">
+        <div class="rounded-2xl bg-transparent p-0">
+          <img
+              src={brokerMathShiftGraphic.src}
+              alt="Model-fit comparison showing cost risk versus confidence outcomes"
+              class="h-auto w-full"
+              loading="lazy"
+              decoding="async"
+          />
+        </div>
+
+        <div>
+          <h2 class="max-w-3xl font-display text-4xl font-bold leading-tight text-[#1f232a] md:text-5xl">
+            The broker <span class="text-[#09cc9c]">math has changed.</span>
+          </h2>
+          <p class="mt-6 max-w-4xl text-base leading-relaxed text-[#3b3e47] md:text-lg">
+            Instead of relying on opinion or guesswork, modern brokers can match clients with data-backed confidence. The result is stronger conversations, faster decisions, and better-fit brand outcomes that compound over time.
+          </p>
+        </div>
       </div>
     </section>
 

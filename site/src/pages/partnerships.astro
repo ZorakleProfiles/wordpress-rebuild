@@ -43,15 +43,15 @@ const partnershipsWithLogos = partnerships.map((partner) => ({
       <ul class="mt-10 grid gap-x-10 gap-y-12 md:grid-cols-1">
         {partnershipsWithLogos.map((partner) => (
           <li class="relative border-t-2 border-[#09cc9c] pt-8">
-            <div class="flex items-center gap-6">
+            <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
               {partner.logo ? (
                 <Image
                   src={partner.logo}
                   alt={`${partner.name} logo`}
-                  class="h-16 w-auto min-w-48 max-w-48 shrink-0 object-contain"
+                  class="self-center md:self-auto h-16 w-auto min-w-48 max-w-48 shrink-0 object-contain"
                 />
               ) : (
-                <span class="font-display text-[44px] leading-none tracking-tight text-[#5a5f69]">
+                <span class="self-center md:self-auto font-display text-[44px] leading-none tracking-tight text-[#5a5f69]">
                   {partner.shortName}
                 </span>
               )}

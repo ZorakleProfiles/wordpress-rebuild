@@ -1,0 +1,60 @@
+<svg viewBox="0 0 760 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Model-fit comparison showing cost risk versus confidence outcomes</title>
+  <desc id="desc">Side-by-side comparison of wrong fit versus right fit outcomes, including confidence signals and earnings versus support cost bars.</desc>
+  <g transform="translate(12,12)">
+    <rect x="0" y="0" width="356" height="496" rx="24" fill="#ffe9e9" stroke="#f1c7c7" />
+    <rect x="380" y="0" width="356" height="496" rx="24" fill="#e8fbf4" stroke="#bfe9dc" />
+
+    <text x="28" y="50" font-size="26" font-weight="700" fill="#8f2020" font-family="Inter, Arial, sans-serif">Wrong Fit</text>
+    <text x="408" y="50" font-size="26" font-weight="700" fill="#0d7258" font-family="Inter, Arial, sans-serif">Right Fit</text>
+
+    <text x="28" y="84" font-size="16" fill="#a94444" font-family="Inter, Arial, sans-serif">Costs outpace earnings</text>
+    <text x="408" y="84" font-size="16" fill="#2f816d" font-family="Inter, Arial, sans-serif">Earnings compound over time</text>
+
+    <line x1="178" y1="252" x2="178" y2="412" stroke="#e9adb0" stroke-dasharray="8 8" />
+    <line x1="558" y1="252" x2="558" y2="412" stroke="#9ee0cb" stroke-dasharray="8 8" />
+
+    <rect x="96" y="330" width="74" height="82" rx="8" fill="#09cc9c" />
+    <rect x="186" y="248" width="74" height="164" rx="8" fill="#e94949" />
+    <text x="133" y="432" text-anchor="middle" font-size="12" fill="#314046" font-family="Inter, Arial, sans-serif">Earnings</text>
+    <text x="223" y="432" text-anchor="middle" font-size="12" fill="#314046" font-family="Inter, Arial, sans-serif">Support Cost</text>
+
+    <rect x="476" y="286" width="74" height="126" rx="8" fill="#09cc9c" />
+    <rect x="566" y="344" width="74" height="68" rx="8" fill="#e94949" />
+    <text x="513" y="432" text-anchor="middle" font-size="12" fill="#314046" font-family="Inter, Arial, sans-serif">Earnings</text>
+    <text x="603" y="432" text-anchor="middle" font-size="12" fill="#314046" font-family="Inter, Arial, sans-serif">Support Cost</text>
+
+    <g transform="translate(28,132)">
+      <circle cx="8" cy="8" r="8" fill="#e94949" />
+      <path d="M4.5 8h7" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+      <text x="24" y="12" font-size="14" fill="#723c3c" font-family="Inter, Arial, sans-serif">Low model fit confidence</text>
+    </g>
+    <g transform="translate(28,166)">
+      <circle cx="8" cy="8" r="8" fill="#e94949" />
+      <path d="M4.5 8h7" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+      <text x="24" y="12" font-size="14" fill="#723c3c" font-family="Inter, Arial, sans-serif">Validation friction increases</text>
+    </g>
+    <g transform="translate(28,200)">
+      <circle cx="8" cy="8" r="8" fill="#e94949" />
+      <path d="M4.5 8h7" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+      <text x="24" y="12" font-size="14" fill="#723c3c" font-family="Inter, Arial, sans-serif">Transfer risk rises later</text>
+    </g>
+
+    <g transform="translate(408,132)">
+      <circle cx="8" cy="8" r="8" fill="#09cc9c" />
+      <path d="M4.5 8l2.2 2.3 4.8-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="24" y="12" font-size="14" fill="#275f52" font-family="Inter, Arial, sans-serif">Fit to your operating model</text>
+    </g>
+    <g transform="translate(408,166)">
+      <circle cx="8" cy="8" r="8" fill="#09cc9c" />
+      <path d="M4.5 8l2.2 2.3 4.8-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="24" y="12" font-size="14" fill="#275f52" font-family="Inter, Arial, sans-serif">Faster, clearer validation calls</text>
+    </g>
+    <g transform="translate(408,200)">
+      <circle cx="8" cy="8" r="8" fill="#09cc9c" />
+      <path d="M4.5 8l2.2 2.3 4.8-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="24" y="12" font-size="14" fill="#275f52" font-family="Inter, Arial, sans-serif">Protects Item 19 outcomes</text>
+    </g>
+  </g>
+</svg>
+

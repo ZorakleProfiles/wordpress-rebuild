@@ -56,14 +56,28 @@ export const partnerships = [
     description: "Information needed from Rebecca.",
     linkName: "Learn more about BAI →",
     linkUrl: "https://www.businessallianceinc.com/"
+  },
+  {
+    shortName: "FRANSERVE",
+    name: "Franserve",
+    description: "Empowering franchise systems with operational excellence and strategic guidance to build sustainable, scalable businesses.",
+    linkName: "Learn more about Franserve →",
+    linkUrl: "https://www.franserve.com/"
+  },
+  {
+    shortName: "CLIENTTETHER",
+    name: "ClientTether",
+    description: "Connecting clients with the right franchise opportunities through innovative technology and data-driven insights.",
+    linkName: "Learn more about ClientTether →",
+    linkUrl: "https://www.clienttether.com/"
   }
 ];
 
 export const trustStats = [
-  "12 Years in Franchising",
-  "7 Validated Sciences Built into Every Profile",
-  "[X+] Franchise Systems Served to Date",
-  "[X+] Client Retention Across Our Subscriber Base"
+  "Reduced late-stage surprises with data-driven awards",
+  "7 peer-reviewed sciences from Stanford, Harvard & Gallup",
+  "Stronger first-year owner performance & retention",
+  "Trusted by franchisors, brokers & development teams"
 ];
 
 export const pathCards = [

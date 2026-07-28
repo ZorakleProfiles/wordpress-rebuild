@@ -1,12 +1,16 @@
 ---
-import { Image } from "astro:assets";
 import MainLayout from "../layouts/MainLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import CtaBand from "../components/CtaBand.astro";
 import PageHero from "../components/PageHero.astro";
-import heroBackground from "../assets/figma-import/hero-background-about.png";
-import rebeccaPortrait from "../assets/figma-import/about-rebecca-monet.png";
+import heroBackground from "../assets/figma-import/about-hero.png";
+
+const rebeccaHighlights = [
+  "30+ years in psychometrics, assessment, and franchise development",
+  "12 years building franchise-specific fit science for awards",
+  "7 validated sciences integrated into one practical framework"
+];
 ---
 
 <MainLayout
@@ -50,7 +54,7 @@ import rebeccaPortrait from "../assets/figma-import/about-rebecca-monet.png";
     </section>
 
     <section class="border-b border-[#d1d4dd] bg-[#f4f5f7] py-16 md:py-20">
-      <div class="section-shell grid gap-8 lg:grid-cols-[1.35fr_0.9fr] lg:items-center">
+      <div class="section-shell grid gap-10 lg:grid-cols-[1.25fr_0.95fr] lg:items-start">
         <div>
           <p class="font-display text-lg text-[#22252a] md:text-xl">Meet</p>
           <h2 class="mt-2 font-display text-5xl font-bold leading-tight text-[#09cc9c] md:text-6xl">
@@ -70,12 +74,21 @@ import rebeccaPortrait from "../assets/figma-import/about-rebecca-monet.png";
           </div>
         </div>
 
-        <aside class="rounded-2xl border border-[#d1d4dd] bg-[#e6e8ec] p-4 shadow-[0_10px_25px_rgba(34,37,42,0.12)]">
-          <Image
-            src={rebeccaPortrait}
-            alt="Rebecca Monet"
-            class="h-105 w-full rounded-xl object-cover"
-          />
+        <aside class="rounded-2xl border border-[#d1d4dd] bg-white p-6 md:p-8">
+          <p class="text-sm font-semibold uppercase tracking-[0.12em] text-[#5a5f69]">Why teams trust the method</p>
+          <ul class="mt-5 space-y-4">
+            {rebeccaHighlights.map((item) => (
+              <li class="flex items-start gap-3">
+                <span class="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#09cc9c]"></span>
+                <span class="text-base leading-relaxed text-[#22252a] md:text-lg">{item}</span>
+              </li>
+            ))}
+          </ul>
+
+          <blockquote class="mt-8 rounded-xl border border-[#dfe3ea] bg-[#f9fafb] p-5">
+            <p class="font-display text-2xl leading-snug text-[#22252a]">"When teams stop guessing, they award stronger owners and scale with less risk."</p>
+            <footer class="mt-3 text-sm font-medium uppercase tracking-widest text-[#5a5f69]">Rebecca Monet</footer>
+          </blockquote>
         </aside>
       </div>
     </section>

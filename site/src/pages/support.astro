@@ -3,39 +3,328 @@ import MainLayout from "../layouts/MainLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import CtaBand from "../components/CtaBand.astro";
-import PageHero from "../components/PageHero.astro";
-import heroBackground from "../assets/figma-import/hero-background-about.png";
+
+const platformVideos = [
+  {
+    title: "Getting Started with Zorakle",
+    description: "Learn the fundamentals of the Zorakle platform and how to navigate the dashboard.",
+    duration: "8 min",
+    thumbnail: "▶"
+  },
+  {
+    title: "Running Assessments",
+    description: "Step-by-step guide to creating and managing candidate assessments.",
+    duration: "12 min",
+    thumbnail: "▶"
+  },
+  {
+    title: "Understanding Your Reports",
+    description: "Deep dive into reading and interpreting assessment reports and fit scores.",
+    duration: "15 min",
+    thumbnail: "▶"
+  },
+  {
+    title: "Managing Team Access",
+    description: "Set up user roles, permissions, and team collaboration features.",
+    duration: "7 min",
+    thumbnail: "▶"
+  },
+  {
+    title: "Advanced Filtering & Analytics",
+    description: "Use data filters and analytics tools to track performance trends.",
+    duration: "10 min",
+    thumbnail: "▶"
+  },
+  {
+    title: "Best Practices for Franchisors",
+    description: "Industry best practices for maximizing fit predictions in your award process.",
+    duration: "14 min",
+    thumbnail: "▶"
+  }
+];
+
+const sciences = [
+  {
+    number: "01",
+    title: "Leadership & Decision-Making",
+    description: "Based on decades of leadership research from Gallup and Harvard Business School. Measures how candidates approach challenges, make decisions under pressure, and lead teams.",
+    keyPoints: ["Strategic thinking", "Decision-making frameworks", "Team leadership"]
+  },
+  {
+    number: "02",
+    title: "Emotional Intelligence",
+    description: "Grounded in contemporary psychology research. Assesses self-awareness, empathy, relationship management, and emotional resilience—critical for franchisee success.",
+    keyPoints: ["Self-awareness", "Empathy", "Relationship skills", "Emotional resilience"]
+  },
+  {
+    number: "03",
+    title: "Work Ethic & Drive",
+    description: "Validated through organizational behavior studies. Identifies candidates with the grit, determination, and work ethic required to build and sustain a successful franchise.",
+    keyPoints: ["Motivation", "Perseverance", "Goal orientation", "Accountability"]
+  },
+  {
+    number: "04",
+    title: "Financial & Business Acumen",
+    description: "Stanford-backed research on entrepreneurial capability. Evaluates business judgment, financial literacy, and ability to manage P&L.",
+    keyPoints: ["Financial literacy", "Business strategy", "Operational thinking", "Risk management"]
+  },
+  {
+    number: "05",
+    title: "Resilience & Adaptability",
+    description: "Psychology-grounded framework measuring ability to handle setbacks, adapt to change, and maintain performance under stress.",
+    keyPoints: ["Stress management", "Adaptability", "Learning agility", "Bounce-back potential"]
+  },
+  {
+    number: "06",
+    title: "People & Team Building",
+    description: "Based on organizational behavior and team dynamics research. Assesses ability to recruit, develop, and maintain high-performing teams.",
+    keyPoints: ["Team development", "Hiring judgment", "Delegation", "Culture building"]
+  },
+  {
+    number: "07",
+    title: "Entrepreneurial Mindset",
+    description: "Integrated research from Stanford and Gallup on what drives successful business ownership. Captures initiative, innovation, and ownership psychology.",
+    keyPoints: ["Initiative", "Innovation", "Ownership mentality", "Market orientation"]
+  }
+];
 ---
 <MainLayout
-        title="About | Zorakle"
-        description="Learn why Zorakle was built and how Rebecca Monet helps franchise systems award with more confidence and better outcomes."
+  title="Training & Support | Zorakle"
+  description="Training resources, science explanations, and support for Zorakle users. Learn the platform and understand the 7 peer-reviewed sciences behind your assessments."
 >
-    <SiteHeader />
+  <SiteHeader />
 
-    <main>
+  <main>
 
-        <section class="border-b border-[#d1d4dd] bg-white py-10">
-            <div class="section-shell">
-                <div class="iframe-container h-[100vh] w-[100%]">
-                    <iframe
-                            src="http://localhost/support"
-                            title="Embedded External Site"
-                            width="100%"
-                            height="100%"
-                            frameborder="0"
-                            sandbox="allow-scripts allow-same-origin"
-                    >
-                        <p>Your browser does not support iframes. Please visit <a href="https://example.com">the external site</a> directly.</p>
-                    </iframe>
+    <!-- Training Tabs Section -->
+    <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
+      <div class="section-shell">
+        <!-- Tab Navigation -->
+        <div class="flex border-b border-[#d1d4dd] mb-12" data-training-tabs>
+          <button
+            class="tab-btn px-6 py-4 font-bold text-base text-[#3b3e47] border-b-2 border-transparent transition hover:text-[#fd7730] data-active:border-[#fd7730] data-active:text-[#fd7730]"
+            data-tab="platform"
+          >
+            Platform Training
+          </button>
+          <button
+            class="tab-btn px-6 py-4 font-bold text-base text-[#3b3e47] border-b-2 border-transparent transition hover:text-[#fd7730] data-active:border-[#fd7730] data-active:text-[#fd7730]"
+            data-tab="sciences"
+          >
+            Zorakle Sciences
+          </button>
+        </div>
+
+        <!-- Platform Training Tab Content -->
+        <div class="tab-content" data-tab-content="platform">
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-[#22252a] mb-2">Platform Training Videos</h2>
+          <p class="text-lg text-[#3b3e47] mb-12 max-w-2xl">
+            Master every feature of Zorakle. From basic navigation to advanced analytics, these videos will help you get the most out of the platform.
+          </p>
+
+          <!-- Video Grid -->
+          <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {platformVideos.map((video) => (
+              <div class="group cursor-pointer rounded-2xl border border-[#d1d4dd] bg-white p-6 transition hover:shadow-lg hover:border-[#09cc9c]">
+                <div class="relative mb-4 aspect-video rounded-lg bg-linear-to-br from-[#f4f6f9] to-[#e8ecf2] flex items-center justify-center text-4xl text-[#d1d4dd] group-hover:bg-linear-to-br group-hover:from-[#09cc9c]/20 group-hover:to-[#fd7730]/20 transition">
+                  {video.thumbnail}
                 </div>
-            </div>
-        </section>
+                <div class="space-y-2">
+                  <p class="text-sm font-semibold text-[#09cc9c]">{video.duration}</p>
+                  <h3 class="font-display text-lg font-bold text-[#22252a]">{video.title}</h3>
+                  <p class="text-sm text-[#3b3e47] leading-relaxed">{video.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
 
-        <CtaBand
-                title="Let's talk."
-                text="Whether you are awarding franchises, matching candidates, or evaluating your own team, we can show you what Zorakle can do for your system."
-        />
-    </main>
+          <p class="mt-12 text-center text-base text-[#3b3e47]">
+            More videos coming soon. Have a topic you'd like us to cover? <a href="#contact" class="font-bold text-[#fd7730] hover:underline">Let us know.</a>
+          </p>
+        </div>
 
-    <SiteFooter />
+        <!-- Sciences Tab Content -->
+        <div class="tab-content hidden" data-tab-content="sciences">
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-[#22252a] mb-2">The 7 Peer-Reviewed Sciences</h2>
+          <p class="text-lg text-[#3b3e47] mb-12 max-w-3xl">
+            Zorakle integrates seven validated sciences from top research institutions—Stanford, Harvard Business School, Gallup, and the University of Michigan. Each science measures something different. Together, they predict franchise performance like nothing else.
+          </p>
+
+          <!-- Sciences Accordion/Cards -->
+          <div class="space-y-4">
+            {sciences.map((science, index) => (
+              <div class="science-card rounded-2xl border border-[#d1d4dd] bg-white transition hover:shadow-lg hover:border-[#09cc9c]" data-science-card>
+                <button
+                  class="science-header w-full px-6 py-6 flex items-start justify-between gap-4 cursor-pointer group text-left"
+                  data-science-toggle={index}
+                >
+                  <span class="text-4xl font-bold text-[#09cc9c] shrink-0 block">{science.number}</span>
+                  <span class="flex-1">
+                    <span class="font-display text-xl font-bold text-[#22252a] group-hover:text-[#fd7730] block">{science.title}</span>
+                    <span class="mt-2 text-[#3b3e47] leading-relaxed block">{science.description}</span>
+                  </span>
+                  <span class="text-[#09cc9c] text-2xl shrink-0 transition group-hover:rotate-180 mt-2 block" aria-hidden="true">▾</span>
+                </button>
+                <div class="science-content hidden px-6 pb-6" data-science-content={index}>
+                  <div class="pl-24 space-y-3">
+                    <p class="font-semibold text-[#22252a] text-sm uppercase tracking-wider">Key Competencies</p>
+                    <ul class="space-y-2">
+                      {science.keyPoints.map((point) => (
+                        <li class="flex items-center gap-3 text-[#3b3e47]">
+                          <span class="h-1.5 w-1.5 rounded-full bg-[#fd7730]"></span>
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div class="mt-12 rounded-2xl bg-linear-to-r from-[#09cc9c]/10 to-[#fd7730]/10 border border-[#09cc9c]/20 p-8">
+            <p class="font-display text-2xl font-bold text-[#22252a] mb-3">Why This Matters</p>
+            <p class="text-lg text-[#3b3e47] leading-relaxed">
+              Off-the-shelf personality tests weren't built for franchisees. They measure traits for employees, not business owners. Zorakle's integrated science framework was purpose-built to predict what actually matters: franchise success. When you understand the science, you understand why fit matters.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="border-b border-[#d1d4dd] bg-[#f4f5f7] py-16 md:py-20" id="contact">
+      <div class="section-shell">
+        <div class="space-y-8">
+          <div>
+            <h2 class="font-display text-4xl md:text-5xl font-bold text-[#22252a] mb-3">
+              Need Help?
+            </h2>
+            <p class="text-lg text-[#3b3e47]">
+              We're here to support your success. Whether you have questions about the platform, need technical assistance, or want to discuss your franchise assessment strategy, reach out.
+            </p>
+          </div>
+
+          <!-- Contact Info -->
+          <div class="space-y-4">
+            <p class="text-lg text-[#3b3e47]">
+              <span class="font-semibold text-[#22252a]">Email:</span> <a href="mailto:support@zorakle.net" class="text-[#fd7730] hover:underline font-semibold">support@zorakle.net</a>
+            </p>
+            <p class="text-lg text-[#3b3e47]">
+              <span class="font-semibold text-[#22252a]">Hours:</span> Monday – Friday, 9 AM – 5 PM CT
+            </p>
+            <p class="text-lg text-[#3b3e47]">
+              We typically respond within 48 hours. Reach out with any questions or issues.
+            </p>
+          </div>
+
+           <!-- FAQ Section (Always visible) -->
+           <div class="faq-section space-y-4" data-faq-content>
+            <h3 class="font-display text-2xl font-bold text-[#22252a] mb-4">Frequently Asked Questions</h3>
+
+            <details class="group rounded-lg border border-[#d1d4dd] bg-white">
+              <summary class="flex cursor-pointer items-center justify-between px-6 py-4 font-bold text-[#22252a] hover:text-[#fd7730]">
+                How do I get started with Zorakle?
+                <span class="transition group-open:rotate-180">▾</span>
+              </summary>
+              <div class="px-6 pb-4 text-[#3b3e47] border-t border-[#d1d4dd]">
+                Contact our team at support@zorakle.net to schedule a demo and get started. We'll walk you through setup and help you with onboarding.
+              </div>
+            </details>
+
+            <details class="group rounded-lg border border-[#d1d4dd] bg-white">
+              <summary class="flex cursor-pointer items-center justify-between px-6 py-4 font-bold text-[#22252a] hover:text-[#fd7730]">
+                Can I integrate Zorakle with our existing systems?
+                <span class="transition group-open:rotate-180">▾</span>
+              </summary>
+              <div class="px-6 pb-4 text-[#3b3e47] border-t border-[#d1d4dd]">
+                Yes. Zorakle offers API integrations and can work with most franchise systems software. Reach out to discuss your specific setup.
+              </div>
+            </details>
+
+            <details class="group rounded-lg border border-[#d1d4dd] bg-white">
+              <summary class="flex cursor-pointer items-center justify-between px-6 py-4 font-bold text-[#22252a] hover:text-[#fd7730]">
+                How long does an assessment take?
+                <span class="transition group-open:rotate-180">▾</span>
+              </summary>
+              <div class="px-6 pb-4 text-[#3b3e47] border-t border-[#d1d4dd]">
+                Most assessments take 20-30 minutes. Reports are generated immediately upon completion.
+              </div>
+            </details>
+
+            <details class="group rounded-lg border border-[#d1d4dd] bg-white">
+              <summary class="flex cursor-pointer items-center justify-between px-6 py-4 font-bold text-[#22252a] hover:text-[#fd7730]">
+                What if I have a technical issue?
+                <span class="transition group-open:rotate-180">▾</span>
+              </summary>
+              <div class="px-6 pb-4 text-[#3b3e47] border-t border-[#d1d4dd]">
+                Email support@zorakle.net with details of the issue, and our technical team will help resolve it promptly.
+              </div>
+            </details>
+
+            <details class="group rounded-lg border border-[#d1d4dd] bg-white">
+              <summary class="flex cursor-pointer items-center justify-between px-6 py-4 font-bold text-[#22252a] hover:text-[#fd7730]">
+                Is there training available for my team?
+                <span class="transition group-open:rotate-180">▾</span>
+              </summary>
+              <div class="px-6 pb-4 text-[#3b3e47] border-t border-[#d1d4dd]">
+                Absolutely. We offer platform training videos (see above), plus we can arrange custom training sessions for your team. Contact support to schedule.
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <CtaBand
+      title="Ready to award franchises with confidence?"
+      text="Book a demo with our team to see how Zorakle can transform your selection process."
+    />
+  </main>
+
+  <SiteFooter />
 </MainLayout>
+
+<script>
+  // Tab Navigation
+  const tabContainer = document.querySelector('[data-training-tabs]') as any;
+  if (tabContainer) {
+    const tabs = tabContainer.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach((tab: any) => {
+      tab.addEventListener('click', () => {
+        const targetTab = tab.dataset.tab;
+
+        // Remove active state from all tabs and hide all contents
+        tabs.forEach((t: any) => t.removeAttribute('data-active'));
+        contents.forEach((c: any) => c.classList.add('hidden'));
+
+        // Set active tab and show corresponding content
+        tab.setAttribute('data-active', '');
+        const content = document.querySelector(`[data-tab-content="${targetTab}"]`);
+        if (content) content.classList.remove('hidden');
+      });
+    });
+
+    // Set first tab as active by default
+    if (tabs.length > 0) {
+      tabs[0].setAttribute('data-active', '');
+    }
+  }
+
+  // Science Accordion
+  const scienceCards = document.querySelectorAll('[data-science-card]');
+  scienceCards.forEach((card: any) => {
+    const toggleBtn = card.querySelector('[data-science-toggle]');
+    const contentDiv = card.querySelector('[data-science-content]');
+
+    if (toggleBtn && contentDiv) {
+      toggleBtn.addEventListener('click', () => {
+        contentDiv.classList.toggle('hidden');
+      });
+    }
+  });
+
+ </script>
+

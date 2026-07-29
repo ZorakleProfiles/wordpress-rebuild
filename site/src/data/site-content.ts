@@ -7,7 +7,7 @@ export const navLinks = [
       { href: "/solutions/brokers", label: "For Brokers" }
     ]
   },
-  { href: "#pricing", label: "Pricing" },
+  { href: "/pricing", label: "Pricing" },
   {
     label: "Resources",
     items: [

@@ -8,7 +8,6 @@ export interface SupportStepMedia {
 }
 
 export interface SupportArticleStep {
-  number: number;
   title: string;
   content: string;
   tip?: string;
@@ -21,6 +20,7 @@ export interface SupportArticle {
   title: string;
   summary: string;
   assetDir: string;
+  type: string;
   summaryVideo?: {
     fileName: string;
     posterFileName?: string;
@@ -30,52 +30,16 @@ export interface SupportArticle {
 }
 
 export const supportArticles: SupportArticle[] = [
-  {
-    slug: "broker-setup",
-    title: "Setting Up Your Broker Account",
-    summary:
-      "Once you're logged in, you can start running assessment links right away. Before you do, add your logo and branding so your assessment link and reports carry your custom look.",
-    assetDir: "src/assets/support/broker-setup",
-    summaryVideo: {
-      fileName: "summary.mp4",
-      caption: "Quick walkthrough: broker setup and branding"
-    },
-    steps: [
-      {
-        number: 1,
-        title: "Open Logo and Branding Settings",
-        content:
-          "Click Settings, then navigate to Logo and Branding.",
-        media: {
-          type: "screenshot",
-          fileName: "01.png",
-          alt: "Settings menu with Logo and Branding highlighted"
-        }
-      },
-      {
-        number: 2,
-        title: "Upload Your Logo",
-        content:
-          "Upload your logo file. The system will suggest brand colors automatically. Select one of those or enter a custom hex code for an exact match.",
-        tip:
-          "If your brand has a specific hex code from your style guide, use the custom hex field to match your brand exactly.",
-        media: {
-          type: "screenshot",
-          fileName: "02.png",
-          alt: "Logo upload panel with generated color swatches and hex input"
-        }
-      },
-    ]
-  },
+
   {
     slug: "established-franchisor-setup",
     title: "Setting Up Your Established Franchisor Account",
     summary:
       "Use this guide to complete your benchmark setup and generate a reliable franchise blueprint from your existing operator data.",
     assetDir: "src/assets/support/established-franchisor-setup",
+    type:"Established Franchisor",
     steps: [
       {
-        number: 1,
         title: "Take the Franchise Benchmark Audit",
         content:
           "After logging in, you'll see your Algorithm Setup Checklist. The first step is to complete the Franchise Benchmark Audit, which defines the standards and operator profile targets for your franchise system. Click the Get Started button to begin.",
@@ -86,7 +50,6 @@ export const supportArticles: SupportArticle[] = [
         }
       },
       {
-        number: 2,
         title: "Send Warm-Up Emails to Research Participants",
         content:
           "Notify your franchisees in advance so they understand the purpose of the research assessment and are prepared to complete it. Click the Get Samples button to access ready-to-use email templates provided for your convenience.",
@@ -97,7 +60,6 @@ export const supportArticles: SupportArticle[] = [
         }
       },
       {
-        number: 3,
         title: "Upload Your Current Franchisees",
         content:
           "Add franchisees in one of two ways: click Add Franchisee to enter them manually, or download the Sample CSV template, fill in your data, and upload it using the Upload Franchisees button. All that's required is each franchisee's first name, last name, and email address.",
@@ -108,7 +70,6 @@ export const supportArticles: SupportArticle[] = [
         }
       },
       {
-        number: 4,
         title: "Send Research Assessments to Franchisees",
         content:
           "After uploading your franchisees, a Send Research Assessments button will appear along with a count of pending invitations. Click the button to send assessments. Duplicates are never sent automatically.",
@@ -119,7 +80,6 @@ export const supportArticles: SupportArticle[] = [
         }
       },
       {
-        number: 5,
         title: "Select Your Performance Metrics",
         content:
           "Choose the performance metrics your organization uses to measure franchisee success.",
@@ -130,7 +90,6 @@ export const supportArticles: SupportArticle[] = [
         }
       },
       {
-        number: 6,
         title: "Rank Your Performance Metrics",
         content:
           "If you selected more than one performance metric, rank them in order of importance. If you selected only one metric, this step will not appear.",
@@ -141,7 +100,6 @@ export const supportArticles: SupportArticle[] = [
         }
       },
       {
-        number: 7,
         title: "Enter Franchisee Performance Data",
         content:
           "Entering performance data for each franchisee is optional, but it helps Zorakle auto-categorize franchisees in the next step. You can enter data manually or download the Sample CSV, populate it with your data, and upload it using the Upload Metrics button.",
@@ -152,7 +110,6 @@ export const supportArticles: SupportArticle[] = [
         }
       },
       {
-        number: 8,
         title: "Categorize Franchisees",
         content:
           "If you provided performance data, Zorakle will automatically categorize your franchisees by performance tier. If no data was provided, you can categorize them manually.",
@@ -163,7 +120,6 @@ export const supportArticles: SupportArticle[] = [
         }
       },
       {
-        number: 9,
         title: "Track Research Assessment Progress",
         content:
           "You need at least 5 top-performing (A) and 5 underperforming (C) franchisees to complete the assessment before generating your blueprint. Click the View Progress button in the Track Research Assessments section. From there you can view in-progress assessments with shareable links and access reports for completed ones.",
@@ -174,7 +130,6 @@ export const supportArticles: SupportArticle[] = [
         }
       },
       {
-        number: 10,
         title: "Generate Your Blueprint",
         content:
           "Once the minimum assessment threshold is met, generate your blueprint. The Zorakle team will review it and notify you when it has been approved. You can then begin evaluating prospective franchisees using your personalized blueprint and algorithm.",
@@ -192,9 +147,9 @@ export const supportArticles: SupportArticle[] = [
     summary:
       "Use this quick flow to create your algorithm and begin evaluating prospective franchisees.",
     assetDir: "src/assets/support/emerging-franchisor-setup",
+    type:"Emerging Franchisor",
     steps: [
       {
-        number: 1,
         title: "Take the Franchise Benchmark Audit",
         content:
           "When you log in you will see your Algorithm setup checklist. The first step is to complete the benchmark audit to define the standards and operator profile targets for your franchise system. Just click on the \"Get Started\" button to start taking your Franchise Benchmark Audit.",
@@ -205,7 +160,6 @@ export const supportArticles: SupportArticle[] = [
         }
       },
       {
-        number: 2,
         title: "Blueprint and Algorithm Created",
         content:
           "After the audit is complete, Zorakle generates your initial blueprint and matching algorithm.",
@@ -216,7 +170,6 @@ export const supportArticles: SupportArticle[] = [
         }
       },
       {
-        number: 3,
         title: "Start Sending Assessments to Prospective Franchisees",
         content:
           "Begin sharing assessment links with prospective franchisees so you can evaluate fit using your new blueprint and algorithm.",
@@ -226,6 +179,42 @@ export const supportArticles: SupportArticle[] = [
           alt: "Placeholder screenshot for sending assessments"
         }
       }
+    ]
+  },
+  {
+    slug: "broker-setup",
+    title: "Setting Up Your Broker Account",
+    summary:
+        "Use this quick flow to get started as a broker/consultant.",
+    assetDir: "src/assets/support/broker-setup",
+    summaryVideo: {
+      fileName: "summary.mp4",
+      caption: "Quick walkthrough: broker setup and branding"
+    },
+    type:"Broker",
+    steps: [
+      {
+        title: "Open Logo and Branding Settings",
+        content:
+            "Click Settings, then navigate to Logo and Branding.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Settings menu with Logo and Branding highlighted"
+        }
+      },
+      {
+        title: "Upload Your Logo",
+        content:
+            "Upload your logo file. The system will suggest brand colors automatically. Select one of those or enter a custom hex code for an exact match.",
+        tip:
+            "If your brand has a specific hex code from your style guide, use the custom hex field to match your brand exactly.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Logo upload panel with generated color swatches and hex input"
+        }
+      },
     ]
   }
 ];

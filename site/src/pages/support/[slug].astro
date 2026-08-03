@@ -124,10 +124,10 @@ const summaryVideoPosterSrc = summaryVideoPosterPath
           ) : null}
 
           <div class="space-y-8">
-            {resolvedSteps.map(({ step, mediaPath, screenshotSrc, gifSrc, videoSrc }) => (
+            {resolvedSteps.map(({ step, mediaPath, screenshotSrc, gifSrc, videoSrc }, index) => (
               <section class="rounded-xl border border-[#d1d4dd] bg-[#fdfefe] p-6 md:p-8 space-y-4">
                 <h2 class="font-display text-xl font-bold text-[#22252a]">
-                  Step {step.number}: {step.title}
+                   Step {index+1}: {step.title}
                 </h2>
                 <p class="text-[#3b3e47] leading-relaxed">{step.content}</p>
                 {step.tip ? (

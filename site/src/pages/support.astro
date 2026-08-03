@@ -2,46 +2,9 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
-import CtaBand from "../components/CtaBand.astro";
+import Help from "../components/Help.astro";
 
-const platformVideos = [
-  {
-    title: "Getting Started with Zorakle",
-    description: "Learn the fundamentals of the Zorakle platform and how to navigate the dashboard.",
-    duration: "8 min",
-    thumbnail: "▶"
-  },
-  {
-    title: "Running Assessments",
-    description: "Step-by-step guide to creating and managing candidate assessments.",
-    duration: "12 min",
-    thumbnail: "▶"
-  },
-  {
-    title: "Understanding Your Reports",
-    description: "Deep dive into reading and interpreting assessment reports and fit scores.",
-    duration: "15 min",
-    thumbnail: "▶"
-  },
-  {
-    title: "Managing Team Access",
-    description: "Set up user roles, permissions, and team collaboration features.",
-    duration: "7 min",
-    thumbnail: "▶"
-  },
-  {
-    title: "Advanced Filtering & Analytics",
-    description: "Use data filters and analytics tools to track performance trends.",
-    duration: "10 min",
-    thumbnail: "▶"
-  },
-  {
-    title: "Best Practices for Franchisors",
-    description: "Industry best practices for maximizing fit predictions in your award process.",
-    duration: "14 min",
-    thumbnail: "▶"
-  }
-];
+import { supportArticles } from "../data/support.ts";
 
 const sciences = [
   {
@@ -87,6 +50,7 @@ const sciences = [
     keyPoints: ["Initiative", "Innovation", "Ownership mentality", "Market orientation"]
   }
 ];
+
 ---
 <MainLayout
   title="Training & Support | Zorakle"
@@ -105,7 +69,7 @@ const sciences = [
             class="tab-btn px-6 py-4 font-bold text-base text-[#3b3e47] border-b-2 border-transparent transition hover:text-[#fd7730] data-active:border-[#fd7730] data-active:text-[#fd7730]"
             data-tab="platform"
           >
-            Platform Training
+            Support Articles
           </button>
           <button
             class="tab-btn px-6 py-4 font-bold text-base text-[#3b3e47] border-b-2 border-transparent transition hover:text-[#fd7730] data-active:border-[#fd7730] data-active:text-[#fd7730]"
@@ -115,32 +79,34 @@ const sciences = [
           </button>
         </div>
 
-        <!-- Platform Training Tab Content -->
+        <!-- Support Articles Tab Content -->
         <div class="tab-content" data-tab-content="platform">
-          <h2 class="font-display text-3xl md:text-4xl font-bold text-[#22252a] mb-2">Platform Training Videos</h2>
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-[#22252a] mb-2">Support Articles</h2>
           <p class="text-lg text-[#3b3e47] mb-12 max-w-2xl">
-            Master every feature of Zorakle. From basic navigation to advanced analytics, these videos will help you get the most out of the platform.
+            Follow practical setup guides with screenshots and lightweight visuals. Click an article to open the full walkthrough.
           </p>
 
-          <!-- Video Grid -->
-          <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {platformVideos.map((video) => (
-              <div class="group cursor-pointer rounded-2xl border border-[#d1d4dd] bg-white p-6 transition hover:shadow-lg hover:border-[#09cc9c]">
-                <div class="relative mb-4 aspect-video rounded-lg bg-linear-to-br from-[#f4f6f9] to-[#e8ecf2] flex items-center justify-center text-4xl text-[#d1d4dd] group-hover:bg-linear-to-br group-hover:from-[#09cc9c]/20 group-hover:to-[#fd7730]/20 transition">
-                  {video.thumbnail}
-                </div>
-                <div class="space-y-2">
-                  <p class="text-sm font-semibold text-[#09cc9c]">{video.duration}</p>
-                  <h3 class="font-display text-lg font-bold text-[#22252a]">{video.title}</h3>
-                  <p class="text-sm text-[#3b3e47] leading-relaxed">{video.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <p class="mt-12 text-center text-base text-[#3b3e47]">
-            More videos coming soon. Have a topic you'd like us to cover? <a href="#contact" class="font-bold text-[#fd7730] hover:underline">Let us know.</a>
-          </p>
+          {supportArticles.length > 0 ? (
+            <div class="grid gap-6 md:grid-cols-2">
+              {supportArticles.map((article) => (
+                <a
+                  href={`/support/${article.slug}`}
+                  class="group rounded-2xl border border-[#d1d4dd] bg-white p-6 transition hover:border-[#09cc9c] hover:shadow-lg"
+                >
+                  <p class="text-sm font-semibold text-[#09cc9c]">Support Guide</p>
+                  <h3 class="mt-2 font-display text-2xl font-bold text-[#22252a] group-hover:text-[#fd7730]">{article.title}</h3>
+                  <p class="mt-3 text-sm leading-relaxed text-[#3b3e47]">{article.summary}</p>
+                  <p class="mt-4 text-sm text-[#56586a]">{article.steps.length} steps</p>
+                  {article.summaryVideo ? (
+                    <p class="mt-1 text-sm text-[#56586a]">Includes a 1-minute summary video</p>
+                  ) : null}
+                  <p class="mt-4 text-sm font-semibold text-[#fd7730]">Read full article -></p>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p class="text-base text-[#3b3e47]">No support articles are available yet.</p>
+          )}
         </div>
 
         <!-- Sciences Tab Content -->
@@ -191,95 +157,8 @@ const sciences = [
         </div>
       </div>
     </section>
+  <Help></Help>
 
-    <!-- Contact Section -->
-    <section class="border-b border-[#d1d4dd] bg-[#f4f5f7] py-16 md:py-20" id="contact">
-      <div class="section-shell">
-        <div class="space-y-8">
-          <div>
-            <h2 class="font-display text-4xl md:text-5xl font-bold text-[#22252a] mb-3">
-              Need Help?
-            </h2>
-            <p class="text-lg text-[#3b3e47]">
-              We're here to support your success. Whether you have questions about the platform, need technical assistance, or want to discuss your franchise assessment strategy, reach out.
-            </p>
-          </div>
-
-          <!-- Contact Info -->
-          <div class="space-y-4">
-            <p class="text-lg text-[#3b3e47]">
-              <span class="font-semibold text-[#22252a]">Email:</span> <a href="mailto:support@zorakle.net" class="text-[#fd7730] hover:underline font-semibold">support@zorakle.net</a>
-            </p>
-            <p class="text-lg text-[#3b3e47]">
-              <span class="font-semibold text-[#22252a]">Hours:</span> Monday – Friday, 9 AM – 5 PM CT
-            </p>
-            <p class="text-lg text-[#3b3e47]">
-              We typically respond within 48 hours. Reach out with any questions or issues.
-            </p>
-          </div>
-
-           <!-- FAQ Section (Always visible) -->
-           <div class="faq-section space-y-4" data-faq-content>
-            <h3 class="font-display text-2xl font-bold text-[#22252a] mb-4">Frequently Asked Questions</h3>
-
-            <details class="group rounded-lg border border-[#d1d4dd] bg-white">
-              <summary class="flex cursor-pointer items-center justify-between px-6 py-4 font-bold text-[#22252a] hover:text-[#fd7730]">
-                How do I get started with Zorakle?
-                <span class="transition group-open:rotate-180">▾</span>
-              </summary>
-              <div class="px-6 pb-4 text-[#3b3e47] border-t border-[#d1d4dd]">
-                Contact our team at support@zorakle.net to schedule a demo and get started. We'll walk you through setup and help you with onboarding.
-              </div>
-            </details>
-
-            <details class="group rounded-lg border border-[#d1d4dd] bg-white">
-              <summary class="flex cursor-pointer items-center justify-between px-6 py-4 font-bold text-[#22252a] hover:text-[#fd7730]">
-                Can I integrate Zorakle with our existing systems?
-                <span class="transition group-open:rotate-180">▾</span>
-              </summary>
-              <div class="px-6 pb-4 text-[#3b3e47] border-t border-[#d1d4dd]">
-                Yes. Zorakle offers API integrations and can work with most franchise systems software. Reach out to discuss your specific setup.
-              </div>
-            </details>
-
-            <details class="group rounded-lg border border-[#d1d4dd] bg-white">
-              <summary class="flex cursor-pointer items-center justify-between px-6 py-4 font-bold text-[#22252a] hover:text-[#fd7730]">
-                How long does an assessment take?
-                <span class="transition group-open:rotate-180">▾</span>
-              </summary>
-              <div class="px-6 pb-4 text-[#3b3e47] border-t border-[#d1d4dd]">
-                Most assessments take 20-30 minutes. Reports are generated immediately upon completion.
-              </div>
-            </details>
-
-            <details class="group rounded-lg border border-[#d1d4dd] bg-white">
-              <summary class="flex cursor-pointer items-center justify-between px-6 py-4 font-bold text-[#22252a] hover:text-[#fd7730]">
-                What if I have a technical issue?
-                <span class="transition group-open:rotate-180">▾</span>
-              </summary>
-              <div class="px-6 pb-4 text-[#3b3e47] border-t border-[#d1d4dd]">
-                Email support@zorakle.net with details of the issue, and our technical team will help resolve it promptly.
-              </div>
-            </details>
-
-            <details class="group rounded-lg border border-[#d1d4dd] bg-white">
-              <summary class="flex cursor-pointer items-center justify-between px-6 py-4 font-bold text-[#22252a] hover:text-[#fd7730]">
-                Is there training available for my team?
-                <span class="transition group-open:rotate-180">▾</span>
-              </summary>
-              <div class="px-6 pb-4 text-[#3b3e47] border-t border-[#d1d4dd]">
-                Absolutely. We offer platform training videos (see above), plus we can arrange custom training sessions for your team. Contact support to schedule.
-              </div>
-            </details>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <CtaBand
-      title="Ready to award franchises with confidence?"
-      text="Book a demo with our team to see how Zorakle can transform your selection process."
-    />
   </main>
 
   <SiteFooter />

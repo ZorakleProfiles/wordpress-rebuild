@@ -1,0 +1,206 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import {
+  supportArticles,
+  type SupportArticle,
+  type SupportArticleStep
+} from "../../data/support.ts";
+import Help from "../../components/Help.astro";
+
+interface Props {
+  article: SupportArticle;
+}
+
+export function getStaticPaths() {
+  return supportArticles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article }
+  }));
+}
+
+const { article } = Astro.props as Props;
+
+const screenshotAssets = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/support/**/*.{png,jpg,jpeg,webp,avif}",
+  { eager: true }
+);
+const gifAssets = import.meta.glob<{ default: string }>(
+  "/src/assets/support/**/*.gif",
+  { eager: true }
+);
+const videoAssets = import.meta.glob<{ default: string }>(
+  "/src/assets/support/**/*.{mp4,webm,mov}",
+  { eager: true }
+);
+
+interface ResolvedStep {
+  step: SupportArticleStep;
+  mediaPath: string;
+  screenshotSrc?: ImageMetadata;
+  gifSrc?: string;
+  videoSrc?: string;
+}
+
+const normalizeAssetDir = (assetDir: string) =>
+  assetDir.startsWith("/") ? assetDir : `/${assetDir}`;
+
+const resolveMediaPath = (assetDir: string, fileName: string) =>
+  `${normalizeAssetDir(assetDir)}/${fileName}`;
+
+const resolvedSteps: ResolvedStep[] = article.steps.map((step) => {
+  const mediaPath = resolveMediaPath(article.assetDir, step.media.fileName);
+
+  return {
+    step,
+    mediaPath,
+    screenshotSrc: step.media.type === "screenshot"
+      ? screenshotAssets[mediaPath]?.default
+      : undefined,
+    gifSrc: step.media.type === "gif" ? gifAssets[mediaPath]?.default : undefined,
+    videoSrc: step.media.type === "video" ? videoAssets[mediaPath]?.default : undefined
+  };
+});
+
+const summaryVideoPath = article.summaryVideo
+  ? resolveMediaPath(article.assetDir, article.summaryVideo.fileName)
+  : undefined;
+const summaryVideoSrc = summaryVideoPath ? videoAssets[summaryVideoPath]?.default : undefined;
+const summaryVideoPosterPath = article.summaryVideo?.posterFileName
+  ? resolveMediaPath(article.assetDir, article.summaryVideo.posterFileName)
+  : undefined;
+const summaryVideoPosterSrc = summaryVideoPosterPath
+  ? screenshotAssets[summaryVideoPosterPath]?.default
+  : undefined;
+---
+<MainLayout
+  title={`${article.title} | Support | Zorakle`}
+  description={article.summary}
+>
+  <SiteHeader />
+
+  <main>
+    <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
+      <div class="section-shell">
+        <a href="/support" class="inline-flex items-center gap-2 text-sm font-semibold text-[#fd7730] hover:underline">
+          &larr; Back to support articles
+        </a>
+
+        <article class="mt-8 space-y-8 rounded-2xl border border-[#d1d4dd] bg-white p-8 md:p-10">
+          <header class="space-y-3 border-b border-[#d1d4dd] pb-8">
+            <h1 class="font-display text-3xl md:text-4xl font-bold text-[#22252a]">{article.title}</h1>
+            <p class="text-lg text-[#3b3e47] leading-relaxed">{article.summary}</p>
+          </header>
+
+          {article.summaryVideo ? (
+            summaryVideoSrc ? (
+              <figure class="space-y-2">
+                <video
+                  class="w-full rounded-lg border border-[#d1d4dd]"
+                  controls
+                  muted
+                  playsinline
+                  preload="metadata"
+                  poster={summaryVideoPosterSrc?.src}
+                >
+                  <source src={summaryVideoSrc} type="video/mp4" />
+                </video>
+                <figcaption class="text-sm text-[#3b3e47]">
+                  {article.summaryVideo.caption ?? "Summary walkthrough"}
+                </figcaption>
+              </figure>
+            ) : (
+              <div class="rounded-lg border border-dashed border-[#b7bcc9] bg-[#f4f6f9] p-4">
+                <p class="text-sm font-semibold text-[#22252a]">Missing summary video</p>
+                <p class="mt-2 text-xs text-[#56586a]">
+                  Expected file: <code>{summaryVideoPath}</code>
+                </p>
+              </div>
+            )
+          ) : null}
+
+          <div class="space-y-8">
+            {resolvedSteps.map(({ step, mediaPath, screenshotSrc, gifSrc, videoSrc }) => (
+              <section class="rounded-xl border border-[#d1d4dd] bg-[#fdfefe] p-6 md:p-8 space-y-4">
+                <h2 class="font-display text-xl font-bold text-[#22252a]">
+                  Step {step.number}: {step.title}
+                </h2>
+                <p class="text-[#3b3e47] leading-relaxed">{step.content}</p>
+                {step.tip ? (
+                  <p class="rounded-lg border border-[#09cc9c]/40 bg-[#09cc9c]/8 px-4 py-3 text-sm text-[#2d6659]">
+                    <span class="font-semibold">Tip:</span> {step.tip}
+                  </p>
+                ) : null}
+
+                {step.media.type === "screenshot" && screenshotSrc ? (
+                  <figure class="space-y-2">
+                    <Image
+                      src={screenshotSrc}
+                      alt={step.media.alt}
+                      widths={[720, 1080, 1440]}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1100px"
+                      class="w-full rounded-lg border border-[#d1d4dd]"
+                      loading="lazy"
+                    />
+                    <figcaption class="text-sm text-[#3b3e47]">{step.media.caption ?? step.media.alt}</figcaption>
+                  </figure>
+                ) : null}
+
+                {step.media.type === "gif" && gifSrc ? (
+                  <figure class="space-y-2">
+                    <img
+                      src={gifSrc}
+                      alt={step.media.alt}
+                      class="w-full rounded-lg border border-[#d1d4dd]"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <figcaption class="text-sm text-[#3b3e47]">{step.media.caption ?? step.media.alt}</figcaption>
+                  </figure>
+                ) : null}
+
+                {step.media.type === "video" && videoSrc ? (
+                  <figure class="space-y-2">
+                    <video
+                      class="w-full rounded-lg border border-[#d1d4dd]"
+                      controls
+                      muted
+                      playsinline
+                      preload="metadata"
+                    >
+                      <source src={videoSrc} />
+                    </video>
+                    <figcaption class="text-sm text-[#3b3e47]">{step.media.caption ?? step.media.alt}</figcaption>
+                  </figure>
+                ) : null}
+
+                {(
+                  (step.media.type === "screenshot" && !screenshotSrc) ||
+                  (step.media.type === "gif" && !gifSrc) ||
+                  (step.media.type === "video" && !videoSrc)
+                ) ? (
+                  <div class="rounded-lg border border-dashed border-[#b7bcc9] bg-[#f4f6f9] p-4">
+                    <p class="text-sm font-semibold text-[#22252a]">Missing media file ({step.media.type})</p>
+                    <p class="mt-1 text-sm text-[#3b3e47]">{step.media.caption ?? step.media.alt}</p>
+                    <p class="mt-2 text-xs text-[#56586a]">
+                      Expected file: <code>{mediaPath}</code>
+                    </p>
+                  </div>
+                ) : null}
+              </section>
+            ))}
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <Help></Help>
+  </main>
+
+  <SiteFooter />
+</MainLayout>
+

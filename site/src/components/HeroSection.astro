@@ -2,8 +2,8 @@
 import heroBackground from "../assets/figma-import/home-hero.png";
 const hero = {
     eyebrow: "The Franchise Industry's Assessment Authority — Since 2014",
-    titlePrefix: "Award franchises with",
-    titleAccent: "science not gut feeling.",
+    titlePrefix: "Franchise Success Is Not Random.",
+    titleAccent: "It’s Aligned.",
     description:
         "For 12 years, franchise systems have trusted Zorakle to make smarter awards decisions. Seven validated sciences. One methodology built exclusively for franchising.",
     primaryCta: { href: "/solutions/franchisors", label: "Franchisors" },
@@ -17,6 +17,7 @@ import PageHero from "./PageHero.astro";
   titlePrefix={hero.titlePrefix}
   titleHighlight={hero.titleAccent}
   description={hero.description}
+  supportingLine={hero.supportingLine}
   primaryCta={hero.primaryCta}
   secondaryCta={hero.secondaryCta}
   backgroundImage={heroBackground}

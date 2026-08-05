@@ -1,0 +1,19 @@
+<svg width="220" height="150" viewBox="0 0 220 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <!-- Axes -->
+  <line x1="20" y1="30"  x2="20"  y2="128" stroke="#b0b4bf" stroke-width="1.5"/>
+  <line x1="20" y1="128" x2="205" y2="128" stroke="#b0b4bf" stroke-width="1.5"/>
+  <!-- Grid lines -->
+  <line x1="20" y1="95"  x2="205" y2="95"  stroke="#b0b4bf" stroke-opacity="0.6" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="20" y1="62"  x2="205" y2="62"  stroke="#b0b4bf" stroke-opacity="0.6" stroke-width="1" stroke-dasharray="3 3"/>
+  <!-- Aligned execution line -->
+  <polyline points="20,110 60,86 100,62 145,42 195,28" fill="none" stroke="#09cc9c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Misaligned line -->
+  <polyline points="20,110 60,108 100,112 145,106 195,118" fill="none" stroke="#fd7730" stroke-width="2" stroke-dasharray="5 3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- End dots -->
+  <circle cx="195" cy="28" r="4" fill="#09cc9c"/>
+  <circle cx="195" cy="118" r="4" fill="#fd7730"/>
+  <!-- Labels -->
+  <text x="28" y="20" font-size="8.5" font-family="sans-serif" fill="#09cc9c" font-weight="600">Aligned execution</text>
+  <text x="28" y="144" font-size="8.5" font-family="sans-serif" fill="#fd7730" font-weight="600">Misaligned</text>
+</svg>
+

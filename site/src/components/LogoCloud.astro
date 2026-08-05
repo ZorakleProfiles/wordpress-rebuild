@@ -4,23 +4,8 @@ import { trustStats } from "../data/site-content";
 const portalUrl = import.meta.env.PORTAL_URL || 'http://localhost:3000';
 ---
 
-<section class=" py-20 md:py-24">
+<section class="py-8">
   <div class="section-shell">
-    <div class="border-b-[#f3f3f3] border-b-4 pb-16 mb-16 grid gap-12 md:gap-16 md:grid-cols-[1fr_1fr] lg:grid-cols-[1fr_1.2fr] items-start">
-      <div>
-        <p class="section-eyebrow">Trusted Across</p>
-        <h2 class="mt-2 font-display text-5xl  md:text-6xl">The Franchise Industry</h2>
-      </div>
-
-      <div class="grid grid-cols-1 gap-8 md:gap-10">
-        {trustStats.map((item) => (
-          <div class="flex items-start gap-5">
-            <span class="mt-2 h-4 w-4 rounded-full bg-[#09cc9c] shrink-0 flex-shrink-0"></span>
-            <span class="text-lg md:text-xl font-semibold leading-snug text-[#1f2937]">{item}</span>
-          </div>
-        ))}
-      </div>
-    </div>
     <div class="mb-6 font-display text-2xl font-bold">Brands We Serve</div>
     <div class="overflow-hidden">
       <div class="logo-ticker" id="logo-ticker" data-portal-url={portalUrl}>

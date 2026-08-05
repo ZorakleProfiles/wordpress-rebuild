@@ -1,0 +1,13 @@
+<svg width="220" height="150" viewBox="0 0 220 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <rect x="15"  y="108" width="40" height="30" rx="3" fill="#09cc9c" fill-opacity="0.28"/>
+  <rect x="65"  y="84"  width="40" height="54" rx="3" fill="#09cc9c" fill-opacity="0.42"/>
+  <rect x="115" y="56"  width="40" height="82" rx="3" fill="#09cc9c" fill-opacity="0.58"/>
+  <rect x="165" y="24"  width="40" height="114" rx="3" fill="#09cc9c" fill-opacity="0.75"/>
+  <text x="35"  y="148" text-anchor="middle" font-size="8.5" font-family="sans-serif" fill="#3b3e47" opacity="0.85">Stage 1</text>
+  <text x="85"  y="148" text-anchor="middle" font-size="8.5" font-family="sans-serif" fill="#3b3e47" opacity="0.85">Stage 2</text>
+  <text x="135" y="148" text-anchor="middle" font-size="8.5" font-family="sans-serif" fill="#3b3e47" opacity="0.85">Stage 3</text>
+  <text x="185" y="148" text-anchor="middle" font-size="8.5" font-family="sans-serif" fill="#3b3e47" opacity="0.85">Stage 4</text>
+  <line x1="10" y1="84" x2="210" y2="84" stroke="#fd7730" stroke-opacity="0.70" stroke-width="1.5" stroke-dasharray="5 3"/>
+  <text x="110" y="78" text-anchor="middle" font-size="8.5" font-family="sans-serif" fill="#fd7730" opacity="1">Your system stage</text>
+</svg>
+

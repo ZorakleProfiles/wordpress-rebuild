@@ -1,0 +1,28 @@
+---
+import AlignmentCompoundingChart from "./AlignmentCompoundingChart.astro";
+---
+
+<section class="bg-white py-20 md:py-28 overflow-hidden">
+  <div class="section-shell">
+    <div class="grid gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.25fr)] lg:items-start lg:gap-14">
+      <div class="max-w-4xl space-y-5">
+        <p class="section-eyebrow">Why Consistency Still Breaks</p>
+        <h2 class="section-title">More franchise systems break from misalignment than from bad process.</h2>
+        <p class="section-copy max-w-3xl">
+          Franchisors often improve marketing, sales, training, and field support but still get uneven outcomes.
+          The root issue is disconnected decisions across the lifecycle -- who is attracted, who is awarded, how learning
+          lands, and how execution holds up under pressure.
+        </p>
+      </div>
+
+      <!-- Signal graphic -->
+      <div class="lg:justify-self-end lg:w-full">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#6c7280]">How decisions compound</p>
+        <div class="mt-5">
+          <AlignmentCompoundingChart />
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

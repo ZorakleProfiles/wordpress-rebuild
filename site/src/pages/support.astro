@@ -6,6 +6,8 @@ import Help from "../components/Help.astro";
 
 import { supportArticles } from "../data/support.ts";
 
+const supportArticleTypes = [...new Set(supportArticles.map((article) => article.type))];
+
 const sciences = [
   {
     number: "01",
@@ -87,11 +89,39 @@ const sciences = [
           </p>
 
           {supportArticles.length > 0 ? (
-            <div class="grid gap-6 md:grid-cols-2">
+            <>
+              <div class="mb-8 grid gap-4 md:grid-cols-[2fr_1fr]" data-support-filters>
+                <label class="block">
+                  <span class="mb-2 block text-sm font-semibold text-[#22252a]">Search articles</span>
+                  <input
+                    type="search"
+                    placeholder="Search by topic, feature, or workflow"
+                    class="w-full rounded-xl border border-[#d1d4dd] bg-white px-4 py-3 text-sm text-[#22252a] outline-none transition focus:border-[#09cc9c]"
+                    data-support-search
+                  />
+                </label>
+                <label class="block">
+                  <span class="mb-2 block text-sm font-semibold text-[#22252a]">Audience</span>
+                  <select
+                    class="w-full rounded-xl border border-[#d1d4dd] bg-white px-4 py-3 text-sm text-[#22252a] outline-none transition focus:border-[#09cc9c]"
+                    data-support-type
+                  >
+                    <option value="all">All audiences</option>
+                    {supportArticleTypes.map((type) => (
+                      <option value={type}>{type}</option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+
+              <div class="grid gap-6 md:grid-cols-2" data-support-results>
               {supportArticles.map((article) => (
                 <a
                   href={`/support/${article.slug}`}
                   class="group rounded-2xl border border-[#d1d4dd] bg-white p-6 transition hover:border-[#09cc9c] hover:shadow-lg"
+                  data-support-card
+                  data-support-type={article.type}
+                  data-support-searchable={`${article.title} ${article.summary} ${article.type}`}
                 >
                   <p class="text-sm font-semibold text-[#09cc9c]">{article.type}</p>
                   <h3 class="mt-2 font-display text-2xl font-bold text-[#22252a] group-hover:text-[#fd7730]">{article.title}</h3>
@@ -100,7 +130,12 @@ const sciences = [
                   <p class="mt-4 text-sm font-semibold text-[#fd7730]">Read full article -></p>
                 </a>
               ))}
-            </div>
+              </div>
+
+              <p class="mt-6 hidden rounded-xl border border-dashed border-[#b7bcc9] bg-[#f4f6f9] px-4 py-3 text-sm text-[#3b3e47]" data-support-empty>
+                No articles match your current search. Try a different keyword or choose another audience.
+              </p>
+            </>
           ) : (
             <p class="text-base text-[#3b3e47]">No support articles are available yet.</p>
           )}
@@ -188,6 +223,38 @@ const sciences = [
       tabs[0].setAttribute('data-active', '');
     }
   }
+
+  // Support article search + filter
+  const supportSearch = document.querySelector('[data-support-search]') as HTMLInputElement | null;
+  const supportType = document.querySelector('[data-support-type]') as HTMLSelectElement | null;
+  const supportCards = Array.from(document.querySelectorAll('[data-support-card]')) as HTMLElement[];
+  const supportEmpty = document.querySelector('[data-support-empty]') as HTMLElement | null;
+
+  const applySupportFilters = () => {
+    if (!supportCards.length) return;
+
+    const searchValue = (supportSearch?.value ?? '').trim().toLowerCase();
+    const selectedType = supportType?.value ?? 'all';
+    let visibleCount = 0;
+
+    supportCards.forEach((card) => {
+      const articleType = card.dataset.supportType ?? '';
+      const searchableText = (card.dataset.supportSearchable ?? '').toLowerCase();
+      const matchesSearch = !searchValue || searchableText.includes(searchValue);
+      const matchesType = selectedType === 'all' || articleType === selectedType;
+      const isVisible = matchesSearch && matchesType;
+
+      card.classList.toggle('hidden', !isVisible);
+      if (isVisible) visibleCount += 1;
+    });
+
+    if (supportEmpty) {
+      supportEmpty.classList.toggle('hidden', visibleCount > 0);
+    }
+  };
+
+  supportSearch?.addEventListener('input', applySupportFilters);
+  supportType?.addEventListener('change', applySupportFilters);
 
   // Science Accordion
   const scienceCards = document.querySelectorAll('[data-science-card]');

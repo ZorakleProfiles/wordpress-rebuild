@@ -19,6 +19,7 @@ export interface SupportArticle {
   slug: string;
   title: string;
   summary: string;
+  intro: string;
   assetDir: string;
   type: string;
   summaryVideo?: {
@@ -35,17 +36,19 @@ export const supportArticles: SupportArticle[] = [
     slug: "established-franchisor-setup",
     title: "Setting Up Your Established Franchisor Account",
     summary:
-      "Use this guide to complete your benchmark setup and generate a reliable franchise blueprint from your existing operator data.",
+      "This article walks established franchisors through benchmark setup, franchisee research collection, performance categorization, and final blueprint generation.",
+    intro:
+      "If you already have operating franchisees, this guide helps you turn that real-world performance data into a practical hiring and evaluation blueprint. You will set your benchmark standards, invite the right participants, and organize results so your final algorithm reflects what success looks like in your system. By the end, you will be ready to generate a blueprint grounded in both behavior insights and actual franchisee outcomes.",
     assetDir: "src/assets/support/established-franchisor-setup",
     type:"Established Franchisor",
     steps: [
       {
         title: "Take the Franchise Benchmark Audit",
         content:
-          "After logging in, you'll see your Algorithm Setup Checklist. The first step is to complete the Franchise Benchmark Audit, which defines the standards and operator profile targets for your franchise system. Click the Get Started button to begin.",
+          "After logging in, you'll see your Algorithm Setup Checklist. The first step is to complete the Franchise Benchmark Audit, which defines the standards and operator profile targets for your franchise system. Click the Get Started button to begin, you can save and come back anytime.",
         media: {
           type: "screenshot",
-          fileName: "01.png",
+          fileName: "audit.png",
           alt: "Algorithm Setup Checklist with Get Started button highlighted"
         }
       },
@@ -55,7 +58,7 @@ export const supportArticles: SupportArticle[] = [
           "Notify your franchisees in advance so they understand the purpose of the research assessment and are prepared to complete it. Click the Get Samples button to access ready-to-use email templates provided for your convenience.",
         media: {
           type: "screenshot",
-          fileName: "02.png",
+          fileName: "warmup.png",
           alt: "Notify Franchisees section with Get Samples button"
         }
       },
@@ -65,7 +68,7 @@ export const supportArticles: SupportArticle[] = [
           "Add franchisees in one of two ways: click Add Franchisee to enter them manually, or download the Sample CSV template, fill in your data, and upload it using the Upload Franchisees button. All that's required is each franchisee's first name, last name, and email address.",
         media: {
           type: "screenshot",
-          fileName: "03.png",
+          fileName: "franchisee-upload.png",
           alt: "Upload Franchisees panel with Add Franchisee and Upload CSV options"
         }
       },
@@ -75,7 +78,7 @@ export const supportArticles: SupportArticle[] = [
           "After uploading your franchisees, a Send Research Assessments button will appear along with a count of pending invitations. Click the button to send assessments. Duplicates are never sent automatically.",
         media: {
           type: "screenshot",
-          fileName: "04.png",
+          fileName: "send-assessments.png",
           alt: "Send Research Assessments button with pending count"
         }
       },
@@ -85,7 +88,7 @@ export const supportArticles: SupportArticle[] = [
           "Choose the performance metrics your organization uses to measure franchisee success.",
         media: {
           type: "screenshot",
-          fileName: "05.png",
+          fileName: "add-metrics.png",
           alt: "Performance metrics selection screen"
         }
       },
@@ -95,7 +98,7 @@ export const supportArticles: SupportArticle[] = [
           "If you selected more than one performance metric, rank them in order of importance. If you selected only one metric, this step will not appear.",
         media: {
           type: "screenshot",
-          fileName: "06.png",
+          fileName: "rank-metrics.png",
           alt: "Performance metrics ranking screen"
         }
       },
@@ -105,7 +108,7 @@ export const supportArticles: SupportArticle[] = [
           "Entering performance data for each franchisee is optional, but it helps Zorakle auto-categorize franchisees in the next step. You can enter data manually or download the Sample CSV, populate it with your data, and upload it using the Upload Metrics button.",
         media: {
           type: "screenshot",
-          fileName: "07.png",
+          fileName: "add-franchisee-metrics.png",
           alt: "Franchisee performance data entry with CSV upload option"
         }
       },
@@ -115,7 +118,7 @@ export const supportArticles: SupportArticle[] = [
           "If you provided performance data, Zorakle will automatically categorize your franchisees by performance tier. If no data was provided, you can categorize them manually.",
         media: {
           type: "screenshot",
-          fileName: "08.png",
+          fileName: "categorize.png",
           alt: "Franchisee categorization screen"
         }
       },
@@ -125,7 +128,7 @@ export const supportArticles: SupportArticle[] = [
           "You need at least 5 top-performing (A) and 5 underperforming (C) franchisees to complete the assessment before generating your blueprint. Click the View Progress button in the Track Research Assessments section. From there you can view in-progress assessments with shareable links and access reports for completed ones.",
         media: {
           type: "screenshot",
-          fileName: "09.png",
+          fileName: "track.png",
           alt: "Track Research Assessments progress view"
         }
       },
@@ -135,7 +138,7 @@ export const supportArticles: SupportArticle[] = [
           "Once the minimum assessment threshold is met, generate your blueprint. The Zorakle team will review it and notify you when it has been approved. You can then begin evaluating prospective franchisees using your personalized blueprint and algorithm.",
         media: {
           type: "screenshot",
-          fileName: "10.png",
+          fileName: "generate.png",
           alt: "Generate Blueprint button and approval status"
         }
       }
@@ -145,7 +148,9 @@ export const supportArticles: SupportArticle[] = [
     slug: "emerging-franchisor-setup",
     title: "Setting Up Your Emerging Franchisor Account",
     summary:
-      "Use this quick flow to create your algorithm and begin evaluating prospective franchisees.",
+      "This article explains the fast-start setup for emerging franchisors, from benchmark audit completion to sending your first candidate assessments.",
+    intro:
+      "This walkthrough is designed for newer franchise systems that need to launch quickly without sacrificing decision quality. It shows how to complete your benchmark audit, review the generated blueprint, and move directly into candidate assessment using your new algorithm. The goal is to give you a clean, repeatable setup flow that gets you evaluating prospects with confidence.",
     assetDir: "src/assets/support/emerging-franchisor-setup",
     type:"Emerging Franchisor",
     steps: [
@@ -185,7 +190,9 @@ export const supportArticles: SupportArticle[] = [
     slug: "broker-setup",
     title: "Setting Up Your Broker Account",
     summary:
-        "Use this quick flow to get started as a broker/consultant.",
+      "This article covers broker account branding setup so your workspace reflects your firm before sharing assessments with clients.",
+    intro:
+      "This guide helps brokers and consultants personalize their workspace so everything clients see matches their brand. You will update logo and color settings to create a polished presentation experience before sending links or sharing results. It is a short setup, but it improves trust and consistency across your client interactions.",
     assetDir: "src/assets/support/broker-setup",
     summaryVideo: {
       fileName: "summary.mp4",
@@ -215,6 +222,634 @@ export const supportArticles: SupportArticle[] = [
           alt: "Logo upload panel with generated color swatches and hex input"
         }
       },
+    ]
+  },
+  {
+    slug: "viewing-franchisee-and-research-results",
+    title: "Viewing Franchisee and Research Assessment Results",
+    summary:
+      "Learn where to find completed and in-progress assessments and how to open the right report for each candidate.",
+    intro:
+      "This article is for teams that are already sending assessments and now need to track progress and review outcomes. You will use the Reports table to quickly see who has completed, who is still in progress, and what actions are available for each person. It also explains how to open Business Builder, Eclipse, CQ, and SpotOn reports from one place.",
+    assetDir: "src/assets/support/viewing-franchisee-and-research-results",
+    type: "Everyone",
+    steps: [
+      {
+        title: "Open the Reports screen",
+        content:
+          "Go to the Reports area (Profiles). This is the main table where assessment activity and results are listed for your prospects or franchisees.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Reports table in Profiles with assessment rows"
+        }
+      },
+      {
+        title: "Filter by status",
+        content:
+          "Use the status filter to switch between Complete, In Progress, and Both. This helps you quickly focus on finished reports or follow up with people who have not completed yet.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Status filter with Complete, In Progress, and Both options"
+        }
+      },
+      {
+        title: "Review progress and completion",
+        content:
+          "Read the Completed date, Completion %, CQ Completed, and CQ % columns to understand where each person is in the process.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "Report row showing completion fields and CQ progress"
+        }
+      },
+      {
+        title: "Open reports from Actions",
+        content:
+          "Click the Actions menu on a row to open available reports such as Business Builder, Eclipse Report, CQ Report, and SpotOn! Report.",
+        media: {
+          type: "screenshot",
+          fileName: "04.png",
+          alt: "Actions dropdown showing available report links"
+        }
+      }
+    ]
+  },
+  {
+    slug: "getting-your-assessment-link",
+    title: "Getting Your Assessment Link",
+    summary:
+      "Find your default assessment link, copy it correctly, and use it consistently across campaigns.",
+    intro:
+      "If you need to start sharing assessments right away, this article shows the fastest path. You will go to Active Links, locate your default link, and copy it for email, landing pages, or direct outreach. Following this flow helps you avoid sending outdated URLs and keeps your lead tracking clean.",
+    assetDir: "src/assets/support/getting-your-assessment-link",
+    type: "Everyone",
+    steps: [
+      {
+        title: "Go to Assessment Links",
+        content:
+          "Open the Assessment Links page (Active Links table). This is where all current links are managed.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Assessment Links page with Active Links table"
+        }
+      },
+      {
+        title: "Locate your default link",
+        content:
+          "Find the default company link in the table and confirm the label/source before sharing.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Default assessment link row in Active Links"
+        }
+      },
+      {
+        title: "Copy and test the link",
+        content:
+          "Copy the link and open it in an incognito window to confirm it loads the expected assessment flow.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "Copied assessment link being tested in a browser"
+        }
+      }
+    ]
+  },
+  {
+    slug: "creating-additional-assessment-links",
+    title: "Creating Additional Assessment Links",
+    summary:
+      "Create extra links for tracking marketing sources and team workflows without losing reporting clarity.",
+    intro:
+      "Additional links are useful when you want clearer attribution for campaigns, events, partners, or users. This guide walks through creating a new link with the right label, source type, privacy setting, and optional CQ behavior. A strong naming pattern up front makes your reporting easier later.",
+    assetDir: "src/assets/support/creating-additional-assessment-links",
+    type: "Everyone",
+    steps: [
+      {
+        title: "Click Add New Assessment Link",
+        content:
+          "From Active Links, open the Add New Assessment Link modal to create a new tracked source.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Add New Assessment Link modal"
+        }
+      },
+      {
+        title: "Enter label, source type, and description",
+        content:
+          "Use a clear label (for example, Webinar Aug 2026), choose the source type, and add notes so your team understands how the link should be used.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Link form fields for label source type and description"
+        }
+      },
+      {
+        title: "Choose privacy and assessment behavior",
+        content:
+          "If your account has multiple users, choose Private or Public based on who should see submissions. If CQ is enabled, configure assessment order or CQ-only vs SpotOn-only behavior as needed.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "Privacy and assessment options in link setup"
+        }
+      },
+      {
+        title: "Create the link and share",
+        content:
+          "Save the link, confirm it appears in Active Links, then copy and share it with the intended audience.",
+        media: {
+          type: "screenshot",
+          fileName: "04.png",
+          alt: "Newly created link visible in Active Links"
+        }
+      }
+    ]
+  },
+  {
+    slug: "viewing-and-managing-assessment-links",
+    title: "Viewing and Managing Assessment Links",
+    summary:
+      "Review existing links, edit tracking details, and keep your link list organized over time.",
+    intro:
+      "As campaigns change, your link list can become cluttered or inconsistent. This article shows how to review your active links, update labels and settings, and remove links you no longer use. Keeping links clean prevents reporting confusion and helps your team trust the data.",
+    assetDir: "src/assets/support/viewing-and-managing-assessment-links",
+    type: "Everyone",
+    steps: [
+      {
+        title: "Open Active Links",
+        content:
+          "Go to Assessment Links and review all current entries in the Active Links table.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Active Links table with multiple assessment links"
+        }
+      },
+      {
+        title: "Edit link details",
+        content:
+          "Open a link for editing and update label, source type, privacy, description, or assessment options as needed.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Edit Assessment Link modal"
+        }
+      },
+      {
+        title: "Retire unused links",
+        content:
+          "Delete links that are no longer active to keep reporting clean and reduce mistakes when sharing URLs.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "Delete confirmation for an assessment link"
+        }
+      }
+    ]
+  },
+  {
+    slug: "spoton-reports-broker-vs-franchisor",
+    title: "SpotOn! Reports: Broker vs Franchisor View",
+    summary:
+      "Understand what each account type sees in SpotOn reporting so you can interpret results correctly.",
+    intro:
+      "Brokers and franchisors use the same core profile data, but their tables and actions are slightly different. This guide explains those differences so you know what to expect in each account type and where to click for the right report or match action.",
+    assetDir: "src/assets/support/spoton-reports-broker-vs-franchisor",
+    type: "Everyone",
+    steps: [
+      {
+        title: "Know the shared report workflow",
+        content:
+          "Both account types can open report actions from the Profiles table, including SpotOn!, Eclipse, Business Builder, and CQ when available.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Profiles actions menu with available reports"
+        }
+      },
+      {
+        title: "Understand broker-specific columns",
+        content:
+          "Broker views include link-level tracking details and a SpotOn! Match action to evaluate fit against franchisor opportunities.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Broker report table including Link and SpotOn Match columns"
+        }
+      },
+      {
+        title: "Understand franchisor-specific columns",
+        content:
+          "Franchisor views emphasize fit outcomes in their own pipeline, including fit percentage and completion activity for internal decision-making.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "Franchisor report table with fit percentage and completion data"
+        }
+      }
+    ]
+  },
+  {
+    slug: "cq-setup-and-walkthrough",
+    title: "Confidential Questionnaire (CQ) Setup Walkthrough",
+    summary:
+      "Enable CQ, configure how it runs, and maintain your question set from settings.",
+    intro:
+      "CQ adds an additional layer of candidate insight beyond the standard assessment flow. This walkthrough covers enabling CQ, linking it to assessments, and managing question settings over time. It is written for teams that want consistent implementation without trial-and-error.",
+    assetDir: "src/assets/support/cq-setup-and-walkthrough",
+    type: "Everyone",
+    steps: [
+      {
+        title: "Enable CQ from Assessment Links",
+        content:
+          "On the Assessment Links page, use the Enable Confidential Questionnaire toggle and confirm in the modal.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Enable Confidential Questionnaire toggle on Assessment Links page"
+        }
+      },
+      {
+        title: "Choose how CQ is delivered",
+        content:
+          "Decide whether CQ is part of the assessment flow or separate, then configure each link accordingly.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "CQ delivery options in link configuration"
+        }
+      },
+      {
+        title: "Manage CQ content in Settings",
+        content:
+          "Go to Settings > Confidential Questionnaire to edit sections, add questions, set required panels, and save your configuration.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "Confidential Questionnaire settings editor"
+        }
+      },
+      {
+        title: "Test before full rollout",
+        content:
+          "Run a quick internal test using one link so your team can verify the candidate experience and report output.",
+        media: {
+          type: "screenshot",
+          fileName: "04.png",
+          alt: "Internal CQ test flow before launch"
+        }
+      }
+    ]
+  },
+  {
+    slug: "user-management-settings",
+    title: "Settings: User Management",
+    summary:
+      "Add users, define access levels, and control who receives reports or billing/referral notifications.",
+    intro:
+      "User Management is where you control who can log in, what they can see, and who receives key account communications. This guide helps you set permissions clearly from the start, especially for teams with multiple users and private link workflows.",
+    assetDir: "src/assets/support/user-management-settings",
+    type: "Everyone",
+    steps: [
+      {
+        title: "Open Settings > User Management",
+        content:
+          "From Settings, select User Management to view the team table and current permissions.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "User Management table in Settings"
+        }
+      },
+      {
+        title: "Create a user or report recipient",
+        content:
+          "Use Create User to add either a login user or a report recipient (email only, no login).",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Create New User or Report Recipient modal"
+        }
+      },
+      {
+        title: "Set permissions carefully",
+        content:
+          "Configure admin access, report email delivery, referral and billing notifications, and private link visibility based on each person's role.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "User permission controls for admin report referral and billing access"
+        }
+      }
+    ]
+  },
+  {
+    slug: "assessment-settings-guide",
+    title: "Settings: Assessment Settings",
+    summary:
+      "Configure report delivery behavior and reminder communication settings for your account.",
+    intro:
+      "Assessment Settings help you control the candidate communication experience. You can decide whether Business Builder reports are sent automatically and manage reminder-related content. This article is useful for teams standardizing their follow-up process.",
+    assetDir: "src/assets/support/assessment-settings-guide",
+    type: "Everyone",
+    steps: [
+      {
+        title: "Go to Settings > Assessment Settings",
+        content:
+          "Open the Assessment Settings tab from your account settings menu.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Assessment Settings tab in account settings"
+        }
+      },
+      {
+        title: "Set Business Builder delivery",
+        content:
+          "Choose whether the system automatically emails the Business Builder profile to prospects or keeps delivery manual.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Business Builder Delivery setting"
+        }
+      },
+      {
+        title: "Review reminder settings and save",
+        content:
+          "Check assessment reminder configuration, then save changes so your outreach behavior matches your process.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "Assessment Reminders section and Save Changes button"
+        }
+      }
+    ]
+  },
+  {
+    slug: "company-info-and-branding-settings",
+    title: "Settings: Company Info and Branding",
+    summary:
+      "Update company details and visual branding so shared links and reports match your organization.",
+    intro:
+      "Your company profile and branding influence how candidates and partners experience your account. This guide shows how to update account information, logo, and accent color so communications and report presentation stay consistent with your brand.",
+    assetDir: "src/assets/support/company-info-and-branding-settings",
+    type: "Everyone",
+    steps: [
+      {
+        title: "Update Company Info",
+        content:
+          "Open Settings > Company Info and review your organization name, URL details, and default account information.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Company Info form in account settings"
+        }
+      },
+      {
+        title: "Update Logo and Branding",
+        content:
+          "Go to Settings > Logo and Branding to upload your logo and set an accent color that matches your style guide.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Logo and Branding settings with color selection"
+        }
+      },
+      {
+        title: "Save and verify",
+        content:
+          "Save changes, then confirm updates appear in your account experience and outgoing materials.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "Saved branding changes reflected in account"
+        }
+      }
+    ]
+  },
+  {
+    slug: "email-signature-settings",
+    title: "Settings: Email Signature",
+    summary:
+      "Set and maintain company and personal signatures for cleaner outbound communication.",
+    intro:
+      "Consistent signatures make your outreach look professional and reduce confusion when multiple team members send emails. This article explains how to manage both the company default signature and personal signature from the same settings area.",
+    assetDir: "src/assets/support/email-signature-settings",
+    type: "Everyone",
+    steps: [
+      {
+        title: "Open Settings > Signature",
+        content:
+          "Go to the Signature tab in account settings to access signature controls.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Signature settings tab"
+        }
+      },
+      {
+        title: "Set company default signature",
+        content:
+          "Use the Company Default Signature option for standardized messaging used across the account.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Company Default Signature editor"
+        }
+      },
+      {
+        title: "Set personal signature",
+        content:
+          "Switch to Personal Signature to customize the signature for your own user profile.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "Personal signature editor"
+        }
+      }
+    ]
+  },
+  {
+    slug: "reset-or-update-password",
+    title: "Settings: Reset or Update Password",
+    summary:
+      "Use the Password tab to keep your login secure and recover quickly when credentials change.",
+    intro:
+      "Password updates are a routine part of account security. This guide shows where to access password settings and how to complete updates safely so you avoid lockouts and keep your account protected.",
+    assetDir: "src/assets/support/reset-or-update-password",
+    type: "Everyone",
+    steps: [
+      {
+        title: "Open Settings > Password",
+        content:
+          "In Settings, choose Password to open your user password form.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Password tab in account settings"
+        }
+      },
+      {
+        title: "Enter your new credentials",
+        content:
+          "Enter your updated password details and submit the change.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Password update form"
+        }
+      },
+      {
+        title: "Confirm login works",
+        content:
+          "After updating, confirm your new password works and store it in your password manager.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "Successful password update confirmation"
+        }
+      }
+    ]
+  },
+  {
+    slug: "broker-organizations-settings",
+    title: "Settings: Broker Organizations",
+    summary:
+      "Manage your broker organization memberships and connection requests from one place.",
+    intro:
+      "If you work with broker organizations, this settings area helps you keep memberships accurate and current. You can search for organizations, request association, and remove old relationships when they no longer apply.",
+    assetDir: "src/assets/support/broker-organizations-settings",
+    type: "Everyone",
+    steps: [
+      {
+        title: "Open Settings > Broker Organizations",
+        content:
+          "Go to Broker Organizations to see current memberships and pending actions.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Broker Organizations settings screen"
+        }
+      },
+      {
+        title: "Search and request membership",
+        content:
+          "Use Search Broker Organizations to find the right group, then submit a request for verification.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Search Broker Organizations form and request action"
+        }
+      },
+      {
+        title: "Maintain your organization list",
+        content:
+          "Review organizations you belong to and remove outdated associations when needed.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "List of broker organizations with remove action"
+        }
+      }
+    ]
+  },
+  {
+    slug: "trusted-franchisors-for-brokers",
+    title: "Settings (Broker): Trusted Franchisors",
+    summary:
+      "Build and maintain your trusted franchisor list to speed up matching and referral workflows.",
+    intro:
+      "Trusted Franchisors helps brokers keep a short list of preferred franchisor relationships. Using this list can reduce repetitive setup during referrals and make sharing decisions faster. This article covers how to add, review, and remove entries.",
+    assetDir: "src/assets/support/trusted-franchisors-for-brokers",
+    type: "Broker",
+    steps: [
+      {
+        title: "Open Settings > Trusted Franchisors",
+        content:
+          "Broker accounts can access the Trusted Franchisors tab directly from Settings.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Trusted Franchisors tab in broker settings"
+        }
+      },
+      {
+        title: "Add a franchisor",
+        content:
+          "Search and add franchisors you regularly work with so they are available in future workflows.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Add Trusted Franchisor workflow"
+        }
+      },
+      {
+        title: "Use and maintain the list",
+        content:
+          "Review your trusted list regularly and remove franchisors that are no longer active partners.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "Trusted Franchisors list with remove action"
+        }
+      }
+    ]
+  },
+  {
+    slug: "referral-profile-for-franchisors",
+    title: "Settings (Franchisor): Referral Profile",
+    summary:
+      "Set up your referral profile so brokers see accurate brand and qualification details when matching candidates.",
+    intro:
+      "Your referral profile is what brokers rely on to understand your concept, requirements, and contact path. Completing this section carefully improves lead quality and reduces back-and-forth during referrals. This walkthrough focuses on the fields that matter most for broker-facing clarity.",
+    assetDir: "src/assets/support/referral-profile-for-franchisors",
+    type: "Franchisor",
+    steps: [
+      {
+        title: "Open Settings > Referrals",
+        content:
+          "Franchisor accounts can access the Referral Information tab from Settings.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Referral Information tab in franchisor settings"
+        }
+      },
+      {
+        title: "Complete referral contact details",
+        content:
+          "Fill in contact name, email, and phone so brokers know exactly who should receive qualified candidate inquiries.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Referral Contact Information fields"
+        }
+      },
+      {
+        title: "Update company profile and requirements",
+        content:
+          "Review company description, unit count, franchise start year, investment range, and business category to keep your profile accurate.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "Company Profile and Franchising Requirements form"
+        }
+      },
+      {
+        title: "Save and review regularly",
+        content:
+          "Save your referral profile and revisit it any time your growth model, investment ranges, or contact ownership changes.",
+        media: {
+          type: "screenshot",
+          fileName: "04.png",
+          alt: "Saved referral profile confirmation"
+        }
+      }
     ]
   }
 ];

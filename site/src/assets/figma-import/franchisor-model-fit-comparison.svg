@@ -1,60 +1,50 @@
 <svg viewBox="0 0 760 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title id="title">Model-fit comparison showing cost risk versus confidence outcomes</title>
-  <desc id="desc">Side-by-side comparison of wrong fit versus right fit outcomes, including confidence signals and earnings versus support cost bars.</desc>
-  <g transform="translate(12,12)">
-    <rect x="0" y="0" width="356" height="496" rx="24" fill="#ffe9e9" stroke="#f1c7c7" />
-    <rect x="380" y="0" width="356" height="496" rx="24" fill="#e8fbf4" stroke="#bfe9dc" />
+  <title id="title">Fit clarity impact on outcomes</title>
+  <desc id="desc">Two diverging paths showing owner earnings and support cost over time, comparing low fit versus high fit scenarios.</desc>
 
-    <text x="28" y="50" font-size="26" font-weight="700" fill="#8f2020" font-family="Inter, Arial, sans-serif">Wrong Fit</text>
-    <text x="408" y="50" font-size="26" font-weight="700" fill="#0d7258" font-family="Inter, Arial, sans-serif">Right Fit</text>
+  <!-- Left path: Low fit (declining) -->
+  <g transform="translate(80, 80)">
+    <!-- Earnings line (flat/declining) -->
+    <path d="M 10 200 Q 60 190 110 180 Q 160 170 210 160"
+          stroke="#fd7730" stroke-width="6" fill="none" stroke-linecap="round"/>
 
-    <text x="28" y="84" font-size="16" fill="#a94444" font-family="Inter, Arial, sans-serif">Costs outpace earnings</text>
-    <text x="408" y="84" font-size="16" fill="#2f816d" font-family="Inter, Arial, sans-serif">Earnings compound over time</text>
+    <!-- Support cost line (rising) -->
+    <path d="M 10 100 Q 60 90 110 60 Q 160 30 210 10"
+          stroke="#e94949" stroke-width="6" fill="none" stroke-linecap="round"/>
 
-    <line x1="178" y1="252" x2="178" y2="412" stroke="#e9adb0" stroke-dasharray="8 8" />
-    <line x1="558" y1="252" x2="558" y2="412" stroke="#9ee0cb" stroke-dasharray="8 8" />
+    <!-- Start points -->
+    <circle cx="10" cy="100" r="6" fill="#fd7730" opacity="0.6"/>
+    <circle cx="10" cy="200" r="6" fill="#e94949" opacity="0.6"/>
 
-    <rect x="96" y="330" width="74" height="82" rx="8" fill="#09cc9c" />
-    <rect x="186" y="248" width="74" height="164" rx="8" fill="#e94949" />
-    <text x="133" y="432" text-anchor="middle" font-size="12" fill="#314046" font-family="Inter, Arial, sans-serif">Earnings</text>
-    <text x="223" y="432" text-anchor="middle" font-size="12" fill="#314046" font-family="Inter, Arial, sans-serif">Support Cost</text>
+    <!-- Label -->
+    <text x="110" y="240" text-anchor="middle" font-size="14" font-weight="600" fill="#22252a" font-family="Inter, Arial, sans-serif">Without clarity</text>
+  </g>
 
-    <rect x="476" y="286" width="74" height="126" rx="8" fill="#09cc9c" />
-    <rect x="566" y="344" width="74" height="68" rx="8" fill="#e94949" />
-    <text x="513" y="432" text-anchor="middle" font-size="12" fill="#314046" font-family="Inter, Arial, sans-serif">Earnings</text>
-    <text x="603" y="432" text-anchor="middle" font-size="12" fill="#314046" font-family="Inter, Arial, sans-serif">Support Cost</text>
+  <!-- Right path: High fit (diverging) -->
+  <g transform="translate(420, 80)">
+    <!-- Earnings line (rising) -->
+    <path d="M 10 200 Q 60 160 110 100 Q 160 40 210 20"
+          stroke="#09cc9c" stroke-width="6" fill="none" stroke-linecap="round"/>
 
-    <g transform="translate(28,132)">
-      <circle cx="8" cy="8" r="8" fill="#e94949" />
-      <path d="M4.5 8h7" stroke="#fff" stroke-width="2" stroke-linecap="round" />
-      <text x="24" y="12" font-size="14" fill="#723c3c" font-family="Inter, Arial, sans-serif">Low model fit confidence</text>
-    </g>
-    <g transform="translate(28,166)">
-      <circle cx="8" cy="8" r="8" fill="#e94949" />
-      <path d="M4.5 8h7" stroke="#fff" stroke-width="2" stroke-linecap="round" />
-      <text x="24" y="12" font-size="14" fill="#723c3c" font-family="Inter, Arial, sans-serif">Validation friction increases</text>
-    </g>
-    <g transform="translate(28,200)">
-      <circle cx="8" cy="8" r="8" fill="#e94949" />
-      <path d="M4.5 8h7" stroke="#fff" stroke-width="2" stroke-linecap="round" />
-      <text x="24" y="12" font-size="14" fill="#723c3c" font-family="Inter, Arial, sans-serif">Transfer risk rises later</text>
-    </g>
+    <!-- Support cost line (declining) -->
+    <path d="M 10 100 Q 60 110 110 130 Q 160 150 210 160"
+          stroke="#e94949" stroke-width="6" fill="none" stroke-linecap="round"/>
 
-    <g transform="translate(408,132)">
-      <circle cx="8" cy="8" r="8" fill="#09cc9c" />
-      <path d="M4.5 8l2.2 2.3 4.8-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="24" y="12" font-size="14" fill="#275f52" font-family="Inter, Arial, sans-serif">Fit to your operating model</text>
-    </g>
-    <g transform="translate(408,166)">
-      <circle cx="8" cy="8" r="8" fill="#09cc9c" />
-      <path d="M4.5 8l2.2 2.3 4.8-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="24" y="12" font-size="14" fill="#275f52" font-family="Inter, Arial, sans-serif">Faster, clearer validation calls</text>
-    </g>
-    <g transform="translate(408,200)">
-      <circle cx="8" cy="8" r="8" fill="#09cc9c" />
-      <path d="M4.5 8l2.2 2.3 4.8-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="24" y="12" font-size="14" fill="#275f52" font-family="Inter, Arial, sans-serif">Protects Item 19 outcomes</text>
-    </g>
+    <!-- Start points -->
+    <circle cx="10" cy="100" r="6" fill="#e94949" opacity="0.6"/>
+    <circle cx="10" cy="200" r="6" fill="#09cc9c" opacity="0.6"/>
+
+    <!-- Label -->
+    <text x="110" y="240" text-anchor="middle" font-size="14" font-weight="600" fill="#22252a" font-family="Inter, Arial, sans-serif">With clarity</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(80, 360)">
+    <line x1="0" y1="0" x2="20" y2="0" stroke="#09cc9c" stroke-width="4" stroke-linecap="round"/>
+    <text x="30" y="5" font-size="12" fill="#22252a" font-family="Inter, Arial, sans-serif">Earnings</text>
+
+    <line x1="150" y1="0" x2="170" y2="0" stroke="#e94949" stroke-width="4" stroke-linecap="round"/>
+    <text x="180" y="5" font-size="12" fill="#22252a" font-family="Inter, Arial, sans-serif">Support cost</text>
   </g>
 </svg>
 

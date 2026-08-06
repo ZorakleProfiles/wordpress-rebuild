@@ -1,5 +1,6 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
+import { Image } from "astro:assets";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import PageHero from "../../components/PageHero.astro";
@@ -15,7 +16,7 @@ import spotonReferral from "../../assets/figma-import/referrall.png";
 import marketingBlueprint from "../../assets/figma-import/marketing_blueprint.png";
 import alignmentReport from "../../assets/figma-import/alignment_report.png";
 import heroBackground from "../../assets/figma-import/franchisor-hero.png";
-import franchisorModelFitComparison from "../../assets/figma-import/franchisor-model-fit-comparison.svg";
+import franchisorModelFitComparison from "../../assets/figma-import/franchisors.png";
 
 const steps = [
   {
@@ -143,12 +144,11 @@ const metrics = [
       <div class="section-shell">
         <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div class="rounded-2xl bg-transparent p-0">
-            <img
-              src={franchisorModelFitComparison.src}
+            <Image
+              src={franchisorModelFitComparison}
               alt="Model-fit comparison showing cost risk versus confidence outcomes"
-              class="h-auto w-full"
+              class="h-auto w-full rounded-2xl"
               loading="lazy"
-              decoding="async"
             />
           </div>
 

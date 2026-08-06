@@ -1,10 +1,9 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
-import {visionTool} from '@sanity/vision'
-import {schemaTypes} from './schemaTypes'
+import {schemaTypes} from './src/sanity/schemaTypes'
 
 export default defineConfig({
-  name: 'default',
+  name: 'zorakle-blog',
   title: 'Zorakle Blog',
 
   projectId: '4kjxjblw',
@@ -42,12 +41,9 @@ export default defineConfig({
               ),
           ]),
     }),
-    visionTool(),
   ],
 
   schema: {
     types: schemaTypes,
   },
 })
-
-

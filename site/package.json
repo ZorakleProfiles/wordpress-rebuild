@@ -20,13 +20,13 @@
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-is": "^19.2.8",
+    "sanity": "^6.9.1",
+    "styled-components": "^6.5.0",
     "tailwindcss": "^4.2.2",
     "typescript": "^6.0.0"
   },
   "overrides": {
     "vite": "^7.1.11",
     "esbuild": "^0.24.0"
-  },
-  "devDependencies": {
   }
 }

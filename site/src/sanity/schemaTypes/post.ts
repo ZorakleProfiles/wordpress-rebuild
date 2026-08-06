@@ -19,20 +19,6 @@ export const post = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'wordpressId',
-      title: 'WordPress ID',
-      type: 'string',
-      description: 'Legacy WordPress post ID used by import scripts for upserts.',
-      readOnly: true,
-    }),
-    defineField({
-      name: 'wordpressUrl',
-      title: 'WordPress URL',
-      type: 'url',
-      description: 'Original WordPress permalink for this post.',
-      readOnly: true,
-    }),
-    defineField({
       name: 'author',
       title: 'Author',
       type: 'reference',
@@ -92,19 +78,25 @@ export const post = defineType({
           type: 'image',
           options: {hotspot: true},
           fields: [
-            defineField({
-              name: 'alt',
-              title: 'Alt Text',
-              type: 'string',
-            }),
-            defineField({
-              name: 'caption',
-              title: 'Caption',
-              type: 'string',
-            }),
+            defineField({name: 'alt', title: 'Alt Text', type: 'string'}),
+            defineField({name: 'caption', title: 'Caption', type: 'string'}),
           ],
         }),
       ],
+    }),
+    defineField({
+      name: 'wordpressId',
+      title: 'WordPress ID',
+      type: 'string',
+      description: 'Legacy WordPress post ID used by import scripts for upserts.',
+      readOnly: true,
+    }),
+    defineField({
+      name: 'wordpressUrl',
+      title: 'WordPress URL',
+      type: 'url',
+      description: 'Original WordPress permalink for this post.',
+      readOnly: true,
     }),
   ],
   preview: {
@@ -117,7 +109,7 @@ export const post = defineType({
       return {
         title,
         media,
-        subtitle: date ? new Date(date).toLocaleDateString() : 'No date',
+        subtitle: date ? new Date(date).toLocaleDateString() : 'Draft',
       }
     },
   },

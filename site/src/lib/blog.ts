@@ -1,5 +1,5 @@
 import { sanityClient } from "sanity:client";
-import imageUrlBuilder from "@sanity/image-url";
+import { createImageUrlBuilder } from "@sanity/image-url";
 import { defineQuery } from "groq";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
@@ -22,6 +22,11 @@ interface SanityImage {
   [key: string]: unknown;
 }
 
+interface SanityAuthor {
+  name?: string;
+  slug?: SanitySlug;
+}
+
 interface SanityPost {
   _id: string;
   title?: string;
@@ -33,10 +38,12 @@ interface SanityPost {
   tags?: string[];
   categories?: string[];
   mainImage?: SanityImage;
+  author?: SanityAuthor;
 }
 
 export interface BlogPost {
   id: number;
+  sanityId: string;
   slug: string;
   title: string;
   excerpt: string;
@@ -46,6 +53,7 @@ export interface BlogPost {
   tags: string[];
   categories: string[];
   categorySlugs: string[];
+  authorName?: string;
   featuredImageUrl?: string;
   featuredImageAlt?: string;
 }
@@ -54,7 +62,7 @@ const postsByCategorySlugCache = new Map<string, Promise<BlogPost[]>>();
 const postsByTagCache = new Map<string, Promise<BlogPost[]>>();
 let allPostsCache: Promise<BlogPost[]> | null = null;
 
-const imageBuilder = imageUrlBuilder(sanityClient);
+const imageBuilder = createImageUrlBuilder(sanityClient);
 
 const SANITY_POSTS_QUERY = defineQuery(`
   *[_type == "post" && defined(slug.current)] | order(coalesce(publishedAt, _createdAt) desc) {
@@ -67,7 +75,8 @@ const SANITY_POSTS_QUERY = defineQuery(`
     _createdAt,
     tags,
     categories,
-    mainImage
+    mainImage,
+    "author": author->{ name, slug }
   }
 `);
 
@@ -122,6 +131,7 @@ function mapSanityPost(post: SanityPost, index: number): BlogPost {
 
   return {
     id: index + 1,
+    sanityId: post._id,
     slug,
     title,
     excerpt,
@@ -131,6 +141,7 @@ function mapSanityPost(post: SanityPost, index: number): BlogPost {
     tags,
     categories,
     categorySlugs: categories.map((category) => slugify(category)),
+    authorName: post.author?.name?.trim() || undefined,
     featuredImageUrl: toImageUrl(post.mainImage),
     featuredImageAlt: post.mainImage?.alt
   };

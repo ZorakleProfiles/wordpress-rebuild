@@ -1,0 +1,79 @@
+---
+const { node } = Astro.props as {
+  node: {
+    url?: string;
+    title?: string;
+    provider?: string;
+  };
+};
+
+const sourceUrl = typeof node?.url === "string" ? node.url.trim() : "";
+const title = typeof node?.title === "string" ? node.title.trim() : "";
+const provider = typeof node?.provider === "string" ? node.provider.trim().toLowerCase() : "external";
+
+function toEmbeddableUrl(rawUrl: string): string {
+  try {
+    const parsed = new URL(rawUrl);
+    const host = parsed.hostname.replace(/^www\./, "").toLowerCase();
+
+    if (host === "youtube.com" || host === "m.youtube.com") {
+      const id = parsed.searchParams.get("v");
+      if (id) {
+        return `https://www.youtube.com/embed/${id}`;
+      }
+    }
+
+    if (host === "youtu.be") {
+      const id = parsed.pathname.replace("/", "").trim();
+      if (id) {
+        return `https://www.youtube.com/embed/${id}`;
+      }
+    }
+
+    if (host === "vimeo.com") {
+      const id = parsed.pathname.split("/").filter(Boolean)[0];
+      if (id) {
+        return `https://player.vimeo.com/video/${id}`;
+      }
+    }
+
+    return rawUrl;
+  } catch {
+    return rawUrl;
+  }
+}
+
+function isVideoFile(rawUrl: string): boolean {
+  return /\.(mp4|webm|ogg|m4v)(\?.*)?$/i.test(rawUrl);
+}
+
+const embedUrl = sourceUrl ? toEmbeddableUrl(sourceUrl) : "";
+const isFileVideo = sourceUrl ? isVideoFile(sourceUrl) : false;
+const canUseIframe = ["youtube", "vimeo", "loom", "wistia"].includes(provider);
+---
+
+{sourceUrl && (
+  <figure class="my-8">
+    {isFileVideo ? (
+      <video class="w-full rounded-xl" controls preload="metadata">
+        <source src={sourceUrl} />
+        Your browser does not support the video tag.
+      </video>
+    ) : canUseIframe ? (
+      <iframe
+        src={embedUrl}
+        title={title || "Embedded media"}
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    ) : (
+      <a href={sourceUrl} target="_blank" rel="noopener noreferrer" class="text-[#fd7730] underline underline-offset-2">
+        {title || "Open embedded media"}
+      </a>
+    )}
+    {title && <figcaption class="mt-2 text-center text-sm text-[#8a8e98]">{title}</figcaption>}
+  </figure>
+)}
+

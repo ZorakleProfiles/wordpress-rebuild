@@ -45,6 +45,7 @@ const client = createClient({
 })
 
 const imageCache = new Map()
+const MEDIA_TOKEN_PREFIX = '__WP_MEDIA_'
 
 const portableTextSchema = Schema.compile({
   name: 'importSchema',
@@ -193,13 +194,13 @@ async function htmlToPortableText(html = '') {
   }
 
   try {
-    const {htmlWithTokens, inlineImages} = replaceInlineImagesWithTokens(html)
+    const {htmlWithTokens, inlineMedia} = replaceInlineMediaWithTokens(html)
 
     const blocks = htmlToBlocks(htmlWithTokens, blockContentType, {
       parseHtml: (value) => new JSDOM(value).window.document,
     })
 
-    return resolveInlineImageTokens(blocks, inlineImages)
+    return resolveInlineMediaTokens(blocks, inlineMedia)
   } catch (error) {
     const detail = error instanceof Error ? error.message : String(error)
     console.warn(`Portable Text conversion failed, falling back to plain text block. Reason: ${detail}`)
@@ -225,43 +226,81 @@ async function htmlToPortableText(html = '') {
   }
 }
 
-function replaceInlineImagesWithTokens(html) {
+function replaceInlineMediaWithTokens(html) {
   const dom = new JSDOM(html)
   const doc = dom.window.document
-  const inlineImages = []
+  const inlineMedia = []
 
-  doc.querySelectorAll('img').forEach((img, index) => {
-    const src = img.getAttribute('src')
-    if (!src) {
-      img.remove()
+  doc.querySelectorAll('img, iframe, video').forEach((element, index) => {
+    const tagName = element.tagName.toLowerCase()
+    const token = `${MEDIA_TOKEN_PREFIX}${index}__`
+    const paragraph = doc.createElement('p')
+    paragraph.textContent = token
+
+    if (tagName === 'img') {
+      const src = normalizeMediaUrl(element.getAttribute('src'))
+      if (!src) {
+        element.remove()
+        return
+      }
+
+      inlineMedia.push({
+        token,
+        type: 'image',
+        src,
+        alt: element.getAttribute('alt') || undefined,
+        caption: getImageCaption(element) || undefined,
+      })
+      element.replaceWith(paragraph)
       return
     }
 
-    const token = `[[WP_IMAGE_${index}]]`
-    inlineImages.push({
-      token,
-      src,
-      alt: img.getAttribute('alt') || undefined,
-      caption: img.getAttribute('title') || undefined,
-    })
+    if (tagName === 'iframe') {
+      const src = normalizeMediaUrl(element.getAttribute('src'))
+      if (!src) {
+        element.remove()
+        return
+      }
 
-    const paragraph = doc.createElement('p')
-    paragraph.textContent = token
-    img.replaceWith(paragraph)
+      inlineMedia.push({
+        token,
+        type: 'embed',
+        url: src,
+        title: element.getAttribute('title') || undefined,
+      })
+      element.replaceWith(paragraph)
+      return
+    }
+
+    const videoSource = normalizeMediaUrl(
+      element.getAttribute('src') || element.querySelector('source')?.getAttribute('src')
+    )
+    if (!videoSource) {
+      element.remove()
+      return
+    }
+
+    inlineMedia.push({
+      token,
+      type: 'embed',
+      url: videoSource,
+      title: element.getAttribute('title') || undefined,
+    })
+    element.replaceWith(paragraph)
   })
 
   return {
     htmlWithTokens: doc.body.innerHTML,
-    inlineImages,
+    inlineMedia,
   }
 }
 
-async function resolveInlineImageTokens(blocks, inlineImages) {
-  if (!inlineImages.length) {
+async function resolveInlineMediaTokens(blocks, inlineMedia) {
+  if (!inlineMedia.length) {
     return blocks
   }
 
-  const tokenMap = new Map(inlineImages.map((image) => [image.token, image]))
+  const tokenMap = new Map(inlineMedia.map((media) => [media.token, media]))
   const resolvedBlocks = []
 
   for (const block of blocks) {
@@ -277,19 +316,67 @@ async function resolveInlineImageTokens(blocks, inlineImages) {
       continue
     }
 
-    const asset = await uploadImageToSanity(tokenMatch.src)
+    if (tokenMatch.type === 'image') {
+      const asset = await uploadImageToSanity(tokenMatch.src)
+      resolvedBlocks.push({
+        _type: 'image',
+        asset: {
+          _type: 'reference',
+          _ref: asset._id,
+        },
+        alt: tokenMatch.alt,
+        caption: tokenMatch.caption,
+      })
+      continue
+    }
+
     resolvedBlocks.push({
-      _type: 'image',
-      asset: {
-        _type: 'reference',
-        _ref: asset._id,
-      },
-      alt: tokenMatch.alt,
-      caption: tokenMatch.caption,
+      _type: 'embed',
+      url: tokenMatch.url,
+      provider: getEmbedProvider(tokenMatch.url),
+      title: tokenMatch.title,
     })
   }
 
   return resolvedBlocks
+}
+
+function getImageCaption(imageElement) {
+  const title = imageElement.getAttribute('title')?.trim()
+  if (title) {
+    return title
+  }
+
+  const figure = imageElement.closest('figure')
+  const figcaption = figure?.querySelector('figcaption')?.textContent?.trim()
+  return figcaption || undefined
+}
+
+function normalizeMediaUrl(url) {
+  if (typeof url !== 'string' || !url.trim()) {
+    return undefined
+  }
+
+  const trimmed = url.trim()
+  if (trimmed.startsWith('//')) {
+    return `https:${trimmed}`
+  }
+
+  return trimmed
+}
+
+function getEmbedProvider(url) {
+  try {
+    const parsed = new URL(url)
+    const host = parsed.hostname.replace(/^www\./, '').toLowerCase()
+    if (host.includes('youtube.com') || host.includes('youtu.be')) return 'youtube'
+    if (host.includes('vimeo.com')) return 'vimeo'
+    if (host.includes('loom.com')) return 'loom'
+    if (host.includes('wistia.com') || host.includes('wistia.net')) return 'wistia'
+    return 'external'
+  } catch {
+    return 'external'
+  }
 }
 
 async function mapWordPressPostToSanity(post) {
@@ -460,8 +547,16 @@ function slugify(value = '') {
 
 async function getFeaturedImage(post) {
   const media = post?._embedded?.['wp:featuredmedia']?.[0]
-  const url = media?.source_url
-  if (!url || typeof url !== 'string') {
+  const url = normalizeMediaUrl(media?.source_url)
+  if (!url) {
+    return undefined
+  }
+
+  const mediaType = String(media?.media_type || '').toLowerCase()
+  const mimeType = String(media?.mime_type || '').toLowerCase()
+  const looksLikeImageUrl = /\.(avif|gif|jpe?g|png|svg|webp)(\?.*)?$/i.test(url)
+  const isImage = mediaType === 'image' || mimeType.startsWith('image/') || looksLikeImageUrl
+  if (!isImage) {
     return undefined
   }
 
@@ -479,7 +574,12 @@ async function getFeaturedImage(post) {
 }
 
 async function uploadImageToSanity(url) {
-  const cached = imageCache.get(url)
+  const normalizedUrl = normalizeMediaUrl(url)
+  if (!normalizedUrl) {
+    throw new Error('Missing image URL for upload')
+  }
+
+  const cached = imageCache.get(normalizedUrl)
   if (cached) {
     return cached
   }
@@ -488,17 +588,34 @@ async function uploadImageToSanity(url) {
     return {_id: 'image-dry-run'}
   }
 
-  const imageResponse = await fetch(url)
+  const existingAssetId = await client.fetch(
+    '*[_type == "sanity.imageAsset" && source.url == $url][0]._id',
+    {url: normalizedUrl}
+  )
+  if (existingAssetId) {
+    const existingAsset = {_id: existingAssetId}
+    imageCache.set(normalizedUrl, existingAsset)
+    return existingAsset
+  }
+
+  const imageResponse = await fetch(normalizedUrl)
   if (!imageResponse.ok) {
     const body = await safeResponseText(imageResponse)
     throw new Error(`Image download failed (${imageResponse.status}): ${body}`)
   }
 
   const arrayBuffer = await imageResponse.arrayBuffer()
-  const filename = getFilenameFromUrl(url)
-  const asset = await client.assets.upload('image', Buffer.from(arrayBuffer), {filename})
+  const filename = getFilenameFromUrl(normalizedUrl)
+  const asset = await client.assets.upload('image', Buffer.from(arrayBuffer), {
+    filename,
+    source: {
+      id: normalizedUrl,
+      name: 'wordpress-import',
+      url: normalizedUrl,
+    },
+  })
 
-  imageCache.set(url, asset)
+  imageCache.set(normalizedUrl, asset)
   return asset
 }
 

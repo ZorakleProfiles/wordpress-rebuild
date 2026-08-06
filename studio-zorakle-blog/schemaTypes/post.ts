@@ -104,6 +104,29 @@ export const post = defineType({
             }),
           ],
         }),
+        defineArrayMember({
+          name: 'embed',
+          title: 'Embedded Media',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'url',
+              title: 'Embed URL',
+              type: 'url',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'provider',
+              title: 'Provider',
+              type: 'string',
+            }),
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+            }),
+          ],
+        }),
       ],
     }),
   ],

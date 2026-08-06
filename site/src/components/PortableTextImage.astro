@@ -1,0 +1,27 @@
+---
+/**
+ * Custom Portable Text image block component.
+ * Registered as `components.types.image` in PortableText.
+ * Receives the Sanity image block as `node`.
+ */
+import { urlFor } from "../utils/sanity.ts";
+
+const { node } = Astro.props as { node: Record<string, unknown> };
+const src = urlFor(node).width(1200).fit("max").auto("format").url();
+const alt = (node.alt as string) || "";
+const caption = (node.caption as string) || "";
+---
+
+<figure class="my-8">
+  <img
+    src={src}
+    alt={alt}
+    class="w-full rounded-xl object-cover"
+    loading="lazy"
+    decoding="async"
+  />
+  {caption && (
+    <figcaption class="mt-2 text-center text-sm text-[#8a8e98]">{caption}</figcaption>
+  )}
+</figure>
+

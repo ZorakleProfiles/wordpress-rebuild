@@ -1,13 +1,13 @@
 import { sanityClient } from "sanity:client";
-import imageUrlBuilder from "@sanity/image-url";
+import { createImageUrlBuilder } from "@sanity/image-url";
 import { defineQuery } from "groq";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 // ── Image URL builder ────────────────────────────────────────────────────────
 
-const builder = imageUrlBuilder(sanityClient);
+const builder = createImageUrlBuilder(sanityClient);
 
-export function urlFor(source: SanityImageSource) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function urlFor(source: any) {
   return builder.image(source);
 }
 
@@ -21,7 +21,8 @@ export const POSTS_QUERY = defineQuery(
 
 export const POST_BY_SLUG_QUERY = defineQuery(
   `*[_type == "post" && slug.current == $slug][0]{
-    _id, title, slug, publishedAt, excerpt, mainImage, categories, tags, body
+    _id, title, slug, publishedAt, excerpt, mainImage, categories, tags, body,
+    "author": author->{ name, slug }
   }`
 );
 

@@ -1,9 +1,47 @@
+import { sanityClient } from "sanity:client";
+import imageUrlBuilder from "@sanity/image-url";
+import { defineQuery } from "groq";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+
+interface PortableTextSpan {
+  _type?: string;
+  text?: string;
+}
+
+interface PortableTextBlock {
+  _type?: string;
+  children?: PortableTextSpan[];
+}
+
+interface SanitySlug {
+  current?: string;
+}
+
+interface SanityImage {
+  alt?: string;
+  [key: string]: unknown;
+}
+
+interface SanityPost {
+  _id: string;
+  title?: string;
+  slug?: SanitySlug;
+  excerpt?: string;
+  body?: PortableTextBlock[];
+  publishedAt?: string;
+  _createdAt?: string;
+  tags?: string[];
+  categories?: string[];
+  mainImage?: SanityImage;
+}
+
 export interface BlogPost {
   id: number;
   slug: string;
   title: string;
   excerpt: string;
   contentHtml: string;
+  body: PortableTextBlock[];
   publishedAt: string;
   tags: string[];
   categories: string[];
@@ -12,11 +50,26 @@ export interface BlogPost {
   featuredImageAlt?: string;
 }
 
-const portalUrl = import.meta.env.PORTAL_URL?.trim();
-const portalBlogApiUrl = `${portalUrl}/website/hubspot/blogs`;
 const postsByCategorySlugCache = new Map<string, Promise<BlogPost[]>>();
 const postsByTagCache = new Map<string, Promise<BlogPost[]>>();
 let allPostsCache: Promise<BlogPost[]> | null = null;
+
+const imageBuilder = imageUrlBuilder(sanityClient);
+
+const SANITY_POSTS_QUERY = defineQuery(`
+  *[_type == "post" && defined(slug.current)] | order(coalesce(publishedAt, _createdAt) desc) {
+    _id,
+    title,
+    slug,
+    excerpt,
+    body,
+    publishedAt,
+    _createdAt,
+    tags,
+    categories,
+    mainImage
+  }
+`);
 
 export const DEFAULT_ARCHIVE_PAGE_SIZE = 12;
 
@@ -25,87 +78,6 @@ export interface PaginatedPosts {
   page: number;
   totalPages: number;
   totalPosts: number;
-}
-
-function ensureHttpUrl(rawValue: string, variableName: string): URL {
-  try {
-    const url = new URL(rawValue);
-    if (url.protocol !== "http:" && url.protocol !== "https:") {
-      throw new Error();
-    }
-
-    return url;
-  } catch {
-    throw new Error(`${variableName} must be an absolute http(s) URL. Received: ${rawValue}`);
-  }
-}
-
-function ensurePortalBlogApiEndpoint(): string {
-  if (portalBlogApiUrl) {
-    if (portalBlogApiUrl.startsWith("/")) {
-      if (!portalUrl) {
-        throw new Error("PORTAL_BLOG_API_URL is relative but PORTAL_URL is missing. Set both in site/.env");
-      }
-
-      const baseUrl = ensureHttpUrl(portalUrl, "PORTAL_URL");
-      return new URL(portalBlogApiUrl, baseUrl).toString();
-    }
-
-    return ensureHttpUrl(portalBlogApiUrl, "PORTAL_BLOG_API_URL").toString();
-  }
-
-  if (!portalUrl) {
-    throw new Error("PORTAL_URL or PORTAL_BLOG_API_URL is not configured. Set it in site/.env");
-  }
-
-  const baseUrl = ensureHttpUrl(portalUrl, "PORTAL_URL");
-  return new URL("/api/blog", baseUrl).toString();
-}
-
-function getPortalOrigin(): string {
-  const endpoint = ensurePortalBlogApiEndpoint();
-  return new URL(endpoint).origin;
-}
-
-function asRecord(value: unknown): Record<string, unknown> {
-  return value && typeof value === "object" ? (value as Record<string, unknown>) : {};
-}
-
-function toText(value: unknown): string {
-  if (typeof value === "string") {
-    return value;
-  }
-
-  if (typeof value === "number" || typeof value === "boolean") {
-    return String(value);
-  }
-
-  return "";
-}
-
-function toStringArray(value: unknown): string[] {
-  if (Array.isArray(value)) {
-    return value
-      .map((item) => {
-        if (typeof item === "string") {
-          return item;
-        }
-
-        const itemRecord = asRecord(item);
-        return toText(itemRecord.slug ?? itemRecord.name ?? itemRecord.title ?? itemRecord.label);
-      })
-      .map((item) => item.trim())
-      .filter(Boolean);
-  }
-
-  if (typeof value === "string") {
-    return value
-      .split(",")
-      .map((item) => item.trim())
-      .filter(Boolean);
-  }
-
-  return [];
 }
 
 function slugify(value: string): string {
@@ -117,110 +89,56 @@ function slugify(value: string): string {
     .replace(/-+/g, "-");
 }
 
-function toDateString(value: unknown): string {
-  if (typeof value === "number") {
-    const fromSeconds = new Date(value * 1000).toISOString();
-    return Number.isNaN(Date.parse(fromSeconds)) ? new Date(value).toISOString() : fromSeconds;
-  }
-
-  const rawValue = toText(value).trim();
-  if (!rawValue) {
-    return new Date(0).toISOString();
-  }
-
-  const parsed = new Date(rawValue);
-  if (!Number.isNaN(parsed.getTime())) {
-    return parsed.toISOString();
-  }
-
-  return new Date(0).toISOString();
-}
-
-function stripHtml(html: string): string {
-  return html
-    .replace(/<[^>]*>/g, " ")
+function toPortableTextPlainText(body: PortableTextBlock[] = []): string {
+  return body
+    .filter((block) => block?._type === "block" && Array.isArray(block.children))
+    .map((block) => block.children?.map((child) => child?.text ?? "").join("") ?? "")
+    .join(" ")
     .replace(/\s+/g, " ")
     .trim();
 }
 
-function rewriteInternalLinks(html: string): string {
-  const portalOrigin = getPortalOrigin();
-
-  // Keep links functional while preventing Astro from crawling root-relative routes during build.
-  return html.replace(/href=(['"])(\/[^'"]*)\1/g, (_match, quote: string, path: string) => {
-    return `href=${quote}${portalOrigin}${path}${quote}`;
-  });
-}
-
-function extractPostsFromPayload(payload: unknown): unknown[] {
-  if (Array.isArray(payload)) {
-    return payload;
+function toImageUrl(image: SanityImage | undefined): string | undefined {
+  if (!image) {
+    return undefined;
   }
 
-  const record = asRecord(payload);
-  const posts = record.results;
-  return Array.isArray(posts) ? posts : [];
+  try {
+    return imageBuilder.image(image as SanityImageSource).width(1200).fit("max").auto("format").url();
+  } catch {
+    return undefined;
+  }
 }
 
-function mapPortalPost(rawPost: unknown, index: number): BlogPost {
-  const post = asRecord(rawPost);
-  const idValue = post.id ?? post.postId ?? post.blogId;
-  const id = Number(idValue) || index + 1;
-  const title = toText(post.title ?? post.name ?? post.headline);
-  const slug = toText(post.slug ?? post.path ?? post.hs_path) || slugify(title || `post-${id}`);
-
-  const excerptSource = toText(post.excerpt ?? post.summary ?? post.description);
-  const contentSource = toText(post.postBody);
-  const excerpt = stripHtml(excerptSource || contentSource).slice(0, 280);
-
-  const publishedAt = toDateString(post.publishDate);
-
-  const categories = toStringArray(post.categories ?? post.categoryNames ?? post.topicNames ?? post.topics);
-  const categorySlugs = toStringArray(post.categorySlugs);
-  const normalizedCategorySlugs = (categorySlugs.length > 0 ? categorySlugs : categories.map(slugify)).map((value) =>
-    value.toLowerCase()
-  );
-
-  const tags = toStringArray(post.tags ?? post.tagNames ?? post.tag_list);
+function mapSanityPost(post: SanityPost, index: number): BlogPost {
+  const title = post.title?.trim() || "Untitled";
+  const slug = post.slug?.current?.trim() || slugify(title || `post-${index + 1}`);
+  const body = Array.isArray(post.body) ? post.body : [];
+  const plainBody = toPortableTextPlainText(body);
+  const excerpt = (post.excerpt?.trim() || plainBody).slice(0, 280);
+  const publishedAt = post.publishedAt || post._createdAt || new Date(0).toISOString();
+  const categories = Array.isArray(post.categories) ? post.categories : [];
+  const tags = Array.isArray(post.tags) ? post.tags : [];
 
   return {
-    id,
+    id: index + 1,
     slug,
-    title: stripHtml(title),
+    title,
     excerpt,
-    contentHtml: rewriteInternalLinks(contentSource),
+    contentHtml: "",
+    body,
     publishedAt,
     tags,
     categories,
-    categorySlugs: normalizedCategorySlugs,
-    featuredImageUrl: toText(post.featuredImageUrl ?? post.featured_image_url ?? post.imageUrl ?? post.featuredImage),
-    featuredImageAlt: toText(post.featuredImageAlt ?? post.featured_image_alt ?? post.imageAlt)
+    categorySlugs: categories.map((category) => slugify(category)),
+    featuredImageUrl: toImageUrl(post.mainImage),
+    featuredImageAlt: post.mainImage?.alt
   };
 }
 
-async function fetchPortalBlogPosts(tag?: string): Promise<BlogPost[]> {
-  const endpoint = new URL(ensurePortalBlogApiEndpoint());
-  const normalizedTag = tag?.trim();
-  if (normalizedTag) {
-    endpoint.searchParams.set("tag", normalizedTag);
-  }
-
-  const response = await fetch(endpoint.toString(), {
-    headers: {
-      Accept: "application/json"
-    }
-  });
-  if (!response.ok) {
-    const responseBody = await response.text();
-    throw new Error(
-      `Failed to fetch blog posts from portal API: ${response.status} ${response.statusText}. URL: ${endpoint.toString()}. Body: ${responseBody.slice(0, 500)}`
-    );
-  }
-
-  let payload = (await response.json()) as unknown;
-  return extractPostsFromPayload(payload)
-    .map((post, index) => mapPortalPost(post, index))
-    .filter((post) => Boolean(post.slug));
+async function fetchSanityPosts(): Promise<BlogPost[]> {
+  const posts = await sanityClient.fetch<SanityPost[]>(SANITY_POSTS_QUERY);
+  return posts.map((post, index) => mapSanityPost(post, index)).filter((post) => Boolean(post.slug));
 }
 
 export async function getAllPosts(): Promise<BlogPost[]> {
@@ -228,7 +146,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     return allPostsCache;
   }
 
-  const postsPromise = fetchPortalBlogPosts();
+  const postsPromise = fetchSanityPosts();
   allPostsCache = postsPromise;
   postsPromise.catch(() => {
     if (allPostsCache === postsPromise) {
@@ -250,7 +168,11 @@ export async function getPostsByTag(tag: string): Promise<BlogPost[]> {
     return cachedPosts;
   }
 
-  const postsPromise = fetchPortalBlogPosts(normalizedTag);
+  const postsPromise = (async () => {
+    const posts = await getAllPosts();
+    return posts.filter((post) => post.tags.some((item) => item.trim().toLowerCase() === normalizedTag));
+  })();
+
   postsByTagCache.set(normalizedTag, postsPromise);
   postsPromise.catch(() => {
     postsByTagCache.delete(normalizedTag);

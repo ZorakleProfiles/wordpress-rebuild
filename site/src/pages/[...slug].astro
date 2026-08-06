@@ -2,6 +2,7 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import { PortableText } from "astro-portabletext";
 import { getAllPosts, type BlogPost } from "../lib/blog.ts";
 
 export async function getStaticPaths() {
@@ -42,7 +43,26 @@ const pageDescription = post.excerpt || `Read ${post.title} on Zorakle Blog.`;
       <h1 class="mt-4 max-w-5xl font-display text-[42px] leading-tight text-[#22252a] md:text-[56px]">{post.title}</h1>
       <p class="mt-4 text-sm font-semibold text-[#22252a]">Posted on {publishedDate}</p>
 
-      <div class="blog-content mt-8 border-t border-[#d1d4dd] pt-8" set:html={post.contentHtml}></div>
+      {post.featuredImageUrl && (
+        <div class="mt-8">
+          <img
+            src={post.featuredImageUrl}
+            alt={post.featuredImageAlt || post.title}
+            class="w-full rounded-xl object-cover"
+            loading="eager"
+          />
+        </div>
+      )}
+
+      {
+        post.body.length > 0 ? (
+          <div class="blog-content mt-8 border-t border-[#d1d4dd] pt-8">
+            <PortableText value={post.body} />
+          </div>
+        ) : (
+          <div class="blog-content mt-8 border-t border-[#d1d4dd] pt-8" set:html={post.contentHtml}></div>
+        )
+      }
     </article>
   </main>
 

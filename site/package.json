@@ -9,14 +9,24 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/react": "^6.0.2",
+    "@sanity/astro": "^3.5.0",
+    "@sanity/image-url": "^2.1.1",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.3.6",
-    "tailwindcss": "^4.2.2"
+    "astro-portabletext": "^0.13.0",
+    "groq": "^6.9.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-is": "^19.2.8",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^6.0.0"
   },
   "overrides": {
-    "vite": "^7.1.11"
+    "vite": "^7.1.11",
+    "esbuild": "^0.24.0"
   },
   "devDependencies": {
-    "wrangler": "^4.111.0"
   }
 }

@@ -10,4 +10,3 @@
     "preview": "npm --prefix site run preview"
   }
 }
-

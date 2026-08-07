@@ -2,11 +2,10 @@ FROM node:22
 
 WORKDIR /app
 
-# ── Astro site ────────────────────────────────────────────────────────────────
-COPY site/package*.json ./site/
-WORKDIR /app/site
-RUN npm install --legacy-peer-deps && \
-    npm install --save-dev @rollup/rollup-linux-arm64-gnu @rolldown/binding-linux-arm64-gnu 2>/dev/null || true
+# ── Astro site (installed via root npm workspace) ───────────────────────────
+COPY package.json package-lock.json ./
+COPY site/package.json ./site/
+RUN npm ci --legacy-peer-deps
 
 # ── Sanity Studio ─────────────────────────────────────────────────────────────
 COPY studio-zorakle-blog/package*.json /app/studio-zorakle-blog/

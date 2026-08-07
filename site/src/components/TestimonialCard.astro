@@ -14,42 +14,115 @@ interface Props {
 }
 
 const { name, company, type, quote, class: className = "", dataIndex } = Astro.props;
+const typeModifier = type.trim().toLowerCase() === "broker" ? "is-broker" : "is-franchisor";
 ---
 
 <article class:list={["testimonial-card", className]} data-index={dataIndex}>
+  <span class="testimonial-quote-mark" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7.5 16.5C5.57 16.5 4 14.93 4 13C4 11.07 5.57 9.5 7.5 9.5H8.5V6.5H5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M16.5 16.5C14.57 16.5 13 14.93 13 13C13 11.07 14.57 9.5 16.5 9.5H17.5V6.5H14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </span>
+
   <div class="testimonial-card-head">
     <div class="min-w-0">
       <p class="truncate text-base font-bold text-[#22252a]">{name}</p>
       <p class="truncate text-sm text-[#3b3e47]">{company}</p>
     </div>
-    <p class="testimonial-type">{type}</p>
+    <p class:list={["testimonial-type", typeModifier]}>{type}</p>
   </div>
 
-  <p class="mt-4 text-sm leading-6 text-[#22252a] md:text-[0.95rem] md:leading-7">{quote}</p>
+  <p class="testimonial-quote mt-4 text-sm leading-6 text-[#22252a] md:text-[0.95rem] md:leading-7">{quote}</p>
 </article>
 
 <style>
   .testimonial-card {
+    position: relative;
+    overflow: hidden;
     border-radius: 1rem;
     border: 1px solid #d1d4dd;
-    background: #f3f3f3;
+    background: linear-gradient(160deg, #ffffff 0%, #f3f3f3 65%);
     padding: 1.1rem;
     min-height: 13.5rem;
+    box-shadow: 0 1px 2px rgba(34, 37, 42, 0.04);
+    transition: border-color 220ms ease, box-shadow 220ms ease;
+  }
+
+  /* Brand accent bar along the top. */
+  .testimonial-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #fd7730 0%, #09cc9c 100%);
+    opacity: 0.85;
+  }
+
+  .testimonial-card:hover {
+    border-color: #fd7730;
+    box-shadow: 0 10px 28px -12px rgba(34, 37, 42, 0.28);
+  }
+
+  /* Oversized decorative quote flourish behind the content. */
+  .testimonial-quote-mark {
+    position: absolute;
+    right: 0.4rem;
+    bottom: 0.1rem;
+    width: 5.5rem;
+    height: 5.5rem;
+    color: #fd7730;
+    opacity: 0.08;
+    pointer-events: none;
+    transition: opacity 220ms ease;
+  }
+
+  .testimonial-card:hover .testimonial-quote-mark {
+    opacity: 0.16;
+  }
+
+  .testimonial-quote-mark svg {
+    width: 100%;
+    height: 100%;
   }
 
   .testimonial-card-head {
+    position: relative;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 0.75rem;
   }
 
+  /* Color-coded audience badge. */
   .testimonial-type {
     margin: 0;
-    font-size: 0.62rem;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    padding: 0.22rem 0.6rem;
+    font-size: 0.6rem;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #666a73;
+  }
+
+  .testimonial-type.is-broker {
+    color: #0b7a61;
+    background: #ecfdf8;
+    border: 1px solid #a8ecd9;
+  }
+
+  .testimonial-type.is-franchisor {
+    color: #b34e12;
+    background: #fff4ee;
+    border: 1px solid #fbd3ba;
+  }
+
+  .testimonial-quote {
+    position: relative;
   }
 
   @media (min-width: 1024px) {

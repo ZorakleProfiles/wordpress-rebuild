@@ -217,8 +217,11 @@ function getInitialCardClass(idx: number) {
   }
 
 
+  /* Don't touch border-top-color — the card keeps its type-colored top border. */
   [data-testimonial-carousel] .testimonial-card.is-active {
-    border-color: #d1d4dd;
+    border-right-color: #d1d4dd;
+    border-bottom-color: #d1d4dd;
+    border-left-color: #d1d4dd;
   }
 
   [data-testimonial-carousel] .testimonial-card.is-left,

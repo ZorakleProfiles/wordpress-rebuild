@@ -68,7 +68,12 @@ export default defineConfig({
     sitemap({
       filter: (page) => {
         const { pathname } = new URL(page);
-        return pathname !== "/studio" && !pathname.startsWith("/studio/");
+        return (
+          pathname !== "/studio" &&
+          !pathname.startsWith("/studio/") &&
+          pathname !== "/preview" &&
+          !pathname.startsWith("/preview/")
+        );
       },
     }),
   ],

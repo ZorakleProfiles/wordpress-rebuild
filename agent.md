@@ -33,7 +33,7 @@ docker logs zorakle-wp-update-astro-1 | tail -50
 
 ## 4) Run Commands Inside the Container
 
-Use `docker exec` for all app-level commands.
+This project is **npm-based** (`package-lock.json` is the lockfile — do not use yarn or introduce a `yarn.lock`). Use `docker exec` for all app-level commands.
 
 ```bash
 docker exec -it -w /app/site zorakle-wp-update-astro-1 sh
@@ -42,10 +42,18 @@ docker exec -it -w /app/site zorakle-wp-update-astro-1 sh
 Examples without opening a shell:
 
 ```bash
-docker exec -w /app/site zorakle-wp-update-astro-1 yarn dev
-docker exec -w /app/site zorakle-wp-update-astro-1 yarn build
-docker exec -w /app/site zorakle-wp-update-astro-1 yarn astro check
+docker exec -w /app/site zorakle-wp-update-astro-1 npm run dev
+docker exec -w /app/site zorakle-wp-update-astro-1 npm run build
+docker exec -w /app/site zorakle-wp-update-astro-1 npx astro check
 ```
+
+Installing dependencies (always inside the container, with `--legacy-peer-deps` to match the Dockerfile):
+
+```bash
+docker exec -w /app/site zorakle-wp-update-astro-1 npm install --legacy-peer-deps <package>
+```
+
+After adding or removing dependencies, do the full rebuild in section 6 so the image layer cache matches `package.json`/`package-lock.json`.
 
 ## 5) File Editing Workflow
 
@@ -55,6 +63,8 @@ docker exec -w /app/site zorakle-wp-update-astro-1 yarn astro check
 - Validate runtime changes from container logs.
 
 ## 6) Rebuild When Dependencies or Dockerfile Change
+
+Required after any change to `package.json`, `package-lock.json`, or the `Dockerfile`:
 
 ```bash
 docker compose down

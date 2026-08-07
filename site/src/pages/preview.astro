@@ -1,0 +1,240 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+---
+
+<MainLayout title="Draft Preview | Zorakle" description="Preview a draft blog post." noindex={true}>
+  <SiteHeader />
+
+  <main class="bg-[#f7f8fb] py-14 md:py-16">
+    <article class="section-shell rounded-xl bg-white px-6 py-8 shadow-sm md:px-10 md:py-10">
+      <div class="mb-6 flex items-center gap-3 rounded-lg border border-[#fd7730]/40 bg-[#fff4ee] px-4 py-3 text-sm text-[#22252a]">
+        <span class="inline-block h-2 w-2 shrink-0 rounded-full bg-[#fd7730]"></span>
+        <span>
+          <strong>Draft preview</strong> — this content is not published yet and may differ from the live site.
+        </span>
+      </div>
+
+      <div id="preview-status" class="py-16 text-center text-[#8a8e98]">Loading draft…</div>
+
+      <div id="preview-post" class="hidden">
+        <h1 id="preview-title" class="mt-4 max-w-5xl font-display text-[42px] leading-tight text-[#22252a] md:text-[56px]"></h1>
+        <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-semibold text-[#22252a]">
+          <span id="preview-date"></span>
+          <a
+            id="preview-edit-link"
+            href="/studio"
+            class="ml-auto text-xs font-medium text-[#fd7730] underline underline-offset-2 hover:opacity-80"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Edit in Studio ↗
+          </a>
+        </div>
+        <div id="preview-body" class="blog-content mt-8 border-t border-[#d1d4dd] pt-8"></div>
+      </div>
+    </article>
+  </main>
+
+  <SiteFooter />
+</MainLayout>
+
+<script>
+  import { createClient } from "@sanity/client";
+  import { toHTML, uriLooksSafe } from "@portabletext/to-html";
+  import { createImageUrlBuilder } from "@sanity/image-url";
+
+  const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID || "4kjxjblw";
+  const dataset = import.meta.env.PUBLIC_SANITY_DATASET || "production";
+
+  // withCredentials reuses the editor's Sanity login session (same one that
+  // powers the embedded Studio at /studio) so drafts are readable without
+  // exposing an API token in the client bundle.
+  const client = createClient({
+    projectId,
+    dataset,
+    apiVersion: "2026-08-01",
+    useCdn: false,
+    perspective: "drafts",
+    withCredentials: true,
+  });
+
+  const imageBuilder = createImageUrlBuilder({ projectId, dataset });
+
+  const statusEl = document.getElementById("preview-status")!;
+  const postEl = document.getElementById("preview-post")!;
+
+  function showStatus(html: string) {
+    statusEl.innerHTML = html;
+    statusEl.classList.remove("hidden");
+    postEl.classList.add("hidden");
+  }
+
+  function escapeHtml(value: string): string {
+    return value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function toEmbeddableUrl(rawUrl: string): string {
+    try {
+      const parsed = new URL(rawUrl);
+      const host = parsed.hostname.replace(/^www\./, "").toLowerCase();
+      if (host === "youtube.com" || host === "m.youtube.com") {
+        const id = parsed.searchParams.get("v");
+        if (id) return `https://www.youtube.com/embed/${id}`;
+      }
+      if (host === "youtu.be") {
+        const id = parsed.pathname.replace("/", "").trim();
+        if (id) return `https://www.youtube.com/embed/${id}`;
+      }
+      if (host === "vimeo.com") {
+        const id = parsed.pathname.split("/").filter(Boolean)[0];
+        if (id) return `https://player.vimeo.com/video/${id}`;
+      }
+      return rawUrl;
+    } catch {
+      return rawUrl;
+    }
+  }
+
+  const components = {
+    types: {
+      image: ({ value }: { value: Record<string, unknown> }) => {
+        let src = "";
+        try {
+          src = imageBuilder.image(value as never).width(1200).fit("max").auto("format").url();
+        } catch {
+          return "";
+        }
+        const alt = escapeHtml((value.alt as string) || "");
+        const caption = (value.caption as string) || "";
+        return `<figure class="my-8">
+          <img src="${src}" alt="${alt}" class="w-full rounded-xl object-cover" loading="lazy" decoding="async" />
+          ${caption ? `<figcaption class="mt-2 text-center text-sm text-[#8a8e98]">${escapeHtml(caption)}</figcaption>` : ""}
+        </figure>`;
+      },
+      embed: ({ value }: { value: { url?: string; title?: string; provider?: string } }) => {
+        const sourceUrl = typeof value?.url === "string" ? value.url.trim() : "";
+        if (!sourceUrl || !uriLooksSafe(sourceUrl)) return "";
+        const title = typeof value?.title === "string" ? value.title.trim() : "";
+        const provider = typeof value?.provider === "string" ? value.provider.trim().toLowerCase() : "external";
+        const isFileVideo = /\.(mp4|webm|ogg|m4v)(\?.*)?$/i.test(sourceUrl);
+        const canUseIframe = ["youtube", "vimeo", "loom", "wistia"].includes(provider);
+        const caption = title ? `<figcaption class="mt-2 text-center text-sm text-[#8a8e98]">${escapeHtml(title)}</figcaption>` : "";
+        if (isFileVideo) {
+          return `<figure class="my-8"><video class="w-full rounded-xl" controls preload="metadata"><source src="${escapeHtml(sourceUrl)}" /></video>${caption}</figure>`;
+        }
+        if (canUseIframe) {
+          return `<figure class="my-8"><iframe src="${escapeHtml(toEmbeddableUrl(sourceUrl))}" title="${escapeHtml(title || "Embedded media")}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%;min-height:320px;border:0;border-radius:0.75rem;"></iframe>${caption}</figure>`;
+        }
+        return `<figure class="my-8"><a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener noreferrer" class="text-[#fd7730] underline underline-offset-2">${escapeHtml(title || "Open embedded media")}</a>${caption}</figure>`;
+      },
+    },
+  };
+
+  const PREVIEW_QUERY = `*[_type == "post" && (
+    slug.current == $slug ||
+    _id == $id ||
+    _id == "drafts." + $id
+  )] | order(_updatedAt desc)[0]{
+    _id, title, slug, publishedAt, _createdAt, excerpt, body
+  }`;
+
+  async function loadDraft() {
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("slug")?.trim() || "";
+    const id = (params.get("id")?.trim() || "").replace(/^drafts\./, "");
+
+    if (!slug && !id) {
+      showStatus("No <code>slug</code> or <code>id</code> query parameter provided.");
+      return;
+    }
+
+    let post;
+    try {
+      post = await client.fetch(PREVIEW_QUERY, { slug: slug || "__none__", id: id || "__none__" });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      if (/401|403|unauthorized|permission/i.test(message)) {
+        showStatus(
+          `You must be signed in to Sanity to preview drafts. <a class="text-[#fd7730] underline" href="/studio" target="_blank" rel="noopener noreferrer">Open the Studio</a> to sign in, then reload this page.`
+        );
+      } else {
+        showStatus(`Failed to load draft: ${escapeHtml(message)}`);
+      }
+      return;
+    }
+
+    if (!post) {
+      showStatus("No post found for this preview link. It may have been deleted.");
+      return;
+    }
+
+    document.title = `${post.title || "Untitled"} (Draft Preview) | Zorakle`;
+    document.getElementById("preview-title")!.textContent = post.title || "Untitled";
+
+    const dateSource = post.publishedAt || post._createdAt;
+    document.getElementById("preview-date")!.textContent = dateSource
+      ? `Posted on ${new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric" }).format(new Date(dateSource))}`
+      : "";
+
+    const publishedId = String(post._id).replace(/^drafts\./, "");
+    (document.getElementById("preview-edit-link") as HTMLAnchorElement).href =
+      `/studio#/intent/edit/id=${encodeURIComponent(publishedId)};type=post`;
+
+    const bodyEl = document.getElementById("preview-body")!;
+    bodyEl.innerHTML = Array.isArray(post.body) && post.body.length > 0
+      ? toHTML(post.body, { components })
+      : "<p><em>This draft has no body content yet.</em></p>";
+
+    statusEl.classList.add("hidden");
+    postEl.classList.remove("hidden");
+  }
+
+  loadDraft();
+</script>
+
+<style is:global>
+  .blog-content {
+    color: #3b3e47;
+    line-height: 1.8;
+    font-size: 1rem;
+  }
+
+  .blog-content > * + * {
+    margin-top: 1.25rem;
+  }
+
+  .blog-content h1,
+  .blog-content h2,
+  .blog-content h3,
+  .blog-content h4 {
+    font-family: "MontereyFLF", "Century Gothic", "Avenir Next", sans-serif;
+    color: #22252a;
+    line-height: 1.25;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .blog-content a {
+    color: #fd7730;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .blog-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+  }
+
+  .blog-content video {
+    width: 100%;
+    border-radius: 0.75rem;
+  }
+</style>
+

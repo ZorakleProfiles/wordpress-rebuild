@@ -1,0 +1,62 @@
+---
+/**
+ * Shared testimonial card used by the carousel and the testimonials page.
+ * Base card styles live here; consumers may layer layout/animation overrides
+ * via the `class` prop (e.g. carousel state classes).
+ */
+interface Props {
+  name: string;
+  company: string;
+  type: string;
+  quote: string;
+  class?: string;
+  dataIndex?: number;
+}
+
+const { name, company, type, quote, class: className = "", dataIndex } = Astro.props;
+---
+
+<article class:list={["testimonial-card", className]} data-index={dataIndex}>
+  <div class="testimonial-card-head">
+    <div class="min-w-0">
+      <p class="truncate text-base font-bold text-[#22252a]">{name}</p>
+      <p class="truncate text-sm text-[#3b3e47]">{company}</p>
+    </div>
+    <p class="testimonial-type">{type}</p>
+  </div>
+
+  <p class="mt-4 text-sm leading-6 text-[#22252a] md:text-[0.95rem] md:leading-7">{quote}</p>
+</article>
+
+<style>
+  .testimonial-card {
+    border-radius: 1rem;
+    border: 1px solid #d1d4dd;
+    background: #f3f3f3;
+    padding: 1.1rem;
+    min-height: 13.5rem;
+  }
+
+  .testimonial-card-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .testimonial-type {
+    margin: 0;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #666a73;
+  }
+
+  @media (min-width: 1024px) {
+    .testimonial-card {
+      min-height: 14.5rem;
+      padding: 1.3rem;
+    }
+  }
+</style>
+

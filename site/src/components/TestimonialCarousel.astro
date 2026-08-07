@@ -1,4 +1,5 @@
 ---
+import TestimonialCard from "./TestimonialCard.astro";
 import { testimonials } from "../data/site-content";
 
 type TestimonialFilterType = "brokers" | "franchisors" | null;
@@ -35,19 +36,14 @@ function getInitialCardClass(idx: number) {
   <div class="mt-10 md:mt-12" data-testimonial-carousel tabindex="0" aria-label="Testimonials carousel">
     <div class="testimonial-stage">
       {filteredTestimonials.map((item, idx) => (
-        <article class={`testimonial-card ${getInitialCardClass(idx)}`} data-index={idx}>
-          <div class="flex justify-between">
-            <div class="min-w-0">
-              <p class="truncate text-base font-bold text-[#22252a]">{item.name}</p>
-              <p class="truncate text-sm text-[#3b3e47]">{item.company}</p>
-            </div>
-            <p class="testimonial-type">{item.type}</p>
-          </div>
-
-
-
-          <p class="mt-4 text-sm leading-6 text-[#22252a] md:text-[0.95rem] md:leading-7">{item.quote}</p>
-        </article>
+        <TestimonialCard
+          name={item.name}
+          company={item.company}
+          type={item.type}
+          quote={item.quote}
+          class={getInitialCardClass(idx)}
+          dataIndex={idx}
+        />
       ))}
     </div>
 
@@ -173,12 +169,8 @@ function getInitialCardClass(idx: number) {
     max-height: clamp(18rem, 52vw, 23rem);
   }
 
+  /* Carousel-specific overrides — base card styles live in TestimonialCard.astro */
   [data-testimonial-carousel] .testimonial-card {
-    border-radius: 1rem;
-    border: 1px solid #d1d4dd;
-    background: #f3f3f3;
-    padding: 1.1rem;
-    min-height: 13.5rem;
     height: 100%;
     flex: 1 1 0;
     transition: border-color 220ms ease;
@@ -225,33 +217,6 @@ function getInitialCardClass(idx: number) {
     }
   }
 
-  [data-testimonial-carousel] .testimonial-card-head {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 0.75rem;
-  }
-
-  [data-testimonial-carousel] .testimonial-type {
-    margin: 0;
-    font-size: 0.62rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #666a73;
-  }
-
-  [data-testimonial-carousel] .testimonial-quote-mark {
-    margin: 0;
-    width: 1.3rem;
-    height: 1.3rem;
-    color: #fd7730;
-    flex-shrink: 0;
-  }
-
-  [data-testimonial-carousel] .testimonial-quote-mark svg {
-    width: 100%;
-    height: 100%;
-  }
 
   [data-testimonial-carousel] .testimonial-card.is-active {
     border-color: #d1d4dd;
@@ -326,10 +291,6 @@ function getInitialCardClass(idx: number) {
       max-height: clamp(16rem, 24vw, 19rem);
     }
 
-    [data-testimonial-carousel] .testimonial-card {
-      min-height: 14.5rem;
-      padding: 1.3rem;
-    }
 
     [data-testimonial-carousel] .testimonial-card.is-left,
     [data-testimonial-carousel] .testimonial-card.is-right {

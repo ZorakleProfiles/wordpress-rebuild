@@ -41,6 +41,7 @@ interface SanityPost {
   categoryRefSlugs?: string[];
   mainImage?: SanityImage;
   author?: SanityAuthor;
+  wordpressUrl?: string;
 }
 
 export interface BlogPost {
@@ -58,6 +59,7 @@ export interface BlogPost {
   authorName?: string;
   featuredImageUrl?: string;
   featuredImageAlt?: string;
+  legacySlug?: string;
 }
 
 const postsByCategorySlugCache = new Map<string, Promise<BlogPost[]>>();
@@ -80,7 +82,8 @@ const SANITY_POSTS_QUERY = defineQuery(`
     "categoryRefTitles": categoryRefs[]->title,
     "categoryRefSlugs": categoryRefs[]->slug.current,
     mainImage,
-    "author": author->{ name, slug }
+    "author": author->{ name, slug },
+    wordpressUrl
   }
 `);
 
@@ -131,6 +134,20 @@ function toImageUrl(image: SanityImage | undefined): string | undefined {
   }
 }
 
+function toLegacySlug(wordpressUrl: string | undefined): string | undefined {
+  if (!wordpressUrl || typeof wordpressUrl !== "string") {
+    return undefined;
+  }
+
+  try {
+    const parsed = new URL(wordpressUrl);
+    const lastSegment = parsed.pathname.split("/").filter(Boolean).at(-1);
+    return lastSegment ? decodeURIComponent(lastSegment.trim()) : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 function mapSanityPost(post: SanityPost, index: number): BlogPost {
   const title = post.title?.trim() || "Untitled";
   const slug = post.slug?.current?.trim() || slugify(title || `post-${index + 1}`);
@@ -162,7 +179,8 @@ function mapSanityPost(post: SanityPost, index: number): BlogPost {
     categorySlugs: categories.map((category) => slugify(category)),
     authorName: post.author?.name?.trim() || undefined,
     featuredImageUrl: toImageUrl(post.mainImage),
-    featuredImageAlt: post.mainImage?.alt
+    featuredImageAlt: post.mainImage?.alt,
+    legacySlug: toLegacySlug(post.wordpressUrl)
   };
 }
 

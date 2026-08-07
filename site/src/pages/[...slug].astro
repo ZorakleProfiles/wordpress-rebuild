@@ -10,11 +10,23 @@ import { getAllPosts, type BlogPost } from "../lib/blog.ts";
 export async function getStaticPaths() {
   const posts = await getAllPosts();
   const paths: Array<{ params: { slug: string }; props: { post: BlogPost } }> = [];
+  const seenSlugs = new Set<string>();
 
   posts.forEach((post) => {
-    paths.push({
-      params: { slug: post.slug },
-      props: { post }
+    const aliases = [post.slug, post.legacySlug].filter(
+      (value): value is string => typeof value === "string" && value.trim().length > 0
+    );
+
+    aliases.forEach((alias) => {
+      if (seenSlugs.has(alias)) {
+        return;
+      }
+
+      seenSlugs.add(alias);
+      paths.push({
+        params: { slug: alias },
+        props: { post }
+      });
     });
   });
 

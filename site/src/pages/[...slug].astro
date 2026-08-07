@@ -99,6 +99,8 @@ const portableTextComponents = {
         <span>Posted on {publishedDate}</span>
         <a
           href={studioEditHref}
+          data-studio-edit-link
+          hidden
           class="ml-auto text-xs font-medium text-[#fd7730] underline underline-offset-2 hover:opacity-80"
           target="_blank"
           rel="noopener noreferrer"
@@ -106,6 +108,46 @@ const portableTextComponents = {
           Edit in Studio ↗
         </a>
       </div>
+
+      <script>
+        // Show the "Edit in Studio" link only when the visitor has an active
+        // Sanity session (i.e. they are logged in to the Studio).
+        const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID || "4kjxjblw";
+        const CACHE_KEY = "sanity-studio-session";
+
+        function reveal() {
+          document
+            .querySelectorAll("[data-studio-edit-link]")
+            .forEach((el) => el.removeAttribute("hidden"));
+        }
+
+        async function checkSession() {
+          const cached = sessionStorage.getItem(CACHE_KEY);
+          if (cached === "yes") {
+            reveal();
+            return;
+          }
+          if (cached === "no") {
+            return;
+          }
+
+          try {
+            const res = await fetch(`https://${projectId}.api.sanity.io/v1/users/me`, {
+              credentials: "include",
+            });
+            const user = res.ok ? await res.json() : null;
+            const loggedIn = Boolean(user && user.id);
+            sessionStorage.setItem(CACHE_KEY, loggedIn ? "yes" : "no");
+            if (loggedIn) {
+              reveal();
+            }
+          } catch {
+            // Network/CORS failure — leave the link hidden.
+          }
+        }
+
+        checkSession();
+      </script>
 
 
 

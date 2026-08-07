@@ -17,7 +17,7 @@
     "@sanity/client": "^7.26.2",
     "@sanity/image-url": "^2.1.1",
     "@tailwindcss/vite": "^4.2.2",
-    "astro": "^6.3.6",
+    "astro": "^7.2.0",
     "astro-portabletext": "^0.13.0",
     "groq": "^6.9.1",
     "react": "^19.2.8",
@@ -27,8 +27,5 @@
     "styled-components": "^6.5.0",
     "tailwindcss": "^4.2.2",
     "typescript": "^6.0.0"
-  },
-  "devDependencies": {
-    "vite": "^7.1.11"
   }
 }

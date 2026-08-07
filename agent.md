@@ -55,7 +55,7 @@ There are exactly **two lockfiles** — never more:
 - **`studio-zorakle-blog/package-lock.json`** — the standalone Sanity Studio deployable (not part of the workspace).
 
 Notes:
-- `vite` is pinned as a direct devDependency in `site/package.json` (Astro requires vite 7; npm ignores root `overrides` for workspace children, so don't use `overrides`).
+- Don't use root `overrides` — npm silently ignores them for workspace children. If a transitive dep must be forced, add it as a direct dependency of `site/package.json` instead.
 
 ### Adding or updating site dependencies
 

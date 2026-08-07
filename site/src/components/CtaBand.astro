@@ -25,14 +25,14 @@ const {
   <div class="section-shell flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
     <div class="max-w-3xl">
       <h2 set:html={title}
-              class="font-display text-5xl leading-[1.05] text-white md:text-6xl font-bold">
+              class="font-display text-5xl leading-[1.05] text-[#22252a] md:text-6xl font-bold">
       </h2>
-      <p class="mt-5 text-lg text-white/85">
+      <p class="mt-5 text-lg text-[#22252a]/90">
           {text}
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
-         <a class="inline-flex items-center justify-center rounded-lg bg-[#fd7730] px-7 py-3 text-base font-bold text-white transition hover:brightness-95 whitespace-nowrap" href={primaryHref}>{primaryLabel}</a>
-         <a class="inline-flex items-center justify-center rounded-lg border border-white/40 bg-transparent px-7 py-3 text-base font-bold text-white transition hover:bg-white/10 whitespace-nowrap" href={secondaryHref}>{secondaryLabel}</a>
+         <a class="inline-flex items-center justify-center rounded-lg bg-[#fd7730] px-7 py-3 text-base font-bold text-[#22252a] transition hover:brightness-95 whitespace-nowrap" href={primaryHref}>{primaryLabel}</a>
+         <a class="inline-flex items-center justify-center rounded-lg border border-[#22252a]/50 bg-transparent px-7 py-3 text-base font-bold text-[#22252a] transition hover:bg-[#22252a]/10 whitespace-nowrap" href={secondaryHref}>{secondaryLabel}</a>
        </div>
     </div>
   </div>

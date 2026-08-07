@@ -51,14 +51,14 @@ const bodyColorClass = dark ? "text-white" : "text-[#3b3e47]";
   <div class={`section-shell relative z-10 flex flex-col gap-8 py-14 md:flex-row md:items-start md:gap-10 md:py-20 ${minHeightClass}`}>
     <div class={`${rightImage ? "w-full md:max-w-[55%]" : "w-full md:max-w-[70%]"} space-y-4 md:space-y-6`}>
       {eyebrow && (
-        <p class={`font-display text-base md:text-[20px] ${dark ? "text-white/90" : "text-[#09cc9c]"}`}>
+        <p class={`font-display text-base md:text-[20px] ${dark ? "text-white/90" : "eyebrow-accent"}`}>
           {eyebrow}
         </p>
       )}
 
       <div class={`font-display text-4xl font-bold leading-tight sm:text-5xl md:text-6xl ${textColorClass}`}>
         {titlePrefix}
-        {titleHighlight && <span class="text-[#09cc9c]"><br>{titleHighlight}</span>}
+        {titleHighlight && <span class={dark ? "text-[#09cc9c]" : ""}><br>{titleHighlight}</span>}
         {titleSuffix && ` ${titleSuffix}`}
       </div>
 

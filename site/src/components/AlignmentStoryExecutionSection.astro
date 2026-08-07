@@ -48,15 +48,18 @@ const alignmentLayers = [
 
     <!-- Alignment Stack -->
     <div>
-      <p class="section-eyebrow">Alignment Stack</p>
-      <h3 class="mt-2 text-4xl font-bold text-[#22252a] md:text-5xl">The Franchise Alignment Stack™</h3>
+      <p class="section-eyebrow">Our Methodology</p>
+      <h3 class="section-title mt-2 text-4xl font-bold text-[#22252a] md:text-5xl">The Franchise Alignment Stack™</h3>
+      <p class="mt-4 max-w-3xl text-lg leading-relaxed text-[#3b3e47]">
+        This is how Zorakle analyzes the match between a prospect and your franchise system — five measurable layers of fit, evaluated together to predict who will actually execute.
+      </p>
 
       <div class="mt-10">
         {alignmentLayers.map((layer, i) => (
           <div class="grid grid-cols-1 gap-10 border-t border-[#d1d4dd] py-12 md:grid-cols-[1fr_260px] md:gap-16 lg:py-16">
             <div class="max-w-2xl">
-              <p class="text-xs font-semibold uppercase tracking-widest text-[#09cc9c]">{layer.subtitle}</p>
-              <h4 class="mt-2 text-2xl font-bold text-[#22252a] md:text-3xl">{layer.title}</h4>
+              <p class="text-xs font-semibold uppercase tracking-widest text-[#3b3e47]">{layer.subtitle}</p>
+              <h4 class="mt-2 text-2xl font-bold text-[#22252a] md:text-3xl font-display">{layer.title}</h4>
               <p class="mt-4 text-lg font-medium leading-snug text-[#22252a]">{layer.description}</p>
               <p class="mt-3 text-[15px] leading-relaxed text-[#3b3e47]">{layer.elaboration}</p>
             </div>

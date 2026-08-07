@@ -35,8 +35,27 @@ p {
 
 .section-eyebrow {
   font-family: "MontereyFLF", "Century Gothic", "Avenir Next", sans-serif;
-  @apply text-lg md:text-xl text-[#09cc9c] font-medium;
+  @apply text-lg md:text-xl text-[#22252a] font-medium;
 }
+
+/* Teal accent bar shown before eyebrow/label text (decorative, so the
+   brand teal keeps its exact hex without failing text-contrast checks). */
+.section-eyebrow::before,
+.eyebrow-accent::before {
+  content: "";
+  display: inline-block;
+  width: 1.6em;
+  height: 0.32em;
+  border-radius: 9999px;
+  background: #09cc9c;
+  margin-right: 0.6em;
+  vertical-align: 0.18em;
+}
+
+.eyebrow-accent {
+  color: #22252a;
+}
+
 
 .section-title {
   font-family: "MontereyFLF", "Century Gothic", "Avenir Next", sans-serif;
@@ -53,7 +72,7 @@ p {
 }
 
 .btn-primary {
-  @apply inline-flex items-center justify-center rounded-lg bg-[#fd7730] px-7 py-3 text-base font-bold text-white transition hover:brightness-95 whitespace-nowrap;
+  @apply inline-flex items-center justify-center rounded-lg bg-[#fd7730] px-7 py-3 text-base font-bold text-[#22252a] transition hover:brightness-95 whitespace-nowrap;
 }
 
 .btn-secondary {

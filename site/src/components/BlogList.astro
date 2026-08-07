@@ -36,13 +36,13 @@ const {
 
   <main class="bg-[#f7f8fb] py-14 md:py-16">
     <section class="section-shell">
-      <h1 class="font-display text-[40px] leading-tight text-[#22252a] md:text-[52px]">{heading}</h1>
+      <h1 class="font-display text-[40px] leading-tight font-bold  text-[#22252a] md:text-[52px]">{heading}</h1>
 
       {
         posts.length > 0 ? (
           <div class="mt-6 rounded-xl bg-white px-6 py-2 shadow-sm md:px-8">
-            {posts.map((post) => (
-              <BlogCard post={post} basePath={postBasePath} />
+            {posts.map((post, index) => (
+              <BlogCard post={post} basePath={postBasePath} isLast={index === posts.length - 1} />
             ))}
           </div>
         ) : (

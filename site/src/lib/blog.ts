@@ -37,6 +37,8 @@ interface SanityPost {
   _createdAt?: string;
   tags?: string[];
   categories?: string[];
+  categoryRefTitles?: string[];
+  categoryRefSlugs?: string[];
   mainImage?: SanityImage;
   author?: SanityAuthor;
 }
@@ -75,6 +77,8 @@ const SANITY_POSTS_QUERY = defineQuery(`
     _createdAt,
     tags,
     categories,
+    "categoryRefTitles": categoryRefs[]->title,
+    "categoryRefSlugs": categoryRefs[]->slug.current,
     mainImage,
     "author": author->{ name, slug }
   }
@@ -96,6 +100,14 @@ function slugify(value: string): string {
     .replace(/[^a-z0-9\s-]/g, "")
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-");
+}
+
+function normalizeTaxonomyTerm(value: string): string {
+  return slugify(
+    value
+      .toLowerCase()
+      .replace(/&/g, " and ")
+  );
 }
 
 function toPortableTextPlainText(body: PortableTextBlock[] = []): string {
@@ -126,7 +138,14 @@ function mapSanityPost(post: SanityPost, index: number): BlogPost {
   const plainBody = toPortableTextPlainText(body);
   const excerpt = (post.excerpt?.trim() || plainBody).slice(0, 280);
   const publishedAt = post.publishedAt || post._createdAt || new Date(0).toISOString();
-  const categories = Array.isArray(post.categories) ? post.categories : [];
+  const legacyCategories = Array.isArray(post.categories) ? post.categories : [];
+  const categoryRefTitles = Array.isArray(post.categoryRefTitles)
+    ? post.categoryRefTitles.filter((item): item is string => typeof item === "string" && item.trim().length > 0)
+    : [];
+  const categoryRefSlugs = Array.isArray(post.categoryRefSlugs)
+    ? post.categoryRefSlugs.filter((item): item is string => typeof item === "string" && item.trim().length > 0)
+    : [];
+  const categories = [...new Set([...legacyCategories, ...categoryRefTitles, ...categoryRefSlugs])];
   const tags = Array.isArray(post.tags) ? post.tags : [];
 
   return {
@@ -169,7 +188,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 }
 
 export async function getPostsByTag(tag: string): Promise<BlogPost[]> {
-  const normalizedTag = tag.trim().toLowerCase();
+  const normalizedTag = normalizeTaxonomyTerm(tag.trim());
   if (!normalizedTag) {
     return getAllPosts();
   }
@@ -181,7 +200,10 @@ export async function getPostsByTag(tag: string): Promise<BlogPost[]> {
 
   const postsPromise = (async () => {
     const posts = await getAllPosts();
-    return posts.filter((post) => post.tags.some((item) => item.trim().toLowerCase() === normalizedTag));
+    return posts.filter((post) => {
+      const terms = [...post.tags, ...post.categories];
+      return terms.some((item) => normalizeTaxonomyTerm(item) === normalizedTag);
+    });
   })();
 
   postsByTagCache.set(normalizedTag, postsPromise);

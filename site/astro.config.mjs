@@ -29,29 +29,22 @@ const sanityIntentDevRedirect = {
 
       const url = new URL(req.url, "http://localhost");
 
-      // Support copied Sanity links that start at /intent instead of /studio/intent.
+      // Support copied Studio links that start at /intent.
       if (url.pathname === "/intent" || url.pathname.startsWith("/intent/")) {
-        const targetPath = stripTrailingSlash(`/studio${url.pathname}`);
+        const normalizedPath = stripTrailingSlash(url.pathname);
         res.statusCode = 307;
-        res.setHeader("Location", `${targetPath}${url.search}`);
+        res.setHeader("Location", `/studio#${normalizedPath}${url.search}`);
         res.end();
         return;
       }
 
-      // Normalize trailing slash on /studio/intent links so Sanity parses intent params correctly.
+      // Convert path-based Studio intent links into hash-based routes while preserving params.
       if (url.pathname === "/studio/intent" || url.pathname.startsWith("/studio/intent/")) {
-        const normalizedPath = stripTrailingSlash(url.pathname);
-        if (normalizedPath !== url.pathname) {
-          res.statusCode = 307;
-          res.setHeader("Location", `${normalizedPath}${url.search}`);
-          res.end();
-          return;
-        }
-      }
-
-      // Serve the Studio shell for deep-link routes handled by Sanity client routing.
-      if (url.pathname.startsWith("/studio/")) {
-        req.url = `/studio${url.search}`;
+        const normalizedPath = stripTrailingSlash(url.pathname).replace(/^\/studio/, "");
+        res.statusCode = 307;
+        res.setHeader("Location", `/studio#${normalizedPath}${url.search}`);
+        res.end();
+        return;
       }
 
       next();
@@ -63,10 +56,6 @@ const sanityIntentDevRedirect = {
 export default defineConfig({
   site: "https://zorakle-website.mike-94b.workers.dev",
   base: "/",
-  redirects: {
-    "/intent": "/studio/intent",
-    "/intent/:path*": "/studio/intent/:path*",
-  },
   integrations: [
     react(),
     sanity({

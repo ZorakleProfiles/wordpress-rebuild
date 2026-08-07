@@ -4,9 +4,10 @@ import type { BlogPost } from "../lib/blog.ts";
 interface Props {
   post: BlogPost;
   basePath?: string;
+  isLast?: boolean;
 }
 
-const { post, basePath = "/blog" } = Astro.props;
+const { post, basePath = "/blog", isLast = false } = Astro.props;
 
 const publishedDate = new Intl.DateTimeFormat("en-US", {
   month: "short",
@@ -18,7 +19,12 @@ let slug = post.slug.replace('wordpress-import/', '');
 const postUrl = `/${slug}`;
 ---
 
-<article class="grid gap-5 border-b border-[#d1d4dd] py-8 md:grid-cols-[220px_minmax(0,1fr)] md:items-start">
+<article
+  class:list={[
+    "grid gap-5 py-8 md:grid-cols-[220px_minmax(0,1fr)] md:items-start",
+    !isLast && "border-b border-[#d1d4dd]"
+  ]}
+>
   <a href={postUrl} class="block overflow-hidden rounded-sm border border-[#e2e5ec] bg-[#f0f1f5]">
     {
       post.featuredImageUrl ? (

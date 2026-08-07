@@ -12,7 +12,8 @@ import faviconCircle from "../../assets/figma-import/favicon-circle.png";
 import spotOnProfileReport from "../../assets/figma-import/spoton.png";
 import spotonReferral from "../../assets/figma-import/referrall.png";
 import CtaBand from "../../components/CtaBand.astro";
-import brokerMathShiftGraphic from "../../assets/figma-import/broker-math-shift.svg";
+import brokerMathShiftGraphic from "../../assets/figma-import/brokers.png";
+import {Image} from "astro:assets";
 
 const steps = [
   {
@@ -99,12 +100,11 @@ const metrics = [
     <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
       <div class="section-shell grid items-center gap-10 md:grid-cols-[440px_minmax(0,1fr)] md:gap-14">
         <div class="rounded-2xl bg-transparent p-0">
-          <img
-              src={brokerMathShiftGraphic.src}
+          <Image
+              src={brokerMathShiftGraphic}
               alt="Model-fit comparison showing cost risk versus confidence outcomes"
-              class="h-auto w-full"
+              class="h-auto w-full rounded-2xl"
               loading="lazy"
-              decoding="async"
           />
         </div>
 

@@ -3,6 +3,15 @@ import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 
+type SlugValue = {current?: string}
+
+function resolvePreviewOrigin(): string {
+  const env = (globalThis as {process?: {env?: Record<string, string | undefined>}}).process?.env || {}
+  return env.SANITY_STUDIO_PREVIEW_ORIGIN || env.PUBLIC_SITE_URL || 'http://localhost:4321'
+}
+
+const previewOrigin = resolvePreviewOrigin().replace(/\/$/, '')
+
 export default defineConfig({
   name: 'default',
   title: 'Zorakle Blog',
@@ -44,6 +53,17 @@ export default defineConfig({
     }),
     visionTool(),
   ],
+
+  document: {
+    productionUrl: async (prev, {document}) => {
+      if (document?._type !== 'post') {
+        return prev
+      }
+
+      const slug = (document.slug as SlugValue | undefined)?.current
+      return slug ? `${previewOrigin}/${slug}` : prev
+    },
+  },
 
   schema: {
     types: schemaTypes,

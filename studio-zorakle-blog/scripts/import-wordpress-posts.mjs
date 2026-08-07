@@ -22,6 +22,9 @@ const env = {
   sanityDataset: process.env.SANITY_DATASET || 'production',
   sanityApiVersion: process.env.SANITY_API_VERSION || '2025-01-01',
   sanityApiToken: process.env.SANITY_API_TOKEN,
+  fetchTimeoutMs: Number(process.env.IMPORT_FETCH_TIMEOUT_MS || 30000),
+  fetchMaxRetries: Number(process.env.IMPORT_FETCH_MAX_RETRIES || 3),
+  fetchRetryBaseDelayMs: Number(process.env.IMPORT_FETCH_RETRY_BASE_DELAY_MS || 500),
 }
 
 if (!env.wordpressBaseUrl) {
@@ -106,9 +109,18 @@ async function main() {
   let createdCount = 0
   let updatedCount = 0
   let skippedCount = 0
+  let failedCount = 0
 
   for (const post of slicedPosts) {
-    const mapped = await mapWordPressPostToSanity(post)
+    let mapped
+    try {
+      mapped = await mapWordPressPostToSanity(post)
+    } catch (error) {
+      failedCount += 1
+      const detail = error instanceof Error ? error.message : String(error)
+      console.warn(`Failed to map WordPress post ${post?.id}: ${detail}`)
+      continue
+    }
 
     if (!mapped.slug?.current) {
       skippedCount += 1
@@ -135,10 +147,62 @@ async function main() {
   }
 
   if (isWriteMode) {
-    console.log(`Done. Created: ${createdCount}, Updated: ${updatedCount}, Skipped: ${skippedCount}`)
+    console.log(`Done. Created: ${createdCount}, Updated: ${updatedCount}, Skipped: ${skippedCount}, Failed: ${failedCount}`)
   } else {
-    console.log('Dry run complete. Re-run with --write to apply changes.')
+    console.log(`Dry run complete. Failed: ${failedCount}. Re-run with --write to apply changes.`)
   }
+}
+
+function isRetryableHttpStatus(status) {
+  return status === 408 || status === 429 || (status >= 500 && status <= 599)
+}
+
+function computeRetryDelayMs(baseDelayMs, attempt) {
+  const cappedBase = Math.max(100, Math.floor(baseDelayMs))
+  const jitter = Math.floor(Math.random() * Math.min(250, cappedBase))
+  return cappedBase * 2 ** attempt + jitter
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+async function fetchWithRetry(url, options = {}, config = {}) {
+  const timeoutMs = Number.isFinite(config.timeoutMs) ? Math.max(1000, Math.floor(config.timeoutMs)) : env.fetchTimeoutMs
+  const maxRetries = Number.isFinite(config.maxRetries) ? Math.max(0, Math.floor(config.maxRetries)) : env.fetchMaxRetries
+  const baseDelayMs = Number.isFinite(config.baseDelayMs)
+    ? Math.max(100, Math.floor(config.baseDelayMs))
+    : env.fetchRetryBaseDelayMs
+  const label = config.label || String(url)
+
+  for (let attempt = 0; attempt <= maxRetries; attempt += 1) {
+    try {
+      const timeoutSignal = AbortSignal.timeout(timeoutMs)
+      const response = await fetch(url, {
+        ...options,
+        signal: timeoutSignal,
+      })
+
+      if (!isRetryableHttpStatus(response.status) || attempt === maxRetries) {
+        return response
+      }
+
+      const delayMs = computeRetryDelayMs(baseDelayMs, attempt)
+      console.warn(`Retrying ${label} after HTTP ${response.status} (attempt ${attempt + 1}/${maxRetries + 1}) in ${delayMs}ms`)
+      await sleep(delayMs)
+    } catch (error) {
+      if (attempt === maxRetries) {
+        throw error
+      }
+
+      const delayMs = computeRetryDelayMs(baseDelayMs, attempt)
+      const detail = error instanceof Error ? error.message : String(error)
+      console.warn(`Retrying ${label} after network error (attempt ${attempt + 1}/${maxRetries + 1}) in ${delayMs}ms: ${detail}`)
+      await sleep(delayMs)
+    }
+  }
+
+  throw new Error(`Failed to fetch ${label}`)
 }
 
 async function fetchWordPressPosts(config) {
@@ -156,7 +220,7 @@ async function fetchWordPressPosts(config) {
     url.searchParams.set('status', config.wordpressStatus)
     url.searchParams.set('_embed', '1')
 
-    const response = await fetch(url, {headers})
+    const response = await fetchWithRetry(url, {headers}, {label: `WordPress posts page ${page}`})
     if (!response.ok) {
       const body = await safeResponseText(response)
       throw new Error(`WordPress fetch failed (${response.status}): ${body}`)
@@ -317,7 +381,15 @@ async function resolveInlineMediaTokens(blocks, inlineMedia) {
     }
 
     if (tokenMatch.type === 'image') {
-      const asset = await uploadImageToSanity(tokenMatch.src)
+      let asset
+      try {
+        asset = await uploadImageToSanity(tokenMatch.src)
+      } catch (error) {
+        const detail = error instanceof Error ? error.message : String(error)
+        console.warn(`Skipping inline image for ${tokenMatch.src}: ${detail}`)
+        continue
+      }
+
       resolvedBlocks.push({
         _type: 'image',
         asset: {
@@ -561,7 +633,14 @@ async function getFeaturedImage(post) {
   }
 
   const altText = (media?.alt_text || toPlainText(post?.title?.rendered || '')).trim() || undefined
-  const asset = await uploadImageToSanity(url)
+  let asset
+  try {
+    asset = await uploadImageToSanity(url)
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : String(error)
+    console.warn(`Skipping featured image for WordPress post ${post?.id}: ${detail}`)
+    return undefined
+  }
 
   return {
     _type: 'image',
@@ -598,7 +677,7 @@ async function uploadImageToSanity(url) {
     return existingAsset
   }
 
-  const imageResponse = await fetch(normalizedUrl)
+  const imageResponse = await fetchWithRetry(normalizedUrl, {}, {label: `image ${normalizedUrl}`})
   if (!imageResponse.ok) {
     const body = await safeResponseText(imageResponse)
     throw new Error(`Image download failed (${imageResponse.status}): ${body}`)
@@ -668,6 +747,9 @@ Optional environment variables:
   SANITY_PROJECT_ID      Default: 4kjxjblw
   SANITY_DATASET         Default: production
   SANITY_API_VERSION     Default: 2025-01-01
+  IMPORT_FETCH_TIMEOUT_MS          Default: 30000
+  IMPORT_FETCH_MAX_RETRIES         Default: 3
+  IMPORT_FETCH_RETRY_BASE_DELAY_MS Default: 500
 `)
 }
 

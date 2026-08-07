@@ -3,7 +3,8 @@ import MainLayout from "../layouts/MainLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import CtaBand from "../components/CtaBand.astro";
-import heroBackground from "../assets/figma-import/franchisor-hero.png";
+import { Image } from "astro:assets";
+import rebeccaPhoto from "../assets/figma-import/about-rebecca-monet.png";
 
 const stats = [
   { number: "30+", label: "Years in psychometrics & assessment" },
@@ -20,29 +21,18 @@ const stats = [
 
   <main>
 
-    <!-- HERO -->
-    <section
-      class="relative overflow-hidden border-b border-[#d1d4dd] bg-cover bg-center bg-no-repeat"
-      style={`background-image: url(${heroBackground.src});`}
-    >
-      <div class="absolute inset-0 z-0 bg-[#1f232a]/82"></div>
-      <div class="section-shell relative z-10 flex min-h-[70vh] flex-col justify-center gap-6 py-20 md:py-28">
-        <p class="font-display text-lg text-[#09cc9c]">About Zorakle</p>
-        <h1 class="font-display max-w-3xl text-5xl font-bold leading-tight text-white sm:text-6xl md:text-7xl">
-          Built to make franchise fit <span class="text-[#09cc9c]">a science.</span>
-        </h1>
-        <p class="max-w-xl text-lg leading-relaxed text-white/80">
-          For more than a decade, Zorakle has been the only franchise-specific fit platform — predictive, science-backed, and built for the decisions that actually matter.
-        </p>
-      </div>
-    </section>
-
-    <!-- ORIGIN -->
-    <section class="border-b border-[#d1d4dd] bg-white py-20 md:py-24">
-      <div class="section-shell max-w-4xl">
-        <p class="section-eyebrow">Why We Exist</p>
-        <h2 class="section-title">The franchise industry deserved better tools.</h2>
-        <div class="mt-7 space-y-5 text-base leading-relaxed text-[#3b3e47] md:text-lg">
+    <!-- INTRO / WHY WE EXIST -->
+    <section class="bg-white py-20 md:py-28">
+      <div class="section-shell">
+        <div class="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-20">
+          <div>
+            <p class="section-eyebrow">About Zorakle</p>
+            <h1 class="section-title">Built to make franchise fit a science.</h1>
+            <p class="section-copy max-w-xl">
+              For more than a decade, Zorakle has been the only franchise-specific fit platform — predictive, science-backed, and built for the decisions that actually matter.
+            </p>
+          </div>
+          <div class="space-y-5 text-base leading-relaxed text-[#3b3e47] md:text-lg lg:pt-2">
           <p>
             Personality tests tell you who someone is. Zorakle tells you whether they will succeed as a franchisee. That is a fundamentally different question — and it requires a fundamentally different tool.
           </p>
@@ -52,16 +42,17 @@ const stats = [
           <p>
             Over twelve years, we integrated seven peer-reviewed sciences from leading research institutions into a single, franchise-specific framework — one designed to predict performance and fit before the agreement is ever signed.
           </p>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- STATS -->
-    <section class="border-b border-[#d1d4dd] bg-[#09cc9c] py-16 md:py-20">
+    <section class="bg-[#09cc9c] py-16 md:py-20">
       <div class="section-shell">
-        <div class="grid gap-10 sm:grid-cols-3">
+        <div class="grid gap-10 sm:grid-cols-3 sm:divide-x sm:divide-white/25">
           {stats.map((s) => (
-            <div>
+            <div class="sm:px-8 sm:first:pl-0 sm:last:pr-0">
               <p class="font-display text-6xl font-bold text-white md:text-7xl">{s.number}</p>
               <p class="mt-2 text-base font-medium text-white/85 md:text-lg">{s.label}</p>
             </div>
@@ -70,37 +61,36 @@ const stats = [
       </div>
     </section>
 
-    <!-- THE SCIENCE -->
-    <section class="border-b border-[#d1d4dd] bg-[#f4f5f7] py-20 md:py-24">
-      <div class="section-shell max-w-4xl">
-        <p class="section-eyebrow">The Research</p>
-        <h2 class="section-title">Seven sciences. One framework.</h2>
-        <p class="section-copy">
-          Stanford. Harvard Business School. Gallup. University of Michigan. The science behind Zorakle draws from the most validated research in psychology, organizational behavior, and performance — then applies it specifically to the demands of franchise ownership. The result is a predictive framework, not a profile. It tells you who will perform, not just who they are.
-        </p>
-        <p class="mt-8 text-sm font-semibold uppercase tracking-[0.14em] text-[#6c7280]">
-          Stanford · Harvard Business School · Gallup · University of Michigan · Positive Psychology · Applied Psychometrics · Performance Science
-        </p>
-      </div>
-    </section>
-
     <!-- REBECCA -->
-    <section class="border-b border-[#d1d4dd] bg-white py-20 md:py-24">
-      <div class="section-shell max-w-4xl">
-        <p class="section-eyebrow">Founder & Chief Scientist</p>
-        <h2 class="section-title">Rebecca Monet.</h2>
-        <p class="mt-7 text-base leading-relaxed text-[#3b3e47] md:text-lg max-w-3xl">
-          Rebecca has spent more than 30 years at the intersection of psychometrics, performance science, and franchise development. She built Zorakle because she recognized that the industry was making million-dollar decisions with tools designed for a completely different purpose — and she had the scientific background to do something about it. She is also the host of <em>The Franchise Woman Podcast</em> and a frequent voice on franchise development, candidate quality, and what it really takes to build a high-performing system.
-        </p>
-        <blockquote class="mt-10 border-l-4 border-[#09cc9c] pl-6">
-          <p class="font-display text-2xl leading-snug text-[#22252a] md:text-3xl">
-            "When teams stop guessing, they award stronger owners and scale with less risk."
-          </p>
-          <footer class="mt-3 text-sm font-semibold uppercase tracking-widest text-[#09cc9c]">Rebecca Monet</footer>
-        </blockquote>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href="/podcasts" class="btn-secondary">The Franchise Woman Podcast</a>
-          <a href="/news" class="btn-secondary">Read Her Insights</a>
+    <section class="bg-[#f3f3f3] py-20 md:py-28">
+      <div class="section-shell">
+        <div class="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center lg:gap-20">
+          <div class="mx-auto w-full max-w-md lg:mx-0">
+            <div class="overflow-hidden rounded-3xl shadow-xl">
+              <Image
+                src={rebeccaPhoto}
+                alt="Rebecca Monet, Founder & Chief Scientist of Zorakle"
+                class="h-full w-full object-cover"
+              />
+            </div>
+          </div>
+          <div>
+            <p class="section-eyebrow">Founder &amp; Chief Scientist</p>
+            <h2 class="section-title">Rebecca Monet.</h2>
+            <p class="mt-7 max-w-2xl text-base leading-relaxed text-[#3b3e47] md:text-lg">
+              Rebecca has spent more than 30 years at the intersection of psychometrics, performance science, and franchise development. She built Zorakle because she recognized that the industry was making million-dollar decisions with tools designed for a completely different purpose — and she had the scientific background to do something about it. She is also the host of <em>The Franchise Woman Podcast</em> and a frequent voice on franchise development, candidate quality, and what it really takes to build a high-performing system.
+            </p>
+            <blockquote class="mt-10 border-l-4 border-[#09cc9c] pl-6">
+              <p class="font-display text-2xl leading-snug text-[#22252a] md:text-3xl">
+                "When teams stop guessing, they award stronger owners and scale with less risk."
+              </p>
+              <footer class="mt-3 text-sm font-semibold uppercase tracking-widest text-[#09cc9c]">Rebecca Monet</footer>
+            </blockquote>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a href="/podcasts" class="btn-secondary">The Franchise Woman Podcast</a>
+              <a href="/news" class="btn-secondary">Read Her Insights</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>

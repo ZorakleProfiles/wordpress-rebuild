@@ -8,14 +8,28 @@ This importer pulls posts from a WordPress site (`/wp-json/wp/v2/posts`) and ups
 - `slug`
 - `publishedAt`
 - `excerpt`
-- `author` (mapped to `post.author` reference)
-- `categories`
-- `tags`
+- `categoryRefs` — WordPress categories are synced to Sanity `category` documents
+  (get-or-create by slug/title) and referenced relationally
 - `body` (HTML converted to Portable Text, including inline image upload)
 - `mainImage` (featured image uploaded to Sanity)
 - `wordpressId` and `wordpressUrl` for idempotent re-runs
 
-The importer also upserts `author` documents using `wordpressAuthorId` and stores avatar images when available.
+Notes:
+
+- WordPress tags and authors are **not** imported — those fields were removed from the `post` schema.
+- When updating an existing post, the importer also unsets the legacy `categories` (strings), `tags`, and `author` fields.
+- Category documents are matched case-insensitively by slug or title, so re-runs never create duplicates.
+
+## Related: one-time category sync
+
+`scripts/sync-categories.mjs` migrates already-imported posts from legacy string
+`categories` to relational `categoryRefs` (and strips `tags`/`author`). Run it once
+after a schema change, dry-run first:
+
+```bash
+SANITY_API_TOKEN="your-token" node ./scripts/sync-categories.mjs          # dry run
+SANITY_API_TOKEN="your-token" node ./scripts/sync-categories.mjs --write  # apply
+```
 
 ## 1) Install dependencies
 

@@ -22,11 +22,6 @@ interface SanityImage {
   [key: string]: unknown;
 }
 
-interface SanityAuthor {
-  name?: string;
-  slug?: SanitySlug;
-}
-
 interface SanityPost {
   _id: string;
   title?: string;
@@ -35,12 +30,9 @@ interface SanityPost {
   body?: PortableTextBlock[];
   publishedAt?: string;
   _createdAt?: string;
-  tags?: string[];
-  categories?: string[];
-  categoryRefTitles?: string[];
-  categoryRefSlugs?: string[];
+  categoryTitles?: (string | null)[];
+  categorySlugs?: (string | null)[];
   mainImage?: SanityImage;
-  author?: SanityAuthor;
   wordpressUrl?: string;
 }
 
@@ -53,17 +45,14 @@ export interface BlogPost {
   contentHtml: string;
   body: PortableTextBlock[];
   publishedAt: string;
-  tags: string[];
   categories: string[];
   categorySlugs: string[];
-  authorName?: string;
   featuredImageUrl?: string;
   featuredImageAlt?: string;
   legacySlug?: string;
 }
 
-const postsByCategorySlugCache = new Map<string, Promise<BlogPost[]>>();
-const postsByTagCache = new Map<string, Promise<BlogPost[]>>();
+const postsByCategoryCache = new Map<string, Promise<BlogPost[]>>();
 let allPostsCache: Promise<BlogPost[]> | null = null;
 
 const imageBuilder = createImageUrlBuilder(sanityClient);
@@ -77,12 +66,9 @@ const SANITY_POSTS_QUERY = defineQuery(`
     body,
     publishedAt,
     _createdAt,
-    tags,
-    categories,
-    "categoryRefTitles": categoryRefs[]->title,
-    "categoryRefSlugs": categoryRefs[]->slug.current,
+    "categoryTitles": categoryRefs[]->title,
+    "categorySlugs": categoryRefs[]->slug.current,
     mainImage,
-    "author": author->{ name, slug },
     wordpressUrl
   }
 `);
@@ -105,12 +91,8 @@ function slugify(value: string): string {
     .replace(/-+/g, "-");
 }
 
-function normalizeTaxonomyTerm(value: string): string {
-  return slugify(
-    value
-      .toLowerCase()
-      .replace(/&/g, " and ")
-  );
+function normalizeCategoryTerm(value: string): string {
+  return slugify(value.toLowerCase().replace(/&/g, " "));
 }
 
 function toPortableTextPlainText(body: PortableTextBlock[] = []): string {
@@ -148,6 +130,12 @@ function toLegacySlug(wordpressUrl: string | undefined): string | undefined {
   }
 }
 
+function cleanStrings(values: (string | null)[] | undefined): string[] {
+  return Array.isArray(values)
+    ? values.filter((item): item is string => typeof item === "string" && item.trim().length > 0)
+    : [];
+}
+
 function mapSanityPost(post: SanityPost, index: number): BlogPost {
   const title = post.title?.trim() || "Untitled";
   const slug = post.slug?.current?.trim() || slugify(title || `post-${index + 1}`);
@@ -155,15 +143,8 @@ function mapSanityPost(post: SanityPost, index: number): BlogPost {
   const plainBody = toPortableTextPlainText(body);
   const excerpt = (post.excerpt?.trim() || plainBody).slice(0, 280);
   const publishedAt = post.publishedAt || post._createdAt || new Date(0).toISOString();
-  const legacyCategories = Array.isArray(post.categories) ? post.categories : [];
-  const categoryRefTitles = Array.isArray(post.categoryRefTitles)
-    ? post.categoryRefTitles.filter((item): item is string => typeof item === "string" && item.trim().length > 0)
-    : [];
-  const categoryRefSlugs = Array.isArray(post.categoryRefSlugs)
-    ? post.categoryRefSlugs.filter((item): item is string => typeof item === "string" && item.trim().length > 0)
-    : [];
-  const categories = [...new Set([...legacyCategories, ...categoryRefTitles, ...categoryRefSlugs])];
-  const tags = Array.isArray(post.tags) ? post.tags : [];
+  const categories = cleanStrings(post.categoryTitles);
+  const categorySlugs = cleanStrings(post.categorySlugs);
 
   return {
     id: index + 1,
@@ -174,10 +155,8 @@ function mapSanityPost(post: SanityPost, index: number): BlogPost {
     contentHtml: "",
     body,
     publishedAt,
-    tags,
     categories,
-    categorySlugs: categories.map((category) => slugify(category)),
-    authorName: post.author?.name?.trim() || undefined,
+    categorySlugs,
     featuredImageUrl: toImageUrl(post.mainImage),
     featuredImageAlt: post.mainImage?.alt,
     legacySlug: toLegacySlug(post.wordpressUrl)
@@ -205,13 +184,18 @@ export async function getAllPosts(): Promise<BlogPost[]> {
   return postsPromise;
 }
 
-export async function getPostsByTag(tag: string): Promise<BlogPost[]> {
-  const normalizedTag = normalizeTaxonomyTerm(tag.trim());
-  if (!normalizedTag) {
+/**
+ * Filter posts by category. The term is matched against both category slugs
+ * and normalized category titles, so "news", "News", "webinars & training",
+ * and "webinars-training" all resolve as expected.
+ */
+export async function getPostsByCategory(category: string): Promise<BlogPost[]> {
+  const normalizedTerm = normalizeCategoryTerm(category.trim());
+  if (!normalizedTerm) {
     return getAllPosts();
   }
 
-  const cachedPosts = postsByTagCache.get(normalizedTag);
+  const cachedPosts = postsByCategoryCache.get(normalizedTerm);
   if (cachedPosts) {
     return cachedPosts;
   }
@@ -219,68 +203,34 @@ export async function getPostsByTag(tag: string): Promise<BlogPost[]> {
   const postsPromise = (async () => {
     const posts = await getAllPosts();
     return posts.filter((post) => {
-      const terms = [...post.tags, ...post.categories];
-      return terms.some((item) => normalizeTaxonomyTerm(item) === normalizedTag);
+      const terms = [
+        ...post.categorySlugs.map((slug) => normalizeCategoryTerm(slug)),
+        ...post.categories.map((title) => normalizeCategoryTerm(title))
+      ];
+      return terms.includes(normalizedTerm);
     });
   })();
 
-  postsByTagCache.set(normalizedTag, postsPromise);
+  postsByCategoryCache.set(normalizedTerm, postsPromise);
   postsPromise.catch(() => {
-    postsByTagCache.delete(normalizedTag);
-  });
-
-  return postsPromise;
-}
-
-export async function getPostsByCategorySlug(categorySlug: string): Promise<BlogPost[]> {
-  const normalizedCategorySlug = categorySlug.trim().toLowerCase();
-  if (!normalizedCategorySlug) {
-    return [];
-  }
-
-  const cachedPosts = postsByCategorySlugCache.get(normalizedCategorySlug);
-  if (cachedPosts) {
-    return cachedPosts;
-  }
-
-  const postsPromise = (async () => {
-    const allPosts = await getAllPosts();
-    return allPosts.filter((post) => {
-      const slugs = post.categorySlugs.map((slug) => slug.toLowerCase());
-      if (slugs.includes(normalizedCategorySlug)) {
-        return true;
-      }
-
-      const categoryNames = post.categories.map((category) => category.trim().toLowerCase());
-      return categoryNames.includes(normalizedCategorySlug);
-    });
-  })();
-
-  postsByCategorySlugCache.set(normalizedCategorySlug, postsPromise);
-  postsPromise.catch(() => {
-    postsByCategorySlugCache.delete(normalizedCategorySlug);
+    postsByCategoryCache.delete(normalizedTerm);
   });
 
   return postsPromise;
 }
 
 export async function getCategoryPostPageCount(
-  categorySlug: string,
+  category: string,
   pageSize = DEFAULT_ARCHIVE_PAGE_SIZE
 ): Promise<number> {
   const safePageSize = Math.max(1, Math.floor(pageSize));
-  const posts = await getPostsByCategorySlug(categorySlug);
+  const posts = await getPostsByCategory(category);
   return Math.ceil(posts.length / safePageSize);
 }
 
-export async function getPaginatedPostsByCategorySlug(
-  categorySlug: string,
-  page: number,
-  pageSize = DEFAULT_ARCHIVE_PAGE_SIZE
-): Promise<PaginatedPosts> {
+function paginate(allPosts: BlogPost[], page: number, pageSize: number): PaginatedPosts {
   const safePage = Math.max(1, Math.floor(page));
   const safePageSize = Math.max(1, Math.floor(pageSize));
-  const allPosts = await getPostsByCategorySlug(categorySlug);
   const totalPosts = allPosts.length;
   const totalPages = Math.ceil(totalPosts / safePageSize);
   const startIndex = (safePage - 1) * safePageSize;
@@ -293,6 +243,14 @@ export async function getPaginatedPostsByCategorySlug(
     totalPages,
     totalPosts
   };
+}
+
+export async function getPaginatedPostsByCategory(
+  category: string,
+  page: number,
+  pageSize = DEFAULT_ARCHIVE_PAGE_SIZE
+): Promise<PaginatedPosts> {
+  return paginate(await getPostsByCategory(category), page, pageSize);
 }
 
 export async function getPostPageCount(pageSize = DEFAULT_ARCHIVE_PAGE_SIZE): Promise<number> {
@@ -302,48 +260,6 @@ export async function getPostPageCount(pageSize = DEFAULT_ARCHIVE_PAGE_SIZE): Pr
 }
 
 export async function getPaginatedPosts(page: number, pageSize = DEFAULT_ARCHIVE_PAGE_SIZE): Promise<PaginatedPosts> {
-  const safePage = Math.max(1, Math.floor(page));
-  const safePageSize = Math.max(1, Math.floor(pageSize));
-  const allPosts = await getAllPosts();
-  const totalPosts = allPosts.length;
-  const totalPages = Math.ceil(totalPosts / safePageSize);
-  const startIndex = (safePage - 1) * safePageSize;
-  const endIndex = startIndex + safePageSize;
-  const posts = startIndex >= totalPosts ? [] : allPosts.slice(startIndex, endIndex);
-
-  return {
-    posts,
-    page: safePage,
-    totalPages,
-    totalPosts
-  };
-}
-
-export async function getTaggedPostPageCount(tag: string, pageSize = DEFAULT_ARCHIVE_PAGE_SIZE): Promise<number> {
-  const safePageSize = Math.max(1, Math.floor(pageSize));
-  const posts = await getPostsByTag(tag);
-  return Math.ceil(posts.length / safePageSize);
-}
-
-export async function getPaginatedPostsByTag(
-  tag: string,
-  page: number,
-  pageSize = DEFAULT_ARCHIVE_PAGE_SIZE
-): Promise<PaginatedPosts> {
-  const safePage = Math.max(1, Math.floor(page));
-  const safePageSize = Math.max(1, Math.floor(pageSize));
-  const allPosts = await getPostsByTag(tag);
-  const totalPosts = allPosts.length;
-  const totalPages = Math.ceil(totalPosts / safePageSize);
-  const startIndex = (safePage - 1) * safePageSize;
-  const endIndex = startIndex + safePageSize;
-  const posts = startIndex >= totalPosts ? [] : allPosts.slice(startIndex, endIndex);
-
-  return {
-    posts,
-    page: safePage,
-    totalPages,
-    totalPosts
-  };
+  return paginate(await getAllPosts(), page, pageSize);
 }
 

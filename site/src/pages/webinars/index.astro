@@ -1,9 +1,9 @@
 ---
 import BlogList from "../../components/BlogList.astro";
-import { getPaginatedPostsByTag } from "../../lib/blog.ts";
+import { getPaginatedPostsByCategory } from "../../lib/blog.ts";
 
 const WEBINARS_ARCHIVE_PAGE_SIZE = 10;
-const pageData = await getPaginatedPostsByTag("webinars & training", 1, WEBINARS_ARCHIVE_PAGE_SIZE);
+const pageData = await getPaginatedPostsByCategory("webinars & training", 1, WEBINARS_ARCHIVE_PAGE_SIZE);
 ---
 
 <BlogList

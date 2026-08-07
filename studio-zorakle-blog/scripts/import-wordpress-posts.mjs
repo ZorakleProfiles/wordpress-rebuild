@@ -136,7 +136,11 @@ async function main() {
     }
 
     if (existingId) {
-      await client.patch(existingId).set(mapped).commit({autoGenerateArrayKeys: true})
+      await client
+        .patch(existingId)
+        .set(mapped)
+        .unset(['tags', 'categories', 'author'])
+        .commit({autoGenerateArrayKeys: true})
       updatedCount += 1
       console.log(`Updated post ${post.id} -> ${mapped.slug.current}`)
     } else {
@@ -456,13 +460,11 @@ async function mapWordPressPostToSanity(post) {
   const slug = String(post?.slug || '').trim()
   const body = await htmlToPortableText(post?.content?.rendered || '')
   const excerpt = toPlainText(post?.excerpt?.rendered || '').slice(0, 280)
-  const categories = getTerms(post, 'category')
   // WP categories are the routing signal (News, Podcasts, Webinars & Training).
-  // The frontend filters on the `tags` field, so merge categories in.
-  const wpTags = getTerms(post, 'post_tag')
-  const tags = [...new Set([...categories, ...wpTags])]
+  // They are synced to `category` documents and referenced relationally.
+  const categoryNames = getTerms(post, 'category')
+  const categoryRefs = await getOrCreateCategoryReferences(categoryNames)
   const publishedAt = toIsoDate(post?.date_gmt, post?.date)
-  const author = await getOrCreateAuthorReference(post)
 
   const mainImage = await getFeaturedImage(post)
 
@@ -471,11 +473,9 @@ async function mapWordPressPostToSanity(post) {
     slug: {current: slug},
     wordpressId: String(post.id),
     wordpressUrl: post.link || undefined,
-    author,
     publishedAt,
     excerpt,
-    categories,
-    tags,
+    categoryRefs,
     mainImage,
     body,
   }
@@ -520,92 +520,54 @@ function getTerms(post, taxonomy) {
   return [...new Set(names)]
 }
 
-async function getOrCreateAuthorReference(post) {
-  const embeddedAuthor = post?._embedded?.author?.[0]
-  const wordpressAuthorId = String(embeddedAuthor?.id || post?.author || '').trim()
-  if (!wordpressAuthorId) {
-    return undefined
-  }
+const categoryRefCache = new Map()
 
-  const existingAuthorId = await client.fetch(
-    '*[_type == "author" && wordpressAuthorId == $wordpressAuthorId][0]._id',
-    {wordpressAuthorId}
-  )
+async function getOrCreateCategoryReferences(categoryNames) {
+  const refs = []
 
-  if (existingAuthorId) {
-    if (isWriteMode && embeddedAuthor) {
-      const mappedAuthor = await mapWordPressAuthorToSanity(embeddedAuthor, wordpressAuthorId)
-      await client.patch(existingAuthorId).set(mappedAuthor).commit()
+  for (const name of categoryNames) {
+    const title = String(name || '').trim()
+    if (!title) {
+      continue
     }
 
-    return {
-      _type: 'reference',
-      _ref: existingAuthorId,
+    const slugCurrent = slugify(title)
+    if (!slugCurrent) {
+      continue
     }
-  }
 
-  if (!isWriteMode) {
-    return {
-      _type: 'reference',
-      _ref: `author-dry-run-${wordpressAuthorId}`,
-    }
-  }
+    let categoryId = categoryRefCache.get(slugCurrent)
+    if (!categoryId) {
+      categoryId = await client.fetch(
+        '*[_type == "category" && (slug.current == $slug || lower(title) == $lowerTitle)][0]._id',
+        {slug: slugCurrent, lowerTitle: title.toLowerCase()}
+      )
 
-  const mappedAuthor = await mapWordPressAuthorToSanity(embeddedAuthor, wordpressAuthorId)
-  const createdAuthor = await client.create({_type: 'author', ...mappedAuthor})
-
-  return {
-    _type: 'reference',
-    _ref: createdAuthor._id,
-  }
-}
-
-async function mapWordPressAuthorToSanity(embeddedAuthor, wordpressAuthorId) {
-  const name = String(embeddedAuthor?.name || `Author ${wordpressAuthorId}`).trim() || `Author ${wordpressAuthorId}`
-  const slugCurrent = String(embeddedAuthor?.slug || slugify(name)).trim() || slugify(name)
-  const bio = toPlainText(embeddedAuthor?.description || '') || undefined
-  const wordpressUrl = embeddedAuthor?.link || undefined
-  const avatarUrl = getAuthorAvatarUrl(embeddedAuthor)
-  const avatarAsset = avatarUrl ? await uploadImageToSanity(avatarUrl) : undefined
-
-  return {
-    name,
-    slug: {current: slugCurrent},
-    wordpressAuthorId,
-    wordpressUrl,
-    bio,
-    avatar: avatarAsset
-      ? {
-          _type: 'image',
-          asset: {
-            _type: 'reference',
-            _ref: avatarAsset._id,
-          },
-          alt: name,
+      if (!categoryId) {
+        if (!isWriteMode) {
+          categoryId = `category-dry-run-${slugCurrent}`
+        } else {
+          const created = await client.create({
+            _type: 'category',
+            title,
+            slug: {current: slugCurrent},
+          })
+          categoryId = created._id
+          console.log(`Created category "${title}" (${slugCurrent})`)
         }
-      : undefined,
-  }
-}
+      }
 
-function getAuthorAvatarUrl(embeddedAuthor) {
-  const avatarUrls = embeddedAuthor?.avatar_urls
-  if (!avatarUrls || typeof avatarUrls !== 'object') {
-    return undefined
-  }
-
-  for (const size of ['96', '48', '24']) {
-    if (typeof avatarUrls[size] === 'string' && avatarUrls[size].trim()) {
-      return avatarUrls[size]
+      categoryRefCache.set(slugCurrent, categoryId)
     }
+
+    refs.push({
+      _type: 'reference',
+      _ref: categoryId,
+      _key: slugCurrent,
+    })
   }
 
-  for (const value of Object.values(avatarUrls)) {
-    if (typeof value === 'string' && value.trim()) {
-      return value
-    }
-  }
-
-  return undefined
+  return refs.length > 0 ? refs : undefined
 }
 
 function slugify(value = '') {

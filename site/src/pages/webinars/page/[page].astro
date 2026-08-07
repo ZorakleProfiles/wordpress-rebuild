@@ -1,21 +1,21 @@
 ---
 import BlogList from "../../../components/BlogList.astro";
 import {
-  getPaginatedPostsByTag,
-  getTaggedPostPageCount,
+  getPaginatedPostsByCategory,
+  getCategoryPostPageCount,
   type PaginatedPosts
 } from "../../../lib/blog.ts";
 
 export async function getStaticPaths() {
   const webinarsArchivePageSize = 10;
-  const totalPages = await getTaggedPostPageCount("webinars & training", webinarsArchivePageSize);
+  const totalPages = await getCategoryPostPageCount("webinars & training", webinarsArchivePageSize);
   if (totalPages <= 1) {
     return [];
   }
 
   const pageNumbers = Array.from({ length: totalPages - 1 }, (_unused, index) => index + 2);
   const pageDataByPage = await Promise.all(
-    pageNumbers.map((pageNumber) => getPaginatedPostsByTag("webinars & training", pageNumber, webinarsArchivePageSize))
+    pageNumbers.map((pageNumber) => getPaginatedPostsByCategory("webinars & training", pageNumber, webinarsArchivePageSize))
   );
 
   return pageNumbers.map((pageNumber, index) => ({

@@ -15,14 +15,15 @@ export function urlFor(source: any) {
 
 export const POSTS_QUERY = defineQuery(
   `*[_type == "post" && defined(slug.current)] | order(publishedAt desc){
-    _id, title, slug, publishedAt, excerpt, mainImage, categories, tags
+    _id, title, slug, publishedAt, excerpt, mainImage,
+    "categories": categoryRefs[]->{ title, slug }
   }`
 );
 
 export const POST_BY_SLUG_QUERY = defineQuery(
   `*[_type == "post" && slug.current == $slug][0]{
-    _id, title, slug, publishedAt, excerpt, mainImage, categories, tags, body,
-    "author": author->{ name, slug }
+    _id, title, slug, publishedAt, excerpt, mainImage, body,
+    "categories": categoryRefs[]->{ title, slug }
   }`
 );
 

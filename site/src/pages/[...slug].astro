@@ -58,7 +58,6 @@ const jsonLd = JSON.stringify({
   headline: post.title,
   description: pageDescription,
   datePublished: post.publishedAt,
-  ...(post.authorName ? { author: { "@type": "Person", name: post.authorName } } : {}),
   ...(post.featuredImageUrl ? { image: post.featuredImageUrl } : {}),
   mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
   publisher: {
@@ -85,7 +84,6 @@ const portableTextComponents = {
   ogType="article"
   ogImage={post.featuredImageUrl}
   publishedTime={post.publishedAt}
-  author={post.authorName}
 >
   <script type="application/ld+json" slot="head" set:html={jsonLd} />
   <SiteHeader />

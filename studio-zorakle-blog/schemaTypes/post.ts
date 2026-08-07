@@ -33,12 +33,6 @@ export const post = defineType({
       readOnly: true,
     }),
     defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
-      to: [{type: 'author'}],
-    }),
-    defineField({
       name: 'publishedAt',
       title: 'Published At',
       type: 'datetime',
@@ -67,20 +61,6 @@ export const post = defineType({
       title: 'Categories',
       type: 'array',
       of: [defineArrayMember({type: 'reference', to: [{type: 'category'}]})],
-      description: 'Select structured categories (preferred for new posts)',
-    }),
-    defineField({
-      name: 'categories',
-      title: 'Legacy Categories (strings)',
-      type: 'array',
-      of: [defineArrayMember({type: 'string'})],
-      description: 'Legacy string categories from WordPress import — use Categories above for new posts.',
-    }),
-    defineField({
-      name: 'tags',
-      title: 'Tags',
-      type: 'array',
-      of: [defineArrayMember({type: 'string'})],
     }),
     defineField({
       name: 'body',

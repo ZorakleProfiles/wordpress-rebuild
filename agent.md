@@ -53,6 +53,14 @@ Installing dependencies (always inside the container, with `--legacy-peer-deps` 
 docker exec -w /app/site zorakle-wp-update-astro-1 npm install --legacy-peer-deps <package>
 ```
 
+**Important:** the repo root is an npm workspace (`workspaces: ["site"]`) with its own `package-lock.json`, and CI runs `npm ci` from the root. After changing `site/package.json`, always re-sync the root lockfile from the repository root on the host:
+
+```bash
+npm install --package-lock-only
+```
+
+Commit both `site/package-lock.json` and the root `package-lock.json`.
+
 After adding or removing dependencies, do the full rebuild in section 6 so the image layer cache matches `package.json`/`package-lock.json`.
 
 ## 5) File Editing Workflow

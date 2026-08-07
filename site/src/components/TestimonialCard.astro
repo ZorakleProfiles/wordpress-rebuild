@@ -17,7 +17,7 @@ const { name, company, type, quote, class: className = "", dataIndex } = Astro.p
 const typeModifier = type.trim().toLowerCase() === "broker" ? "is-broker" : "is-franchisor";
 ---
 
-<article class:list={["testimonial-card", className]} data-index={dataIndex}>
+<article class:list={["testimonial-card", typeModifier, className]} data-index={dataIndex}>
 
   <div class="testimonial-card-head">
     <div class="min-w-0">
@@ -43,20 +43,33 @@ const typeModifier = type.trim().toLowerCase() === "broker" ? "is-broker" : "is-
     transition: border-color 220ms ease, box-shadow 220ms ease;
   }
 
-  /* Brand accent bar along the top. */
+  /* Solid accent bar along the top, colored to match the audience badge. */
   .testimonial-card::before {
     content: "";
     position: absolute;
     inset: 0 auto auto 0;
     width: 100%;
     height: 3px;
-    background: linear-gradient(90deg, #fd7730 0%, #09cc9c 100%);
-    opacity: 0.85;
+  }
+
+  .testimonial-card.is-broker::before {
+    background: #09cc9c;
+  }
+
+  .testimonial-card.is-franchisor::before {
+    background: #fd7730;
   }
 
   .testimonial-card:hover {
-    border-color: #fd7730;
     box-shadow: 0 10px 28px -12px rgba(34, 37, 42, 0.28);
+  }
+
+  .testimonial-card.is-broker:hover {
+    border-color: #09cc9c;
+  }
+
+  .testimonial-card.is-franchisor:hover {
+    border-color: #fd7730;
   }
 
 

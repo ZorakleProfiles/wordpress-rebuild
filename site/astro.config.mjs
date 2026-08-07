@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { loadEnv } from "vite";
 import sanity from "@sanity/astro";
 import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
 
 const { PUBLIC_SANITY_PROJECT_ID, PUBLIC_SANITY_DATASET } = loadEnv(
   process.env.NODE_ENV ?? "development",
@@ -54,7 +55,7 @@ const sanityIntentDevRedirect = {
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://zorakle-website.mike-94b.workers.dev",
+  site: "https://www.zorakleprofiles.com",
   base: "/",
   integrations: [
     react(),
@@ -63,6 +64,12 @@ export default defineConfig({
       dataset: PUBLIC_SANITY_DATASET,
       useCdn: false,
       studioBasePath: '/studio',
+    }),
+    sitemap({
+      filter: (page) => {
+        const { pathname } = new URL(page);
+        return pathname !== "/studio" && !pathname.startsWith("/studio/");
+      },
     }),
   ],
   vite: {

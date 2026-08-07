@@ -1,0 +1,43 @@
+
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+---
+
+<MainLayout
+  title="Page Not Found | Zorakle"
+  description="The page you're looking for doesn't exist or has been moved."
+  noindex
+>
+  <SiteHeader />
+
+  <main class="bg-[#f7f8fb] py-20 md:py-28">
+    <div class="section-shell text-center">
+      <p class="text-sm font-semibold uppercase tracking-wide text-[#fd7730]">404</p>
+      <h1 class="mt-4 font-display text-[42px] leading-tight text-[#22252a] md:text-[56px]">
+        Page not found
+      </h1>
+      <p class="mx-auto mt-4 max-w-xl text-lg text-[#3b3e47]">
+        The page you're looking for doesn't exist or has been moved.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+        <a
+          href="/"
+          class="rounded-full bg-[#fd7730] px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+        >
+          Back to home
+        </a>
+        <a
+          href="/support"
+          class="text-sm font-semibold text-[#fd7730] underline underline-offset-2 hover:opacity-80"
+        >
+          Visit support
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <SiteFooter />
+</MainLayout>
+

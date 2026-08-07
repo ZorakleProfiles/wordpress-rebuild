@@ -1,0 +1,6 @@
+# Prevent the workers.dev preview deployment from being indexed by search engines.
+# This rule is host-scoped: it does NOT apply when the site is served from the
+# production domain (www.zorakleprofiles.com).
+https://zorakle-website.mike-94b.workers.dev/*
+  X-Robots-Tag: noindex
+

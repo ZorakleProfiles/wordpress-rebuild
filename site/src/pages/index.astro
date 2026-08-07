@@ -12,9 +12,32 @@ import AlignmentStoryExecutionSection from "../components/AlignmentStoryExecutio
 import TestimonialGrid from "../components/TestimonialGrid.astro";
 import CtaBand from "../components/CtaBand.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import { footer } from "../data/site-content";
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${Astro.site?.href}#organization`,
+      name: "Zorakle",
+      url: Astro.site?.href,
+      email: footer.email,
+      description:
+        "Science-backed tools for franchise awarding and broker matching decisions."
+    },
+    {
+      "@type": "WebSite",
+      name: "Zorakle",
+      url: Astro.site?.href,
+      publisher: { "@id": `${Astro.site?.href}#organization` }
+    }
+  ]
+});
 ---
 
 <MainLayout>
+  <script type="application/ld+json" slot="head" set:html={jsonLd} />
   <SiteHeader />
   <main>
     <HeroSection />

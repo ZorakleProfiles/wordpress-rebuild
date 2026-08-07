@@ -49,6 +49,25 @@ const pageDescription = post.excerpt || `Read ${post.title} on Zorakle Blog.`;
 const encodedPostId = encodeURIComponent(post.sanityId);
 const studioEditHref = `/studio#/intent/edit/id=${encodedPostId};type=post`;
 
+// Legacy WordPress slug aliases render the same content — canonicalize to the primary slug.
+const canonicalUrl = new URL(`/${post.slug}/`, Astro.site).href;
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: post.title,
+  description: pageDescription,
+  datePublished: post.publishedAt,
+  ...(post.authorName ? { author: { "@type": "Person", name: post.authorName } } : {}),
+  ...(post.featuredImageUrl ? { image: post.featuredImageUrl } : {}),
+  mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
+  publisher: {
+    "@type": "Organization",
+    name: "Zorakle",
+    url: Astro.site?.href
+  }
+});
+
 const portableTextComponents = {
   type: {
     // Renders image blocks embedded in the post body
@@ -59,7 +78,16 @@ const portableTextComponents = {
 };
 ---
 
-<MainLayout title={`${post.title} | Zorakle`} description={pageDescription}>
+<MainLayout
+  title={`${post.title} | Zorakle`}
+  description={pageDescription}
+  canonicalUrl={canonicalUrl}
+  ogType="article"
+  ogImage={post.featuredImageUrl}
+  publishedTime={post.publishedAt}
+  author={post.authorName}
+>
+  <script type="application/ld+json" slot="head" set:html={jsonLd} />
   <SiteHeader />
 
   <main class="bg-[#f7f8fb] py-14 md:py-16">

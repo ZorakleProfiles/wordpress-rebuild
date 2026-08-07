@@ -17,7 +17,9 @@ export default defineConfig({
 
   projectId: '4kjxjblw',
   dataset: 'production',
-
+  releases: {
+    enabled: false
+  },
   plugins: [
     structureTool({
       structure: (S) =>
@@ -53,6 +55,7 @@ export default defineConfig({
   ],
 
   document: {
+
     productionUrl: async (prev, {document, getClient}) => {
       if (document?._type !== 'post') {
         return prev

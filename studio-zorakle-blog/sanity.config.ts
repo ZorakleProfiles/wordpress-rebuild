@@ -18,7 +18,12 @@ export default defineConfig({
 
   projectId: '4kjxjblw',
   dataset: 'production',
-
+  releases: {
+    enabled: false
+  },
+  scheduledDrafts: {
+    enabled: false,
+  },
   plugins: [
     structureTool({
       structure: (S) =>
@@ -53,8 +58,11 @@ export default defineConfig({
     }),
     visionTool(),
   ],
-
   document: {
+    drafts: {
+      enabled: false
+    },
+
     productionUrl: async (prev, {document, getClient}) => {
       if (document?._type !== 'post') {
         return prev

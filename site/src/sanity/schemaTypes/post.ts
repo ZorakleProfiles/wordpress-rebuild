@@ -37,7 +37,7 @@ export const post = defineType({
     }),
     defineField({
       name: 'mainImage',
-      title: 'Main Image',
+      title: 'Thumbnail Image',
       type: 'image',
       options: {hotspot: true},
       fields: [

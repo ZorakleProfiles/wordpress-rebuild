@@ -43,34 +43,19 @@ const typeModifier = type.trim().toLowerCase() === "broker" ? "is-broker" : "is-
     transition: border-color 220ms ease, box-shadow 220ms ease;
   }
 
-  /* Solid accent bar along the top, colored to match the audience badge. */
-  .testimonial-card::before {
-    content: "";
-    position: absolute;
-    inset: 0 auto auto 0;
-    width: 100%;
-    height: 3px;
+  /* Type-colored top border: green for brokers, orange for franchisors. */
+  .testimonial-card.is-broker {
+    border-top: 3px solid #09cc9c;
   }
 
-  .testimonial-card.is-broker::before {
-    background: #09cc9c;
-  }
-
-  .testimonial-card.is-franchisor::before {
-    background: #fd7730;
+  .testimonial-card.is-franchisor {
+    border-top: 3px solid #fd7730;
   }
 
   .testimonial-card:hover {
     box-shadow: 0 10px 28px -12px rgba(34, 37, 42, 0.28);
   }
 
-  .testimonial-card.is-broker:hover {
-    border-color: #09cc9c;
-  }
-
-  .testimonial-card.is-franchisor:hover {
-    border-color: #fd7730;
-  }
 
 
   .testimonial-card-head {

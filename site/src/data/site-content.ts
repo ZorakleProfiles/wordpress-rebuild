@@ -72,6 +72,27 @@ export const partnerships = [
     description: "Connecting clients with the right franchise opportunities through innovative technology and data-driven insights.",
     linkName: "Learn more about ClientTether →",
     linkUrl: "https://www.clienttether.com/"
+  },
+  {
+    shortName: "MAVERICK",
+    name: "The Maverick",
+    description: "Connecting clients with the right franchise opportunities through innovative technology and data-driven insights.",
+    linkName: "Learn more about The Maverick →",
+    linkUrl: "https://fran.themaverick.ai/"
+  },
+  {
+    shortName: "MAVERICK",
+    name: "Own Your Revenue",
+    description: "Connecting clients with the right franchise opportunities through innovative technology and data-driven insights.",
+    linkName: "Learn more about Own Your Revenue →",
+    linkUrl: "https://www.ownyourrevenue.com"
+  },
+  {
+    shortName: "EAUTH",
+    name: "The Entrepreneur Authority",
+    description: "Connecting clients with the right franchise opportunities through innovative technology and data-driven insights.",
+    linkName: "Learn more about The Entrepreneur Authority →",
+    linkUrl: "https://www.eAuth.com"
   }
 ];
 

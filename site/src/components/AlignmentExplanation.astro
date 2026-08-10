@@ -1,0 +1,25 @@
+---
+import AlignmentCompoundingChart from "./AlignmentCompoundingChart.astro";
+import KeyImage from "../assets/figma-import/key.png";
+import {Image} from "astro:assets";
+---
+
+<section class="bg-white py-20 md:py-28 overflow-hidden">
+  <div class="section-shell">
+    <div class="grid gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.25fr)] lg:items-start lg:gap-14">
+      <div class="max-w-4xl space-y-5">
+        <p class="section-eyebrow">Why Consistency Still Breaks</p>
+        <h2 class="section-title">More Franchises Fail From Misalignment Than From Bad Systems</h2>
+        <p class="section-copy max-w-3xl">
+          Franchisors often assume success is driven by better marketing, stronger sales teams, improved training, or more field support.
+          But even great systems produce inconsistent outcomes.
+        </p>
+      </div>
+
+      <!-- Signal graphic -->
+      <div class="lg:justify-self-end lg:w-full">
+        <Image src={KeyImage} alt="" aria-hidden="true" />
+      </div>
+    </div>
+  </div>
+</section>

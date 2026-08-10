@@ -1,0 +1,29 @@
+---
+import type { ScienceLesson } from "../data/sciences";
+
+interface Props {
+  lesson: ScienceLesson;
+}
+
+const { lesson } = Astro.props;
+const lessonNumber = String(lesson.number).padStart(2, "0");
+---
+
+<article class="overflow-hidden rounded-2xl border border-[#d1d4dd] bg-white shadow-sm">
+  <div class="aspect-video bg-[#22252a]">
+    <iframe
+      src={`${lesson.videoUrl}?title=0&byline=0&portrait=0&dnt=1`}
+      title={`Lesson ${lessonNumber}: ${lesson.title}`}
+      class="h-full w-full"
+      loading="lazy"
+      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+    ></iframe>
+  </div>
+  <div class="p-6 md:p-8">
+    <p class="text-sm font-bold uppercase tracking-[0.14em] text-[#287867]">Lesson {lessonNumber}</p>
+    <h2 class="mt-2 font-display text-2xl font-bold text-[#22252a] md:text-3xl">{lesson.title}</h2>
+    <p class="mt-4 leading-relaxed text-[#3b3e47]">{lesson.explanation}</p>
+  </div>
+</article>

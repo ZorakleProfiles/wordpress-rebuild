@@ -12,10 +12,12 @@ export const navLinks = [
     label: "Resources",
     items: [
       { href: "/news", label: "News" },
+      { href: "/partnerships", label: "Partnerships" },
       { href: "/podcasts", label: "Podcasts" },
+      { href: "/sciences", label: "Science" },
+      { href: "/support", label: "Support" },
       { href: "/webinars", label: "Webinars" },
-      { href: "/support", label: "Training & Support" },
-      { href: "/partnerships", label: "Partnerships" }
+
     ]
   },
   { href: "/about", label: "About" }

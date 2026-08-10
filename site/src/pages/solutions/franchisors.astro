@@ -3,7 +3,7 @@ import MainLayout from "../../layouts/MainLayout.astro";
 import { Image } from "astro:assets";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
-import PageHero from "../../components/PageHero.astro";
+import VideoHero from "../../components/VideoHero.astro";
 import TestimonialCarousel from "../../components/TestimonialCarousel.astro";
 import WorkflowStepsSection from "../../components/WorkflowStepsSection.astro";
 import ToolsShowcaseSection from "../../components/ToolsShowcaseSection.astro";
@@ -129,15 +129,20 @@ const metrics = [
   <SiteHeader />
 
   <main>
-    <PageHero
+    <VideoHero
       titlePrefix="Award franchises"
       titleHighlight="with the confidence of statistically validated science and data."
       titleSuffix=""
       description="Selecting the wrong owner creates expensive downstream friction. Zorakle gives your team a repeatable, validated framework to predict fit before contracts are signed."
       primaryCta={{ href: "/schedule", label: "Book a Demo" }}
       secondaryCta={{ href: "#sample-report", label: "Sign Up Now!" }}
-      backgroundImage={heroBackground}
-      dark={true}
+      poster={heroBackground}
+      posterAlt="Franchise owners and operators representing a growing franchise system"
+      videoId="1037075278"
+      durationLabel="5 min"
+      playLabel="Play the 5-minute franchisor overview"
+      modalTitle="Zorakle 5-minute franchisor overview"
+      caption="See how Zorakle helps franchisors award stronger owners with confidence."
     />
 
     <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
@@ -201,7 +206,7 @@ const metrics = [
     <MetricsTimelineSection
       eyebrow="What Franchisors Gain When Awarding Through Data"
       titlePrefix="The metrics that move when you"
-      titleHighlight="select with science."
+      titleHighlight=" select with science."
       items={metrics}
     />
 

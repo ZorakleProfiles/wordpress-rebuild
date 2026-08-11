@@ -22,15 +22,6 @@ import SiteFooter from "../components/SiteFooter.astro";
         <h1 id="preview-title" class="mt-4 max-w-5xl font-display text-[42px] leading-tight text-[#22252a] md:text-[56px]"></h1>
         <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-semibold text-[#22252a]">
           <span id="preview-date"></span>
-          <a
-            id="preview-edit-link"
-            href="/studio"
-            class="ml-auto text-xs font-medium text-[#fd7730] underline underline-offset-2 hover:opacity-80"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Edit in Studio ↗
-          </a>
         </div>
         <div id="preview-body" class="blog-content mt-8 border-t border-[#d1d4dd] pt-8"></div>
       </div>
@@ -48,8 +39,7 @@ import SiteFooter from "../components/SiteFooter.astro";
   const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID || "4kjxjblw";
   const dataset = import.meta.env.PUBLIC_SANITY_DATASET || "production";
 
-  // withCredentials reuses the editor's Sanity login session (same one that
-  // powers the embedded Studio at /studio) so drafts are readable without
+  // Reuse an editor's Sanity login session so drafts are readable without
   // exposing an API token in the client bundle.
   const client = createClient({
     projectId,
@@ -160,9 +150,7 @@ import SiteFooter from "../components/SiteFooter.astro";
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       if (/401|403|unauthorized|permission/i.test(message)) {
-        showStatus(
-          `You must be signed in to Sanity to preview drafts. <a class="text-[#fd7730] underline" href="/studio" target="_blank" rel="noopener noreferrer">Open the Studio</a> to sign in, then reload this page.`
-        );
+        showStatus("You must be signed in to Sanity to preview drafts. Sign in through the standalone Studio, then reload this page.");
       } else {
         showStatus(`Failed to load draft: ${escapeHtml(message)}`);
       }
@@ -181,10 +169,6 @@ import SiteFooter from "../components/SiteFooter.astro";
     document.getElementById("preview-date")!.textContent = dateSource
       ? `Posted on ${new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric" }).format(new Date(dateSource))}`
       : "";
-
-    const publishedId = String(post._id).replace(/^drafts\./, "");
-    (document.getElementById("preview-edit-link") as HTMLAnchorElement).href =
-      `/studio#/intent/edit/id=${encodeURIComponent(publishedId)};type=post`;
 
     const bodyEl = document.getElementById("preview-body")!;
     bodyEl.innerHTML = Array.isArray(post.body) && post.body.length > 0
@@ -237,4 +221,3 @@ import SiteFooter from "../components/SiteFooter.astro";
     border-radius: 0.75rem;
   }
 </style>
-

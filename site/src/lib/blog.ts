@@ -1,4 +1,4 @@
-import { sanityClient } from "sanity:client";
+import { sanityClient } from "./sanity-client";
 import { createImageUrlBuilder } from "@sanity/image-url";
 import { defineQuery } from "groq";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
@@ -262,4 +262,3 @@ export async function getPostPageCount(pageSize = DEFAULT_ARCHIVE_PAGE_SIZE): Pr
 export async function getPaginatedPosts(page: number, pageSize = DEFAULT_ARCHIVE_PAGE_SIZE): Promise<PaginatedPosts> {
   return paginate(await getAllPosts(), page, pageSize);
 }
-

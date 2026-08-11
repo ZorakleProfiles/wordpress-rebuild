@@ -1,4 +1,4 @@
-import { sanityClient } from "sanity:client";
+import { sanityClient } from "../lib/sanity-client";
 import { createImageUrlBuilder } from "@sanity/image-url";
 import { defineQuery } from "groq";
 
@@ -40,4 +40,3 @@ export async function getPosts() {
 export async function getPostBySlug(slug: string) {
   return await sanityClient.fetch(POST_BY_SLUG_QUERY, { slug });
 }
-

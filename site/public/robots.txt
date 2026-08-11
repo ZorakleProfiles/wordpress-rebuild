@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /studio
 
 Sitemap: https://www.zorakleprofiles.com/sitemap-index.xml
-

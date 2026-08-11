@@ -3,117 +3,302 @@ import MainLayout from "../layouts/MainLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import Help from "../components/Help.astro";
-
-import { supportArticles } from "../data/support.ts";
+import { supportArticles } from "../data/support";
+import { scienceTopics } from "../data/sciences";
 
 const supportArticleTypes = [...new Set(supportArticles.map((article) => article.type))];
-
+const totalLessons = scienceTopics.reduce((total, topic) => total + topic.lessons.length, 0);
 ---
+
 <MainLayout
-  title="Training & Support | Zorakle"
-  description="Support articles and training resources for Zorakle users. Step-by-step guides to help you set up and get the most out of the platform."
+  title="Technical Support & Training | Zorakle"
+  description="Get technical help with the Zorakle platform or explore the science behind the SpotOn! framework."
 >
   <SiteHeader />
 
   <main>
-
-    <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
+    <section class="border-b border-[#d1d4dd] bg-[#f4f5f7] py-10 md:py-12">
       <div class="section-shell">
-        <h1 class="font-display text-4xl font-bold text-[#22252a] md:text-5xl">Support</h1>
-        <p class="mt-4 text-lg text-[#3b3e47] max-w-2xl">
-          Step-by-step guides with screenshots to help you set up and get the most out of Zorakle. Click any article to open the full walkthrough.
+        <p class="section-eyebrow">Resources</p>
+        <h1 class="mt-4 font-display text-4xl font-bold text-[#22252a] md:text-5xl">
+          Technical Support & Training
+        </h1>
+        <p class="mt-4 max-w-2xl text-lg text-[#3b3e47]">
+          Get help setting up and using the Zorakle platform, or explore the sciences behind the
+          Zorakle framework.
         </p>
 
-        {supportArticles.length > 0 ? (
-          <>
-            <div class="mt-10 mb-8 grid gap-4 md:grid-cols-[2fr_1fr]" data-support-filters>
-              <label class="block">
-                <span class="mb-2 block text-sm font-semibold text-[#22252a]">Search articles</span>
-                <input
-                  type="search"
-                  placeholder="Search by topic, feature, or workflow"
-                  class="w-full rounded-xl border border-[#d1d4dd] bg-white px-4 py-3 text-sm text-[#22252a] outline-none transition focus:border-[#09cc9c]"
-                  data-support-search
-                />
-              </label>
-              <label class="block">
-                <span class="mb-2 block text-sm font-semibold text-[#22252a]">Audience</span>
-                <select
-                  class="w-full rounded-xl border border-[#d1d4dd] bg-white px-4 py-3 text-sm text-[#22252a] outline-none transition focus:border-[#09cc9c]"
-                  data-support-type
-                >
-                  <option value="all">All audiences</option>
-                  {supportArticleTypes.map((type) => (
-                    <option value={type}>{type}</option>
-                  ))}
-                </select>
-              </label>
-            </div>
-
-            <div class="grid gap-6 md:grid-cols-2" data-support-results>
-            {supportArticles.map((article) => (
-              <a
-                href={`/support/${article.slug}`}
-                class="group rounded-2xl border border-[#d1d4dd] bg-white p-6 transition hover:border-[#09cc9c] hover:shadow-lg"
-                data-support-card
-                data-support-type={article.type}
-                data-support-searchable={`${article.title} ${article.summary} ${article.type}`}
-              >
-                <p class="text-sm font-semibold text-[#09cc9c]">{article.type}</p>
-                <h3 class="mt-2 font-display text-2xl font-bold text-[#22252a] group-hover:text-[#fd7730]">{article.title}</h3>
-                <p class="mt-3 text-sm leading-relaxed text-[#3b3e47]">{article.summary}</p>
-                <p class="mt-4 text-sm text-[#56586a]">{article.steps.length} steps</p>
-                <p class="mt-4 text-sm font-semibold text-[#fd7730]">Read full article →</p>
-              </a>
-            ))}
-            </div>
-
-            <p class="mt-6 hidden rounded-xl border border-dashed border-[#b7bcc9] bg-[#f4f6f9] px-4 py-3 text-sm text-[#3b3e47]" data-support-empty>
-              No articles match your current search. Try a different keyword or choose another audience.
-            </p>
-          </>
-        ) : (
-          <p class="mt-8 text-base text-[#3b3e47]">No support articles are available yet.</p>
-        )}
+        <div
+          class="mt-8 inline-flex rounded-xl border border-[#d1d4dd] bg-white p-1"
+          role="tablist"
+          aria-label="Technical support and Zorakle training resources"
+        >
+          <button
+            id="support-tab"
+            class="resource-tab rounded-lg px-5 py-2.5 text-sm font-bold transition"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="support-panel"
+            data-resource-tab="support"
+          >
+            Technical Support
+          </button>
+          <button
+            id="science-tab"
+            class="resource-tab rounded-lg px-5 py-2.5 text-sm font-bold transition"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="science-panel"
+            tabindex="-1"
+            data-resource-tab="science"
+          >
+            Training
+          </button>
+        </div>
       </div>
     </section>
 
-    <Help />
+    <div
+      id="support-panel"
+      role="tabpanel"
+      aria-labelledby="support-tab"
+      data-resource-panel="support"
+    >
+      <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
+        <div class="section-shell">
+          <p class="section-eyebrow">Platform Help</p>
+          <h2 class="mt-4 font-display text-3xl font-bold text-[#22252a] md:text-4xl">
+            Technical Support
+          </h2>
+          <p class="mt-4 max-w-2xl text-lg text-[#3b3e47]">
+            Find step-by-step guides for account setup, platform features, reports, and common
+            technical workflows. Select any article to open the full walkthrough.
+          </p>
 
+          {supportArticles.length > 0 ? (
+            <>
+              <div class="mt-10 mb-8 grid gap-4 md:grid-cols-[2fr_1fr]" data-support-filters>
+                <label class="block">
+                  <span class="mb-2 block text-sm font-semibold text-[#22252a]">Search articles</span>
+                  <input
+                    type="search"
+                    placeholder="Search by topic, feature, or workflow"
+                    class="w-full rounded-xl border border-[#d1d4dd] bg-white px-4 py-3 text-sm text-[#22252a] outline-none transition focus:border-[#09cc9c]"
+                    data-support-search
+                  />
+                </label>
+                <label class="block">
+                  <span class="mb-2 block text-sm font-semibold text-[#22252a]">Audience</span>
+                  <select
+                    class="w-full rounded-xl border border-[#d1d4dd] bg-white px-4 py-3 text-sm text-[#22252a] outline-none transition focus:border-[#09cc9c]"
+                    data-support-type
+                  >
+                    <option value="all">All audiences</option>
+                    {supportArticleTypes.map((type) => <option value={type}>{type}</option>)}
+                  </select>
+                </label>
+              </div>
+
+              <div class="grid gap-6 md:grid-cols-2" data-support-results>
+                {supportArticles.map((article) => (
+                  <a
+                    href={`/support/${article.slug}`}
+                    class="group rounded-2xl border border-[#d1d4dd] bg-white p-6 transition hover:border-[#09cc9c] hover:shadow-lg"
+                    data-support-card
+                    data-support-type={article.type}
+                    data-support-searchable={`${article.title} ${article.summary} ${article.type}`}
+                  >
+                    <p class="text-sm font-semibold text-[#09cc9c]">{article.type}</p>
+                    <h3 class="mt-2 font-display text-2xl font-bold text-[#22252a] group-hover:text-[#fd7730]">
+                      {article.title}
+                    </h3>
+                    <p class="mt-3 text-sm leading-relaxed text-[#3b3e47]">{article.summary}</p>
+                    <p class="mt-4 text-sm text-[#56586a]">{article.steps.length} steps</p>
+                    <p class="mt-4 text-sm font-semibold text-[#fd7730]">Read full article →</p>
+                  </a>
+                ))}
+              </div>
+
+              <p
+                class="mt-6 hidden rounded-xl border border-dashed border-[#b7bcc9] bg-[#f4f6f9] px-4 py-3 text-sm text-[#3b3e47]"
+                data-support-empty
+              >
+                No articles match your current search. Try a different keyword or choose another audience.
+              </p>
+            </>
+          ) : (
+            <p class="mt-8 text-base text-[#3b3e47]">No support articles are available yet.</p>
+          )}
+        </div>
+      </section>
+
+      <Help />
+    </div>
+
+    <div
+      id="science-panel"
+      role="tabpanel"
+      aria-labelledby="science-tab"
+      data-resource-panel="science"
+      hidden
+    >
+      <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
+        <div class="section-shell">
+          <p class="section-eyebrow">The Science</p>
+          <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold text-[#22252a] md:text-5xl">
+            SpotOn! Basics
+          </h2>
+          <p class="mt-4 max-w-3xl text-lg text-[#3b3e47]">
+            Build a practical understanding of the science behind Zorakle. Start with the overview,
+            then explore how values, stage of growth, culture, work style, and competencies work
+            together to create a more complete picture of fit.
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-3 text-sm font-semibold text-[#56586a]">
+            <span class="rounded-full bg-[#f4f6f9] px-4 py-2">{scienceTopics.length} topics</span>
+            <span class="rounded-full bg-[#f4f6f9] px-4 py-2">{totalLessons} video lessons</span>
+            <span class="rounded-full bg-[#f4f6f9] px-4 py-2">Learn at your own pace</span>
+          </div>
+
+          <div class="mt-10 grid gap-6 md:grid-cols-2">
+            {scienceTopics.map((topic, index) => (
+              <a
+                href={`/sciences/${topic.slug}`}
+                class:list={[
+                  "group flex flex-col rounded-2xl border bg-white p-6 transition hover:-translate-y-0.5 hover:border-[#09cc9c] hover:shadow-lg md:p-8",
+                  index === 0 ? "border-[#09cc9c] md:col-span-2" : "border-[#d1d4dd]"
+                ]}
+              >
+                <div class="flex items-start justify-between gap-4">
+                  <p class="text-sm font-bold uppercase tracking-[0.14em] text-[#287867]">
+                    {index === 0 ? "Start here" : `Topic ${String(index + 1).padStart(2, "0")}`}
+                  </p>
+                  <span class="rounded-full bg-[#f4f6f9] px-3 py-1 text-xs font-semibold text-[#56586a]">
+                    {topic.lessons.length} {topic.lessons.length === 1 ? "lesson" : "lessons"}
+                  </span>
+                </div>
+                <h3 class="mt-3 font-display text-2xl font-bold text-[#22252a] transition group-hover:text-[#fd7730] md:text-3xl">
+                  {topic.title}
+                </h3>
+                <p class="mt-3 line-clamp-3 flex-1 leading-relaxed text-[#3b3e47]">{topic.summary}</p>
+                <p class="mt-6 text-sm font-bold text-[#c84f10]">Explore this topic →</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+      <Help />
+    </div>
   </main>
 
   <SiteFooter />
 </MainLayout>
 
 <script>
-  const supportSearch = document.querySelector('[data-support-search]') as HTMLInputElement | null;
-  const supportType = document.querySelector('[data-support-type]') as HTMLSelectElement | null;
-  const supportCards = Array.from(document.querySelectorAll('[data-support-card]')) as HTMLElement[];
-  const supportEmpty = document.querySelector('[data-support-empty]') as HTMLElement | null;
+  type ResourceTab = "support" | "science";
+
+  const tabButtons = Array.from(
+    document.querySelectorAll<HTMLButtonElement>("[data-resource-tab]")
+  );
+  const tabPanels = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-resource-panel]")
+  );
+
+  const selectResourceTab = (tab: ResourceTab, updateUrl = false) => {
+    tabButtons.forEach((button) => {
+      const isSelected = button.dataset.resourceTab === tab;
+      button.setAttribute("aria-selected", String(isSelected));
+      button.tabIndex = isSelected ? 0 : -1;
+    });
+
+    tabPanels.forEach((panel) => {
+      panel.hidden = panel.dataset.resourcePanel !== tab;
+    });
+
+    if (updateUrl) {
+      const url = new URL(window.location.href);
+      if (tab === "science") url.searchParams.set("tab", "science");
+      else url.searchParams.delete("tab");
+      window.history.pushState({}, "", `${url.pathname}${url.search}${url.hash}`);
+    }
+  };
+
+  const tabFromUrl = (): ResourceTab =>
+    new URL(window.location.href).searchParams.get("tab") === "science" ? "science" : "support";
+
+  tabButtons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+      selectResourceTab(button.dataset.resourceTab as ResourceTab, true);
+    });
+
+    button.addEventListener("keydown", (event) => {
+      if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+      event.preventDefault();
+
+      let nextIndex = index;
+      if (event.key === "ArrowLeft") nextIndex = (index - 1 + tabButtons.length) % tabButtons.length;
+      if (event.key === "ArrowRight") nextIndex = (index + 1) % tabButtons.length;
+      if (event.key === "Home") nextIndex = 0;
+      if (event.key === "End") nextIndex = tabButtons.length - 1;
+
+      const nextButton = tabButtons[nextIndex];
+      nextButton?.focus();
+      if (nextButton) selectResourceTab(nextButton.dataset.resourceTab as ResourceTab, true);
+    });
+  });
+
+  window.addEventListener("popstate", () => selectResourceTab(tabFromUrl()));
+  selectResourceTab(tabFromUrl());
+
+  const supportSearch = document.querySelector<HTMLInputElement>("[data-support-search]");
+  const supportType = document.querySelector<HTMLSelectElement>("[data-support-type]");
+  const supportCards = Array.from(document.querySelectorAll<HTMLElement>("[data-support-card]"));
+  const supportEmpty = document.querySelector<HTMLElement>("[data-support-empty]");
 
   const applySupportFilters = () => {
     if (!supportCards.length) return;
 
-    const searchValue = (supportSearch?.value ?? '').trim().toLowerCase();
-    const selectedType = supportType?.value ?? 'all';
+    const searchValue = (supportSearch?.value ?? "").trim().toLowerCase();
+    const selectedType = supportType?.value ?? "all";
     let visibleCount = 0;
 
     supportCards.forEach((card) => {
-      const articleType = card.dataset.supportType ?? '';
-      const searchableText = (card.dataset.supportSearchable ?? '').toLowerCase();
+      const articleType = card.dataset.supportType ?? "";
+      const searchableText = (card.dataset.supportSearchable ?? "").toLowerCase();
       const matchesSearch = !searchValue || searchableText.includes(searchValue);
-      const matchesType = selectedType === 'all' || articleType === selectedType;
+      const matchesType = selectedType === "all" || articleType === selectedType;
       const isVisible = matchesSearch && matchesType;
 
-      card.classList.toggle('hidden', !isVisible);
+      card.classList.toggle("hidden", !isVisible);
       if (isVisible) visibleCount += 1;
     });
 
-    if (supportEmpty) {
-      supportEmpty.classList.toggle('hidden', visibleCount > 0);
-    }
+    supportEmpty?.classList.toggle("hidden", visibleCount > 0);
   };
 
-  supportSearch?.addEventListener('input', applySupportFilters);
-  supportType?.addEventListener('change', applySupportFilters);
+  supportSearch?.addEventListener("input", applySupportFilters);
+  supportType?.addEventListener("change", applySupportFilters);
 </script>
+
+<style>
+  .resource-tab {
+    color: #56586a;
+  }
+
+  .resource-tab:hover {
+    color: #22252a;
+  }
+
+  .resource-tab[aria-selected="true"] {
+    background: #22252a;
+    color: #fff;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
+  }
+
+  .resource-tab:focus-visible {
+    outline: 2px solid #fd7730;
+    outline-offset: 2px;
+  }
+</style>

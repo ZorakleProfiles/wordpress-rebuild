@@ -1,7 +1,5 @@
 ---
-import { trustStats } from "../data/site-content";
-
-const portalUrl = import.meta.env.PORTAL_URL || 'http://localhost:3000';
+const portalUrl = import.meta.env.PORTAL_URL || "http://localhost:3000";
 ---
 
 <section class="bg-[#f3f3f3] py-8">
@@ -15,6 +13,20 @@ const portalUrl = import.meta.env.PORTAL_URL || 'http://localhost:3000';
 </section>
 
 <script>
+  function restartLogoTicker() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const track = document.querySelector<HTMLElement>(".logo-ticker .logo-track");
+    if (!track) return;
+
+    // iOS Safari can leave CSS animations paused after dynamic insertion or a page-cache restore.
+    track.style.setProperty("-webkit-animation", "none");
+    track.style.animation = "none";
+    void track.offsetWidth;
+    track.style.removeProperty("-webkit-animation");
+    track.style.removeProperty("animation");
+  }
+
   async function loadLogos() {
     try {
       const ticker = document.getElementById("logo-ticker");
@@ -60,12 +72,19 @@ const portalUrl = import.meta.env.PORTAL_URL || 'http://localhost:3000';
           <div class="logo-group" aria-hidden="true">${logoMarkup}</div>
         </div>
       `;
+
+      requestAnimationFrame(restartLogoTicker);
     } catch (error) {
       console.error("Failed to load brand logos:", error);
     }
   }
 
   loadLogos();
+
+  window.addEventListener("pageshow", restartLogoTicker);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") restartLogoTicker();
+  });
 </script>
 
 <style is:global>
@@ -76,7 +95,12 @@ const portalUrl = import.meta.env.PORTAL_URL || 'http://localhost:3000';
   .logo-ticker .logo-track {
     display: flex;
     width: max-content;
+    -webkit-animation: ticker-scroll 40s linear infinite;
     animation: ticker-scroll 40s linear infinite;
+    -webkit-animation-play-state: running;
+    animation-play-state: running;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
     will-change: transform;
   }
 
@@ -92,15 +116,27 @@ const portalUrl = import.meta.env.PORTAL_URL || 'http://localhost:3000';
 
   @keyframes ticker-scroll {
     from {
-      transform: translateX(0);
+      transform: translate3d(0, 0, 0);
     }
     to {
-      transform: translateX(-50%);
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @-webkit-keyframes ticker-scroll {
+    from {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      -webkit-transform: translate3d(-50%, 0, 0);
+      transform: translate3d(-50%, 0, 0);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .logo-ticker .logo-track {
+      -webkit-animation: none;
       animation: none;
     }
   }

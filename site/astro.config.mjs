@@ -77,6 +77,9 @@ export default defineConfig({
       },
     }),
   ],
+  experimental: {
+    incrementalBuild: true,
+  },
   vite: {
     plugins: [tailwindcss(), sanityIntentDevRedirect],
     resolve: {

@@ -38,16 +38,16 @@ const videoEmbedUrl =
   `https://player.vimeo.com/video/${videoId}?autoplay=1&title=0&byline=0&portrait=0&dnt=1`;
 ---
 
-<section class="relative overflow-hidden border-b border-[#d1d4dd] bg-[linear-gradient(135deg,#22252a_0%,#303642_58%,#253e3a_100%)]">
+<section class="relative overflow-hidden border-b border-[#d1d4dd] bg-[#f3f3f3]">
   <div class="section-shell grid min-h-[calc(100vh-6.5rem)] grid-cols-1 items-center gap-12 py-16 md:py-20 lg:grid-cols-2 lg:gap-16">
     <div class="order-1 space-y-5 md:space-y-6">
-      <h1 class="font-display text-4xl font-bold leading-tight sm:text-5xl md:text-6xl" style="color: #ffffff;">
+      <h1 class="font-display text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
         {titlePrefix}
         {titleHighlight && <>{" "}<span class="block text-[#09cc9c]">{titleHighlight}</span></>}
         {titleSuffix && <span>{` ${titleSuffix}`}</span>}
       </h1>
 
-      <p class="max-w-140 text-sm leading-relaxed text-white sm:text-base md:text-lg">
+      <p class="max-w-140 text-sm leading-relaxed sm:text-base md:text-lg">
         {description}
       </p>
 
@@ -93,11 +93,11 @@ const videoEmbedUrl =
           </span>
         </button>
 
-        <span class="absolute bottom-4 right-4 rounded-full bg-[#111419]/85 px-3 py-1.5 text-xs font-bold text-white backdrop-blur-sm">
+        <span class="absolute bottom-4 right-4 rounded-full bg-[#111419]/85 px-3 py-1.5 text-xs font-bold backdrop-blur-sm">
           {durationLabel}
         </span>
       </div>
-      {caption && <p class="mt-4 text-sm font-semibold text-white/80">{caption}</p>}
+      {caption && <p class="mt-4 text-sm font-semibold">{caption}</p>}
     </div>
   </div>
 </section>

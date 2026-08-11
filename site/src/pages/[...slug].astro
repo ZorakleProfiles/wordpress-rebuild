@@ -9,7 +9,7 @@ import { getAllPosts, type BlogPost } from "../lib/blog.ts";
 
 export async function getStaticPaths() {
   const posts = await getAllPosts();
-  const paths: Array<{ params: { slug: string }; props: { post: BlogPost } }> = [];
+  const paths: Array<{ params: { slug: string }; props: { post: BlogPost }; cacheKey: string }> = [];
   const seenSlugs = new Set<string>();
 
   posts.forEach((post) => {
@@ -25,7 +25,8 @@ export async function getStaticPaths() {
       seenSlugs.add(alias);
       paths.push({
         params: { slug: alias },
-        props: { post }
+        props: { post },
+        cacheKey: post.publishedAt,
       });
     });
   });

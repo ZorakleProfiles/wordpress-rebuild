@@ -14,8 +14,7 @@ export const navLinks = [
       { href: "/news", label: "News" },
       { href: "/partnerships", label: "Partnerships" },
       { href: "/podcasts", label: "Podcasts" },
-      { href: "/sciences", label: "Science" },
-      { href: "/support", label: "Support" },
+      { href: "/support", label: "Support & Training" },
       { href: "/webinars", label: "Webinars" },
 
     ]
@@ -43,21 +42,21 @@ export const partnerships = [
     name: "International Franchise Association",
     description: "The industry's largest membership organization. Zorakle is a long-standing member and contributor to IFA programs that support emerging and established franchisors.",
     linkName: "Learn more about IFA →",
-    linkUrl: "https://www.franchise.org/"
+    linkUrl: "https://www.franchise.org"
   },
   {
     shortName: "FBR",
     name: "Franchise Business Review",
     description: "Independent franchisee satisfaction research. Zorakle's work complements FBR's mission of transparency in the franchise industry.",
     linkName: "Learn more about FBR →",
-    linkUrl: "https://franchisebusinessreview.com/"
+    linkUrl: "https://franchisebusinessreview.com"
   },
   {
     shortName: "BAI",
     name: "Business Alliance Incorporated",
     description: "Information needed from Rebecca.",
     linkName: "Learn more about BAI →",
-    linkUrl: "https://www.businessallianceinc.com/"
+    linkUrl: "https://businessallianceinc.com"
   },
   {
     shortName: "FRANSERVE",
@@ -96,12 +95,6 @@ export const partnerships = [
   }
 ];
 
-export const trustStats = [
-  "Reduced late-stage surprises with data-driven awards",
-  "7 peer-reviewed sciences from Stanford, Harvard & Gallup",
-  "Stronger first-year owner performance & retention",
-  "Trusted by franchisors, brokers & development teams"
-];
 
 export const pathCards = [
   {
@@ -152,183 +145,75 @@ export const footer = {
 
 export const testimonials = [
   {
-    name: "Jack & Jill Johnson",
-    company: "Franchise Insiders",
-    type: "Broker",
-    quote: "Worth every penny."
+    "quote": "Zorakle Profiles offers greater insight into more strategically choosing a candidate because the assessment measures key categories with surgical accuracy. It also compares the candidate to so many of the important qualities possessed by the most successful franchisees in the system. I recommend investing the time to speak with Zorakle Profiles and discover how this valuable assessment tool can assist you and your company in finding, the right fit candidate for your system.",
+    "name": "Jeffrey Polino",
+    "company": "TAB",
+    "type": "Franchisor"
   },
   {
-    name: "Kim Marinoff",
-    company: "FranNet",
-    type: "Broker",
-    quote: "I can explain fit in plain language now."
+    "quote": "Zorakle Profiles has been a game changer for our business. This powerful tool has helped us find more precise franchise matches for our clients that fit “their why”. Additionally, Zorakle gives us keen insight into how to best work with our clients in terms of their pace and how they will react in different situation, thereby increasing our chances to bring the deal home. This tool is worth 100x what we pay for it.",
+    "name": "Jack & Jill Johnson",
+    "company": "Franchise Insiders",
+    "type": "Broker"
   },
   {
-    name: "Sean Hart",
-    company: "American Family Care",
-    type: "Franchisor",
-    quote: "The scientific data gives us clear direction, and it helps us protect culture while we expand into new markets and onboard larger ownership groups."
+    "quote": "Zorakle’s products have enabled us to target, attract, and motivate the right franchise partners to inquire about our franchise opportunity. I can’t imagine growing our system without Rebecca Monet’s influence and expertise. Awarding franchises is too big of a decision to leave to chance and a “gut feeling”. With Zorakle, we’re able to make the decision to award a franchise based fit, values, and aptitude – this alone has had a hugely positive affect on our franchisee validation and our strong Item 19 performance.",
+    "name": "Marcos Moura",
+    "company": "Amada Senior Care",
+    "type": "Franchisor"
   },
   {
-    name: "Marcos Moura",
-    company: "Amada Senior Care",
-    type: "Franchisor",
-    quote: "We stopped relying on guesswork."
+    "quote": "Zorakle has increased our ability to have an open discussion on values, skills and vision with candidates and our franchisees. The SpotOn! Profiling Tool provides key elements that we use to build stronger partnerships. Zorakle team, simply thank you for your support.",
+    "name": "Denis Kurdi",
+    "company": "Sharkey’s Cuts for Kids",
+    "type": "Franchisor"
   },
   {
-    name: "Angela Cote",
-    company: "AC Inc.",
-    type: "Broker",
-    quote: "Recommendation meetings are faster because the profile tells a complete story our candidates actually understand."
+    "quote": "Zorakle Profiles has provided our franchise development team with a deeper and more informed approach to not only understanding our prospect as a person but even more importantly that they are a fit with our organization. I highly recommend that franchisors consider these tools as part of their sales process.",
+    "name": "Keith Mathias",
+    "company": "WIN Home Inspection",
+    "type": "Franchisor"
   },
   {
-    name: "Keith Mathias",
-    company: "WIN Home Inspection",
-    type: "Franchisor",
-    quote: "We see stronger operator alignment before signing, which saves time later."
+    "quote": "You guys have given me the tools to see the inner workings of our franchise candidates. I had the “gut” but the unbiased, scientific data gives us direction. I believe in this stuff. It gives me control to create my corporate culture and that leads to every kind of success. Zorakle Profiles is like the key to reading a foreign language of personality.",
+    "name": "Sean Hart",
+    "company": "American Family Care",
+    "type": "Franchisor"
   },
   {
-    name: "Denis Kurdi",
-    company: "The Franchise Builders",
-    type: "Broker",
-    quote: "Better matches. Less friction."
+    "quote": "We’ve been using Zorakle SpotOn! reports for years. We recently decided to take our candidate analysis to the next level with the Eclipse Reports. The benchmarking was extremely insightful and accurate!",
+    "name": "Shannon McInnis",
+    "company": "CarePatrol",
+    "type": "Franchisor"
   },
   {
-    name: "Gerry Henley",
-    company: "LaunchPad Franchising",
-    type: "Broker",
-    quote: "The fit score removes opinion and keeps everyone focused on facts instead of preferences."
+    "quote": "Zorakle is an incredible tool for a franchise system. Finding the right fit is the most crucial piece of our qualification process. I am amazed at how accurate the SpotOn! Profile is.",
+    "name": "Gerry Henley",
+    "company": "Office Pride",
+    "type": "Franchisor"
   },
   {
-    name: "Shannon McInnis",
-    company: "Growth Capital Partners",
-    type: "Franchisor",
-    quote: "Our development team now has one repeatable standard for candidate review, and that consistency has improved handoffs from development to operations."
+    "quote": "The SpotOn! Profile is an instrumental objective tool in my arsenal. It provides tremendous insight into my candidates and differentiates me from my competitors.",
+    "name": "Seth Lederman",
+    "company": "FranNexus",
+    "type": "Broker"
   },
   {
-    name: "Jeffrey Polino",
-    company: "Franchise Dynamics",
-    type: "Broker",
-    quote: "Clients feel seen."
+    "quote": "Rebecca Monet is an amazing scientist who has the unique ability take complex information and present it in an engaging way that is understandable, applicable and fun. We’ve worked together implementing the Zorakle tool into our organization, which has added tremendous value to how we recruit franchisees. Additionally, she is an incredible resource, providing guidance to insure the maximum ROI.",
+    "name": "Margaret Maclay",
+    "company": "FocalPoint",
+    "type": "Franchisor"
   },
   {
-    name: "Margaret Maclay",
-    company: "Neighborly Ventures",
-    type: "Franchisor",
-    quote: "Better fit upfront reduced support strain across our operations team."
+    "quote": "The Zorakle tool is exceptional!! My clients repeatedly comment on the accuracy of the results. Recently, I was able to help one of my clients be awarded a two territory franchise. When I called to congratulate him, he attributed the Zorakle as being a key reason of why he worked with me, over 2 other consultants. He was super impressed with the results, and that information helped to guide him in his selection.",
+    "name": "Kim Marinoff",
+    "company": "The Franchise Explorer",
+    "type": "Broker"
   },
   {
-    name: "Seth Lederman",
-    company: "Summit Franchise Group",
-    type: "Broker",
-    quote: "I can defend every recommendation with data, which has raised trust in our process and shortened decision cycles."
-  },
-  {
-    name: "Rebecca Monet",
-    company: "Zorakle Profiles",
-    type: "Franchisor",
-    quote: "When teams stop guessing, they award stronger owners and scale with less risk. That one shift changes everything downstream."
-  },
-  {
-    name: "Jenna Law",
-    company: "Franchise Advisory Co.",
-    type: "Broker",
-    quote: "The ranked matches are clear and easy to explain."
-  },
-  {
-    name: "Olivia Turner",
-    company: "Crescent Foods Franchise",
-    type: "Franchisor",
-    quote: "Validation improved because candidates can clearly see why they are a fit for our model."
-  },
-  {
-    name: "Ethan Brooks",
-    company: "Momentum Franchise Advisors",
-    type: "Broker",
-    quote: "Our close rate improved once we started leading with objective fit indicators, not generic sales language."
-  },
-  {
-    name: "Priya Shah",
-    company: "BrightPath Fitness",
-    type: "Franchisor",
-    quote: "Fewer late-stage surprises. Better screening."
-  },
-  {
-    name: "Lucas Bennett",
-    company: "Prime Match Brokerage",
-    type: "Broker",
-    quote: "Candidates appreciate the structure, and our discovery calls are far more productive from the first meeting."
-  },
-  {
-    name: "Nora Alvarez",
-    company: "Hearthstone Home Services",
-    type: "Franchisor",
-    quote: "This is now a core part of our award process and development training playbook."
-  },
-  {
-    name: "Caleb Ross",
-    company: "Waypoint Franchise Partners",
-    type: "Broker",
-    quote: "Less debating. More momentum."
-  },
-  {
-    name: "Monica Hale",
-    company: "CleanWave Commercial",
-    type: "Franchisor",
-    quote: "The fit insights align leadership, development, and operations around one decision model, which makes execution much cleaner after award."
-  },
-  {
-    name: "Tyler Nguyen",
-    company: "BridgePoint Franchise Group",
-    type: "Broker",
-    quote: "Clients trust the recommendations because the rationale is transparent."
-  },
-  {
-    name: "Avery Collins",
-    company: "Harbor Senior Living",
-    type: "Franchisor",
-    quote: "Award quality improved, and the downstream impact on support has been meaningful across onboarding and field coaching."
-  },
-  {
-    name: "Jordan Patel",
-    company: "Keystone Franchise Advisors",
-    type: "Broker",
-    quote: "It helps us deliver a premium advisory experience in a competitive market."
-  },
-  {
-    name: "Hannah Reed",
-    company: "Northstar Education Centers",
-    type: "Franchisor",
-    quote: "The reports make difficult decisions easier to communicate across departments and leadership levels."
-  },
-  {
-    name: "Mason Webb",
-    company: "Catalyst Franchise Brokerage",
-    type: "Broker",
-    quote: "From first call to brand intro, we now have a repeatable framework that keeps deals moving."
-  },
-  {
-    name: "Elena Ruiz",
-    company: "Urban Pet Collective",
-    type: "Franchisor",
-    quote: "We are seeing stronger early performance from owners selected through this process, especially in the first year."
-  },
-  {
-    name: "Owen Price",
-    company: "Franchise Access Network",
-    type: "Broker",
-    quote: "Pipeline quality improved because candidate-brand fit is measured, not assumed."
-  },
-  {
-    name: "Chloe Martin",
-    company: "Evergreen Wellness Clinics",
-    type: "Franchisor",
-    quote: "It gives our team confidence to make big decisions with less bias and better evidence, even when the stakes are high and timelines are tight."
-  },
-  {
-    name: "Noah Simmons",
-    company: "PartnerPath Advisors",
-    type: "Broker",
-    quote: "Essential for long-term matching."
+    "quote": "I am hugely convinced that profiling franchisees saves franchisors time and costly mistakes and that getting the right franchisee can ‘make or break’ your brand. Zorakle Profiles is an amazing tool that I recommend for any franchisor, early or established, who wants to maximize growth by putting the right people on their team.",
+    "name": "Angela Cote",
+    "company": "Franchise Growth Catalyst",
+    "type": "Broker"
   }
 ];

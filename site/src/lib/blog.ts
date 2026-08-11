@@ -23,7 +23,6 @@ interface SanityImage {
 }
 
 interface SanityPost {
-  _id: string;
   title?: string;
   slug?: SanitySlug;
   excerpt?: string;
@@ -37,8 +36,6 @@ interface SanityPost {
 }
 
 export interface BlogPost {
-  id: number;
-  sanityId: string;
   slug: string;
   title: string;
   excerpt: string;
@@ -59,7 +56,6 @@ const imageBuilder = createImageUrlBuilder(sanityClient);
 
 const SANITY_POSTS_QUERY = defineQuery(`
   *[_type == "post" && defined(slug.current)] | order(coalesce(publishedAt, _createdAt) desc) {
-    _id,
     title,
     slug,
     excerpt,
@@ -147,8 +143,6 @@ function mapSanityPost(post: SanityPost, index: number): BlogPost {
   const categorySlugs = cleanStrings(post.categorySlugs);
 
   return {
-    id: index + 1,
-    sanityId: post._id,
     slug,
     title,
     excerpt,

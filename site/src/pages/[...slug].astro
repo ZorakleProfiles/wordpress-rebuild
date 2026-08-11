@@ -23,7 +23,6 @@ export async function getStaticPaths() {
       }
 
       seenSlugs.add(alias);
-      console.log(post);
       paths.push({
         params: { slug: alias },
         props: { post },

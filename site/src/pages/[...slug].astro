@@ -26,7 +26,7 @@ export async function getStaticPaths() {
       paths.push({
         params: { slug: alias },
         props: { post },
-        cacheKey: post.publishedAt,
+        cacheKey: post._updatedAt,
       });
     });
   });

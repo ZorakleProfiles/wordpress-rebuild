@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev --host 0.0.0.0 --port 4321 --ignore-lock",
     "build": "astro build",
+    "test:pricing": "node --experimental-strip-types scripts/verify-pricing.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

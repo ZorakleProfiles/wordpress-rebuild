@@ -4,15 +4,15 @@ import MainLayout from "../layouts/MainLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import { partnerships } from "../data/site-content";
-import logoFba from "../assets/figma-import/fba.webp";
-import logoFbr from "../assets/figma-import/fbr-logo.webp";
-import logoBai from "../assets/figma-import/bai-logo.webp";
-import logoIfa from "../assets/figma-import/logo-ifa-grey.png";
-import logoIfpg from "../assets/figma-import/ifpg.png";
-import logoFranserve from "../assets/figma-import/franserve-logo.png";
-import logoClienttether from "../assets/figma-import/clienttether-logo.png";
-import logoEauth from "../assets/figma-import/eauth.png";
-import logoMaverick from "../assets/figma-import/maverick.png";
+import logoFba from "../assets/fba.webp";
+import logoFbr from "../assets/fbr-logo.webp";
+import logoBai from "../assets/bai-logo.webp";
+import logoIfa from "../assets/logo-ifa-grey.png";
+import logoIfpg from "../assets/ifpg.png";
+import logoFranserve from "../assets/franserve-logo.png";
+import logoClienttether from "../assets/clienttether-logo.png";
+import logoEauth from "../assets/eauth.png";
+import logoMaverick from "../assets/maverick.png";
 const partnerLogos = {
   FBA: logoFba,
   FBR: logoFbr,
@@ -48,7 +48,7 @@ const partnershipsWithLogos = partnerships.map((partner) => ({
 
       <ul class="mt-10 grid gap-x-10 gap-y-12 md:grid-cols-1">
         {partnershipsWithLogos.map((partner) => (
-          <li class="relative border-t-2 border-[#09cc9c] pt-8">
+          <li class="relative border-t-2 border-[#d1d4dd] pt-8">
             <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
               {partner.logo ? (
                 <Image

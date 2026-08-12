@@ -25,215 +25,390 @@ const {
   ctaLabel,
   ctaId,
   variant,
-  sectionClass = "bg-[#f3f3f3] py-16 md:py-20"
+  sectionClass = "bg-[#f3f3f3] py-16 md:py-24"
 } = Astro.props;
 
-const mobileLayoutClass = variant === "broker" ? "lg:hidden" : "xl:hidden";
-const desktopLayoutClass = variant === "broker" ? "hidden lg:block" : "hidden xl:block";
+const stepCount = String(steps.length).padStart(2, "0");
+const variantLabel = variant === "broker" ? "Built for advisor speed" : "Built for consistent selection";
 ---
 
-<section class={sectionClass}>
-  <div class="section-shell">
-    <p class="font-display text-[17px] text-[#09cc9c] md:text-[20px] section-eyebrow">{eyebrow}</p>
-    <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold leading-tight md:text-5xl">
-      {title}
-    </h2>
-    <p class="mt-5 max-w-3xl text-base md:text-lg">
-      {description}
-    </p>
+<section class={sectionClass} data-workflow={variant}>
+  <div class="section-shell workflow-layout">
+    <div class="workflow-intro">
+      <div class="workflow-intro-inner">
+        <p class="workflow-eyebrow">{eyebrow}</p>
+        <h2 class="workflow-title">{title}</h2>
+        <p class="workflow-description">{description}</p>
 
-    <div class={`mt-10 grid gap-4 text-white md:grid-cols-2 ${mobileLayoutClass}`}>
-      {steps.map((step, idx) => (
-        <article class="rounded-xl border border-white/20 bg-[#1f232a]/70 p-5 shadow-lg md:p-6">
-          <div class="flex items-start gap-4">
-            <div class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#09cc9c] text-sm font-bold text-[#10272a]">
-              {idx + 1}
-            </div>
-            <div>
-              <h3 class="text-lg font-bold text-white md:text-xl">{step.title}</h3>
-              <p class="mt-2 text-sm leading-relaxed text-white/75 md:text-base">{step.body}</p>
-            </div>
-          </div>
-        </article>
-      ))}
-    </div>
+        <div class="workflow-summary" aria-label={`${steps.length} step process`}>
+          <strong>{stepCount}</strong>
+          <span>connected<br />steps</span>
+        </div>
 
-    <div class={`mt-12 ${desktopLayoutClass}`}>
-      <div class="workflow-circle" data-workflow-variant={variant}>
-        <div class="workflow-ring" aria-hidden="true"></div>
-
-        {steps.map((step, idx) => (
-          <article class={`workflow-node workflow-node-${idx + 1}`}>
-            <div class="workflow-node-chip">Step {idx + 1}</div>
-            <h3 class="workflow-node-title">{step.title}</h3>
-            <p class="workflow-node-body">{step.body}</p>
-          </article>
-        ))}
+        <a id={ctaId} class="workflow-cta" href={ctaHref}>
+          <span>{ctaLabel}</span>
+          <span class="workflow-cta-arrow" aria-hidden="true">&#8594;</span>
+        </a>
       </div>
     </div>
 
-    <div class="mt-8">
-      <a id={ctaId} class="btn-primary" href={ctaHref}>{ctaLabel}</a>
+    <div class="workflow-process">
+      <div class="workflow-process-label">
+        <span aria-hidden="true"></span>
+        {variantLabel}
+      </div>
+
+      <ol class="workflow-steps" aria-label={title}>
+        {steps.map((step, idx) => (
+          <li class="workflow-step">
+            <div class="workflow-marker" aria-hidden="true">
+              <span>{String(idx + 1).padStart(2, "0")}</span>
+            </div>
+            <article class="workflow-card">
+              <p class="workflow-step-kicker">Step {idx + 1}</p>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </article>
+          </li>
+        ))}
+      </ol>
     </div>
   </div>
 </section>
 
 <style>
-  .workflow-circle {
+  .workflow-layout {
+    display: grid;
+    gap: 2.75rem;
+  }
+
+  .workflow-intro {
     position: relative;
-    margin: 0 auto;
   }
 
-  .workflow-circle[data-workflow-variant="broker"] {
-    height: 42rem;
-    max-width: 70rem;
+  .workflow-intro-inner {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    background: #22252a;
+    padding: 2rem;
+    color: #ffffff;
+    box-shadow: 0 24px 60px rgba(31, 35, 42, 0.14);
   }
 
-  .workflow-circle[data-workflow-variant="franchisor"] {
-    height: 52rem;
-    max-width: 76rem;
-  }
-
-  .workflow-ring {
+  .workflow-intro-inner::after {
+    content: "";
     position: absolute;
-    inset: 50% auto auto 50%;
-    transform: translate(-50%, -50%);
-    border: 2px dashed #9ca3af;
+    right: -5rem;
+    bottom: -6rem;
+    width: 15rem;
+    height: 15rem;
+    border: 3.25rem solid rgba(9, 204, 156, 0.11);
     border-radius: 9999px;
+    pointer-events: none;
   }
 
-  .workflow-circle[data-workflow-variant="broker"] .workflow-ring {
-    width: min(30rem, 62vw);
-    height: min(30rem, 62vw);
-  }
-
-  .workflow-circle[data-workflow-variant="franchisor"] .workflow-ring {
-    width: 34rem;
-    height: 34rem;
-  }
-
-  .workflow-node {
-    position: absolute;
-    border-radius: 0.9rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(31, 35, 42, 0.74);
-    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.16);
-    padding: 1.1rem 1.15rem;
-  }
-
-  .workflow-circle[data-workflow-variant="broker"] .workflow-node {
-    width: min(18.25rem, 28vw);
-  }
-
-  .workflow-circle[data-workflow-variant="franchisor"] .workflow-node {
-    width: 20.5rem;
-  }
-
-  .workflow-node-chip {
-    display: inline-flex;
+  .workflow-eyebrow {
+    display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 0.65rem;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-family: "MontereyFLF", "Century Gothic", sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .workflow-eyebrow::before {
+    content: "";
+    width: 1.8rem;
+    height: 0.35rem;
     border-radius: 9999px;
     background: #09cc9c;
-    color: #10272a;
+  }
+
+  .workflow-title {
+    max-width: 34rem;
+    margin: 1.4rem 0 0;
+    color: #ffffff;
+    font-family: "MontereyFLF", "Century Gothic", sans-serif;
+    font-size: clamp(2.2rem, 6vw, 3.35rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.04;
+  }
+
+  .workflow-description {
+    max-width: 34rem;
+    margin: 1.35rem 0 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .workflow-summary {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    width: fit-content;
+    margin-top: 2.2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .workflow-summary strong {
+    color: #09cc9c;
+    font-family: "MontereyFLF", "Century Gothic", sans-serif;
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+
+  .workflow-summary span {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    line-height: 1.35;
+    text-transform: uppercase;
+  }
+
+  .workflow-cta {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 2rem;
+    border-radius: 0.75rem;
+    background: #fd7730;
+    padding: 0.95rem 1rem 0.95rem 1.2rem;
+    color: #22252a;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 180ms ease, transform 180ms ease;
+  }
+
+  .workflow-cta:hover {
+    background: #ff8a4d;
+    transform: translateY(-2px);
+  }
+
+  .workflow-cta:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 3px;
+  }
+
+  .workflow-cta-arrow {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border-radius: 9999px;
+    background: rgba(34, 37, 42, 0.12);
+    font-size: 1.1rem;
+    transition: transform 180ms ease;
+  }
+
+  .workflow-cta:hover .workflow-cta-arrow {
+    transform: translateX(3px);
+  }
+
+  .workflow-process {
+    min-width: 0;
+  }
+
+  .workflow-process-label {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 1.35rem;
+    color: #565b65;
     font-size: 0.75rem;
     font-weight: 700;
-    padding: 0.2rem 0.65rem;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+    text-transform: uppercase;
   }
 
-  .workflow-node-title {
-    margin: 0.65rem 0 0;
+  .workflow-process-label span {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 9999px;
+    background: #09cc9c;
+    box-shadow: 0 0 0 0.3rem rgba(9, 204, 156, 0.13);
+  }
+
+  .workflow-steps {
+    position: relative;
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .workflow-steps::before {
+    content: "";
+    position: absolute;
+    top: 2rem;
+    bottom: 2rem;
+    left: 1.45rem;
+    width: 2px;
+    background: linear-gradient(180deg, #09cc9c 0%, rgba(9, 204, 156, 0.15) 100%);
+  }
+
+  .workflow-step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.9rem minmax(0, 1fr);
+    gap: 0.85rem;
+    align-items: start;
+  }
+
+  .workflow-marker {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: 2.9rem;
+    height: 2.9rem;
+    place-items: center;
+    margin-top: 1.25rem;
+    border: 1px solid #ccd1d5;
+    border-radius: 9999px;
+    background: #f3f3f3;
+  }
+
+  .workflow-marker span {
+    display: grid;
+    width: 2.15rem;
+    height: 2.15rem;
+    place-items: center;
+    border-radius: 9999px;
+    background: #22252a;
     color: #ffffff;
-    font-size: 1.05rem;
-    line-height: 1.35;
+    font-family: "MontereyFLF", "Century Gothic", sans-serif;
+    font-size: 0.72rem;
     font-weight: 700;
+    letter-spacing: 0.04em;
   }
 
-  .workflow-node-body {
-    margin: 0.5rem 0 0;
-    color: rgba(255, 255, 255, 0.82);
-    font-size: 0.89rem;
-    line-height: 1.52;
+  .workflow-card {
+    border: 1px solid #dfe1e4;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.86);
+    padding: 1.35rem;
+    box-shadow: 0 8px 30px rgba(31, 35, 42, 0.05);
+    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
   }
 
-  .workflow-circle[data-workflow-variant="broker"] .workflow-node-1 {
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+  .workflow-card:hover {
+    border-color: rgba(9, 204, 156, 0.55);
+    box-shadow: 0 15px 38px rgba(31, 35, 42, 0.09);
+    transform: translateX(4px);
   }
 
-  .workflow-circle[data-workflow-variant="broker"] .workflow-node-2 {
-    top: 50%;
-    left: 65%;
-    transform: translateY(-50%);
+  .workflow-step-kicker {
+    margin: 0 0 0.5rem;
+    color: #067c63;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+    text-transform: uppercase;
   }
 
-  .workflow-circle[data-workflow-variant="broker"] .workflow-node-3 {
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+  .workflow-card h3 {
+    margin: 0;
+    color: #22252a;
+    font-family: "MontereyFLF", "Century Gothic", sans-serif;
+    font-size: clamp(1.2rem, 2vw, 1.45rem);
+    font-weight: 700;
+    line-height: 1.15;
   }
 
-  .workflow-circle[data-workflow-variant="broker"] .workflow-node-4 {
-    top: 50%;
-    right: 65%;
-    transform: translateY(-50%);
+  .workflow-card > p:last-child {
+    margin: 0.7rem 0 0;
+    color: #565b65;
+    font-size: 0.92rem;
+    line-height: 1.6;
   }
 
-  .workflow-circle[data-workflow-variant="franchisor"] .workflow-node-1 {
-    top: 15%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .workflow-circle[data-workflow-variant="franchisor"] .workflow-node-2 {
-    top: 40%;
-    left: 80%;
-    transform: translate(-50%, -50%);
-  }
-
-  .workflow-circle[data-workflow-variant="franchisor"] .workflow-node-3 {
-    top: 80%;
-    left: 75%;
-    transform: translate(-50%, -50%);
-  }
-
-  .workflow-circle[data-workflow-variant="franchisor"] .workflow-node-4 {
-    top: 80%;
-    left: 30%;
-    transform: translate(-50%, -50%);
-  }
-
-  .workflow-circle[data-workflow-variant="franchisor"] .workflow-node-5 {
-    top: 40%;
-    left: 18%;
-    transform: translate(-50%, -50%);
-  }
-
-  @media (min-width: 1024px) and (max-width: 1199px) {
-    .workflow-circle[data-workflow-variant="broker"] {
-      height: 38rem;
-      max-width: 64rem;
+  @media (min-width: 640px) {
+    .workflow-intro-inner {
+      padding: 2.5rem;
     }
 
-    .workflow-circle[data-workflow-variant="broker"] .workflow-node {
-      width: 16rem;
-      padding: 1rem;
+    .workflow-cta {
+      width: fit-content;
+      min-width: 17rem;
     }
 
-    .workflow-circle[data-workflow-variant="broker"] .workflow-node-title {
-      font-size: 1rem;
+    .workflow-step {
+      grid-template-columns: 3.4rem minmax(0, 1fr);
+      gap: 1.15rem;
     }
 
-    .workflow-circle[data-workflow-variant="broker"] .workflow-node-body {
-      font-size: 0.84rem;
+    .workflow-steps::before {
+      left: 1.7rem;
+    }
+
+    .workflow-marker {
+      width: 3.4rem;
+      height: 3.4rem;
+      margin-top: 1.4rem;
+    }
+
+    .workflow-marker span {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .workflow-card {
+      padding: 1.6rem 1.75rem;
     }
   }
 
-  @media (min-width: 1200px) {
-    .workflow-circle[data-workflow-variant="broker"] .workflow-node {
-      width: 19rem;
+  @media (min-width: 1024px) {
+    .workflow-layout {
+      grid-template-columns: minmax(19rem, 0.85fr) minmax(31rem, 1.15fr);
+      gap: clamp(3rem, 7vw, 6.5rem);
+      align-items: start;
+    }
+
+    .workflow-intro {
+      position: sticky;
+      top: 7rem;
+    }
+
+    .workflow-intro-inner {
+      min-height: 35rem;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(2.25rem, 3.5vw, 3.25rem);
+    }
+
+    .workflow-summary {
+      margin-top: auto;
+    }
+
+    .workflow-process {
+      padding-top: 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .workflow-cta,
+    .workflow-cta-arrow,
+    .workflow-card {
+      transition: none;
     }
   }
 </style>
-

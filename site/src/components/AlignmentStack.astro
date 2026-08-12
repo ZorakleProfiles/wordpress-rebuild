@@ -1,36 +1,36 @@
 ---
 const alignmentLayers = [
   {
-    title: "Values Fit",
-    subtitle: "Motivation alignment",
+    title: "Values Alignment",
+    subtitle: "Values",
     description: "Two people can work equally hard toward completely different definitions of success.",
     elaboration: "When franchisee values around financial goals, lifestyle expectations, and long-term purpose align with the franchisor's vision, commitment sustains through hard stretches. Shared priorities give the owner a clear reason to stay engaged, follow through, and keep building for the long term.",
     breakdown: "The franchisee may work hard but still feel like the business is not delivering what they expected. Over time, frustration grows, motivation declines, and an otherwise capable owner may begin questioning whether they chose the right opportunity."
   },
     {
-    title: "Cultural Fit",
-    subtitle: "Identity alignment",
+    title: "Cultural Alignment",
+      subtitle: "Cultural",
     description: "Culture is not a tagline—it's the daily standard that shapes how people work together.",
     elaboration: "When a franchisor's real operating style—how decisions are made, how problems are handled, how leaders show up—matches how franchisees naturally behave, the system reinforces itself at every level. Communication becomes easier, expectations are clearer, and franchisees contribute to a stronger network.",
     breakdown: "Everyday differences in communication and decision-making start creating unnecessary friction. Before long, both sides spend more time managing the relationship than growing the business, and that tension can spread to the team and other franchisees."
   },
   {
-    title: "System Fit",
-    subtitle: "Context alignment",
+    title: "System Alignment",
+    subtitle: "System",
     description: "Different stages of franchise growth call for different owner profiles.",
     elaboration: "Franchisors at different stages of growth need fundamentally different owner profiles. Decision cadence, support availability, operational clarity, and peer community all shift as a system matures. Evaluating fit against your current system context—not an idealized version—is what makes selection decisions predictive rather than aspirational.",
     breakdown: "The owner may expect more structure, freedom, or support than the brand can provide at its current stage. This often shows up as repeated support needs, resistance to the model, or frustration on both sides."
   },
   {
-    title: "Capability Fit",
-    subtitle: "Skill alignment",
+    title: "Skills Fit",
+    subtitle: "Skills",
     description: "Running a business and executing a specific franchise model are different skill sets.",
     elaboration: "The capabilities that predict success in your system—managing team dynamics, following operational systems precisely, leading customer experience, and applying financial discipline—are measurable when you know what to look for. Understanding those capabilities makes training targeted and intentional from the beginning.",
     breakdown: "Key parts of the business are handled inconsistently because the owner is missing a capability the model depends on. Support teams step in to compensate, but without focused development, the same performance problems keep coming back."
   },
   {
-    title: "Execution Fit",
-    subtitle: "Performance alignment",
+    title: "Execution Alignment",
+    subtitle: "Execution",
     description: "Credentials and interviews describe potential. Execution under real-world pressure reveals truth.",
     elaboration: "Some owners are systematic under stress. Others adapt successfully outside the model. Some need structure to perform at their best; others thrive with autonomy. Understanding these patterns before and after launch—and building coaching around them—turns alignment from an abstract concept into a measurable operational advantage across the entire system.",
     breakdown: "Under pressure, the owner falls back on habits that do not support the franchise model. Standards become inconsistent, results are harder to predict, and the franchisor ends up correcting recurring issues instead of coaching for growth."
@@ -39,7 +39,7 @@ const alignmentLayers = [
 
 ---
 
-<section class="bg-white py-20 md:py-28 overflow-hidden">
+<section class="bg-[#f3f3f3] py-20 md:py-28 overflow-hidden">
   <div class="section-shell space-y-20 md:space-y-28">
 
     <!-- Alignment Stack -->
@@ -54,14 +54,13 @@ const alignmentLayers = [
         {alignmentLayers.map((layer) => (
           <div class="grid grid-cols-1 gap-8 border-t border-[#d1d4dd] py-12 md:grid-cols-2 md:gap-12 lg:gap-16 lg:py-16">
             <div>
-              <p class="text-xs font-semibold uppercase tracking-widest text-[#3b3e47]">{layer.subtitle}</p>
               <h4 class="mt-2 text-2xl font-bold text-[#22252a] md:text-3xl font-display">{layer.title}</h4>
               <p class="mt-4 text-lg font-medium leading-snug text-[#22252a]">{layer.description}</p>
               <p class="mt-3 text-[15px] leading-relaxed text-[#3b3e47]">{layer.elaboration}</p>
             </div>
             <div>
               <p class="text-xs font-bold uppercase tracking-[0.14em] text-[#a8420c]">
-                When {layer.title} is misaligned
+                When {layer.subtitle} is misaligned
               </p>
               <p class="mt-4 text-lg leading-relaxed text-[#3b3e47]">{layer.breakdown}</p>
             </div>

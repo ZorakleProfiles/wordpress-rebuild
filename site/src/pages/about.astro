@@ -4,53 +4,32 @@ import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import CtaBand from "../components/CtaBand.astro";
 import { Image } from "astro:assets";
-import rebeccaPhoto from "../assets/figma-import/about-rebecca-monet.png";
-
-const stats = [
-  { number: "30+", label: "Years in psychometrics & assessment" },
-  { number: "7",   label: "Peer-reviewed sciences in one framework" },
-  { number: "12",  label: "Years purpose-built for franchising" },
-];
+import rebeccaPhoto from "../assets/about-rebecca-monet.png";
 ---
 
 <MainLayout
-  title="About | Zorakle"
-  description="Zorakle is the only franchise-specific assessment platform built on seven validated sciences — helping franchisors and brokers award with clarity and confidence."
+  title="Meet the Team | Zorakle"
+  description="Meet the people behind Zorakle: founder and chief scientist Rebecca Monet, technology leader Mike Kidushim, and director of client services Jamie Patterson."
 >
   <SiteHeader />
 
   <main>
 
-    <!-- INTRO / WHY WE EXIST -->
-    <section class="bg-white py-20 md:py-28">
+    <!-- TEAM INTRO -->
+    <section class="bg-white py-16 md:py-24">
       <div class="section-shell">
-        <div class="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-20">
-          <div>
-            <p class="section-eyebrow">About Zorakle</p>
-            <h1 class="section-title">Built to make franchise fit a science.</h1>
-            <p class="section-copy max-w-xl">
-              For more than a decade, Zorakle has been the only franchise-specific fit platform — predictive, science-backed, and built for the decisions that actually matter.
-            </p>
-          </div>
-          <div class="space-y-5 text-base leading-relaxed text-[#3b3e47] md:text-lg lg:pt-2">
-          <p>
-            Personality tests tell you who someone is. Zorakle tells you whether they will succeed as a franchisee. That is a fundamentally different question — and it requires a fundamentally different tool.
+        <div class="max-w-3xl">
+          <p class="section-eyebrow">The Zorakle Team</p>
+          <h1 class="section-title">Meet the people behind the science.</h1>
+          <p class="section-copy max-w-2xl">
+            Zorakle brings together franchise expertise, behavioral science, technology, and hands-on client service. We are a focused team united by one goal: helping our clients make better people decisions with clarity and confidence.
           </p>
-          <p>
-            Franchisees own the business. They manage P&L, hire and retain teams, navigate a relationship with a franchisor, and execute a proven system under real market pressure. No off-the-shelf assessment was ever built to predict that. So we built one from the ground up.
-          </p>
-          <p>
-            Over twelve years, we integrated seven peer-reviewed sciences from leading research institutions into a single, franchise-specific framework — one designed to predict performance and fit before the agreement is ever signed.
-          </p>
-          </div>
         </div>
       </div>
     </section>
 
-    <!-- STATS -->
-
     <!-- REBECCA -->
-    <section class="bg-[#f3f3f3] py-20 md:py-28">
+    <section class="bg-[#f3f3f3] py-16 md:py-24">
       <div class="section-shell">
         <div class="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center lg:gap-20">
           <div class="mx-auto w-full max-w-md lg:mx-0">
@@ -83,9 +62,43 @@ const stats = [
       </div>
     </section>
 
+    <!-- LEADERSHIP TEAM -->
+    <section class="bg-white py-20 md:py-28">
+      <div class="section-shell">
+        <div class="max-w-2xl">
+          <p class="section-eyebrow">Leadership Team</p>
+          <h2 class="section-title">The people who bring Zorakle to life.</h2>
+        </div>
+
+        <div class="mt-12 grid gap-6 md:grid-cols-2 lg:gap-8">
+          <article class="rounded-3xl border border-[#dedede] bg-[#f8f8f8] p-8 md:p-10">
+            <div class="flex h-20 w-20 items-center justify-center rounded-2xl bg-[#22252a] font-display text-3xl text-white" aria-hidden="true">
+              MK
+            </div>
+            <p class="section-eyebrow mt-8">Technology</p>
+            <h3 class="font-display text-3xl text-[#22252a] md:text-4xl">Mike Kidushim</h3>
+            <p class="mt-5 text-base leading-relaxed text-[#3b3e47] md:text-lg">
+              Mike leads technology at Zorakle, guiding the platform and the systems that turn complex assessment science into a clear, dependable experience for clients and their candidates.
+            </p>
+          </article>
+
+          <article class="rounded-3xl border border-[#dedede] bg-[#f8f8f8] p-8 md:p-10">
+            <div class="flex h-20 w-20 items-center justify-center rounded-2xl bg-[#09cc9c] font-display text-3xl text-[#22252a]" aria-hidden="true">
+              JP
+            </div>
+            <p class="section-eyebrow mt-8">Director of Client Services</p>
+            <h3 class="font-display text-3xl text-[#22252a] md:text-4xl">Jamie Patterson</h3>
+            <p class="mt-5 text-base leading-relaxed text-[#3b3e47] md:text-lg">
+              Jamie leads client services, helping Zorakle customers get the support, guidance, and practical insight they need to put the platform to work with confidence.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <CtaBand
-      title="Let's talk."
-      text="Whether you are awarding franchises, matching candidates, or evaluating your system — we can show you what Zorakle can do."
+      title="Meet with our team."
+      text="Tell us what you are working toward, and we will help you see how Zorakle can support better franchise decisions."
     />
 
   </main>

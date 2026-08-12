@@ -5,6 +5,9 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
+  build: {
+    format: 'file'
+  },
   site: "https://www.zorakleprofiles.com",
   base: "/",
   cacheDir: "../node_modules/.astro",

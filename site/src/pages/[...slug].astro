@@ -8,11 +8,13 @@ import PortableTextEmbed from "../components/PortableTextEmbed.astro";
 import { getAllPosts, type BlogPost } from "../lib/blog.ts";
 
 export async function getStaticPaths() {
+
   const posts = await getAllPosts();
   const paths: Array<{ params: { slug: string }; props: { post: BlogPost }; cacheKey: string }> = [];
   const seenSlugs = new Set<string>();
 
   posts.forEach((post) => {
+    const deployId = process.env.CF_PAGES_COMMIT_SHA || 'local-development';
     const aliases = [post.slug, post.legacySlug].filter(
       (value): value is string => typeof value === "string" && value.trim().length > 0
     );
@@ -26,7 +28,7 @@ export async function getStaticPaths() {
       paths.push({
         params: { slug: alias },
         props: { post },
-        cacheKey: post.publishedAt,
+        cacheKey: `${post.publishedAt}-${deployId}`,
       });
     });
   });
@@ -74,6 +76,8 @@ const portableTextComponents = {
     embed: PortableTextEmbed,
   },
 };
+
+
 ---
 
 <MainLayout

@@ -18,45 +18,49 @@ const totalLessons = scienceTopics.reduce((total, topic) => total + topic.lesson
 
   <main>
     <section class="border-b border-[#d1d4dd] bg-[#f4f5f7] py-10 md:py-12">
-      <div class="section-shell">
+      <div class="section-shell grid items-start gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)] lg:gap-12">
+        <div class="flex flex-col h-full items-start">
         <p class="section-eyebrow">Resources</p>
-        <h1 class="mt-4 font-display text-4xl font-bold text-[#22252a] md:text-5xl">
-          Technical Support & Training
-        </h1>
-        <p class="mt-4 max-w-2xl text-lg text-[#3b3e47]">
-          Get help setting up and using the Zorakle platform, or explore the sciences behind the
-          Zorakle framework.
-        </p>
+          <h1 class="mt-4 align-self-bottom font-display text-4xl font-bold text-[#22252a] md:text-5xl">
+            Technical Support & Training
+          </h1>
+          <p class="mt-4 max-w-2xl text-lg text-[#3b3e47]">
+            Get help setting up and using the Zorakle platform, or explore the sciences behind the
+            Zorakle framework.
+          </p>
 
-        <div
-          class="mt-8 inline-flex rounded-xl border border-[#d1d4dd] bg-white p-1"
-          role="tablist"
-          aria-label="Technical support and Zorakle training resources"
-        >
-          <button
-            id="support-tab"
-            class="resource-tab rounded-lg px-5 py-2.5 text-sm font-bold transition"
-            type="button"
-            role="tab"
-            aria-selected="true"
-            aria-controls="support-panel"
-            data-resource-tab="support"
+          <div
+            class="mt-auto inline-flex rounded-xl border border-[#d1d4dd] bg-white p-1"
+            role="tablist"
+            aria-label="Technical support and Zorakle training resources"
           >
-            Technical Support
-          </button>
-          <button
-            id="science-tab"
-            class="resource-tab rounded-lg px-5 py-2.5 text-sm font-bold transition"
-            type="button"
-            role="tab"
-            aria-selected="false"
-            aria-controls="science-panel"
-            tabindex="-1"
-            data-resource-tab="science"
-          >
-            Training
-          </button>
+            <button
+              id="support-tab"
+              class="resource-tab rounded-lg px-5 py-2.5 text-sm font-bold transition"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="support-panel"
+              data-resource-tab="support"
+            >
+              Technical Support
+            </button>
+            <button
+              id="science-tab"
+              class="resource-tab rounded-lg px-5 py-2.5 text-sm font-bold transition"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="science-panel"
+              tabindex="-1"
+              data-resource-tab="science"
+            >
+              Training
+            </button>
+          </div>
         </div>
+
+        <Help embedded />
       </div>
     </section>
 
@@ -66,7 +70,7 @@ const totalLessons = scienceTopics.reduce((total, topic) => total + topic.lesson
       aria-labelledby="support-tab"
       data-resource-panel="support"
     >
-      <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
+      <section class="bg-white pt-6 pb-12">
         <div class="section-shell">
           <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold md:text-5xl">
             Technical Support
@@ -132,8 +136,6 @@ const totalLessons = scienceTopics.reduce((total, topic) => total + topic.lesson
           )}
         </div>
       </section>
-
-      <Help />
     </div>
 
     <div
@@ -143,7 +145,7 @@ const totalLessons = scienceTopics.reduce((total, topic) => total + topic.lesson
       data-resource-panel="science"
       hidden
     >
-      <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
+      <section class="bg-white pt-6 pb-16">
         <div class="section-shell">
           <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold md:text-5xl">
             SpotOn! Basics
@@ -187,7 +189,6 @@ const totalLessons = scienceTopics.reduce((total, topic) => total + topic.lesson
           </div>
         </div>
       </section>
-      <Help />
     </div>
   </main>
 

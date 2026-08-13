@@ -1,35 +1,52 @@
 ---
-import { faqs } from "../data/site-content";
+interface Props {
+  embedded?: boolean;
+}
+
+const { embedded = false } = Astro.props;
+const Wrapper = embedded ? "aside" : "section";
 ---
 
-<section class="border-b border-[#d1d4dd] bg-[#f4f5f7] pt-10 md:pt-16 pb-20 md:pb-26 mb-[-40px]" id="contact">
-  <div class="section-shell">
-    <div class="space-y-8">
+<Wrapper
+  class:list={[
+    embedded
+      ? "rounded-2xl border border-[#d1d4dd] bg-white p-6 shadow-sm md:p-8"
+      : "mb-[-40px] border-b border-[#d1d4dd] bg-[#f4f5f7] pt-10 pb-20 md:pt-16 md:pb-26"
+  ]}
+  id="contact"
+>
+  <div class:list={[!embedded && "section-shell"]}>
+    <div class:list={[embedded ? "space-y-6" : "space-y-8"]}>
       <div>
-        <h2 class="font-display mb-3 text-4xl font-bold text-[#22252a] md:text-5xl">
+        <h2
+          class:list={[
+            "mb-3 font-display font-bold text-[#22252a]",
+            embedded ? "text-3xl" : "text-4xl md:text-5xl"
+          ]}
+        >
           Need Help?
         </h2>
-        <p class="text-lg text-[#3b3e47]">
+        <p class:list={[embedded ? "text-base" : "text-lg", "text-[#3b3e47]"]}>
           We're here to support your success. Whether you have questions about the platform, need
           technical assistance, or want to discuss your franchise assessment strategy, reach out.
         </p>
       </div>
 
-      <div class="space-y-4">
-        <p class="text-lg text-[#3b3e47]">
+      <div class:list={[embedded ? "space-y-3" : "space-y-4"]}>
+        <p class:list={[embedded ? "text-base" : "text-lg", "text-[#3b3e47]"]}>
           <span class="font-semibold text-[#22252a]">Email: </span>
           <a
             href="mailto:support@zorakle.net"
             class="font-semibold text-[#fd7730] hover:underline"
           >support@zorakle.net</a>
         </p>
-        <p class="text-lg text-[#3b3e47]">
+        <p class:list={[embedded ? "text-base" : "text-lg", "text-[#3b3e47]"]}>
           <span class="font-semibold text-[#22252a]">Hours:</span> Monday – Friday, 9 AM – 5 PM CT
         </p>
-        <p class="text-lg text-[#3b3e47]">
+        <p class:list={[embedded ? "text-base" : "text-lg", "text-[#3b3e47]"]}>
           We typically respond within 48 hours. Reach out with any questions or issues.
         </p>
       </div>
     </div>
   </div>
-</section>
+</Wrapper>

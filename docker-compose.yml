@@ -10,9 +10,7 @@ services:
       - "4321:4321"
     volumes:
       - ./site:/app/site
-      - ./studio-zorakle-blog:/app/studio-zorakle-blog
       - /app/site/node_modules
-      - /app/studio-zorakle-blog/node_modules
     environment:
       - NODE_ENV=development
       - PUBLIC_SANITY_PROJECT_ID=4kjxjblw

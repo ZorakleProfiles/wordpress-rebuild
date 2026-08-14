@@ -12,8 +12,10 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "@portabletext/to-html": "^5.0.3",
+    "@sanity/astro": "^3.5.0",
     "@sanity/client": "^7.26.2",
     "@sanity/image-url": "^2.1.1",
+    "@sanity/visual-editing": "^6.0.4",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^7.2.0",
     "astro-portabletext": "^0.13.0",

@@ -5,8 +5,8 @@ export type BillingKey = "monthly" | "annual" | "paygo";
 export type PartnerOrganizationKey = "franserve" | "ifpg" | "entrepreneur-authority";
 
 export type PartnerPromotion =
-  | { key: "partner_20_percent"; kind: "discount"; percentOff: 20; label: string }
-  | { key: "partner_90_day_trial"; kind: "trial"; trialDays: 90; label: string };
+  | { key: "coupon"; kind: "discount"; percentOff: 20; label: string }
+  | { key: "trial"; kind: "trial"; trialDays: 90; label: string };
 
 export interface PricingPlan {
   key: string;
@@ -88,10 +88,11 @@ export const billingOptions: ReadonlyArray<{ key: BillingKey; name: string }> = 
 export const partnerOrganizations: ReadonlyArray<{
   key: PartnerOrganizationKey;
   name: string;
+  affiliateId: number;
 }> = [
-  { key: "franserve", name: "Franserve" },
-  { key: "ifpg", name: "IFPG" },
-  { key: "entrepreneur-authority", name: "The Entrepreneur Authority" },
+  { key: "franserve", name: "Franserve", affiliateId: 2693 },
+  { key: "ifpg", name: "IFPG", affiliateId: 2727 },
+  { key: "entrepreneur-authority", name: "The Entrepreneur Authority", affiliateId: 2685 },
 ];
 
 export const plans: ReadonlyArray<PricingPlan> = [
@@ -251,7 +252,7 @@ export function getPlanSummaryNote(plan: PricingPlan) {
 export function getPartnerPromotion(organizationKeys: ReadonlyArray<PartnerOrganizationKey>): PartnerPromotion | undefined {
   if (organizationKeys.includes("ifpg") || organizationKeys.includes("entrepreneur-authority")) {
     return {
-      key: "partner_90_day_trial",
+      key: "trial",
       kind: "trial",
       trialDays: 90,
       label: "90-day free trial",
@@ -259,7 +260,7 @@ export function getPartnerPromotion(organizationKeys: ReadonlyArray<PartnerOrgan
   }
   if (organizationKeys.includes("franserve")) {
     return {
-      key: "partner_20_percent",
+      key: "coupon",
       kind: "discount",
       percentOff: 20,
       label: "20% off",
@@ -289,7 +290,10 @@ export function buildRegistrationUrl(
   const url = new URL(baseUrl);
   url.searchParams.set("plan", planKey);
   if (couponCode) url.searchParams.set("coupon", couponCode);
-  organizationKeys.forEach((organization) => url.searchParams.append("organization", organization));
+  organizationKeys.forEach((organizationKey) => {
+    const organization = partnerOrganizations.find((item) => item.key === organizationKey);
+    if (organization) url.searchParams.append("organization", String(organization.affiliateId));
+  });
   const promotion = getPartnerPromotion(organizationKeys);
   if (promotion) url.searchParams.set("partner_promotion", promotion.key);
   return url.href;

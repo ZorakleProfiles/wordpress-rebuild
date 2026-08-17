@@ -29,8 +29,17 @@ const registrationUrl = new URL(buildRegistrationUrl(
 assert.equal(registrationUrl.searchParams.get("plan"), "broker_payg_monthly");
 assert.equal(registrationUrl.searchParams.get("coupon"), "SAVE 20%");
 
+const franserveRegistrationUrl = new URL(buildRegistrationUrl(
+  "https://portal.zorakle.net/register",
+  "broker_monthly",
+  undefined,
+  ["franserve"],
+));
+assert.deepEqual(franserveRegistrationUrl.searchParams.getAll("organization"), ["2693"]);
+assert.equal(franserveRegistrationUrl.searchParams.get("partner_promotion"), "coupon");
+
 assert.deepEqual(getPartnerPromotion(["franserve"]), {
-  key: "partner_20_percent",
+  key: "coupon",
   kind: "discount",
   percentOff: 20,
   label: "20% off",
@@ -53,7 +62,7 @@ assert.equal(getPartnerPromotion(["ifpg"])?.trialDays, 90);
 assert.equal(getPartnerPromotion(["entrepreneur-authority"])?.trialDays, 90);
 assert.equal(
   getPartnerPromotion(["franserve", "ifpg"])?.key,
-  "partner_90_day_trial",
+  "trial",
   "The 90-day trial must take precedence when multiple memberships are selected",
 );
 
@@ -63,8 +72,16 @@ const partnerRegistrationUrl = new URL(buildRegistrationUrl(
   undefined,
   ["franserve", "ifpg"],
 ));
-assert.deepEqual(partnerRegistrationUrl.searchParams.getAll("organization"), ["franserve", "ifpg"]);
-assert.equal(partnerRegistrationUrl.searchParams.get("partner_promotion"), "partner_90_day_trial");
+assert.deepEqual(partnerRegistrationUrl.searchParams.getAll("organization"), ["2693", "2727"]);
+assert.equal(partnerRegistrationUrl.searchParams.get("partner_promotion"), "trial");
 assert.equal(partnerRegistrationUrl.searchParams.has("coupon"), false, "Membership benefits must remain separate from coupons");
+
+const entrepreneurAuthorityUrl = new URL(buildRegistrationUrl(
+  "https://portal.zorakle.net/register",
+  "broker_monthly",
+  undefined,
+  ["entrepreneur-authority"],
+));
+assert.deepEqual(entrepreneurAuthorityUrl.searchParams.getAll("organization"), ["2685"]);
 
 console.log(`Pricing catalog verified: ${plans.length} plans`);

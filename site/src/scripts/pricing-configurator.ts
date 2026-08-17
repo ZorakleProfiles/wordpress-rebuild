@@ -312,6 +312,7 @@ function initializePricing(root: HTMLElement) {
         headers: { Accept: "application/json", "Content-Type": "application/json" },
       });
       const result = await response.json().catch(() => ({}));
+      console.log(previewBaseUrl,result);
       if (!response.ok || result.error) throw new Error(result.message || result.error || "This coupon is not valid for the selected plan.");
 
       const percentOff = Number(result.coupon?.percent_off);

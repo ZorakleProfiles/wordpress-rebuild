@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import MainLayout from "../layouts/MainLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import CtaBand from "../components/CtaBand.astro";
 import { partnerships } from "../data/site-content";
 import logoFba from "../assets/fba.webp";
 import logoFbr from "../assets/fbr-logo.webp";
@@ -37,45 +38,51 @@ const partnershipsWithLogos = partnerships.map((partner) => ({
 >
   <SiteHeader />
 
-  <main class="bg-white py-14 md:py-16">
-    <section class="section-shell">
-      <h1 class="font-display text-4xl font-bold text-[#22252a] md:text-5xl">
-        Partnerships
-      </h1>
-      <p class="mt-5 max-w-3xl text-lg text-[#3b3e47] md:text-xl">
-        We work with broker associations, franchise organizations, technology partners, consultants, researchers, and strategic industry partners to improve decision quality at every stage of the franchise lifecycle.
-      </p>
+  <main class="bg-white">
+    <section class="py-14 md:py-16">
+      <div class="section-shell">
+        <h1 class="font-display text-4xl font-bold text-[#22252a] md:text-5xl">
+          Partnerships
+        </h1>
+        <p class="mt-5 max-w-3xl text-lg text-[#3b3e47] md:text-xl">
+          We work with broker associations, franchise organizations, technology partners, consultants, researchers, and strategic industry partners to improve decision quality at every stage of the franchise lifecycle.
+        </p>
 
-      <ul class="mt-10 grid gap-x-10 gap-y-12 md:grid-cols-1">
-        {partnershipsWithLogos.map((partner) => (
-          <li class="relative border-t-2 border-[#d1d4dd] pt-8">
-            <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
-              {partner.logo ? (
-                <Image
-                  src={partner.logo}
-                  alt={`${partner.name} logo`}
-                  class="self-center md:self-auto h-16 w-auto min-w-48 max-w-48 shrink-0 object-contain"
-                />
-              ) : (
-                <span class="self-center md:self-auto font-display text-[44px] leading-none tracking-tight text-[#5a5f69]">
-                  {partner.shortName}
-                </span>
-              )}
-              <div class="min-w-0 flex-1">
-                <h2 class="font-display pb-1 text-[22px] font-semibold leading-tight text-[#22252a] md:text-[26px]">
-                  {partner.name}
-                </h2>
-                <a href={partner.linkUrl} target="_blank">{partner.linkName}</a>
-                <p class="mt-4 text-[18px] leading-[1.6] text-[#3b3e47] md:text-[20px]">
-                  {partner.description}
-                </p>
+        <ul class="mt-10 grid gap-x-10 gap-y-12 md:grid-cols-1">
+          {partnershipsWithLogos.map((partner) => (
+            <li class="relative border-t-2 border-[#d1d4dd] pt-8">
+              <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                {partner.logo ? (
+                  <Image
+                    src={partner.logo}
+                    alt={`${partner.name} logo`}
+                    class="self-center md:self-auto h-16 w-auto min-w-48 max-w-48 shrink-0 object-contain"
+                  />
+                ) : (
+                  <span class="self-center md:self-auto font-display text-[44px] leading-none tracking-tight text-[#5a5f69]">
+                    {partner.shortName}
+                  </span>
+                )}
+                <div class="min-w-0 flex-1">
+                  <h2 class="font-display pb-1 text-[22px] font-semibold leading-tight text-[#22252a] md:text-[26px]">
+                    {partner.name}
+                  </h2>
+                  <a href={partner.linkUrl} target="_blank">{partner.linkName}</a>
+                  <p class="mt-4 text-[18px] leading-[1.6] text-[#3b3e47] md:text-[20px]">
+                    {partner.description}
+                  </p>
+                </div>
               </div>
-
-            </div>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
+
+    <CtaBand
+      title="Let's create better franchise outcomes together."
+      text="Partner with Zorakle to bring predictive science, deeper alignment, and more confident decisions to the people and organizations you serve."
+    />
   </main>
 
   <SiteFooter />

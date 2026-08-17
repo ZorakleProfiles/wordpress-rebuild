@@ -2,6 +2,11 @@ export type PricingAudience = "all" | AccountType;
 export type AccountType = "broker" | "franchisor";
 export type TierKey = "match-only" | "emerging" | "established";
 export type BillingKey = "monthly" | "annual" | "paygo";
+export type PartnerOrganizationKey = "franserve" | "ifpg" | "entrepreneur-authority";
+
+export type PartnerPromotion =
+  | { key: "partner_20_percent"; kind: "discount"; percentOff: 20; label: string }
+  | { key: "partner_90_day_trial"; kind: "trial"; trialDays: 90; label: string };
 
 export interface PricingPlan {
   key: string;
@@ -80,6 +85,15 @@ export const billingOptions: ReadonlyArray<{ key: BillingKey; name: string }> = 
   { key: "paygo", name: "Pay as you go" },
 ];
 
+export const partnerOrganizations: ReadonlyArray<{
+  key: PartnerOrganizationKey;
+  name: string;
+}> = [
+  { key: "franserve", name: "Franserve" },
+  { key: "ifpg", name: "IFPG" },
+  { key: "entrepreneur-authority", name: "The Entrepreneur Authority" },
+];
+
 export const plans: ReadonlyArray<PricingPlan> = [
   {
     key: "broker_monthly",
@@ -132,7 +146,7 @@ export const plans: ReadonlyArray<PricingPlan> = [
     billing: "monthly",
     amountCents: 39500,
     rateUnit: "/mo",
-    description: "Subscription billing begins after setup.",
+    description: "Subscription billing begins after research.",
   },
   {
     key: "emerging_annually",
@@ -141,7 +155,7 @@ export const plans: ReadonlyArray<PricingPlan> = [
     billing: "annual",
     amountCents: 426600,
     rateUnit: "/yr",
-    description: "Annual subscription billing begins after setup.",
+    description: "Annual subscription billing begins after research is completed.",
     badge: "BEST VALUE",
   },
   {
@@ -151,7 +165,7 @@ export const plans: ReadonlyArray<PricingPlan> = [
     billing: "paygo",
     amountCents: 7900,
     rateUnit: " per assessment",
-    description: "Pay monthly for the assessments you run after setup.",
+    description: "Pay monthly for the assessments you run after research is completed.",
   },
   {
     key: "established_monthly",
@@ -160,7 +174,7 @@ export const plans: ReadonlyArray<PricingPlan> = [
     billing: "monthly",
     amountCents: 69500,
     rateUnit: "/mo",
-    description: "Subscription billing begins after setup.",
+    description: "Subscription billing begins after research is completed.",
   },
   {
     key: "established_annually",
@@ -169,7 +183,7 @@ export const plans: ReadonlyArray<PricingPlan> = [
     billing: "annual",
     amountCents: 750600,
     rateUnit: "/yr",
-    description: "Annual subscription billing begins after setup.",
+    description: "Annual subscription billing begins after research is completed.",
     badge: "BEST VALUE",
   },
   {
@@ -179,7 +193,7 @@ export const plans: ReadonlyArray<PricingPlan> = [
     billing: "paygo",
     amountCents: 7900,
     rateUnit: " per assessment",
-    description: "Pay monthly for the assessments you run after setup.",
+    description: "Pay monthly for the assessments you run after research is completed.",
   },
 ];
 
@@ -223,20 +237,60 @@ export function getPlanSummaryNote(plan: PricingPlan) {
   const setupFee = getSetupFeeCents(plan);
   if (plan.billing === "paygo") {
     return setupFee > 0
-      ? `Setup is due today; assessments are ${formatCents(plan.amountCents)} each after setup.`
+      ? `Setup is due today; assessments are ${formatCents(plan.amountCents)} each after research is completed.`
       : `${formatCents(plan.amountCents)} is charged for each assessment and billed monthly.`;
   }
   if (setupFee > 0) {
-    return `Setup is due today; subscription billing begins after setup at ${getPlanRate(plan)}.`;
+    return `Setup is due today; subscription billing begins after research is completed at ${getPlanRate(plan)}.`;
   }
   return plan.billing === "monthly"
     ? `First month due today, then ${getPlanRate(plan)}.`
     : "One year of service, billed today.";
 }
 
-export function buildRegistrationUrl(baseUrl: string, planKey: string, couponCode?: string) {
+export function getPartnerPromotion(organizationKeys: ReadonlyArray<PartnerOrganizationKey>): PartnerPromotion | undefined {
+  if (organizationKeys.includes("ifpg") || organizationKeys.includes("entrepreneur-authority")) {
+    return {
+      key: "partner_90_day_trial",
+      kind: "trial",
+      trialDays: 90,
+      label: "90-day free trial",
+    };
+  }
+  if (organizationKeys.includes("franserve")) {
+    return {
+      key: "partner_20_percent",
+      kind: "discount",
+      percentOff: 20,
+      label: "20% off",
+    };
+  }
+}
+
+export function getPartnerRateCents(plan: PricingPlan, promotion: PartnerPromotion) {
+  return promotion.kind === "trial"
+    ? 0
+    : Math.round(plan.amountCents * (1 - promotion.percentOff / 100));
+}
+
+export function getPartnerDueTodayCents(plan: PricingPlan, promotion: PartnerPromotion) {
+  const setupFee = getSetupFeeCents(plan);
+  if (setupFee > 0) return setupFee;
+  if (plan.billing === "paygo") return 0;
+  return getPartnerRateCents(plan, promotion);
+}
+
+export function buildRegistrationUrl(
+  baseUrl: string,
+  planKey: string,
+  couponCode?: string,
+  organizationKeys: ReadonlyArray<PartnerOrganizationKey> = [],
+) {
   const url = new URL(baseUrl);
   url.searchParams.set("plan", planKey);
   if (couponCode) url.searchParams.set("coupon", couponCode);
+  organizationKeys.forEach((organization) => url.searchParams.append("organization", organization));
+  const promotion = getPartnerPromotion(organizationKeys);
+  if (promotion) url.searchParams.set("partner_promotion", promotion.key);
   return url.href;
 }

@@ -2,6 +2,9 @@ import assert from "node:assert/strict";
 import {
   buildRegistrationUrl,
   getDueTodayCents,
+  getPartnerDueTodayCents,
+  getPartnerPromotion,
+  getPartnerRateCents,
   getPlan,
   getSetupFeeCents,
   plans,
@@ -25,5 +28,43 @@ const registrationUrl = new URL(buildRegistrationUrl(
 ));
 assert.equal(registrationUrl.searchParams.get("plan"), "broker_payg_monthly");
 assert.equal(registrationUrl.searchParams.get("coupon"), "SAVE 20%");
+
+assert.deepEqual(getPartnerPromotion(["franserve"]), {
+  key: "partner_20_percent",
+  kind: "discount",
+  percentOff: 20,
+  label: "20% off",
+});
+const franservePromotion = getPartnerPromotion(["franserve"]);
+const brokerMonthly = getPlan("broker", undefined, "monthly");
+assert.equal(getPartnerRateCents(brokerMonthly, franservePromotion), 11920);
+assert.equal(getPartnerDueTodayCents(brokerMonthly, franservePromotion), 11920);
+
+const ifpgPromotion = getPartnerPromotion(["ifpg"]);
+assert.equal(getPartnerRateCents(brokerMonthly, ifpgPromotion), 0);
+assert.equal(getPartnerDueTodayCents(brokerMonthly, ifpgPromotion), 0);
+const emergingMonthly = getPlan("franchisor", "emerging", "monthly");
+assert.equal(
+  getPartnerDueTodayCents(emergingMonthly, ifpgPromotion),
+  getSetupFeeCents(emergingMonthly),
+  "A trial must not waive a franchisor setup fee",
+);
+assert.equal(getPartnerPromotion(["ifpg"])?.trialDays, 90);
+assert.equal(getPartnerPromotion(["entrepreneur-authority"])?.trialDays, 90);
+assert.equal(
+  getPartnerPromotion(["franserve", "ifpg"])?.key,
+  "partner_90_day_trial",
+  "The 90-day trial must take precedence when multiple memberships are selected",
+);
+
+const partnerRegistrationUrl = new URL(buildRegistrationUrl(
+  "https://portal.zorakle.net/register",
+  "broker_monthly",
+  undefined,
+  ["franserve", "ifpg"],
+));
+assert.deepEqual(partnerRegistrationUrl.searchParams.getAll("organization"), ["franserve", "ifpg"]);
+assert.equal(partnerRegistrationUrl.searchParams.get("partner_promotion"), "partner_90_day_trial");
+assert.equal(partnerRegistrationUrl.searchParams.has("coupon"), false, "Membership benefits must remain separate from coupons");
 
 console.log(`Pricing catalog verified: ${plans.length} plans`);

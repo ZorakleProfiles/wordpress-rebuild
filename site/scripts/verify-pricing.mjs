@@ -38,30 +38,27 @@ const franserveRegistrationUrl = new URL(buildRegistrationUrl(
 assert.deepEqual(franserveRegistrationUrl.searchParams.getAll("organization"), ["2693"]);
 assert.equal(franserveRegistrationUrl.searchParams.get("partner_promotion"), "coupon");
 
-assert.deepEqual(getPartnerPromotion(["franserve"]), {
+assert.deepEqual(getPartnerPromotion(["franserve"], "broker"), {
   key: "coupon",
   kind: "discount",
   percentOff: 20,
   label: "20% off",
 });
-const franservePromotion = getPartnerPromotion(["franserve"]);
+const franservePromotion = getPartnerPromotion(["franserve"], "broker");
 const brokerMonthly = getPlan("broker", undefined, "monthly");
 assert.equal(getPartnerRateCents(brokerMonthly, franservePromotion), 11920);
 assert.equal(getPartnerDueTodayCents(brokerMonthly, franservePromotion), 11920);
 
-const ifpgPromotion = getPartnerPromotion(["ifpg"]);
+const ifpgPromotion = getPartnerPromotion(["ifpg"], "broker");
 assert.equal(getPartnerRateCents(brokerMonthly, ifpgPromotion), 0);
 assert.equal(getPartnerDueTodayCents(brokerMonthly, ifpgPromotion), 0);
-const emergingMonthly = getPlan("franchisor", "emerging", "monthly");
+assert.equal(getPartnerPromotion(["ifpg"], "broker")?.trialDays, 90);
+assert.equal(getPartnerPromotion(["entrepreneur-authority"], "broker")?.trialDays, 90);
+assert.equal(getPartnerPromotion(["ifpg"], "franchisor"), undefined);
+assert.equal(getPartnerPromotion(["entrepreneur-authority"], "franchisor"), undefined);
+assert.equal(getPartnerPromotion(["franserve", "ifpg"], "franchisor")?.key, "coupon");
 assert.equal(
-  getPartnerDueTodayCents(emergingMonthly, ifpgPromotion),
-  getSetupFeeCents(emergingMonthly),
-  "A trial must not waive a franchisor setup fee",
-);
-assert.equal(getPartnerPromotion(["ifpg"])?.trialDays, 90);
-assert.equal(getPartnerPromotion(["entrepreneur-authority"])?.trialDays, 90);
-assert.equal(
-  getPartnerPromotion(["franserve", "ifpg"])?.key,
+  getPartnerPromotion(["franserve", "ifpg"], "broker")?.key,
   "trial",
   "The 90-day trial must take precedence when multiple memberships are selected",
 );
@@ -83,5 +80,21 @@ const entrepreneurAuthorityUrl = new URL(buildRegistrationUrl(
   ["entrepreneur-authority"],
 ));
 assert.deepEqual(entrepreneurAuthorityUrl.searchParams.getAll("organization"), ["2685"]);
+
+const franchisorTrialUrl = new URL(buildRegistrationUrl(
+  "https://portal.zorakle.net/register",
+  "emerging_monthly",
+  undefined,
+  ["ifpg"],
+));
+assert.equal(franchisorTrialUrl.searchParams.has("partner_promotion"), false);
+
+const franchisorCouponUrl = new URL(buildRegistrationUrl(
+  "https://portal.zorakle.net/register",
+  "emerging_monthly",
+  undefined,
+  ["franserve", "ifpg"],
+));
+assert.equal(franchisorCouponUrl.searchParams.get("partner_promotion"), "coupon");
 
 console.log(`Pricing catalog verified: ${plans.length} plans`);

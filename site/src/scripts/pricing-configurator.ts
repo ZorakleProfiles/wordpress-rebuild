@@ -154,7 +154,7 @@ function initializePricing(root: HTMLElement) {
     const setupFeeCents = plan ? getSetupFeeCents(plan) : 0;
     const organizationKeys = selectedOrganizationKeys();
     const organizations = selectedOrganizations();
-    const partnerPromotion = getPartnerPromotion(organizationKeys);
+    const partnerPromotion = getPartnerPromotion(organizationKeys, state.accountType);
     const originalRate = root.querySelector<HTMLElement>("[data-summary-rate-original]");
     const partnerRow = root.querySelector<HTMLElement>("[data-summary-partner-row]");
     const setupRow = root.querySelector<HTMLElement>("[data-summary-setup-row]");
@@ -279,7 +279,7 @@ function initializePricing(root: HTMLElement) {
 
   organizationInputs.forEach((input) => input.addEventListener("change", () => {
     appliedCoupon = null;
-    if (!getPartnerPromotion(selectedOrganizationKeys())) {
+    if (!getPartnerPromotion(selectedOrganizationKeys(), state.accountType)) {
       clearCoupon(couponCode() ? "Apply the code to preview your discount." : "Enter a coupon code, if you have one.");
     }
     render();
@@ -300,7 +300,7 @@ function initializePricing(root: HTMLElement) {
     const plan = selectedPlan();
     const code = couponCode();
     const previewBaseUrl = root.dataset.couponPreviewUrl;
-    if (!plan || !code || !previewBaseUrl || getPartnerPromotion(selectedOrganizationKeys())) return;
+    if (!plan || !code || !previewBaseUrl || getPartnerPromotion(selectedOrganizationKeys(), state.accountType)) return;
 
     couponLoading = true;
     setCouponStatus("Checking coupon…");
@@ -357,7 +357,7 @@ function initializePricing(root: HTMLElement) {
     const registrationUrl = root.dataset.portalRegistrationUrl;
     if (!plan || !registrationUrl) return;
     const organizationKeys = selectedOrganizationKeys();
-    const coupon = !getPartnerPromotion(organizationKeys) && couponIsCurrent() && appliedCoupon ? appliedCoupon.code : undefined;
+    const coupon = !getPartnerPromotion(organizationKeys, state.accountType) && couponIsCurrent() && appliedCoupon ? appliedCoupon.code : undefined;
     window.location.assign(buildRegistrationUrl(registrationUrl, plan.key, coupon, organizationKeys));
   });
 

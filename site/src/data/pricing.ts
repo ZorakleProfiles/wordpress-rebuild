@@ -249,8 +249,11 @@ export function getPlanSummaryNote(plan: PricingPlan) {
     : "One year of service, billed today.";
 }
 
-export function getPartnerPromotion(organizationKeys: ReadonlyArray<PartnerOrganizationKey>): PartnerPromotion | undefined {
-  if (organizationKeys.includes("ifpg") || organizationKeys.includes("entrepreneur-authority")) {
+export function getPartnerPromotion(
+  organizationKeys: ReadonlyArray<PartnerOrganizationKey>,
+  accountType?: AccountType,
+): PartnerPromotion | undefined {
+  if (accountType === "broker" && (organizationKeys.includes("ifpg") || organizationKeys.includes("entrepreneur-authority"))) {
     return {
       key: "trial",
       kind: "trial",
@@ -294,7 +297,8 @@ export function buildRegistrationUrl(
     const organization = partnerOrganizations.find((item) => item.key === organizationKey);
     if (organization) url.searchParams.append("organization", String(organization.affiliateId));
   });
-  const promotion = getPartnerPromotion(organizationKeys);
+  const plan = plans.find((item) => item.key === planKey);
+  const promotion = getPartnerPromotion(organizationKeys, plan?.accountType);
   if (promotion) url.searchParams.set("partner_promotion", promotion.key);
   return url.href;
 }

@@ -41,7 +41,14 @@ const sectionStyle = backgroundImage
 const textColorClass = dark ? "text-white" : "text-[#1f232a]";
 const bodyColorClass = dark ? "text-white" : "text-[#3b3e47]";
 ---
-
+<head>
+  <link
+      rel="preload"
+      as="image"
+      href={backgroundImage.src}
+      fetchpriority="high"
+  />
+</head>
 <section
   class="relative overflow-hidden border-b border-[#d1d4dd] bg-cover bg-center bg-no-repeat"
   style={sectionStyle}

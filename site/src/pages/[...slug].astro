@@ -14,7 +14,11 @@ export async function getStaticPaths() {
   const seenSlugs = new Set<string>();
 
   posts.forEach((post) => {
-    const deployId = process.env.CF_PAGES_COMMIT_SHA || 'local-development';
+    const deployId =
+        process.env.SITE_BUILD_REVISION ??
+        process.env.GITHUB_SHA ??
+        process.env.CF_PAGES_COMMIT_SHA ??
+        "local";
     const aliases = [post.slug, post.legacySlug].filter(
       (value): value is string => typeof value === "string" && value.trim().length > 0
     );

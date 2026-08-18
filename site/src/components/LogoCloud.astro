@@ -1,12 +1,44 @@
 ---
+import { Image } from 'astro:assets';
+
 const portalUrl = import.meta.env.PORTAL_URL || "http://localhost:3000";
+
+// 1. Instantly parse assets synchronously during compilation using eager: true
+const imageModules = import.meta.glob('/src/assets/logos/*.{jpeg,jpg,png,gif,webp}', { eager: true });
+
+// 2. Extract values and apply a randomized sort
+const images = Object.values(imageModules).sort(() => Math.random() - 0.5);
 ---
 
 <section class="bg-[#f3f3f3] py-8">
   <div class="section-shell">
     <div class="overflow-hidden">
       <div class="logo-ticker" id="logo-ticker" data-portal-url={portalUrl}>
-        <!-- Logos will be loaded here -->
+        <div class="logo-track" aria-label="Trusted brand logos">
+
+          {/* Main group for the loop */}
+          <div class="logo-group">
+            {images.map((img: any) => (
+                <div class="w-[200px] h-[100px] logo-item flex items-center justify-center backdrop-blur-sm">
+                  <div class="flex items-center justify-center p-3 w-full h-full">
+                    <Image src={img.default} alt="Brand logo" class="max-w-full max-h-full object-contain" />
+                  </div>
+                </div>
+            ))}
+          </div>
+
+          {/* Identical cloned group for infinite animation tracking */}
+          <div class="logo-group" aria-hidden="true">
+            {images.map((img: any) => (
+                <div class="w-[200px] h-[100px] logo-item flex items-center justify-center backdrop-blur-sm">
+                  <div class="flex items-center justify-center p-3 w-full h-full">
+                    <Image src={img.default} alt="Brand logo" class="max-w-full max-h-full object-contain" />
+                  </div>
+                </div>
+            ))}
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
@@ -16,72 +48,19 @@ const portalUrl = import.meta.env.PORTAL_URL || "http://localhost:3000";
   function restartLogoTicker() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const track = document.querySelector<HTMLElement>(".logo-ticker .logo-track");
+    // Scoped specifically to this exact ID ticker
+    const track = document.querySelector<HTMLElement>("#logo-ticker .logo-track");
     if (!track) return;
 
-    // iOS Safari can leave CSS animations paused after dynamic insertion or a page-cache restore.
-    track.style.setProperty("-webkit-animation", "none");
+    // Direct, performant hardware acceleration reset trick
     track.style.animation = "none";
-    void track.offsetWidth;
-    track.style.removeProperty("-webkit-animation");
+    void track.offsetWidth; // Force a browser layout reflow step
     track.style.removeProperty("animation");
   }
 
-  async function loadLogos() {
-    try {
-      const ticker = document.getElementById("logo-ticker");
-      if (!ticker) return;
-
-      const portalUrl = ticker.getAttribute("data-portal-url");
-      const endpoint = `${portalUrl}/website/logos`;
-
-      console.log("Fetching logos from:", endpoint);
-      const response = await fetch(endpoint);
-
-      if (!response.ok) {
-        console.error("Failed to fetch logos - Status:", response.status);
-        return;
-      }
-
-      const data = await response.json();
-      type BrandLogo = { logo_path: string; name?: string };
-      const logos = (Array.isArray(data?.accounts) ? data.accounts : Array.isArray(data) ? data : []) as BrandLogo[];
-      const brandLogos = logos.filter((logo: BrandLogo) => logo?.logo_path);
-
-      if (brandLogos.length === 0) {
-        console.error("No logos returned from endpoint");
-        return;
-      }
-
-      const logoMarkup = brandLogos
-        .map(
-          (logo: BrandLogo) => `
-            <div class="w-[200px] h-[100px] logo-item flex items-center justify-center backdrop-blur-sm">
-              <div class="flex items-center justify-center p-3 w-full h-full">
-                <img src="${logo.logo_path}" alt="${logo.name || "Brand logo"}" class="max-w-full max-h-full object-contain" />
-              </div>
-            </div>
-          `
-        )
-        .join("");
-
-      // Two identical groups let us animate exactly half-width with no visible seam.
-      ticker.innerHTML = `
-        <div class="logo-track" aria-label="Trusted brand logos">
-          <div class="logo-group">${logoMarkup}</div>
-          <div class="logo-group" aria-hidden="true">${logoMarkup}</div>
-        </div>
-      `;
-
-      requestAnimationFrame(restartLogoTicker);
-    } catch (error) {
-      console.error("Failed to load brand logos:", error);
-    }
-  }
-
-  loadLogos();
-
+  // Handle cross-browser history navigation adjustments (Safari cache restoration)
   window.addEventListener("pageshow", restartLogoTicker);
+
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible") restartLogoTicker();
   });
@@ -95,11 +74,8 @@ const portalUrl = import.meta.env.PORTAL_URL || "http://localhost:3000";
   .logo-ticker .logo-track {
     display: flex;
     width: max-content;
-    -webkit-animation: ticker-scroll 40s linear infinite;
     animation: ticker-scroll 40s linear infinite;
-    -webkit-animation-play-state: running;
     animation-play-state: running;
-    -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
     will-change: transform;
   }
@@ -115,28 +91,12 @@ const portalUrl = import.meta.env.PORTAL_URL || "http://localhost:3000";
   }
 
   @keyframes ticker-scroll {
-    from {
-      transform: translate3d(0, 0, 0);
-    }
-    to {
-      transform: translate3d(-50%, 0, 0);
-    }
-  }
-
-  @-webkit-keyframes ticker-scroll {
-    from {
-      -webkit-transform: translate3d(0, 0, 0);
-      transform: translate3d(0, 0, 0);
-    }
-    to {
-      -webkit-transform: translate3d(-50%, 0, 0);
-      transform: translate3d(-50%, 0, 0);
-    }
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .logo-ticker .logo-track {
-      -webkit-animation: none;
       animation: none;
     }
   }

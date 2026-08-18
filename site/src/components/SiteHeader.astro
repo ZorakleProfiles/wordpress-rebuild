@@ -1,12 +1,14 @@
 ---
 import { navLinks } from "../data/site-content";
 const portal_link= import.meta.env.PORTAL_URL+ '/login';
+import Logo from "../assets/logo.png";
+import { Image } from 'astro:assets';
 ---
 
 <header class="sticky top-0 z-40 border-b border-[#d1d4dd] bg-white/95 backdrop-blur" data-site-header>
   <div class="section-shell flex h-26 items-center justify-between gap-4">
     <a href="#" class="shrink-0" aria-label="Zorakle home">
-      <img src="/zorakle-logo.png" alt="Zorakle" class="h-18 w-auto" width="2218" height="600" />
+      <Image src={Logo} alt="Zorakle" class="h-18 w-auto" width="2218" height="600" />
     </a>
 
     <nav aria-label="Primary" class="hidden items-center gap-8 lg:flex">

@@ -34,26 +34,24 @@ const {
   rightImage
 } = Astro.props;
 
-const sectionStyle = backgroundImage
-  ? `background-image: url(${backgroundImage.src});`
-  : `background-color: ${backgroundColor};`;
-
 const textColorClass = dark ? "text-white" : "text-[#1f232a]";
 const bodyColorClass = dark ? "text-white" : "text-[#3b3e47]";
 ---
-<head>
-  <link
-      rel="preload"
-      as="image"
-      href={backgroundImage.src}
-      fetchpriority="high"
-  />
-</head>
 <section
-  class="relative overflow-hidden border-b border-[#d1d4dd] bg-cover bg-center bg-no-repeat"
-  style={sectionStyle}
+  class="relative overflow-hidden border-b border-[#d1d4dd]"
+  style={`background-color: ${backgroundColor};`}
 >
-  {backgroundImage && <div class={`absolute inset-0 z-0 ${overlayClass}`}></div>}
+  {backgroundImage && (
+    <Image
+      src={backgroundImage}
+      alt=""
+      aria-hidden="true"
+      layout="full-width"
+      priority
+      class="absolute inset-0 z-0 h-full w-full object-cover object-center"
+    />
+  )}
+  {backgroundImage && <div class={`absolute inset-0 z-[1] ${overlayClass}`}></div>}
 
   <div class={`section-shell relative z-10 flex flex-col gap-8 py-14 md:flex-row md:items-start md:gap-10 md:py-20 ${minHeightClass}`}>
     <div class={`${rightImage ? "w-full md:max-w-[55%]" : "w-full md:max-w-[70%]"} space-y-4 md:space-y-6`}>
@@ -93,4 +91,3 @@ const bodyColorClass = dark ? "text-white" : "text-[#3b3e47]";
     )}
   </div>
 </section>
-

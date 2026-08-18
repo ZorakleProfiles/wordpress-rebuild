@@ -26,70 +26,70 @@ export const partnerships = [
   {
     shortName: "IFPG",
     name: "International Franchise Professionals Group",
-    description: "Supporting the consultant community with science-backed tools to better serve their clients.",
+    description: "IFPG brings together franchise consultants, franchisors, and vendor partners through training, resources, events, and a collaborative professional network. Zorakle supports that community with science-backed insights that help consultants understand their candidates more deeply and guide them toward better-aligned franchise opportunities.",
     linkName: "Learn more about IFPG →",
     linkUrl: "https://www.ifpg.org/"
   },
   {
     shortName: "FBA",
     name: "Franchise Brokers Association",
-    description: "Connecting Zorakle with the broker community nationwide supporting brokers as they help clients find the right franchise match.",
+    description: "The Franchise Brokers Association equips franchise brokers with education, technology, community, and ongoing support as they guide aspiring owners through the discovery process. Through this partnership, Zorakle gives brokers an evidence-based way to evaluate candidate fit and make more confident, personalized franchise recommendations.",
     linkName: "Learn more about FBA →",
     linkUrl: "https://www.franchisebrokersassociation.com/"
   },
   {
     shortName: "IFA",
     name: "International Franchise Association",
-    description: "The industry's largest membership organization. Zorakle is a long-standing member and contributor to IFA programs that support emerging and established franchisors.",
+    description: "The International Franchise Association is the industry's largest membership organization, serving franchisors, franchisees, and suppliers through education, advocacy, events, and professional development. Zorakle is a long-standing member and contributor to IFA programs that help emerging and established franchise systems grow responsibly.",
     linkName: "Learn more about IFA →",
     linkUrl: "https://www.franchise.org"
   },
   {
     shortName: "FBR",
     name: "Franchise Business Review",
-    description: "Independent franchisee satisfaction research. Zorakle's work complements FBR's mission of transparency in the franchise industry.",
+    description: "Franchise Business Review provides independent market research centered on franchisee satisfaction and the real experiences of franchise owners. Zorakle's predictive assessments complement that work by helping brands improve candidate alignment before an award, supporting stronger franchisee relationships and more transparent decision-making.",
     linkName: "Learn more about FBR →",
     linkUrl: "https://franchisebusinessreview.com"
   },
   {
     shortName: "BAI",
     name: "Business Alliance Incorporated",
-    description: "Information needed from Rebecca.",
+    description: "Business Alliance Inc. connects franchise buyers, consultants, brands, and suppliers through an established franchise brokerage network and a structured discovery process. Zorakle adds behavioral and values-based insight to that process, helping consultants move beyond surface-level qualifications to identify opportunities that better fit each candidate.",
     linkName: "Learn more about BAI →",
     linkUrl: "https://businessallianceinc.com"
   },
   {
     shortName: "FRANSERVE",
     name: "Franserve",
-    description: "Empowering franchise systems with operational excellence and strategic guidance to build sustainable, scalable businesses.",
+    description: "FranServe is a franchise consulting and expansion network that connects aspiring business owners with vetted opportunities while equipping independent consultants with training, systems, and ongoing support. Zorakle enhances that guided discovery process with predictive insights that help consultants and candidates evaluate alignment with greater clarity and confidence.",
     linkName: "Learn more about Franserve →",
     linkUrl: "https://www.franserve.com/"
   },
   {
     shortName: "CLIENTTETHER",
     name: "ClientTether",
-    description: "Connecting clients with the right franchise opportunities through innovative technology and data-driven insights.",
+    description: "ClientTether is a franchise-focused CRM and automation platform that brings lead engagement, pipeline visibility, franchise development, and unit-level operations into one system. Paired with Zorakle's candidate insights, its workflow tools help franchise teams follow up consistently while keeping fit and decision quality at the center of the development process.",
     linkName: "Learn more about ClientTether →",
     linkUrl: "https://www.clienttether.com/"
   },
   {
     shortName: "MAVERICK",
     name: "The Maverick",
-    description: "Connecting clients with the right franchise opportunities through innovative technology and data-driven insights.",
+    description: "The Maverick provides an AI-powered growth system for franchise brokers, combining lead management, automated follow-up, CRM tools, and pipeline support. Zorakle contributes a deeper understanding of each candidate, allowing brokers to pair efficient technology with thoughtful, evidence-based franchise matching.",
     linkName: "Learn more about The Maverick →",
     linkUrl: "https://fran.themaverick.ai/"
   },
   {
-    shortName: "MAVERICK",
+    shortName: "OYR",
     name: "Own Your Revenue",
-    description: "Connecting clients with the right franchise opportunities through innovative technology and data-driven insights.",
+    description: "Own Your Revenue helps operator-led teams uncover patterns that constrain growth, prioritize the right operational levers, and turn those insights into measurable action. Its focus on clarity, accountability, and sustainable execution aligns with Zorakle's commitment to helping franchise organizations make better people and growth decisions.",
     linkName: "Learn more about Own Your Revenue →",
     linkUrl: "https://www.ownyourrevenue.com"
   },
   {
     shortName: "EAUTH",
     name: "The Entrepreneur Authority",
-    description: "Connecting clients with the right franchise opportunities through innovative technology and data-driven insights.",
+    description: "The Entrepreneur Authority is a network of experienced franchise professionals that guides prospective owners through a structured process of discovery, evaluation, and selection. Zorakle strengthens that process with objective insights into values, motivations, and business fit, helping candidates explore opportunities that align with both their goals and working style.",
     linkName: "Learn more about The Entrepreneur Authority →",
     linkUrl: "https://www.eAuth.com"
   }

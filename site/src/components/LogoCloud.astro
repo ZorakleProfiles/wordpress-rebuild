@@ -3,11 +3,12 @@ import { Image } from 'astro:assets';
 
 const portalUrl = import.meta.env.PORTAL_URL || "http://localhost:3000";
 
-// 1. Instantly parse assets synchronously during compilation using eager: true
 const imageModules = import.meta.glob('/src/assets/logos/*.{jpeg,jpg,png,gif,webp}', { eager: true });
 
-// 2. Extract values and apply a randomized sort
-const images = Object.values(imageModules).sort(() => Math.random() - 0.5);
+// Keep both halves of the marquee deterministic and pixel-identical.
+const images = Object.entries(imageModules)
+  .sort(([firstPath], [secondPath]) => firstPath.localeCompare(secondPath))
+  .map(([, image]) => image);
 ---
 
 <section class="bg-[#f3f3f3] py-8">
@@ -19,7 +20,7 @@ const images = Object.values(imageModules).sort(() => Math.random() - 0.5);
           {/* Main group for the loop */}
           <div class="logo-group">
             {images.map((img: any) => (
-                <div class="w-[200px] h-[100px] logo-item flex items-center justify-center backdrop-blur-sm">
+                <div class="logo-item flex items-center justify-center">
                   <div class="flex items-center justify-center p-3 w-full h-full">
                     <Image src={img.default} alt="Brand logo" class="max-w-full max-h-full object-contain" />
                   </div>
@@ -30,9 +31,9 @@ const images = Object.values(imageModules).sort(() => Math.random() - 0.5);
           {/* Identical cloned group for infinite animation tracking */}
           <div class="logo-group" aria-hidden="true">
             {images.map((img: any) => (
-                <div class="w-[200px] h-[100px] logo-item flex items-center justify-center backdrop-blur-sm">
+                <div class="logo-item flex items-center justify-center">
                   <div class="flex items-center justify-center p-3 w-full h-full">
-                    <Image src={img.default} alt="Brand logo" class="max-w-full max-h-full object-contain" />
+                    <Image src={img.default} alt="" class="max-w-full max-h-full object-contain" />
                   </div>
                 </div>
             ))}
@@ -44,55 +45,50 @@ const images = Object.values(imageModules).sort(() => Math.random() - 0.5);
   </div>
 </section>
 
-<script>
-  function restartLogoTicker() {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    // Scoped specifically to this exact ID ticker
-    const track = document.querySelector<HTMLElement>("#logo-ticker .logo-track");
-    if (!track) return;
-
-    // Direct, performant hardware acceleration reset trick
-    track.style.animation = "none";
-    void track.offsetWidth; // Force a browser layout reflow step
-    track.style.removeProperty("animation");
-  }
-
-  // Handle cross-browser history navigation adjustments (Safari cache restoration)
-  window.addEventListener("pageshow", restartLogoTicker);
-
-  document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") restartLogoTicker();
-  });
-</script>
-
 <style is:global>
   .logo-ticker {
+    --logo-gap: 1rem;
+    --logo-width: 12.5rem;
+    --logo-height: 6.25rem;
+    --ticker-duration: 72s;
     overflow: hidden;
+    width: 100%;
   }
 
   .logo-ticker .logo-track {
     display: flex;
     width: max-content;
-    animation: ticker-scroll 40s linear infinite;
-    animation-play-state: running;
-    transform: translate3d(0, 0, 0);
+    animation: ticker-scroll var(--ticker-duration) linear infinite;
+    backface-visibility: hidden;
+    transform: translateZ(0);
     will-change: transform;
   }
 
   .logo-ticker .logo-group {
     display: flex;
-    gap: 1rem;
+    gap: var(--logo-gap);
+    padding-inline-end: var(--logo-gap);
     flex-shrink: 0;
   }
 
   .logo-ticker .logo-item {
+    width: var(--logo-width);
+    height: var(--logo-height);
     flex-shrink: 0;
   }
 
   @keyframes ticker-scroll {
     from { transform: translate3d(0, 0, 0); }
     to { transform: translate3d(-50%, 0, 0); }
+  }
+
+  @media (max-width: 639px) {
+    .logo-ticker {
+      --logo-gap: 0.75rem;
+      --logo-width: 9rem;
+      --logo-height: 5rem;
+      --ticker-duration: 54s;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

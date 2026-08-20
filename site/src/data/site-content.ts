@@ -75,16 +75,16 @@ export const partnerships = [
   {
     shortName: "MAVERICK",
     name: "The Maverick",
-    description: "The Maverick provides an AI-powered growth system for franchise brokers, combining lead management, automated follow-up, CRM tools, and pipeline support. Zorakle contributes a deeper understanding of each candidate, allowing brokers to pair efficient technology with thoughtful, evidence-based franchise matching.",
+    description: "Your Zorakle blueprint, brought to life — branded landing pages, chatbots, and workflows that speak each buyer's language and fill your locations with qualified franchisees.",
     linkName: "Learn more about The Maverick →",
     linkUrl: "https://fran.themaverick.ai/"
   },
   {
     shortName: "OYR",
     name: "Own Your Revenue",
-    description: "Own Your Revenue helps operator-led teams uncover patterns that constrain growth, prioritize the right operational levers, and turn those insights into measurable action. Its focus on clarity, accountability, and sustainable execution aligns with Zorakle's commitment to helping franchise organizations make better people and growth decisions.",
+    description: "Own Your Revenue exists to tactically hunt the revenue patterns that pull the right levers — adding seven- to eight-figure growth in six to twelve months, with margins intact. We work with business owners who are tired of scaling chaos instead of profit. Through the OYR operating system, RiBot (our AI operating partner), and hands-on strategic support, we help owners find and execute the specific moves that produce real, sustainable growth.",
     linkName: "Learn more about Own Your Revenue →",
-    linkUrl: "https://www.ownyourrevenue.com"
+    linkUrl: "https://ownyourrevenue.com/revenue-applicant-intake/zorakle"
   },
   {
     shortName: "EAUTH",

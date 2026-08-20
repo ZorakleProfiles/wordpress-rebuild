@@ -19,8 +19,8 @@ const totalLessons = scienceTopics.reduce((total, topic) => total + topic.lesson
   <main>
     <section class="border-b border-[#d1d4dd] bg-[#f4f5f7] py-10 md:py-12">
       <div class="section-shell grid items-start gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)] lg:gap-12">
-        <div class="flex flex-col h-full items-start">
-        <p class="section-eyebrow">Resources</p>
+        <div class="row-start-2 lg:row-start-auto flex flex-col h-full items-start">
+          <p class="section-eyebrow">Resources</p>
           <h1 class="mt-4 align-self-bottom font-display text-4xl font-bold text-[#22252a] md:text-5xl">
             Technical Support & Training
           </h1>
@@ -30,7 +30,7 @@ const totalLessons = scienceTopics.reduce((total, topic) => total + topic.lesson
           </p>
 
           <div
-            class="mt-auto inline-flex rounded-xl border border-[#d1d4dd] bg-white p-1"
+            class="lg:mt-auto inline-flex rounded-xl border border-[#d1d4dd] bg-white p-1 mt-10"
             role="tablist"
             aria-label="Technical support and Zorakle training resources"
           >

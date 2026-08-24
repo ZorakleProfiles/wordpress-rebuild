@@ -750,16 +750,6 @@ export const supportArticles: SupportArticle[] = [
           alt: "Company Profile and Franchising Requirements form"
         }
       },
-      {
-        title: "Save and review regularly",
-        content:
-          "Save your referral profile and revisit it any time your growth model, investment ranges, or contact ownership changes.",
-        media: {
-          type: "screenshot",
-          fileName: "04.png",
-          alt: "Saved referral profile confirmation"
-        }
-      }
     ]
   }
 ];

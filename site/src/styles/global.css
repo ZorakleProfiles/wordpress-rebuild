@@ -17,6 +17,14 @@ body {
   font-family: "Century Gothic", "Avenir Next", Avenir, "Segoe UI", sans-serif;
 }
 
+:root {
+  --color-text-strong: #22252a;
+  --color-text-body: #3b3e47;
+  --color-text-muted: #56586a;
+  --color-link-teal: #087f65;
+  --color-link-orange: #a8420c;
+}
+
 h1,
 h2,
 h3,
@@ -59,7 +67,17 @@ p {
 
 .section-title {
   font-family: "MontereyFLF", "Century Gothic", "Avenir Next", sans-serif;
-  @apply mt-3 text-5xl text-[#22252a] md:text-6xl font-bold;
+  @apply mt-3 text-[#22252a] font-bold;
+  font-size: clamp(2.25rem, 2vw + 1rem, 3rem);
+  line-height: 1.08;
+}
+
+.page-title {
+  font-family: "MontereyFLF", "Century Gothic", "Avenir Next", sans-serif;
+  color: var(--color-text-strong);
+  font-size: clamp(2.5rem, 4vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.08;
 }
 
 .section-copy {
@@ -86,4 +104,3 @@ p {
 .btn-secondary-dark {
   @apply border-[#22252a] text-[#22252a] hover:bg-[#22252a]/5;
 }
-

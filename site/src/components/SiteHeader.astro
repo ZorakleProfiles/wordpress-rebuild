@@ -15,19 +15,19 @@ import { Image } from 'astro:assets';
       {navLinks.map((link) => (
         link.items ? (
           <details class="group relative" data-nav-dropdown>
-            <summary class="list-none cursor-pointer text-base font-bold text-[#22252a] transition hover:text-[#fd7730] [&::-webkit-details-marker]:hidden">
+            <summary class="list-none cursor-pointer text-base font-bold text-[#22252a] transition hover:text-[#a8420c] [&::-webkit-details-marker]:hidden">
               {link.label} <span aria-hidden="true">▾</span>
             </summary>
             <div class="pointer-events-none invisible absolute left-0 top-full z-50 min-w-55 rounded-xl border border-[#d1d4dd] bg-white p-2 opacity-0 shadow-lg transition duration-150 group-open:pointer-events-auto group-open:visible group-open:opacity-100 lg:group-hover:pointer-events-auto lg:group-hover:visible lg:group-hover:opacity-100">
               {link.items.map((item) => (
-                <a href={item.href} class="block rounded-lg px-3 py-2 text-sm font-semibold text-[#22252a] transition hover:bg-[#f4f6f9] hover:text-[#fd7730]">
+                <a href={item.href} class="block rounded-lg px-3 py-2 text-sm font-semibold text-[#22252a] transition hover:bg-[#f4f6f9] hover:text-[#a8420c]">
                   {item.label}
                 </a>
               ))}
             </div>
           </details>
         ) : (
-          <a href={link.href} class="text-base font-bold text-[#22252a] transition hover:text-[#fd7730]">
+          <a href={link.href} class="text-base font-bold text-[#22252a] transition hover:text-[#a8420c]">
             {link.label}
           </a>
         )
@@ -36,12 +36,12 @@ import { Image } from 'astro:assets';
 
     <div class="hidden items-center gap-4 md:flex">
       <a class="btn-secondary border-[#d1d4dd] text-[#22252a]" href="/schedule">Book a Demo</a>
-      <a class="text-base font-bold text-[#22252a] transition hover:text-[#fd7730]"
+      <a class="text-base font-bold text-[#22252a] transition hover:text-[#a8420c]"
          href={portal_link}>Login</a>
     </div>
 
     <button
-      class="lg:hidden p-2 text-[#22252a] hover:text-[#fd7730]"
+      class="lg:hidden p-2 text-[#22252a] hover:text-[#a8420c]"
       aria-label="Toggle menu"
       data-menu-toggle
     >
@@ -60,26 +60,26 @@ import { Image } from 'astro:assets';
       {navLinks.map((link) => (
         link.items ? (
           <details class="group" data-mobile-dropdown>
-            <summary class="list-none cursor-pointer px-3 py-2 text-base font-bold text-[#22252a] transition hover:text-[#fd7730] [&::-webkit-details-marker]:hidden">
+            <summary class="list-none cursor-pointer px-3 py-2 text-base font-bold text-[#22252a] transition hover:text-[#a8420c] [&::-webkit-details-marker]:hidden">
               {link.label} <span aria-hidden="true">▾</span>
             </summary>
             <div class="bg-[#f4f6f9] pl-6">
               {link.items.map((item) => (
-                <a href={item.href} class="block px-3 py-2 text-sm font-semibold text-[#22252a] transition hover:text-[#fd7730]">
+                <a href={item.href} class="block px-3 py-2 text-sm font-semibold text-[#22252a] transition hover:text-[#a8420c]">
                   {item.label}
                 </a>
               ))}
             </div>
           </details>
         ) : (
-          <a href={link.href} class="block px-3 py-2 text-base font-bold text-[#22252a] transition hover:text-[#fd7730]">
+          <a href={link.href} class="block px-3 py-2 text-base font-bold text-[#22252a] transition hover:text-[#a8420c]">
             {link.label}
           </a>
         )
       ))}
       <div class="mt-2 flex flex-col gap-2 border-t border-[#d1d4dd] pt-4">
         <a class="btn-secondary border-[#d1d4dd] text-[#22252a] text-center" href="/schedule">Book a Demo</a>
-        <a class="block px-3 py-2 text-center text-base font-bold text-[#22252a] transition hover:text-[#fd7730]"
+        <a class="block px-3 py-2 text-center text-base font-bold text-[#22252a] transition hover:text-[#a8420c]"
            href={portal_link}
         >Login</a>
       </div>

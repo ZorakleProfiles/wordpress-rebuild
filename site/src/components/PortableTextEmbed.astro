@@ -69,11 +69,10 @@ const canUseIframe = ["youtube", "vimeo", "loom", "wistia"].includes(provider);
         allowfullscreen
       ></iframe>
     ) : (
-      <a href={sourceUrl} target="_blank" rel="noopener noreferrer" class="text-[#fd7730] underline underline-offset-2">
+      <a href={sourceUrl} target="_blank" rel="noopener noreferrer" class="text-[#a8420c] underline underline-offset-2">
         {title || "Open embedded media"}
       </a>
     )}
-    {title && <figcaption class="mt-2 text-center text-sm text-[#8a8e98]">{title}</figcaption>}
+    {title && <figcaption class="mt-2 text-center text-sm text-[#56586a]">{title}</figcaption>}
   </figure>
 )}
-

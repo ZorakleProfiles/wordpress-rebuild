@@ -22,12 +22,12 @@ const typeModifier = type.trim().toLowerCase() === "broker" ? "is-broker" : "is-
   <div class="testimonial-card-head">
     <div class="min-w-0">
       <p class="truncate text-base font-bold text-[#22252a]">{name}</p>
-      <p class="truncate text-sm text-[#3b3e47]">{company}</p>
+      <p class="truncate text-sm text-[#56586a]">{company}</p>
     </div>
     <p class:list={["testimonial-type", typeModifier]}>{type}</p>
   </div>
 
-  <p class="testimonial-quote mt-4 text-sm leading-6 text-[#22252a] md:text-[0.95rem] md:leading-7">{quote}</p>
+  <p class="testimonial-quote mt-4 text-base leading-relaxed text-[#22252a]">{quote}</p>
 </article>
 
 <style>
@@ -70,7 +70,7 @@ const typeModifier = type.trim().toLowerCase() === "broker" ? "is-broker" : "is-
     align-items: center;
     border-radius: 9999px;
     padding: 0.22rem 0.6rem;
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;

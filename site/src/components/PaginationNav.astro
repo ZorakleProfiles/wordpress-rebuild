@@ -32,7 +32,7 @@ for (const page of visiblePages) {
   totalPages > 1 && (
     <nav aria-label="Pagination" class="mt-8 flex flex-wrap items-center gap-2 border-t border-[#e5e8ef] pt-6 text-sm font-semibold text-[#3b3e47]">
       {currentPage > 1 ? (
-        <a href={buildPageHref(currentPage - 1)} class="rounded-md border border-[#d1d4dd] px-3 py-1.5 transition hover:border-[#fd7730] hover:text-[#fd7730]">
+        <a href={buildPageHref(currentPage - 1)} class="rounded-md border border-[#d1d4dd] px-3 py-1.5 transition hover:border-[#fd7730] hover:text-[#a8420c]">
           Previous
         </a>
       ) : (
@@ -43,14 +43,14 @@ for (const page of visiblePages) {
         item.type === "gap" ? (
           <span key={item.value} class="px-2 text-[#8b8f99]">...</span>
         ) : item.value === currentPage ? (
-          <span key={`page-${item.value}`} class="rounded-md border border-[#fd7730] bg-[#fff2eb] px-3 py-1.5 text-[#fd7730]">
+          <span key={`page-${item.value}`} class="rounded-md border border-[#fd7730] bg-[#fff2eb] px-3 py-1.5 text-[#a8420c]">
             {item.value}
           </span>
         ) : (
           <a
             key={`page-${item.value}`}
             href={buildPageHref(item.value)}
-            class="rounded-md border border-[#d1d4dd] px-3 py-1.5 transition hover:border-[#fd7730] hover:text-[#fd7730]"
+            class="rounded-md border border-[#d1d4dd] px-3 py-1.5 transition hover:border-[#fd7730] hover:text-[#a8420c]"
           >
             {item.value}
           </a>
@@ -58,7 +58,7 @@ for (const page of visiblePages) {
       )}
 
       {currentPage < totalPages ? (
-        <a href={buildPageHref(currentPage + 1)} class="rounded-md border border-[#d1d4dd] px-3 py-1.5 transition hover:border-[#fd7730] hover:text-[#fd7730]">
+        <a href={buildPageHref(currentPage + 1)} class="rounded-md border border-[#d1d4dd] px-3 py-1.5 transition hover:border-[#fd7730] hover:text-[#a8420c]">
           Next
         </a>
       ) : (
@@ -67,4 +67,3 @@ for (const page of visiblePages) {
     </nav>
   )
 }
-

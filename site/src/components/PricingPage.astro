@@ -52,7 +52,7 @@ const couponPreviewUrl = new URL("/api/check-coupon", portalUrl).href;
       <header class="mb-12 border-b border-[#d1d4dd] pb-10">
         <div class="max-w-3xl">
           <p class="section-eyebrow">Pricing</p>
-          <h1 class="section-title">{pageMeta.heading}</h1>
+          <h1 class="page-title mt-3">{pageMeta.heading}</h1>
           <p class="section-copy max-w-2xl">{pageMeta.description}</p>
         </div>
       </header>
@@ -74,7 +74,7 @@ const couponPreviewUrl = new URL("/api/check-coupon", portalUrl).href;
                       <input type="radio" name="account-type" value={accountType} class="sr-only" data-account-type-input />
                       <div class="rounded-2xl border-2 border-[#d1d4dd] bg-white p-6 transition hover:shadow-lg" data-account-type-option={accountType}>
                         <h3 class="mb-2 text-lg font-bold text-[#22252a]">{account.name}</h3>
-                        <p class="text-sm text-[#72767e]">{account.description}</p>
+                        <p class="text-base leading-relaxed text-[#56586a]">{account.description}</p>
                       </div>
                     </label>
                   );
@@ -91,7 +91,7 @@ const couponPreviewUrl = new URL("/api/check-coupon", portalUrl).href;
                 <div class="flex h-8 w-8 items-center justify-center rounded-full bg-[#22252a] text-sm font-bold text-white">{isCombined ? "2" : "1"}</div>
                 <h2 id="account-tier-heading" class="text-2xl font-bold text-[#22252a]">My account type</h2>
               </div>
-              <p class="mb-6 text-sm text-[#72767e]">Each one adds to the one above it.</p>
+              <p class="mb-6 text-base text-[#56586a]">Each one adds to the one above it.</p>
 
               <div class="space-y-4">
                 {tiers.map((tier) => (
@@ -102,16 +102,16 @@ const couponPreviewUrl = new URL("/api/check-coupon", portalUrl).href;
                         <div class="flex-1">
                           <div class="mb-2 flex flex-wrap items-center gap-2">
                             <h3 class="text-lg font-bold text-[#22252a]">{tier.name}</h3>
-                            <span class="text-xs font-semibold uppercase tracking-wider text-[#72767e]">{tier.segment}</span>
+                            <span class="text-xs font-semibold uppercase tracking-wider text-[#56586a]">{tier.segment}</span>
                           </div>
-                          <p class="text-sm text-[#72767e]">{tier.description}</p>
+                          <p class="text-base leading-relaxed text-[#56586a]">{tier.description}</p>
                         </div>
                       </div>
                       <div class="space-y-2">
                         {tier.features.map((feature) => (
                           <div class="flex items-start gap-2">
-                            <span class="mt-0.5 text-sm text-[#09cc9c]" aria-hidden="true">✓</span>
-                            <span class="text-sm text-[#22252a]">{feature}</span>
+                            <span class="mt-0.5 text-base text-[#087f65]" aria-hidden="true">✓</span>
+                            <span class="text-base text-[#22252a]">{feature}</span>
                           </div>
                         ))}
                       </div>
@@ -134,10 +134,10 @@ const couponPreviewUrl = new URL("/api/check-coupon", portalUrl).href;
                   <label class="cursor-pointer" data-billing-card>
                     <input type="radio" name="billing" value={billing.key} class="sr-only" data-billing-input />
                     <div class="relative flex h-full flex-col rounded-2xl border-2 border-[#d1d4dd] bg-white p-6 transition hover:shadow-lg" data-billing-option={billing.key}>
-                      <div class="absolute -top-3 right-4 hidden w-fit rounded bg-[#09cc9c] px-2 py-1 text-xs font-bold text-white" data-billing-badge></div>
+                      <div class="absolute -top-3 right-4 hidden w-fit rounded bg-[#09cc9c] px-2 py-1 text-xs font-bold text-[#22252a]" data-billing-badge></div>
                       <h3 class="mb-2 text-lg font-bold text-[#22252a]" data-billing-name={billing.key}>{billing.name}</h3>
                       <div class="mb-2 text-xl font-bold text-[#22252a]" data-billing-price>Select an account</div>
-                      <p class="text-sm text-[#72767e]" data-billing-description>Choose an account to see this option.</p>
+                      <p class="text-base leading-relaxed text-[#56586a]" data-billing-description>Choose an account to see this option.</p>
                     </div>
                   </label>
                 ))}
@@ -151,12 +151,12 @@ const couponPreviewUrl = new URL("/api/check-coupon", portalUrl).href;
                 </div>
                 <h2 id="organization-heading" class="text-2xl font-bold text-[#22252a]">Organization membership</h2>
               </div>
-              <p class="mb-5 text-sm text-[#72767e]">Are you a member of any of these organizations? Select all that apply.</p>
+              <p class="mb-5 text-base text-[#56586a]">Are you a member of any of these organizations? Select all that apply.</p>
 
               <details class="relative" data-organization-picker>
                 <summary class="flex cursor-pointer list-none items-center justify-between rounded-xl border-2 border-[#d1d4dd] bg-white px-5 py-4 font-semibold text-[#22252a] transition hover:border-[#09cc9c]">
                   <span data-organization-summary>No organizations selected</span>
-                  <span class="ml-4 text-[#72767e]" aria-hidden="true">⌄</span>
+                  <span class="ml-4 text-[#56586a]" aria-hidden="true">⌄</span>
                 </summary>
                 <div class="absolute z-20 mt-2 w-full rounded-xl border border-[#d1d4dd] bg-white p-2 shadow-xl">
                   {partnerOrganizations.map((organization) => (
@@ -169,7 +169,7 @@ const couponPreviewUrl = new URL("/api/check-coupon", portalUrl).href;
                         data-organization-input
                       />
                       <span class="min-w-0 flex-1">
-                        <span class="block text-sm font-bold text-[#22252a]">{organization.name}</span>
+                        <span class="block text-base font-bold text-[#22252a]">{organization.name}</span>
                       </span>
                     </label>
                   ))}
@@ -181,34 +181,34 @@ const couponPreviewUrl = new URL("/api/check-coupon", portalUrl).href;
 
         <aside class="lg:col-span-1">
           <div class="rounded-3xl border-2 border-[#d1d4dd] bg-[#f0fffe] p-8 text-[#22252a] lg:sticky lg:top-32">
-            <div class="mb-2 text-xs uppercase tracking-widest text-[#72767e]">Your plan</div>
+            <div class="mb-2 text-xs uppercase tracking-widest text-[#56586a]">Your plan</div>
             <h2 class="mb-4 text-3xl font-bold" data-summary-title>Build your plan</h2>
 
             <div class="space-y-4 border-b border-[#d1d4dd] pb-4">
               <div>
-                <div class="mb-1 text-xs uppercase tracking-widest text-[#72767e]" data-summary-rate-label>Subscription</div>
-                <div class="hidden text-xs font-semibold text-[#72767e] line-through" data-summary-rate-original></div>
-                <div class="text-sm font-semibold" data-summary-rate>Not selected</div>
+                <div class="mb-1 text-xs uppercase tracking-widest text-[#56586a]" data-summary-rate-label>Subscription</div>
+                <div class="hidden text-xs font-semibold text-[#56586a] line-through" data-summary-rate-original></div>
+                <div class="text-base font-semibold" data-summary-rate>Not selected</div>
               </div>
               <div class="hidden" data-summary-partner-row>
-                <div class="mb-1 text-xs uppercase tracking-widest text-[#72767e]">Membership benefit</div>
-                <div class="text-sm font-semibold text-[#087f65]" data-summary-partner></div>
+                <div class="mb-1 text-xs uppercase tracking-widest text-[#56586a]">Membership benefit</div>
+                <div class="text-base font-semibold text-[#087f65]" data-summary-partner></div>
               </div>
               <div class="hidden" data-summary-setup-row>
-                <div class="mb-1 text-xs uppercase tracking-widest text-[#72767e]">One-time setup</div>
-                <div class="text-sm font-semibold" data-summary-setup></div>
+                <div class="mb-1 text-xs uppercase tracking-widest text-[#56586a]">One-time setup</div>
+                <div class="text-base font-semibold" data-summary-setup></div>
               </div>
             </div>
 
             <div class="my-8">
-              <div class="mb-3 text-xs uppercase tracking-widest text-[#72767e]">Due today</div>
+              <div class="mb-3 text-xs uppercase tracking-widest text-[#56586a]">Due today</div>
               <div class="text-2xl font-bold" data-summary-price>—</div>
-              <p class="mt-3 text-xs text-[#72767e]" data-summary-note>Make your selections to continue.</p>
+              <p class="mt-3 text-sm text-[#56586a]" data-summary-note>Make your selections to continue.</p>
             </div>
 
             <div class="mb-6 border-t border-[#d1d4dd] pt-6">
-              <label for="pricing-coupon" class="mb-2 block text-sm font-bold">
-                Coupon code <span class="font-normal text-[#72767e]">(optional)</span>
+              <label for="pricing-coupon" class="mb-2 block text-base font-bold">
+                Coupon code <span class="font-normal text-[#56586a]">(optional)</span>
               </label>
               <div class="flex gap-2">
                 <input
@@ -220,7 +220,7 @@ const couponPreviewUrl = new URL("/api/check-coupon", portalUrl).href;
                   autocapitalize="characters"
                   spellcheck="false"
                   placeholder="Enter coupon code"
-                  class="min-w-0 flex-1 rounded-xl border border-[#b9bdc7] bg-white px-4 py-3 text-sm font-semibold uppercase outline-none transition placeholder:font-normal placeholder:normal-case placeholder:text-[#8b8f99] focus:border-[#09a982] focus:ring-2 focus:ring-[#09cc9c]/20 disabled:cursor-not-allowed disabled:bg-[#f4f5f7] disabled:text-[#8b8f99]"
+                  class="min-w-0 flex-1 rounded-xl border border-[#b9bdc7] bg-white px-4 py-3 text-base font-semibold uppercase outline-none transition placeholder:font-normal placeholder:normal-case placeholder:text-[#56586a] focus:border-[#09a982] focus:ring-2 focus:ring-[#09cc9c]/20 disabled:cursor-not-allowed disabled:bg-[#f4f5f7] disabled:text-[#56586a]"
                   data-coupon-input
                 />
                 <button
@@ -232,19 +232,19 @@ const couponPreviewUrl = new URL("/api/check-coupon", portalUrl).href;
                   Apply
                 </button>
               </div>
-              <p class="mt-2 text-xs text-[#72767e]" data-coupon-status aria-live="polite">Choose a plan, then apply your code.</p>
+              <p class="mt-2 text-sm text-[#56586a]" data-coupon-status aria-live="polite">Choose a plan, then apply your code.</p>
             </div>
 
             <button
               type="button"
-              class="mb-4 w-full rounded-2xl bg-[#fd7730] py-4 font-bold transition hover:bg-[#e56620] disabled:cursor-not-allowed disabled:bg-[#d1d4dd] disabled:text-[#72767e]"
+              class="mb-4 w-full rounded-2xl bg-[#fd7730] py-4 font-bold text-[#22252a] transition hover:bg-[#e56620] disabled:cursor-not-allowed disabled:bg-[#d1d4dd] disabled:text-[#56586a]"
               data-continue-btn
               disabled
             >
               Continue to your details →
             </button>
 
-            <p class="text-center text-xs leading-relaxed text-[#72767e]" data-summary-footnote>
+            <p class="text-center text-sm leading-relaxed text-[#56586a]" data-summary-footnote>
               Your final plan and billing details will be confirmed before checkout.
             </p>
           </div>

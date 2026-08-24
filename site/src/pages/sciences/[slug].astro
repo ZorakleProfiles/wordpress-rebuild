@@ -36,7 +36,7 @@ const nextTopic = currentIndex < scienceTopics.length - 1 ? scienceTopics[curren
         <div class="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
           <div>
             <p class="section-eyebrow">The Science</p>
-            <h1 class="mt-4 font-display text-4xl font-bold text-[#22252a] md:text-5xl">{topic.title}</h1>
+            <h1 class="page-title mt-4">{topic.title}</h1>
             <p class="mt-5 max-w-3xl text-lg leading-relaxed text-[#3b3e47]">{topic.summary}</p>
           </div>
 
@@ -52,7 +52,7 @@ const nextTopic = currentIndex < scienceTopics.length - 1 ? scienceTopics[curren
                       "block rounded-lg px-3 py-2 text-sm font-semibold transition",
                       item.slug === topic.slug
                         ? "bg-white text-[#22252a] shadow-sm"
-                        : "text-[#3b3e47] hover:bg-white hover:text-[#fd7730]"
+                        : "text-[#3b3e47] hover:bg-white hover:text-[#a8420c]"
                     ]}
                   >
                     {item.shortTitle}

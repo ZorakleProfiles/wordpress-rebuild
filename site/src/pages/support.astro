@@ -21,7 +21,7 @@ const totalLessons = scienceTopics.reduce((total, topic) => total + topic.lesson
       <div class="section-shell grid items-start gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)] lg:gap-12">
         <div class="row-start-2 lg:row-start-auto flex flex-col h-full items-start">
           <p class="section-eyebrow">Resources</p>
-          <h1 class="mt-4 align-self-bottom font-display text-4xl font-bold text-[#22252a] md:text-5xl">
+          <h1 class="page-title mt-4 align-self-bottom">
             Technical Support & Training
           </h1>
           <p class="mt-4 max-w-2xl text-lg text-[#3b3e47]">
@@ -36,7 +36,7 @@ const totalLessons = scienceTopics.reduce((total, topic) => total + topic.lesson
           >
             <button
               id="support-tab"
-              class="resource-tab rounded-lg px-5 py-2.5 text-sm font-bold transition"
+              class="resource-tab rounded-lg px-5 py-2.5 text-base font-bold transition"
               type="button"
               role="tab"
               aria-selected="true"
@@ -47,7 +47,7 @@ const totalLessons = scienceTopics.reduce((total, topic) => total + topic.lesson
             </button>
             <button
               id="science-tab"
-              class="resource-tab rounded-lg px-5 py-2.5 text-sm font-bold transition"
+              class="resource-tab rounded-lg px-5 py-2.5 text-base font-bold transition"
               type="button"
               role="tab"
               aria-selected="false"
@@ -72,7 +72,7 @@ const totalLessons = scienceTopics.reduce((total, topic) => total + topic.lesson
     >
       <section class="bg-white pt-6 pb-12">
         <div class="section-shell">
-          <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold md:text-5xl">
+          <h2 class="section-title mt-4 max-w-4xl">
             Technical Support
           </h2>
           <p class="mt-4 max-w-2xl text-lg text-[#3b3e47]">
@@ -84,18 +84,18 @@ const totalLessons = scienceTopics.reduce((total, topic) => total + topic.lesson
             <>
               <div class="mt-10 mb-8 grid gap-4 md:grid-cols-[2fr_1fr]" data-support-filters>
                 <label class="block">
-                  <span class="mb-2 block text-sm font-semibold text-[#22252a]">Search articles</span>
+                  <span class="mb-2 block text-base font-semibold text-[#22252a]">Search articles</span>
                   <input
                     type="search"
                     placeholder="Search by topic, feature, or workflow"
-                    class="w-full rounded-xl border border-[#d1d4dd] bg-white px-4 py-3 text-sm text-[#22252a] outline-none transition focus:border-[#09cc9c]"
+                    class="w-full rounded-xl border border-[#d1d4dd] bg-white px-4 py-3 text-base text-[#22252a] outline-none transition focus:border-[#09cc9c]"
                     data-support-search
                   />
                 </label>
                 <label class="block">
-                  <span class="mb-2 block text-sm font-semibold text-[#22252a]">Audience</span>
+                  <span class="mb-2 block text-base font-semibold text-[#22252a]">Audience</span>
                   <select
-                    class="w-full rounded-xl border border-[#d1d4dd] bg-white px-4 py-3 text-sm text-[#22252a] outline-none transition focus:border-[#09cc9c]"
+                    class="w-full rounded-xl border border-[#d1d4dd] bg-white px-4 py-3 text-base text-[#22252a] outline-none transition focus:border-[#09cc9c]"
                     data-support-type
                   >
                     <option value="all">All audiences</option>
@@ -113,13 +113,13 @@ const totalLessons = scienceTopics.reduce((total, topic) => total + topic.lesson
                     data-support-type={article.type}
                     data-support-searchable={`${article.title} ${article.summary} ${article.type}`}
                   >
-                    <p class="text-sm font-semibold text-[#09cc9c]">{article.type}</p>
-                    <h3 class="mt-2 font-display text-2xl font-bold text-[#22252a] group-hover:text-[#fd7730]">
+                    <p class="text-sm font-semibold text-[#087f65]">{article.type}</p>
+                    <h3 class="mt-2 font-display text-2xl font-bold text-[#22252a] group-hover:text-[#a8420c]">
                       {article.title}
                     </h3>
-                    <p class="mt-3 text-sm leading-relaxed text-[#3b3e47]">{article.summary}</p>
+                    <p class="mt-3 text-base leading-relaxed text-[#3b3e47]">{article.summary}</p>
                     <p class="mt-4 text-sm text-[#56586a]">{article.steps.length} steps</p>
-                    <p class="mt-4 text-sm font-semibold text-[#fd7730]">Read full article →</p>
+                    <p class="mt-4 text-sm font-semibold text-[#a8420c]">Read full article →</p>
                   </a>
                 ))}
               </div>
@@ -147,7 +147,7 @@ const totalLessons = scienceTopics.reduce((total, topic) => total + topic.lesson
     >
       <section class="bg-white pt-6 pb-16">
         <div class="section-shell">
-          <h2 class="mt-4 max-w-4xl font-display text-4xl font-bold md:text-5xl">
+          <h2 class="section-title mt-4 max-w-4xl">
             SpotOn! Basics
           </h2>
           <p class="mt-4 max-w-3xl text-lg text-[#3b3e47]">
@@ -179,7 +179,7 @@ const totalLessons = scienceTopics.reduce((total, topic) => total + topic.lesson
                     {topic.lessons.length} {topic.lessons.length === 1 ? "lesson" : "lessons"}
                   </span>
                 </div>
-                <h3 class="mt-3 font-display text-2xl font-bold text-[#22252a] transition group-hover:text-[#fd7730] md:text-3xl">
+                <h3 class="mt-3 font-display text-2xl font-bold text-[#22252a] transition group-hover:text-[#a8420c] md:text-3xl">
                   {topic.title}
                 </h3>
                 <p class="mt-3 line-clamp-3 flex-1 leading-relaxed text-[#3b3e47]">{topic.summary}</p>

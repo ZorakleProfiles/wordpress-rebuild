@@ -186,99 +186,47 @@ export const supportArticles: SupportArticle[] = [
       }
     ]
   },
+  // {
+  //   slug: "broker-setup",
+  //   title: "Setting Up Your Broker Account",
+  //   summary:
+  //     "This article covers broker account branding setup so your workspace reflects your firm before sharing assessments with clients.",
+  //   intro:
+  //     "This guide helps brokers and consultants personalize their workspace so everything clients see matches their brand. You will update logo and color settings to create a polished presentation experience before sending links or sharing results. It is a short setup, but it improves trust and consistency across your client interactions.",
+  //   assetDir: "src/assets/support/broker-setup",
+  //   summaryVideo: {
+  //     fileName: "summary.mp4",
+  //     caption: "Quick walkthrough: broker setup and branding"
+  //   },
+  //   type:"Broker",
+  //   steps: [
+  //     {
+  //       title: "Open Logo and Branding Settings",
+  //       content:
+  //           "Click Settings, then navigate to Logo and Branding.",
+  //       media: {
+  //         type: "screenshot",
+  //         fileName: "01.png",
+  //         alt: "Settings menu with Logo and Branding highlighted"
+  //       }
+  //     },
+  //     {
+  //       title: "Upload Your Logo",
+  //       content:
+  //           "Upload your logo file. The system will suggest brand colors automatically. Select one of those or enter a custom hex code for an exact match.",
+  //       tip:
+  //           "If your brand has a specific hex code from your style guide, use the custom hex field to match your brand exactly.",
+  //       media: {
+  //         type: "screenshot",
+  //         fileName: "02.png",
+  //         alt: "Logo upload panel with generated color swatches and hex input"
+  //       }
+  //     },
+  //   ]
+  // },
   {
-    slug: "broker-setup",
-    title: "Setting Up Your Broker Account",
-    summary:
-      "This article covers broker account branding setup so your workspace reflects your firm before sharing assessments with clients.",
-    intro:
-      "This guide helps brokers and consultants personalize their workspace so everything clients see matches their brand. You will update logo and color settings to create a polished presentation experience before sending links or sharing results. It is a short setup, but it improves trust and consistency across your client interactions.",
-    assetDir: "src/assets/support/broker-setup",
-    summaryVideo: {
-      fileName: "summary.mp4",
-      caption: "Quick walkthrough: broker setup and branding"
-    },
-    type:"Broker",
-    steps: [
-      {
-        title: "Open Logo and Branding Settings",
-        content:
-            "Click Settings, then navigate to Logo and Branding.",
-        media: {
-          type: "screenshot",
-          fileName: "01.png",
-          alt: "Settings menu with Logo and Branding highlighted"
-        }
-      },
-      {
-        title: "Upload Your Logo",
-        content:
-            "Upload your logo file. The system will suggest brand colors automatically. Select one of those or enter a custom hex code for an exact match.",
-        tip:
-            "If your brand has a specific hex code from your style guide, use the custom hex field to match your brand exactly.",
-        media: {
-          type: "screenshot",
-          fileName: "02.png",
-          alt: "Logo upload panel with generated color swatches and hex input"
-        }
-      },
-    ]
-  },
-  {
-    slug: "viewing-franchisee-and-research-results",
-    title: "Viewing Franchisee and Research Assessment Results",
-    summary:
-      "Learn where to find completed and in-progress assessments and how to open the right report for each candidate.",
-    intro:
-      "This article is for teams that are already sending assessments and now need to track progress and review outcomes. You will use the Reports table to quickly see who has completed, who is still in progress, and what actions are available for each person. It also explains how to open Business Builder, Eclipse, CQ, and SpotOn reports from one place.",
-    assetDir: "src/assets/support/viewing-franchisee-and-research-results",
-    type: "Everyone",
-    steps: [
-      {
-        title: "Open the Reports screen",
-        content:
-          "Go to the Reports area (Profiles). This is the main table where assessment activity and results are listed for your prospects or franchisees.",
-        media: {
-          type: "screenshot",
-          fileName: "01.png",
-          alt: "Reports table in Profiles with assessment rows"
-        }
-      },
-      {
-        title: "Filter by status",
-        content:
-          "Use the status filter to switch between Complete, In Progress, and Both. This helps you quickly focus on finished reports or follow up with people who have not completed yet.",
-        media: {
-          type: "screenshot",
-          fileName: "02.png",
-          alt: "Status filter with Complete, In Progress, and Both options"
-        }
-      },
-      {
-        title: "Review progress and completion",
-        content:
-          "Read the Completed date, Completion %, CQ Completed, and CQ % columns to understand where each person is in the process.",
-        media: {
-          type: "screenshot",
-          fileName: "03.png",
-          alt: "Report row showing completion fields and CQ progress"
-        }
-      },
-      {
-        title: "Open reports from Actions",
-        content:
-          "Click the Actions menu on a row to open available reports such as Business Builder, Eclipse Report, CQ Report, and SpotOn! Report.",
-        media: {
-          type: "screenshot",
-          fileName: "04.png",
-          alt: "Actions dropdown showing available report links"
-        }
-      }
-    ]
-  },
-  {
-    slug: "getting-your-assessment-link",
-    title: "Getting Your Assessment Link",
+    slug: "collect-assessments",
+    title: "Collecting Assessments",
     summary:
       "Find your default assessment link, copy it correctly, and use it consistently across campaigns.",
     intro:
@@ -319,62 +267,10 @@ export const supportArticles: SupportArticle[] = [
     ]
   },
   {
-    slug: "creating-additional-assessment-links",
-    title: "Creating Additional Assessment Links",
+    slug: "create-view-and-manage-assessment-links",
+    title: "Create, view and Manage Assessment Links",
     summary:
-      "Create extra links for tracking marketing sources and team workflows without losing reporting clarity.",
-    intro:
-      "Additional links are useful when you want clearer attribution for campaigns, events, partners, or users. This guide walks through creating a new link with the right label, source type, privacy setting, and optional CQ behavior. A strong naming pattern up front makes your reporting easier later.",
-    assetDir: "src/assets/support/creating-additional-assessment-links",
-    type: "Everyone",
-    steps: [
-      {
-        title: "Click Add New Assessment Link",
-        content:
-          "From Active Links, open the Add New Assessment Link modal to create a new tracked source.",
-        media: {
-          type: "screenshot",
-          fileName: "01.png",
-          alt: "Add New Assessment Link modal"
-        }
-      },
-      {
-        title: "Enter label, source type, and description",
-        content:
-          "Use a clear label (for example, Webinar Aug 2026), choose the source type, and add notes so your team understands how the link should be used.",
-        media: {
-          type: "screenshot",
-          fileName: "02.png",
-          alt: "Link form fields for label source type and description"
-        }
-      },
-      {
-        title: "Choose privacy and assessment behavior",
-        content:
-          "If your account has multiple users, choose Private or Public based on who should see submissions. If CQ is enabled, configure assessment order or CQ-only vs SpotOn-only behavior as needed.",
-        media: {
-          type: "screenshot",
-          fileName: "03.png",
-          alt: "Privacy and assessment options in link setup"
-        }
-      },
-      {
-        title: "Create the link and share",
-        content:
-          "Save the link, confirm it appears in Active Links, then copy and share it with the intended audience.",
-        media: {
-          type: "screenshot",
-          fileName: "04.png",
-          alt: "Newly created link visible in Active Links"
-        }
-      }
-    ]
-  },
-  {
-    slug: "viewing-and-managing-assessment-links",
-    title: "Viewing and Managing Assessment Links",
-    summary:
-      "Review existing links, edit tracking details, and keep your link list organized over time.",
+      "Create new links,review existing links, edit tracking details, and keep your link list organized over time.",
     intro:
       "As campaigns change, your link list can become cluttered or inconsistent. This article shows how to review your active links, update labels and settings, and remove links you no longer use. Keeping links clean prevents reporting confusion and helps your team trust the data.",
     assetDir: "src/assets/support/viewing-and-managing-assessment-links",
@@ -408,48 +304,6 @@ export const supportArticles: SupportArticle[] = [
           type: "screenshot",
           fileName: "03.png",
           alt: "Delete confirmation for an assessment link"
-        }
-      }
-    ]
-  },
-  {
-    slug: "spoton-reports-broker-vs-franchisor",
-    title: "SpotOn! Reports: Broker vs Franchisor View",
-    summary:
-      "Understand what each account type sees in SpotOn reporting so you can interpret results correctly.",
-    intro:
-      "Brokers and franchisors use the same core profile data, but their tables and actions are slightly different. This guide explains those differences so you know what to expect in each account type and where to click for the right report or match action.",
-    assetDir: "src/assets/support/spoton-reports-broker-vs-franchisor",
-    type: "Everyone",
-    steps: [
-      {
-        title: "Know the shared report workflow",
-        content:
-          "Both account types can open report actions from the Profiles table, including SpotOn!, Eclipse, Business Builder, and CQ when available.",
-        media: {
-          type: "screenshot",
-          fileName: "01.png",
-          alt: "Profiles actions menu with available reports"
-        }
-      },
-      {
-        title: "Understand broker-specific columns",
-        content:
-          "Broker views include link-level tracking details and a SpotOn! Match action to evaluate fit against franchisor opportunities.",
-        media: {
-          type: "screenshot",
-          fileName: "02.png",
-          alt: "Broker report table including Link and SpotOn Match columns"
-        }
-      },
-      {
-        title: "Understand franchisor-specific columns",
-        content:
-          "Franchisor views emphasize fit outcomes in their own pipeline, including fit percentage and completion activity for internal decision-making.",
-        media: {
-          type: "screenshot",
-          fileName: "03.png",
-          alt: "Franchisor report table with fit percentage and completion data"
         }
       }
     ]

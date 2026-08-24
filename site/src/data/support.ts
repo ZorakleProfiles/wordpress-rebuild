@@ -230,8 +230,8 @@ export const supportArticles: SupportArticle[] = [
     summary:
       "Find your default assessment link, copy it correctly, and use it consistently across campaigns.",
     intro:
-      "If you need to start sharing assessments right away, this article shows the fastest path. You will go to Active Links, locate your default link, and copy it for email, landing pages, or direct outreach. Following this flow helps you avoid sending outdated URLs and keeps your lead tracking clean.",
-    assetDir: "src/assets/support/getting-your-assessment-link",
+      "If you need to start sharing assessments right away, this article shows the fastest path. You will go to Active Links, locate your default link, and copy it for email, landing pages, or direct outreach. Following this flow helps you avoid sending outdated URLs and keeps your lead tracking clean. Please note this is only for prospective franchisee assessments; research assessments for existing franchisees are sent from the Established Franchisor Setup flow.",
+    assetDir: "src/assets/support/collect-assessments",
     type: "Everyone",
     steps: [
       {
@@ -245,9 +245,9 @@ export const supportArticles: SupportArticle[] = [
         }
       },
       {
-        title: "Locate your default link",
+        title: "Locate the link you wish to use.",
         content:
-          "Find the default company link in the table and confirm the label/source before sharing.",
+          "Click the actions menu next to your chosen link and select copy. This saves the link to your clipboard for easy pasting. If you are unsure which one to choose, use the default link, which features the most recent creation date and no custom label.",
         media: {
           type: "screenshot",
           fileName: "02.png",
@@ -255,25 +255,51 @@ export const supportArticles: SupportArticle[] = [
         }
       },
       {
-        title: "Copy and test the link",
-        content:
-          "Copy the link and open it in an incognito window to confirm it loads the expected assessment flow.",
+        title: "Email Signature",
+        content: "Add the link to your daily email settings by editing your signature. Include a clear, hyperlinked call-to-action line like, 'Are you a good fit? Take our Franchise Assessment here.'",
         media: {
           type: "screenshot",
           fileName: "03.png",
-          alt: "Copied assessment link being tested in a browser"
+          alt: "Example of a franchise assessment link embedded in an email signature"
+        }
+      },
+      {
+        title: "Your Website",
+        content: "Place the link on your main franchise recruitment or landing page. Add a prominent 'Get Started' or 'Apply Now' button and link it directly to your Zorakle assessment.",
+        media: {
+          type: "screenshot",
+          fileName: "04.png",
+          alt: "Franchise recruitment landing page featuring an Apply Now button linked to the assessment"
+        }
+      },
+      {
+        title: "LinkedIn Profile",
+        content: "Target professionals looking for business opportunities. Paste the link into the Contact Info section of your profile or use the Featured section to keep it prominently displayed.",
+        media: {
+          type: "screenshot",
+          fileName: "05.png",
+          alt: "LinkedIn profile dashboard highlighting the contact info and featured sections"
+        }
+      },
+      {
+        title: "Franchise Portals & Broker Networks",
+        content: "Capture active buyers browsing franchise directories. Add the assessment link directly to your brand profile or include it in your automated email responses.",
+        media: {
+          type: "screenshot",
+          fileName: "06.png",
+          alt: "Franchise portal brand directory dashboard showing profile setup settings"
         }
       }
     ]
   },
   {
     slug: "create-view-and-manage-assessment-links",
-    title: "Create, view and Manage Assessment Links",
+    title: "View, create, edit and delete Assessment Links",
     summary:
       "Create new links,review existing links, edit tracking details, and keep your link list organized over time.",
     intro:
-      "As campaigns change, your link list can become cluttered or inconsistent. This article shows how to review your active links, update labels and settings, and remove links you no longer use. Keeping links clean prevents reporting confusion and helps your team trust the data.",
-    assetDir: "src/assets/support/viewing-and-managing-assessment-links",
+      "As campaigns change, keeping your link list clean prevents reporting confusion and ensures data accuracy. This article covers how to review active links, update settings, and remove unused ones. Note that brokers are limited to 4 custom assessment links for individual marketing; tracking additional team members requires adding paid users via Settings > User Management. Using a single account to generate leads for multiple brokers violates our Terms of Service.",
+    assetDir: "src/assets/support/assessment-link-management",
     type: "Everyone",
     steps: [
       {
@@ -287,22 +313,32 @@ export const supportArticles: SupportArticle[] = [
         }
       },
       {
+        title: "Add Links",
+        content:
+            "Click on the Add New Link button to create a new assessment link. You can customize the label, source type, privacy, description, and assessment options for each link.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Active Links table with multiple assessment links"
+        }
+      },
+      {
         title: "Edit link details",
         content:
           "Open a link for editing and update label, source type, privacy, description, or assessment options as needed.",
         media: {
           type: "screenshot",
-          fileName: "02.png",
+          fileName: "03.png",
           alt: "Edit Assessment Link modal"
         }
       },
       {
-        title: "Retire unused links",
+        title: "Delete unused links",
         content:
           "Delete links that are no longer active to keep reporting clean and reduce mistakes when sharing URLs.",
         media: {
           type: "screenshot",
-          fileName: "03.png",
+          fileName: "04.png",
           alt: "Delete confirmation for an assessment link"
         }
       }
@@ -315,13 +351,13 @@ export const supportArticles: SupportArticle[] = [
       "Enable CQ, configure how it runs, and maintain your question set from settings.",
     intro:
       "CQ adds an additional layer of candidate insight beyond the standard assessment flow. This walkthrough covers enabling CQ, linking it to assessments, and managing question settings over time. It is written for teams that want consistent implementation without trial-and-error.",
-    assetDir: "src/assets/support/cq-setup-and-walkthrough",
+    assetDir: "src/assets/support/cq-walkthrough",
     type: "Everyone",
     steps: [
       {
         title: "Enable CQ from Assessment Links",
         content:
-          "On the Assessment Links page, use the Enable Confidential Questionnaire toggle and confirm in the modal.",
+          "On the Assessment Links page, use the Enable Confidential Questionnaire toggle to activate CQ for your account.",
         media: {
           type: "screenshot",
           fileName: "01.png",
@@ -331,43 +367,53 @@ export const supportArticles: SupportArticle[] = [
       {
         title: "Choose how CQ is delivered",
         content:
-          "Decide whether CQ is part of the assessment flow or separate, then configure each link accordingly.",
+          "Decide whether CQ is part of the assessment flow or separate. If separate, you can send the CQ link directly to candidates or include it in your own email templates. This can be changed at any point in the cq options area.",
         media: {
           type: "screenshot",
           fileName: "02.png",
-          alt: "CQ delivery options in link configuration"
+          alt: "Confidential Questionnaire delivery options in link configuration"
         }
       },
       {
-        title: "Manage CQ content in Settings",
+        title: "Choose a Net Worth Calculator",
         content:
-          "Go to Settings > Confidential Questionnaire to edit sections, add questions, set required panels, and save your configuration.",
+            "Decide whether CQ should include a section about net worth. If you choose to include it, you can select from a few different calculators that will be presented to candidates. The simplified version asks for total assets and total liabilities. The full version breaks down assets and liabilities into multiple categories for a more detailed picture of net worth.",
         media: {
           type: "screenshot",
           fileName: "03.png",
-          alt: "Confidential Questionnaire settings editor"
+          alt: "Confidential Questionnaire net worth calculator options in link configuration"
         }
       },
       {
-        title: "Test before full rollout",
+        title: "Customize Your Confidential Questionnaire",
         content:
-          "Run a quick internal test using one link so your team can verify the candidate experience and report output.",
+          "Go to Settings > Confidential Questionnaire or click on the 'manage Confidential Questionnaire' button on the assessment links page to edit sections, add questions, set required panels, and save your configuration. You will start out with our default question set, but you can add or remove questions to match your process. You can also set which sections are required for candidates to complete.",
+        media: {
+          type: "video",
+          fileName: "04.mov",
+          alt: "Confidential Questionnaire Management page with sections and questions"
+        }
+      },
+      {
+        title: "Preview before full rollout",
+        content:
+          "Once you are happy with your Confidentail Questionnaire, go to Settings > Confidential Questionnaire or click on the 'manage Confidential Questionnaire' button on the assessment links page. Click on the preview button to see how the candidate will experience the questionnaire before you launch it to candidates.",
         media: {
           type: "screenshot",
-          fileName: "04.png",
-          alt: "Internal CQ test flow before launch"
+          fileName: "05.png",
+          alt: "Confidential Questionnaire preview before launch"
         }
       }
     ]
   },
   {
-    slug: "user-management-settings",
+    slug: "user-management",
     title: "Settings: User Management",
     summary:
       "Add users, define access levels, and control who receives reports or billing/referral notifications.",
     intro:
       "User Management is where you control who can log in, what they can see, and who receives key account communications. This guide helps you set permissions clearly from the start, especially for teams with multiple users and private link workflows.",
-    assetDir: "src/assets/support/user-management-settings",
+    assetDir: "src/assets/support/user-management",
     type: "Everyone",
     steps: [
       {
@@ -391,25 +437,45 @@ export const supportArticles: SupportArticle[] = [
         }
       },
       {
-        title: "Set permissions carefully",
+        title: "Edit a user or report recipient",
         content:
-          "Configure admin access, report email delivery, referral and billing notifications, and private link visibility based on each person's role.",
+            "Click on the actions -> edit button to either edit a user or a report recipient (email only, no login).",
         media: {
           type: "screenshot",
           fileName: "03.png",
+          alt: "Edit User or Report Recipient modal"
+        }
+      },
+      {
+        title: "Set permissions carefully",
+        content:
+          "These can be set when creating a new user, or edited later. To edit these just click on the corresponding yes/no button for each permission.",
+        media: {
+          type: "screenshot",
+          fileName: "04.png",
+          alt: "User permission controls for admin report referral and billing access"
+        }
+      },
+      {
+        title: "Change account owner",
+        content:
+            "If you need to transfer account ownership, you will need to login as the owner. Then click actions on the user you wish to become the new owner and select 'Make Owner'.",
+        media: {
+          type: "screenshot",
+          fileName: "05.png",
           alt: "User permission controls for admin report referral and billing access"
         }
       }
     ]
   },
   {
-    slug: "assessment-settings-guide",
+    slug: "assessment-settings",
     title: "Settings: Assessment Settings",
     summary:
       "Configure report delivery behavior and reminder communication settings for your account.",
     intro:
       "Assessment Settings help you control the candidate communication experience. You can decide whether Business Builder reports are sent automatically and manage reminder-related content. This article is useful for teams standardizing their follow-up process.",
-    assetDir: "src/assets/support/assessment-settings-guide",
+    assetDir: "src/assets/support/assessment-settings",
     type: "Everyone",
     steps: [
       {
@@ -451,7 +517,7 @@ export const supportArticles: SupportArticle[] = [
       "Update company details and visual branding so shared links and reports match your organization.",
     intro:
       "Your company profile and branding influence how candidates and partners experience your account. This guide shows how to update account information, logo, and accent color so communications and report presentation stay consistent with your brand.",
-    assetDir: "src/assets/support/company-info-and-branding-settings",
+    assetDir: "src/assets/support/info-and-branding",
     type: "Everyone",
     steps: [
       {
@@ -472,16 +538,6 @@ export const supportArticles: SupportArticle[] = [
           type: "screenshot",
           fileName: "02.png",
           alt: "Logo and Branding settings with color selection"
-        }
-      },
-      {
-        title: "Save and verify",
-        content:
-          "Save changes, then confirm updates appear in your account experience and outgoing materials.",
-        media: {
-          type: "screenshot",
-          fileName: "03.png",
-          alt: "Saved branding changes reflected in account"
         }
       }
     ]
@@ -535,7 +591,7 @@ export const supportArticles: SupportArticle[] = [
       "Use the Password tab to keep your login secure and recover quickly when credentials change.",
     intro:
       "Password updates are a routine part of account security. This guide shows where to access password settings and how to complete updates safely so you avoid lockouts and keep your account protected.",
-    assetDir: "src/assets/support/reset-or-update-password",
+    assetDir: "src/assets/support/update-password",
     type: "Everyone",
     steps: [
       {
@@ -577,7 +633,7 @@ export const supportArticles: SupportArticle[] = [
       "Manage your broker organization memberships and connection requests from one place.",
     intro:
       "If you work with broker organizations, this settings area helps you keep memberships accurate and current. You can search for organizations, request association, and remove old relationships when they no longer apply.",
-    assetDir: "src/assets/support/broker-organizations-settings",
+    assetDir: "src/assets/support/broker-organizations",
     type: "Everyone",
     steps: [
       {

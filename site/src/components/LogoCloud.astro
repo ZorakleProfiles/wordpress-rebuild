@@ -45,6 +45,29 @@ const images = Object.entries(imageModules)
   </div>
 </section>
 
+<script>
+  function restartLogoTicker() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const track = document.querySelector<HTMLElement>('.logo-ticker .logo-track');
+    if (!track) return;
+
+    // iOS Safari can leave composited CSS animations paused after a page-cache
+    // restore or after the browser returns from the background.
+    track.style.setProperty('-webkit-animation', 'none');
+    track.style.animation = 'none';
+    void track.offsetWidth;
+    track.style.removeProperty('-webkit-animation');
+    track.style.removeProperty('animation');
+  }
+
+  requestAnimationFrame(restartLogoTicker);
+  window.addEventListener('pageshow', restartLogoTicker);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') restartLogoTicker();
+  });
+</script>
+
 <style is:global>
   .logo-ticker {
     --logo-gap: 1rem;
@@ -58,8 +81,13 @@ const images = Object.entries(imageModules)
   .logo-ticker .logo-track {
     display: flex;
     width: max-content;
+    -webkit-animation: ticker-scroll var(--ticker-duration) linear infinite;
     animation: ticker-scroll var(--ticker-duration) linear infinite;
+    -webkit-animation-play-state: running;
+    animation-play-state: running;
+    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
     transform: translateZ(0);
     will-change: transform;
   }
@@ -82,6 +110,17 @@ const images = Object.entries(imageModules)
     to { transform: translate3d(-50%, 0, 0); }
   }
 
+  @-webkit-keyframes ticker-scroll {
+    from {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      -webkit-transform: translate3d(-50%, 0, 0);
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
   @media (max-width: 639px) {
     .logo-ticker {
       --logo-gap: 0.75rem;
@@ -93,6 +132,7 @@ const images = Object.entries(imageModules)
 
   @media (prefers-reduced-motion: reduce) {
     .logo-ticker .logo-track {
+      -webkit-animation: none;
       animation: none;
     }
   }

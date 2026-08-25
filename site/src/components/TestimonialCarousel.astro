@@ -164,14 +164,13 @@ function getInitialCardClass(idx: number) {
     display: flex;
     gap: 1rem;
     align-items: stretch;
-    /* Keep the row height stable between testimonial changes. */
+    /* Reserve a comfortable baseline, but let longer quotes push the
+       navigation down instead of overflowing a capped stage. */
     min-height: clamp(18rem, 52vw, 23rem);
-    max-height: clamp(18rem, 52vw, 23rem);
   }
 
   /* Carousel-specific overrides — base card styles live in TestimonialCard.astro */
   [data-testimonial-carousel] .testimonial-card {
-    height: 100%;
     flex: 1 1 0;
   }
 
@@ -290,7 +289,6 @@ function getInitialCardClass(idx: number) {
     [data-testimonial-carousel] .testimonial-stage {
       gap: 1.2rem;
       min-height: clamp(16rem, 24vw, 19rem);
-      /* max-height: clamp(16rem, 24vw, 19rem); */
     }
 
 

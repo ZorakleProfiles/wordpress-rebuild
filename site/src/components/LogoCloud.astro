@@ -47,8 +47,6 @@ const images = Object.entries(imageModules)
 
 <script>
   function restartLogoTicker() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
     const track = document.querySelector<HTMLElement>('.logo-ticker .logo-track');
     if (!track) return;
 
@@ -130,10 +128,4 @@ const images = Object.entries(imageModules)
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .logo-ticker .logo-track {
-      -webkit-animation: none;
-      animation: none;
-    }
-  }
 </style>

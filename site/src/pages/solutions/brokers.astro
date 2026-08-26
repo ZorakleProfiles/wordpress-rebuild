@@ -2,18 +2,17 @@
 import MainLayout from "../../layouts/MainLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
-import PageHero from "../../components/PageHero.astro";
 import TestimonialCarousel from "../../components/TestimonialCarousel.astro";
 import WorkflowStepsSection from "../../components/WorkflowStepsSection.astro";
 import ToolsShowcaseSection from "../../components/ToolsShowcaseSection.astro";
 import MetricsTimelineSection from "../../components/MetricsTimelineSection.astro";
-import heroBackground from "../../assets/broker-hero.png";
-import faviconCircle from "../../assets/favicon-circle.png";
+import heroBackground from "../../assets/broker-poster.png";
 import spotOnProfileReport from "../../assets/spoton.png";
 import spotonMatch from "../../assets/spoton_match.png";
 import CtaBand from "../../components/CtaBand.astro";
 import brokerMathShiftGraphic from "../../assets/brokers.png";
 import {Image} from "astro:assets";
+import VideoHero from "../../components/VideoHero.astro";
 
 const steps = [
   {
@@ -88,16 +87,20 @@ const metrics = [
   <SiteHeader />
 
   <main>
-    <PageHero
-      titlePrefix="Match clients to the right brand."
-      titleHighlight="Close more deals doing it."
-      description="Clients trust brokers who can explain fit clearly, not just speak in broad probabilities. SpotOn! gives you science-backed candidate-to-brand recommendations so every intro feels grounded and credible."
-      primaryCta={{ href: "/schedule", label: "Book a Demo" }}
-      secondaryCta={{ href: "/pricing/brokers", label: "Join the Broker Network" }}
-      backgroundImage={heroBackground}
-      dark={true}
+    <VideoHero
+        titlePrefix="Match clients to the right brand."
+        titleHighlight="Close more deals doing it."
+        titleSuffix=""
+        description="Clients trust brokers who can explain fit clearly, not just speak in broad probabilities. SpotOn! gives you science-backed candidate-to-brand recommendations so every intro feels grounded and credible."
+        primaryCta={{ href: "/schedule", label: "Book a Demo" }}
+        secondaryCta={{ href: "/pricing/brokers", label: "Sign Up Now!" }}
+        poster={heroBackground}
+        posterAlt="Franchise owners and operators representing a growing franchise system"
+        videoId="1137519120"
+        playLabel="Play the 5-minute franchisor overview"
+        modalTitle="Zorakle 5-minute franchisor overview"
+        caption="See how Zorakle helps brokers."
     />
-
     <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
       <div class="section-shell grid items-center gap-10 md:grid-cols-[440px_minmax(0,1fr)] md:gap-14">
         <div class="rounded-2xl bg-transparent p-0">

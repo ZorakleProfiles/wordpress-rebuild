@@ -1,0 +1,154 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  poster: ImageMetadata;
+  posterAlt: string;
+  videoId: string;
+  playLabel: string;
+  modalTitle: string;
+  caption?: string;
+  loading?: "eager" | "lazy";
+  fetchpriority?: "high" | "low" | "auto";
+  sizes?: string;
+  frameClass?: string;
+  imageClass?: string;
+}
+
+const {
+  poster,
+  posterAlt,
+  videoId,
+  playLabel,
+  modalTitle,
+  caption,
+  loading = "lazy",
+  fetchpriority = "auto",
+  sizes = "(max-width: 1023px) calc(100vw - 2.5rem), 50vw",
+  frameClass = "rounded-2xl bg-[#111419] shadow-[0_24px_60px_rgba(0,0,0,0.28)] ring-1 ring-white/15",
+  imageClass = "transition duration-300 group-hover:scale-[1.015]"
+} = Astro.props;
+
+const videoEmbedUrl =
+  `https://player.vimeo.com/video/${videoId}?autoplay=1&title=0&byline=0&portrait=0&dnt=1`;
+const modalTitleId = `video-modal-title-${videoId}`;
+---
+
+<div
+  data-video
+  data-video-embed-url={videoEmbedUrl}
+  data-video-title={modalTitle}
+>
+  <div class:list={["group relative aspect-video overflow-hidden", frameClass]}>
+    <Image
+      src={poster}
+      alt={posterAlt}
+      widths={[640, 960, 1280]}
+      {sizes}
+      class:list={["h-full w-full object-cover", imageClass]}
+      {loading}
+      {fetchpriority}
+    />
+
+    <button
+      type="button"
+      class="absolute inset-0 flex cursor-pointer items-center justify-center focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-[#09cc9c]"
+      aria-label={playLabel}
+      data-video-open
+    >
+      <span class="flex h-18 w-18 items-center justify-center rounded-full bg-[#fd7730] text-[#22252a] shadow-xl transition group-hover:scale-105 group-focus-visible:scale-105 md:h-20 md:w-20" aria-hidden="true">
+        <svg viewBox="0 0 24 24" class="ml-1 h-8 w-8 fill-current" focusable="false">
+          <path d="M8 5.5v13l10-6.5L8 5.5Z"></path>
+        </svg>
+      </span>
+    </button>
+  </div>
+
+  {caption && <p class="mt-4 text-sm font-semibold">{caption}</p>}
+
+  <dialog
+    class="m-auto w-[min(1100px,calc(100%-2rem))] max-w-none overflow-visible bg-transparent p-0 backdrop:bg-[#111419]/85 backdrop:backdrop-blur-sm"
+    aria-labelledby={modalTitleId}
+    data-video-modal
+  >
+    <div class="relative rounded-2xl bg-[#111419] p-2 shadow-2xl ring-1 ring-white/20 sm:p-3">
+      <h2 id={modalTitleId} class="sr-only">{modalTitle}</h2>
+      <button
+        type="button"
+        class="absolute -top-12 right-0 inline-flex h-10 items-center gap-2 rounded-lg bg-white px-4 text-sm font-bold text-[#22252a] shadow-lg transition hover:bg-[#f4f6f9] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#09cc9c]"
+        aria-label={`Close ${modalTitle}`}
+        data-video-close
+      >
+        <span aria-hidden="true">×</span>
+        Close
+      </button>
+      <div class="aspect-video w-full overflow-hidden rounded-xl bg-black" data-video-player></div>
+    </div>
+  </dialog>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-video]").forEach((video) => {
+    if (video.dataset.videoInitialized === "true") return;
+    video.dataset.videoInitialized = "true";
+
+    const modal = video.querySelector("[data-video-modal]");
+    const openButton = video.querySelector("[data-video-open]");
+    const closeButton = video.querySelector("[data-video-close]");
+    const playerContainer = video.querySelector("[data-video-player]");
+    const videoEmbedUrl = video.dataset.videoEmbedUrl;
+    const modalTitle = video.dataset.videoTitle;
+
+    let opener: Element | null = null;
+
+    const removePlayer = () => {
+      playerContainer?.replaceChildren();
+    };
+
+    const closeVideo = () => {
+      if (modal instanceof HTMLDialogElement && modal.open) modal.close();
+    };
+
+    const openVideo = () => {
+      if (
+        !(modal instanceof HTMLDialogElement) ||
+        !playerContainer ||
+        !videoEmbedUrl ||
+        !modalTitle
+      ) return;
+
+      opener = document.activeElement;
+
+      const iframe = document.createElement("iframe");
+      iframe.src = videoEmbedUrl;
+      iframe.title = modalTitle;
+      iframe.className = "h-full w-full";
+      iframe.allow = "autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share";
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      iframe.allowFullscreen = true;
+
+      playerContainer.replaceChildren(iframe);
+      modal.showModal();
+      document.body.style.overflow = "hidden";
+
+      requestAnimationFrame(() => {
+        if (closeButton instanceof HTMLElement) closeButton.focus();
+      });
+    };
+
+    openButton?.addEventListener("click", openVideo);
+    closeButton?.addEventListener("click", closeVideo);
+
+    modal?.addEventListener("click", (event) => {
+      if (event.target === modal) closeVideo();
+    });
+
+    modal?.addEventListener("close", () => {
+      removePlayer();
+      document.body.style.overflow = "";
+      if (opener instanceof HTMLElement) opener.focus();
+      opener = null;
+    });
+  });
+</script>

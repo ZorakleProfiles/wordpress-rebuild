@@ -137,9 +137,9 @@ export const differenceCards = [
 ];
 
 export const footer = {
-  address: "Zorakle Profiles, LLC 8782 S. Park Road Rogers, AR 72756",
+  address: "8782 S. Park Road Rogers, AR 72756",
   email: "support@zorakle.net",
-  copyright: "© 2026 Zorakle. All Rights Reserved."
+  copyright: "© 2026 Zorakle Profiles, LLC. All Rights Reserved."
 };
 
 

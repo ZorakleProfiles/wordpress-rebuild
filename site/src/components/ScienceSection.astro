@@ -1,6 +1,6 @@
 ---
-import { Image } from "astro:assets";
-import scienceImage from "../assets/hero-dashboard.png";
+import Video from "./Video.astro";
+import sciencePoster from "../assets/sciences-poster.png";
 ---
 
 <section class="bg-white relative overflow-hidden py-20 md:py-24">
@@ -18,16 +18,15 @@ import scienceImage from "../assets/hero-dashboard.png";
         </p>
       </div>
 
-      <!-- Right: Image placeholder -->
-      <div class="rounded-3xl overflow-hidden shadow-2xl border border-white/20">
-        <div class="relative aspect-video bg-gradient-to-br from-[#1a5f52] to-[#0d8b78] flex items-center justify-center">
-          <Image
-            src={scienceImage}
-            alt="Zorakle science dashboard"
-            class="w-full h-full object-cover"
-          />
-        </div>
-      </div>
+      <!-- Right: Science overview video -->
+      <Video
+        poster={sciencePoster}
+        posterAlt="Zorakle Science: The Science Behind Franchise Success"
+        videoId="1037075151"
+        playLabel="Play the Zorakle science overview"
+        modalTitle="Zorakle science overview"
+        frameClass="rounded-3xl border border-white/20 bg-[#111419] shadow-2xl"
+      />
     </div>
     <div class="mt-8">
       <a class="btn-primary" href="/support?tab=science">Learn More</a>

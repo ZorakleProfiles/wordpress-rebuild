@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   astro:
     image: astro-dev
@@ -21,4 +19,3 @@ services:
 networks:
   zorakle-new_sail:
     external: true
-

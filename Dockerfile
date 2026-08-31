@@ -1,15 +1,14 @@
-FROM node:22
+FROM oven/bun:1.2.22-alpine
 
 WORKDIR /app
 
-# ── Astro site (installed via root npm workspace) ───────────────────────────
-COPY package.json package-lock.json ./
+# Install the Astro site through the root Bun workspace.
+COPY package.json bun.lock ./
 COPY site/package.json ./site/
-RUN npm ci --legacy-peer-deps
+RUN bun install --frozen-lockfile
 
-# ── Back to site for CMD ──────────────────────────────────────────────────────
 WORKDIR /app/site
 
 EXPOSE 4321
 
-CMD ["npm", "run", "dev"]
+CMD ["bun", "run", "dev"]

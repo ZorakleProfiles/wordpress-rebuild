@@ -1,11 +1,8 @@
-version: "3.9"
-
 services:
-  node:
-    image: node:22-alpine
+  bun:
+    image: oven/bun:1.2.22-alpine
     working_dir: /app
     volumes:
       - ./site:/app
     stdin_open: true
     tty: true
-

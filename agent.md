@@ -1,6 +1,7 @@
 # Agent Guide: Dev Server Workflow
 
-This project runs the Astro dev server inside Docker. Use the container as the source of truth for install, run, and logs.
+This project uses Bun and runs the Astro development server in Docker. Use the
+container as the source of truth for installs, runtime commands, and logs.
 
 ## 1) Core Setup
 
@@ -11,7 +12,7 @@ This project runs the Astro dev server inside Docker. Use the container as the s
 
 ## 2) Start and Stop
 
-From repository root:
+From the repository root:
 
 ```bash
 docker compose up -d
@@ -25,7 +26,7 @@ docker ps | grep zorakle-wp-update-astro-1
 docker logs -f zorakle-wp-update-astro-1
 ```
 
-If you only need recent logs:
+For recent logs only:
 
 ```bash
 docker logs zorakle-wp-update-astro-1 | tail -50
@@ -33,7 +34,7 @@ docker logs zorakle-wp-update-astro-1 | tail -50
 
 ## 4) Run Commands Inside the Container
 
-This project is **npm-based** (do not use yarn or introduce a `yarn.lock`). Use `docker exec` for all app-level commands.
+This project is Bun-based. Do not introduce npm, pnpm, or Yarn lockfiles.
 
 ```bash
 docker exec -it -w /app/site zorakle-wp-update-astro-1 sh
@@ -42,56 +43,35 @@ docker exec -it -w /app/site zorakle-wp-update-astro-1 sh
 Examples without opening a shell:
 
 ```bash
-docker exec -w /app/site zorakle-wp-update-astro-1 npm run dev
-docker exec -w /app/site zorakle-wp-update-astro-1 npm run build
-docker exec -w /app/site zorakle-wp-update-astro-1 npx astro check
+docker exec -w /app/site zorakle-wp-update-astro-1 bun run dev
+docker exec -w /app/site zorakle-wp-update-astro-1 bun run build
+docker exec -w /app/site zorakle-wp-update-astro-1 bunx astro check
 ```
 
-## 5) Dependency Management (Lockfile Model)
+## 5) Dependency Management
 
-There are exactly **two lockfiles** — never more:
+The root `bun.lock` is the single lockfile for the Astro site. The repository
+root is a Bun workspace (`workspaces: ["site"]`), so `site/` must not have its
+own lockfile.
 
-- **Root `package-lock.json`** — the single lockfile for the Astro site. The repo root is an npm workspace (`workspaces: ["site"]`); `site/` must **not** have its own `package-lock.json`. CI runs `npm ci` from the root, and the Dockerfile installs from this lockfile too.
-- **`studio-zorakle-blog/package-lock.json`** — the standalone Sanity Studio deployable (not part of the workspace).
+To add or update a site dependency:
 
-Notes:
-- Don't use root `overrides` — npm silently ignores them for workspace children. If a transitive dep must be forced, add it as a direct dependency of `site/package.json` instead.
-
-### Adding or updating site dependencies
-
-1. Edit `site/package.json` (add/remove/bump the dependency).
-2. Regenerate the root lockfile **using the same npm as the Docker image** (npm 11+ on the host omits other platforms' native binaries, which breaks `npm ci` in CI/Docker — npm 10 in `node:22` records all platforms):
-
-```bash
-docker run --rm \
-  -v "$PWD/package.json:/w/package.json" \
-  -v "$PWD/site/package.json:/w/site/package.json" \
-  -v "$PWD:/out" -w /w node:22 \
-  sh -c "npm install --package-lock-only --legacy-peer-deps && cp package-lock.json /out/"
-```
-
-3. Sanity-check on the host: `npm ci --dry-run` from the repo root must pass.
-4. Do the full rebuild in section 7.
-5. Commit `package.json`, `site/package.json`, and the root `package-lock.json` together.
-
-### Studio dependencies
-
-The studio folder is bind-mounted, so install inside the container and its lockfile syncs back automatically:
-
-```bash
-docker exec -w /app/studio-zorakle-blog zorakle-wp-update-astro-1 npm install --legacy-peer-deps <package>
-```
+1. Run `bun add <package>` from `site/`, or edit `site/package.json`.
+2. Run `bun install` from the repository root to update `bun.lock`.
+3. Verify the locked install with `bun install --frozen-lockfile`.
+4. Rebuild the container as described below.
+5. Commit `package.json`, `site/package.json`, and `bun.lock` together when changed.
 
 ## 6) File Editing Workflow
 
 - Edit source locally in `site/`.
-- Bind mount syncs files into container.
-- Astro dev server auto-reloads on changes.
-- Validate runtime changes from container logs.
+- The bind mount syncs files into the container.
+- Astro reloads automatically.
+- Validate runtime changes in the container logs.
 
-## 7) Rebuild When Dependencies or Dockerfile Change
+## 7) Rebuild After Dependency Changes
 
-Required after any change to `package.json`, `package-lock.json`, or the `Dockerfile`:
+After changing `package.json`, `site/package.json`, `bun.lock`, or the Dockerfile:
 
 ```bash
 docker compose down
@@ -101,43 +81,11 @@ docker compose up -d
 
 ## 8) Troubleshooting
 
-### Missing native module errors (rollup / rolldown / lightningcss / sharp)
+If a native module is missing, regenerate the lockfile with the pinned Bun
+version and perform the full rebuild above. If the container exits immediately,
+check its logs first and confirm the `site/` bind mount is intact.
 
-Symptoms include messages like:
-
-- `Cannot find module @rollup/rollup-linux-arm64-gnu`
-- `Cannot find module @rolldown/binding-linux-arm64-gnu`
-- `Cannot find module '../lightningcss.linux-arm64.node'`
-- `MissingSharp: Could not find Sharp`
-
-Cause: the root `package-lock.json` was regenerated with an npm version that only records the current platform's native binaries (e.g. npm 11 on macOS). Regenerate it with `node:22` as described in section 5, then use the full rebuild flow:
-
-```bash
-docker compose down
-docker compose build --no-cache
-docker compose up -d
-docker logs -f zorakle-wp-update-astro-1
-```
-
-### Container exits immediately
-
-- Check logs first.
-- Verify `Dockerfile` and `docker-compose.yml` were not changed incorrectly.
-- Confirm the `volumes` mapping keeps container `node_modules` intact.
-
-## 9) Current Compose Notes
-
-The working compose volume pattern is:
-
-```yaml
-volumes:
-  - ./site:/app/site
-  - /app/site/node_modules
-```
-
-This prevents host bind mounts from clobbering container-installed dependencies.
-
-## 10) Quick Daily Commands
+## 9) Quick Daily Commands
 
 ```bash
 # Start dev server

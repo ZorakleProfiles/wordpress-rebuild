@@ -167,7 +167,9 @@ import { Image } from 'astro:assets';
     function openMobileMenu() {
       if (!mobileMenu) return;
       mobileMenu.dataset.open = "true";
-      mobileMenu.style.maxHeight = mobileMenu.scrollHeight + "px";
+      const headerBottom = header.getBoundingClientRect().bottom;
+      mobileMenu.style.maxHeight = `${window.innerHeight - headerBottom}px`;
+      mobileMenu.style.overflowY = "auto";
       document.body.style.overflow = "hidden";
     }
 
@@ -175,6 +177,7 @@ import { Image } from 'astro:assets';
       if (!mobileMenu) return;
       mobileMenu.dataset.open = "false";
       mobileMenu.style.maxHeight = "0";
+      mobileMenu.style.overflowY = "hidden";
       document.body.style.overflow = "";
     }
   }

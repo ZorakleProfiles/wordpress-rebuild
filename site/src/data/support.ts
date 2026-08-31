@@ -293,6 +293,124 @@ export const supportArticles: SupportArticle[] = [
     ]
   },
   {
+    slug: "viewing-reports-for-brokers",
+    title: "Viewing Reports for Brokers",
+    summary:
+      "Find completed candidate assessments, review ranked SpotOn! Matches, and open the other reports available for each candidate.",
+    intro:
+      "The Reports page keeps completed assessments and candidate reports in one place. For brokers, the main audience-specific result is the SpotOn! Match report, which ranks franchise opportunities by overall fit and by each assessment dimension. This guide shows you how to locate a completed candidate, open their matches, and access any additional reports available on their record.",
+    assetDir: "src/assets/support/viewing-reports-for-brokers",
+    type: "Broker",
+    steps: [
+      {
+        title: "Open Reports",
+        content:
+          "Sign in to Zorakle and select SpotOn! Reports from the main navigation. The Reports page shows candidate assessments and provides controls for viewing completed results or checking assessments that are still in progress.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Broker Reports page with the Reports navigation item and report table visible"
+        }
+      },
+      {
+        title: "Find a completed candidate",
+        content:
+          "Set the status filter to Complete, then search for the candidate by name or email. A Match button appears in the SpotOn! Match column when the candidate has completed the assessment.",
+        tip:
+          "Use In Progress when you need to check completion percentage or recent activity instead of opening final reports.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Completed broker report row with the SpotOn Match button highlighted"
+        }
+      },
+      {
+        title: "Open the SpotOn! Match report",
+        content:
+          "Click Match to open the candidate's ranked franchise matches. Review the Overall fit score and the Values, Stage of Growth, Culture, Work Style, and Skills scores for each franchise. You can search the list, filter by business category or broker organization when those filters are available, and export the results to CSV.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "SpotOn Matches report showing ranked franchises and fit scores"
+        }
+      },
+      {
+        title: "View additional candidate reports",
+        content:
+          "Open the three-dot Actions menu on the candidate's row to view any other reports available for that candidate, such as the Business Builder, CQ Report, SpotOn! Report, or resume. Only reports that have been generated or uploaded will appear in the menu.",
+        media: {
+          type: "screenshot",
+          fileName: "04.png",
+          alt: "Broker report Actions menu with available candidate reports"
+        }
+      }
+    ]
+  },
+  {
+    slug: "viewing-reports-for-franchisors",
+    title: "Viewing Reports for Franchisors",
+    summary:
+      "Find completed candidate assessments, review fit results, and open the correct Eclipse Profile for a candidate.",
+    intro:
+      "The Reports page keeps completed assessments and candidate reports in one place. For franchisors, the main audience-specific result is the Eclipse Profile, which compares a candidate with your company's profile or a selected role. This guide shows you how to locate a completed candidate, interpret the Fit percentage, and open the appropriate Eclipse Profile.",
+    assetDir: "src/assets/support/viewing-reports-for-franchisors",
+    type: "Franchisor",
+    steps: [
+      {
+        title: "Open Reports",
+        content:
+          "Sign in to Zorakle and select SpotOn! Reports from the main navigation. The Reports page shows candidate assessments and provides controls for viewing completed results or checking assessments that are still in progress.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Franchisor Reports page with the Reports navigation item and report table visible"
+        }
+      },
+      {
+        title: "Find a completed candidate",
+        content:
+          "Set the status filter to Complete, then search for the candidate by name or email. The Fit % column shows the candidate's overall alignment with the currently selected company profile or role.",
+        tip:
+          "Use In Progress when you need to check completion percentage or recent activity instead of opening final reports.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Completed franchisor report row with the Fit percentage and Actions menu highlighted"
+        }
+      },
+      {
+        title: "Open the Eclipse Profile",
+        content:
+          "Open the three-dot Actions menu and choose Eclipse Report. If your account has one active company profile, the report opens immediately. If your account has multiple active profiles or roles, select the role you want to compare the candidate against, then click View Eclipse Report.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "Franchisor report Actions menu with Eclipse Report highlighted"
+        }
+      },
+      {
+        title: "Review the Eclipse Profile",
+        content:
+          "Use the report sections to review the candidate's overall score and alignment across Values, Stage of Growth, Culture, Work Style, Competencies, Sales Orientation, Business Path, Focus Preferences, Emotional Intelligence, and Social Intelligence. Return to Reports when you are ready to review another candidate.",
+        media: {
+          type: "screenshot",
+          fileName: "04.png",
+          alt: "Interactive Eclipse Profile viewer with report sections"
+        }
+      },
+      {
+        title: "View additional candidate reports",
+        content:
+          "Use the candidate's three-dot Actions menu to open any other available reports, such as the Business Builder, CQ Report, SpotOn! Report, or resume. Only reports that have been generated or uploaded will appear in the menu.",
+        media: {
+          type: "screenshot",
+          fileName: "05.png",
+          alt: "Franchisor report Actions menu with available candidate reports"
+        }
+      }
+    ]
+  },
+  {
     slug: "create-view-and-manage-assessment-links",
     title: "View, create, edit and delete Assessment Links",
     summary:

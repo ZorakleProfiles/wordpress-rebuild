@@ -1,8 +1,13 @@
+import ifpgLogo from "../assets/ifpg.png";
+import franserveLogo from "../assets/franserve-logo.png";
+import fbaLogo from "../assets/fba.webp";
+
+
 export type PricingAudience = "all" | AccountType;
 export type AccountType = "broker" | "franchisor";
 export type TierKey = "match-only" | "emerging" | "established";
 export type BillingKey = "monthly" | "annual" | "paygo";
-export type PartnerOrganizationKey = "franserve" | "ifpg" | "entrepreneur-authority";
+export type PartnerKey = "franserve" | "ifpg";
 
 export type PartnerPromotion =
   | { key: "coupon"; kind: "discount"; percentOff: 20; label: string }
@@ -85,16 +90,6 @@ export const billingOptions: ReadonlyArray<{ key: BillingKey; name: string }> = 
   { key: "paygo", name: "Pay as you go" },
 ];
 
-export const partnerOrganizations: ReadonlyArray<{
-  key: PartnerOrganizationKey;
-  name: string;
-  affiliateId: number;
-}> = [
-  { key: "franserve", name: "Franserve", affiliateId: 2693 },
-  { key: "ifpg", name: "IFPG", affiliateId: 2727 },
-  { key: "entrepreneur-authority", name: "The Entrepreneur Authority", affiliateId: 2685 },
-];
-
 export const plans: ReadonlyArray<PricingPlan> = [
   {
     key: "broker_monthly",
@@ -114,7 +109,7 @@ export const plans: ReadonlyArray<PricingPlan> = [
     badge: "BEST VALUE",
   },
   {
-    key: "broker_payg_monthly",
+    key: "broker_pay_as_you_go",
     accountType: "broker",
     billing: "paygo",
     amountCents: 4900,
@@ -164,7 +159,7 @@ export const plans: ReadonlyArray<PricingPlan> = [
     accountType: "franchisor",
     tier: "emerging",
     billing: "paygo",
-    amountCents: 7900,
+    amountCents: 6900,
     rateUnit: " per assessment",
     description: "Pay monthly for the assessments you run after research is completed.",
   },
@@ -192,7 +187,7 @@ export const plans: ReadonlyArray<PricingPlan> = [
     accountType: "franchisor",
     tier: "established",
     billing: "paygo",
-    amountCents: 7900,
+    amountCents: 6900,
     rateUnit: " per assessment",
     description: "Pay monthly for the assessments you run after research is completed.",
   },
@@ -250,10 +245,10 @@ export function getPlanSummaryNote(plan: PricingPlan) {
 }
 
 export function getPartnerPromotion(
-  organizationKeys: ReadonlyArray<PartnerOrganizationKey>,
+  partner?: PartnerKey,
   accountType?: AccountType,
 ): PartnerPromotion | undefined {
-  if (accountType === "broker" && (organizationKeys.includes("ifpg") || organizationKeys.includes("entrepreneur-authority"))) {
+  if (partner === "ifpg" && accountType === "broker") {
     return {
       key: "trial",
       kind: "trial",
@@ -261,7 +256,7 @@ export function getPartnerPromotion(
       label: "90-day free trial",
     };
   }
-  if (organizationKeys.includes("franserve")) {
+  if (partner === "franserve") {
     return {
       key: "coupon",
       kind: "discount",
@@ -284,21 +279,27 @@ export function getPartnerDueTodayCents(plan: PricingPlan, promotion: PartnerPro
   return getPartnerRateCents(plan, promotion);
 }
 
-export function buildRegistrationUrl(
-  baseUrl: string,
-  planKey: string,
-  couponCode?: string,
-  organizationKeys: ReadonlyArray<PartnerOrganizationKey> = [],
-) {
-  const url = new URL(baseUrl);
-  url.searchParams.set("plan", planKey);
-  if (couponCode) url.searchParams.set("coupon", couponCode);
-  organizationKeys.forEach((organizationKey) => {
-    const organization = partnerOrganizations.find((item) => item.key === organizationKey);
-    if (organization) url.searchParams.append("organization", String(organization.affiliateId));
-  });
-  const plan = plans.find((item) => item.key === planKey);
-  const promotion = getPartnerPromotion(organizationKeys, plan?.accountType);
-  if (promotion) url.searchParams.set("partner_promotion", promotion.key);
-  return url.href;
-}
+
+export const Partners = {
+  ifpg:{
+    title: "IFPG Broker Offer | Zorakle",
+    heading: "90 days free for IFPG brokers",
+    description: "Start matching candidates with science-backed insight. Your broker subscription begins after a 90-day free trial.",
+    logo: ifpgLogo,
+    logoAlt: "IFPG",
+  },
+  franserve:{
+    title: "FranServe Member Offer | Zorakle",
+    heading: "20% off for FranServe members",
+    description: "FranServe brokers receive 20% off their plan. FranServe franchisors receive 20% off subscription billing after research; the one-time research fee is not discounted.",
+    logo: franserveLogo,
+    logoAlt: "FranServe",
+  },
+  fba:{
+    title: "FBA Member Offer | Zorakle",
+    heading: "20% off for FBA members",
+    description: "FranServe brokers receive 20% off their plan. FranServe franchisors receive 20% off subscription billing after research; the one-time research fee is not discounted.",
+    logo: fbaLogo,
+    logoAlt: "Franchise Brokers Association",
+  }
+};

@@ -1,24 +1,250 @@
 ---
 import { footer } from "../data/site-content";
+
+const portalBase = (import.meta.env.PORTAL_URL ?? "").replace(/\/$/, "");
+const portalLogin = `${portalBase}/login`;
+
+const nl = footer.newsletter;
+const hs = nl?.hubspot ?? { portalId: "", formId: "", region: "na1" };
+const hasHubspotForm = Boolean(hs.portalId && hs.formId);
+
+const year = new Date().getFullYear();
+const copyright = (footer.copyright ?? "© {year} Zorakle Profiles, LLC. All rights reserved.").replace(
+  "{year}",
+  String(year)
+);
+
+const resolveHref = (href: string) => (href === "PORTAL_LOGIN" ? portalLogin : href);
+const mailtoSubscribe = `mailto:${footer.email}?subject=Subscribe%3A%20The%20Franchise%20Alignment%20Brief`;
 ---
 
-<footer class="rounded-t-[45px] bg-[#22252a] py-14 text-white">
-  <div class="section-shell space-y-8">
-    <div class="flex flex-col justify-between gap-8 lg:flex-row lg:items-center">
-      <img src="/zorakle-logo.png" alt="Zorakle" class="h-10 w-auto brightness-0 invert object-contain" width="2218" height="600" />
-      <div class="text-sm text-white/80">
-        <p>{footer.address}</p>
-        <a href={`mailto:${footer.email}`} class="underline underline-offset-2 hover:text-white transition">
+<footer class="relative z-10 rounded-t-[45px] bg-[#22252a] text-white">
+  <div class="section-shell py-12 md:py-14">
+    <div class="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
+      <div class="max-w-sm">
+        <img
+          src="/zorakle-logo.png"
+          alt="Zorakle"
+          class="h-8 w-auto object-contain brightness-0 invert"
+          width="2218"
+          height="600"
+        />
+        {footer.tagline && <p class="mt-3 text-sm text-white/60">{footer.tagline}</p>}
+        <p class="mt-3 text-sm text-white/45">{footer.address}</p>
+        <a href={`mailto:${footer.email}`} class="text-sm text-white/60 underline underline-offset-2 transition hover:text-white">
           {footer.email}
         </a>
       </div>
+
+      {nl && (
+        <div id={nl.anchorId} class="w-full max-w-sm scroll-mt-32">
+          <p class="text-sm font-semibold text-white">{nl.heading}</p>
+          <p class="mt-1 text-xs leading-relaxed text-white/55">{nl.description}</p>
+          <div class="mt-3">
+            {hasHubspotForm ? (
+              <div
+                class="footer-hs-form"
+                data-hs-form
+                data-portal-id={hs.portalId}
+                data-form-id={hs.formId}
+                data-region={hs.region ?? "na1"}
+              >
+                <noscript>
+                  <a class="footer-subscribe-btn" href={mailtoSubscribe}>Email us to subscribe</a>
+                </noscript>
+              </div>
+            ) : (
+              <a class="footer-subscribe-btn" href={mailtoSubscribe}>Subscribe by email</a>
+            )}
+          </div>
+        </div>
+      )}
     </div>
 
-    <div class="h-px bg-white/20"></div>
-
-    <div class="flex flex-col gap-2 text-sm text-white/75 md:flex-row md:items-center md:justify-between">
-      <p>{footer.copyright}</p>
-      <a href="#" class="underline underline-offset-2 hover:text-white transition">Privacy Policy</a>
+    <div class="mt-10 flex flex-col gap-4 border-t border-white/12 pt-6 md:flex-row md:items-center md:justify-between">
+      <nav class="flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/60">
+        {footer.links.map((link) => (
+          <a href={resolveHref(link.href)} class="transition hover:text-white">{link.label}</a>
+        ))}
+      </nav>
+      <div class="flex items-center gap-4 text-sm text-white/50">
+        {footer.legal.map((link) => (
+          <a href={link.href} class="underline underline-offset-2 transition hover:text-white">{link.label}</a>
+        ))}
+        {footer.social?.map((s) => (
+          <a
+            href={s.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={s.label}
+            class="transition hover:text-white"
+          >
+            {s.icon === "linkedin" && (
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.55C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.72C24 .77 23.2 0 22.22 0Z" />
+              </svg>
+            )}
+            {s.icon === "youtube" && (
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z" />
+              </svg>
+            )}
+            {s.icon === "x" && (
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18.9 2h3.3l-7.2 8.3L23.5 22h-6.6l-5.2-6.8L5.7 22H2.4l7.7-8.8L1 2h6.8l4.7 6.2L18.9 2Zm-1.2 18h1.8L7.4 3.9H5.5L17.7 20Z" />
+              </svg>
+            )}
+          </a>
+        ))}
+      </div>
     </div>
+
+    <p class="mt-4 text-xs text-white/40">{copyright}</p>
   </div>
 </footer>
+
+<script>
+  function initFooterHubspot() {
+    const mount = document.querySelector<HTMLElement>("[data-hs-form]");
+    if (!mount || mount.dataset.hsInit === "true") return;
+
+    const portalId = mount.dataset.portalId;
+    const formId = mount.dataset.formId;
+    const region = mount.dataset.region || "na1";
+    if (!portalId || !formId) return;
+
+    const build = () => {
+      const w = window as any;
+      if (!w.hbspt || mount.dataset.hsInit === "true") return;
+      mount.dataset.hsInit = "true";
+      w.hbspt.forms.create({ portalId, formId, region, target: "[data-hs-form]" });
+    };
+
+    const load = () => {
+      const w = window as any;
+      if (w.hbspt) return build();
+      const existing = document.getElementById("hs-forms-embed-v2") as HTMLScriptElement | null;
+      if (existing) {
+        existing.addEventListener("load", build);
+        return;
+      }
+      const s = document.createElement("script");
+      s.id = "hs-forms-embed-v2";
+      s.src = "https://js.hsforms.net/forms/embed/v2.js";
+      s.async = true;
+      s.addEventListener("load", build);
+      document.head.appendChild(s);
+    };
+
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries, obs) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              obs.disconnect();
+              load();
+            }
+          }
+        },
+        { rootMargin: "500px 0px" }
+      );
+      io.observe(mount);
+    } else {
+      load();
+    }
+  }
+
+  initFooterHubspot();
+  document.addEventListener("astro:page-load", initFooterHubspot);
+</script>
+
+<style is:global>
+  .footer-subscribe-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    background: #fd7730;
+    padding: 0.6rem 1.4rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #22252a;
+    transition: filter 0.15s ease;
+  }
+  .footer-subscribe-btn:hover {
+    filter: brightness(0.95);
+  }
+
+  /* Skin the embedded HubSpot form for the dark footer. */
+  .footer-hs-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .footer-hs-form .hs-form-field > label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .footer-hs-form .hs-form-field > label .hs-form-required {
+    color: #fd7730;
+  }
+  .footer-hs-form input.hs-input:not([type="checkbox"]):not([type="radio"]),
+  .footer-hs-form select.hs-input,
+  .footer-hs-form textarea.hs-input {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    padding: 0.6rem 0.8rem;
+    font-size: 0.875rem;
+    color: #fff;
+  }
+  .footer-hs-form input.hs-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .footer-hs-form input.hs-input:focus,
+  .footer-hs-form select.hs-input:focus,
+  .footer-hs-form textarea.hs-input:focus {
+    outline: none;
+    border-color: #09cc9c;
+    box-shadow: 0 0 0 3px rgba(9, 204, 156, 0.25);
+  }
+  .footer-hs-form .hs-button {
+    align-self: flex-start;
+    cursor: pointer;
+    border: 0;
+    border-radius: 0.5rem;
+    background: #fd7730;
+    padding: 0.6rem 1.4rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #22252a;
+    transition: filter 0.15s ease;
+  }
+  .footer-hs-form .hs-button:hover {
+    filter: brightness(0.95);
+  }
+  .footer-hs-form .hs-error-msg,
+  .footer-hs-form .hs-error-msgs label {
+    color: #ffb4a1;
+    font-size: 0.75rem;
+  }
+  .footer-hs-form .hs-field-desc,
+  .footer-hs-form .legal-consent-container,
+  .footer-hs-form .hs-richtext {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.7rem;
+  }
+  .footer-hs-form .hs-richtext a,
+  .footer-hs-form .legal-consent-container a {
+    color: #09cc9c;
+    text-decoration: underline;
+  }
+  .footer-hs-form .submitted-message {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+</style>

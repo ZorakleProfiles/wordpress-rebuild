@@ -29,6 +29,7 @@ interface SanityPost {
   body?: PortableTextBlock[];
   publishedAt?: string;
   _createdAt?: string;
+  _updatedAt?: string;
   categoryTitles?: (string | null)[];
   categorySlugs?: (string | null)[];
   mainImage?: SanityImage;
@@ -42,6 +43,7 @@ export interface BlogPost {
   contentHtml: string;
   body: PortableTextBlock[];
   publishedAt: string;
+  updatedAt: string;
   categories: string[];
   categorySlugs: string[];
   featuredImageUrl?: string;
@@ -62,6 +64,7 @@ const SANITY_POSTS_QUERY = defineQuery(`
     body,
     publishedAt,
     _createdAt,
+    _updatedAt,
     "categoryTitles": categoryRefs[]->title,
     "categorySlugs": categoryRefs[]->slug.current,
     mainImage,
@@ -139,6 +142,7 @@ function mapSanityPost(post: SanityPost, index: number): BlogPost {
   const plainBody = toPortableTextPlainText(body);
   const excerpt = (post.excerpt?.trim() || plainBody).slice(0, 280);
   const publishedAt = post.publishedAt || post._createdAt || new Date(0).toISOString();
+  const updatedAt = post._updatedAt || publishedAt;
   const categories = cleanStrings(post.categoryTitles);
   const categorySlugs = cleanStrings(post.categorySlugs);
 
@@ -149,6 +153,7 @@ function mapSanityPost(post: SanityPost, index: number): BlogPost {
     contentHtml: "",
     body,
     publishedAt,
+    updatedAt,
     categories,
     categorySlugs,
     featuredImageUrl: toImageUrl(post.mainImage),

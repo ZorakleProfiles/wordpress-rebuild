@@ -6,8 +6,10 @@ interface Props {
   description?: string;
   /** Absolute or root-relative canonical URL override. Defaults to the current page URL. */
   canonicalUrl?: string;
-  /** Absolute URL of the social sharing image (og:image / twitter:image). */
+  /** Absolute or root-relative URL of the social sharing image (og:image / twitter:image). Defaults to the branded site image. */
   ogImage?: string;
+  /** Alt text for the social sharing image. */
+  ogImageAlt?: string;
   /** Open Graph type. Use "article" for blog posts. */
   ogType?: "website" | "article";
   /** ISO date string; rendered as article:published_time when ogType is "article". */
@@ -19,10 +21,11 @@ interface Props {
 }
 
 const {
-  title = "Zorakle | Franchise Performance Intelligence",
-  description = "Science-backed tools for franchise awarding and broker matching decisions.",
+  title = "Franchisee Assessment Software for Franchisors | Zorakle",
+  description = "Zorakle uses seven validated sciences to predict franchisee fit and performance, helping franchisors award stronger owners with confidence.",
   canonicalUrl,
   ogImage,
+  ogImageAlt = "Zorakle — franchise alignment and franchisee selection software",
   ogType = "website",
   publishedTime,
   author,
@@ -44,6 +47,10 @@ function normalizePath(pathname: string): string {
 const canonical = canonicalUrl
   ? new URL(canonicalUrl, siteOrigin).href
   : new URL(normalizePath(Astro.url.pathname), siteOrigin).href;
+
+const DEFAULT_OG_IMAGE = "/images/og-default.png";
+const usingDefaultOgImage = !ogImage;
+const resolvedOgImage = new URL(ogImage ?? DEFAULT_OG_IMAGE, siteOrigin).href;
 ---
 
 <!doctype html>
@@ -54,7 +61,7 @@ const canonical = canonicalUrl
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="icon" type="image/svg+xml" href={faviconHref} />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
@@ -64,17 +71,25 @@ const canonical = canonicalUrl
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta property="og:image" content={resolvedOgImage} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    {usingDefaultOgImage && (
+      <>
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+      </>
+    )}
     {ogType === "article" && publishedTime && (
       <meta property="article:published_time" content={publishedTime} />
     )}
     {ogType === "article" && author && <meta property="article:author" content={author} />}
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    {ogImage && <meta name="twitter:image" content={ogImage} />}
+    <meta name="twitter:image" content={resolvedOgImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     <slot name="head" />
   </head>

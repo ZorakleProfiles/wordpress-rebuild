@@ -14,7 +14,8 @@ export const navLinks = [
       { href: "/news", label: "News" },
       { href: "/partnerships", label: "Partnerships" },
       { href: "/podcasts", label: "Podcasts" },
-      { href: "/support", label: "Support & Training" },
+      { href: "/science", label: "The Science" },
+      { href: "/support", label: "Support" },
       { href: "/webinars", label: "Webinars" },
 
     ]
@@ -137,9 +138,61 @@ export const differenceCards = [
 ];
 
 export const footer = {
-  address: "8782 S. Park Road Rogers, AR 72756",
+  tagline: "Predictive franchise alignment for franchisors and brokers.",
+  address: "8782 S. Park Road, Rogers, AR 72756",
   email: "support@zorakle.net",
-  copyright: "© 2026 Zorakle Profiles, LLC. All Rights Reserved."
+  // "{year}" is replaced with the current year at build time.
+  copyright: "© {year} Zorakle Profiles, LLC. All rights reserved.",
+
+  newsletter: {
+    anchorId: "newsletter",
+    heading: "The Franchise Alignment Brief",
+    description: "Research on candidate fit and system alignment. One email, no noise.",
+    // Create a HubSpot form for newsletter signups, then fill in formId.
+    // While formId is empty the footer shows a mailto fallback instead.
+    hubspot: {
+      portalId: "2403148",
+      formId: "",
+      region: "na1"
+    }
+  },
+
+  links: [
+    { href: "/solutions/franchisors", label: "For Franchisors" },
+    { href: "/solutions/brokers", label: "For Brokers" },
+    { href: "/pricing", label: "Pricing" },
+    { href: "/news", label: "News" },
+    { href: "/science", label: "The Science" },
+    { href: "/support", label: "Support" },
+    { href: "/about", label: "About" },
+    { href: "/schedule", label: "Book a Demo" },
+    { href: "PORTAL_LOGIN", label: "Client Login" }
+  ],
+
+  legal: [
+    { href: "/privacy-policy", label: "Privacy Policy" },
+    { href: "/terms", label: "Terms" }
+  ],
+
+  // Rendered only when populated. Verify the URL before launch.
+  // Also used for Organization schema `sameAs` on the homepage.
+  social: [
+    {
+      href: "https://www.linkedin.com/company/zorakle-profiles/",
+      label: "LinkedIn",
+      icon: "linkedin"
+    },
+    {
+      href: "https://www.youtube.com/channel/UCdtjfxIoV7tfURV21zYhB1A",
+      label: "YouTube",
+      icon: "youtube"
+    },
+    {
+      href: "https://x.com/ZorakleProfiles",
+      label: "X",
+      icon: "x"
+    }
+  ]
 };
 
 

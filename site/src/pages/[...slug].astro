@@ -8,25 +8,56 @@ import PortableTextEmbed from "../components/PortableTextEmbed.astro";
 import { getAllPosts, type BlogPost } from "../lib/blog.ts";
 
 export async function getStaticPaths() {
+  /**
+   * Collapse a slug to a comparison key: decode percent-encoding, fold
+   * compatibility characters (e.g. "ⓡ" -> "r"), and drop zero-width /
+   * non-breaking spaces left over from the WordPress import. Aliases that
+   * share a key with the primary slug differ only by encoding and must not
+   * become their own route — they would otherwise clobber the primary
+   * page on disk. Defined inside getStaticPaths: Astro isolates its scope.
+   */
+  const slugKey = (value: string): string => {
+    let decoded = value;
+    try {
+      decoded = decodeURIComponent(value);
+    } catch {
+      // keep the raw value if it isn't valid percent-encoding
+    }
+    return decoded
+      .normalize("NFKC")
+      .replace(/[​-‍⁠  ﻿]/g, "")
+      .trim()
+      .toLowerCase();
+  };
 
   const posts = await getAllPosts();
-  const paths: Array<{ params: { slug: string }; props: { post: BlogPost }; cacheKey: string }> = [];
+  const paths: Array<{
+    params: { slug: string };
+    props: { post: BlogPost; isLegacyAlias: boolean };
+  }> = [];
   const seenSlugs = new Set<string>();
 
   posts.forEach((post) => {
     const aliases = [post.slug, post.legacySlug].filter(
       (value): value is string => typeof value === "string" && value.trim().length > 0
     );
+    const primaryKey = slugKey(post.slug);
 
     aliases.forEach((alias) => {
       if (seenSlugs.has(alias)) {
         return;
       }
-
       seenSlugs.add(alias);
+
+      // Treat as a legacy alias (-> 301) only when it is a genuinely different
+      // slug. Twins that differ from the primary just by percent-encoding or
+      // invisible characters keep rendering the article; their <link rel=
+      // "canonical"> already points search engines at the primary URL.
+      const isLegacyAlias =
+        alias !== post.slug && slugKey(alias) !== primaryKey;
       paths.push({
         params: { slug: alias },
-        props: { post },
+        props: { post, isLegacyAlias },
       });
     });
   });
@@ -36,9 +67,15 @@ export async function getStaticPaths() {
 
 interface Props {
   post: BlogPost;
+  isLegacyAlias: boolean;
 }
 
-const { post } = Astro.props;
+const { post, isLegacyAlias } = Astro.props;
+
+const primaryUrl = new URL(`/${post.slug}/`, Astro.site).href;
+if (isLegacyAlias) {
+  return Astro.redirect(primaryUrl, 301);
+}
 
 const publishedDate = new Intl.DateTimeFormat("en-US", {
   month: "long",
@@ -48,22 +85,49 @@ const publishedDate = new Intl.DateTimeFormat("en-US", {
 
 const pageDescription = post.excerpt || `Read ${post.title} on Zorakle Blog.`;
 
-// Legacy WordPress slug aliases render the same content — canonicalize to the primary slug.
-const canonicalUrl = new URL(`/${post.slug}/`, Astro.site).href;
+const canonicalUrl = primaryUrl;
+const orgId = `${Astro.site?.href}#organization`;
 
 const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  headline: post.title,
-  description: pageDescription,
-  datePublished: post.publishedAt,
-  ...(post.featuredImageUrl ? { image: post.featuredImageUrl } : {}),
-  mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
-  publisher: {
-    "@type": "Organization",
-    name: "Zorakle",
-    url: Astro.site?.href
-  }
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      headline: post.title,
+      description: pageDescription,
+      datePublished: post.publishedAt,
+      dateModified: post.updatedAt,
+      ...(post.featuredImageUrl
+        ? { image: { "@type": "ImageObject", url: post.featuredImageUrl, width: 1200 } }
+        : {}),
+      author: { "@id": orgId },
+      mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
+      publisher: { "@id": orgId }
+    },
+    {
+      "@type": "Organization",
+      "@id": orgId,
+      name: "Zorakle",
+      url: Astro.site?.href,
+      logo: {
+        "@type": "ImageObject",
+        url: new URL("/zorakle-logo.png", Astro.site).href
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: Astro.site?.href },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "News",
+          item: new URL("/news/", Astro.site).href
+        },
+        { "@type": "ListItem", position: 3, name: post.title, item: canonicalUrl }
+      ]
+    }
+  ]
 });
 
 const portableTextComponents = {
@@ -84,6 +148,7 @@ const portableTextComponents = {
   canonicalUrl={canonicalUrl}
   ogType="article"
   ogImage={post.featuredImageUrl}
+  ogImageAlt={post.featuredImageAlt || post.title}
   publishedTime={post.publishedAt}
 >
   <script type="application/ld+json" slot="head" set:html={jsonLd} />

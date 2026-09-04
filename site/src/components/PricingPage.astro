@@ -41,9 +41,19 @@ const pageMeta = partnerMeta ?? defaultPageMeta;
 const portalUrl = import.meta.env.PORTAL_URL ?? "https://portal.zorakle.net";
 const registrationApiUrl = new URL("/api/website-registration", portalUrl).href;
 const couponPreviewUrl = new URL("/api/check-coupon", portalUrl).href;
+
+// Partner offer pages are gated, near-duplicate variants of /pricing — keep them
+// out of the index and point canonical signals at the public pricing page.
+const isPartnerPage = Boolean(partner);
+const canonicalUrl = isPartnerPage ? "/pricing/" : undefined;
 ---
 
-<MainLayout title={pageMeta.title} description={pageMeta.description}>
+<MainLayout
+  title={pageMeta.title}
+  description={pageMeta.description}
+  noindex={isPartnerPage}
+  canonicalUrl={canonicalUrl}
+>
   <SiteHeader />
 
   <main

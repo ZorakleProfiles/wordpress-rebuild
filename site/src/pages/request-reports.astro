@@ -1,31 +1,35 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 ---
 <MainLayout
-        title="SpotOn! Reports Request | Zorakle"
-        description="request demos of our SpotOn! reports"
+        title="Request Sample SpotOn! Reports | Zorakle"
+        description="See real Zorakle output before you buy. Request a sample SpotOn! Profile and Eclipse Profile and we'll send copies to your inbox."
 >
     <SiteHeader />
-    <section class="">
-        <div class="section-shell">
-            <div class="relative flex flex-col justify-between px-7 py-10  md:px-12 md:py-14 lg:px-14 lg:py-16">
-                <div class="mb-10">
-                    <h1 class="page-title">Unlock Zorakle Sample Reports</h1>
-                    <p class="section-copy max-w-3xl">
-                    Ready to explore? Let us know where to send your copies.
-                    </p>
-                </div>
-        <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
-        <script>
-            hbspt.forms.create({
-                portalId: "2403148",
-                formId: "f07010b8-8664-4d70-860c-2c0e13e5f880",
-                region: "na1"
-            });
-        </script>
-            </div>
-        </div>
-    </section>
+    <main>
+      <section class="">
+          <div class="section-shell">
+              <div class="relative flex flex-col justify-between px-7 py-10  md:px-12 md:py-14 lg:px-14 lg:py-16">
+                  <div class="mb-10">
+                      <h1 class="page-title">Unlock Zorakle sample reports</h1>
+                      <p class="section-copy max-w-3xl">
+                      Ready to explore? Let us know where to send your copies.
+                      </p>
+                  </div>
+          <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
+          <script>
+              hbspt.forms.create({
+                  portalId: "2403148",
+                  formId: "f07010b8-8664-4d70-860c-2c0e13e5f880",
+                  region: "na1"
+              });
+          </script>
+              </div>
+          </div>
+      </section>
+    </main>
 
+    <SiteFooter />
 </MainLayout>

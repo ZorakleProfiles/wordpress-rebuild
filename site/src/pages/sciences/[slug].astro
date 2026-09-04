@@ -21,15 +21,51 @@ const { topic } = Astro.props as Props;
 const currentIndex = scienceTopics.findIndex((item) => item.slug === topic.slug);
 const previousTopic = currentIndex > 0 ? scienceTopics[currentIndex - 1] : undefined;
 const nextTopic = currentIndex < scienceTopics.length - 1 ? scienceTopics[currentIndex + 1] : undefined;
+
+const siteHref = Astro.site?.href ?? "https://www.zorakleprofiles.com/";
+const orgId = `${siteHref}#organization`;
+const topicUrl = new URL(`/sciences/${topic.slug}/`, Astro.site ?? siteHref).href;
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      headline: topic.title,
+      description: topic.summary,
+      about: "Franchisee assessment science",
+      isPartOf: { "@type": "WebPage", "@id": new URL("/science/", Astro.site ?? siteHref).href },
+      mainEntityOfPage: { "@type": "WebPage", "@id": topicUrl },
+      author: { "@id": orgId },
+      publisher: { "@id": orgId }
+    },
+    {
+      "@type": "Organization",
+      "@id": orgId,
+      name: "Zorakle",
+      url: siteHref,
+      logo: { "@type": "ImageObject", url: new URL("/zorakle-logo.png", Astro.site ?? siteHref).href }
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: siteHref },
+        { "@type": "ListItem", position: 2, name: "The Science", item: new URL("/science/", Astro.site ?? siteHref).href },
+        { "@type": "ListItem", position: 3, name: topic.title, item: topicUrl }
+      ]
+    }
+  ]
+});
 ---
 
 <MainLayout title={`${topic.title} | Zorakle`} description={topic.summary}>
+  <script type="application/ld+json" slot="head" set:html={jsonLd} />
   <SiteHeader />
 
   <main>
     <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
       <div class="section-shell">
-        <a href="/support?tab=science" class="inline-flex items-center gap-2 text-sm font-bold text-[#c84f10] hover:underline">
+        <a href="/science" class="inline-flex items-center gap-2 text-sm font-bold text-[#c84f10] hover:underline">
           &larr; Back to all science topics
         </a>
 

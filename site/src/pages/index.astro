@@ -15,29 +15,54 @@ import CtaBand from "../components/CtaBand.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import { footer } from "../data/site-content";
 
+const siteHref = Astro.site?.href ?? "https://www.zorakleprofiles.com/";
+const orgId = `${siteHref}#organization`;
+
+// sameAs: pulled from footer.social. Add YouTube / podcast / X profile URLs there
+// as they become available and they will flow into this schema automatically.
+const sameAs = footer.social.map((profile) => profile.href).filter(Boolean);
+
 const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Organization",
-      "@id": `${Astro.site?.href}#organization`,
+      "@id": orgId,
       name: "Zorakle",
-      url: Astro.site?.href,
+      alternateName: "Zorakle Profiles",
+      url: siteHref,
+      logo: {
+        "@type": "ImageObject",
+        url: new URL("/zorakle-logo.png", siteHref).href
+      },
       email: footer.email,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "8782 S. Park Road",
+        addressLocality: "Rogers",
+        addressRegion: "AR",
+        postalCode: "72756",
+        addressCountry: "US"
+      },
+      ...(sameAs.length ? { sameAs } : {}),
       description:
         "Science-backed tools for franchise awarding and broker matching decisions."
     },
     {
       "@type": "WebSite",
+      "@id": `${siteHref}#website`,
       name: "Zorakle",
-      url: Astro.site?.href,
-      publisher: { "@id": `${Astro.site?.href}#organization` }
+      url: siteHref,
+      publisher: { "@id": orgId }
     }
   ]
 });
 ---
 
-<MainLayout>
+<MainLayout
+  title="Zorakle | Franchisee Assessment Software for Franchisors"
+  description="Zorakle helps franchisors award better-fitting franchisees. The SpotOn! assessment scores candidate fit and performance potential using seven validated sciences."
+>
   <script type="application/ld+json" slot="head" set:html={jsonLd} />
   <SiteHeader />
   <main>

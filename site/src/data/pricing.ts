@@ -298,7 +298,7 @@ export const Partners = {
   fba:{
     title: "FBA Member Offer | Zorakle",
     heading: "20% off for FBA members",
-    description: "FranServe brokers receive 20% off their plan. FranServe franchisors receive 20% off subscription billing after research; the one-time research fee is not discounted.",
+    description: "Franchise Brokers Association members receive 20% off their plan. FBA franchisors receive 20% off subscription billing after research; the one-time research fee is not discounted.",
     logo: fbaLogo,
     logoAlt: "Franchise Brokers Association",
   }

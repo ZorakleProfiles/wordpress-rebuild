@@ -1,14 +1,42 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 ---
 <MainLayout
-        title="Schedule a Demo | Zorakle"
-        description="Schedule a demo for zorakle profiles"
+  title="Book a Zorakle Demo | Franchisee Assessment Software"
+  description="See how Zorakle's science-backed franchisee selection and matching tools work. Book a live demo with our team and get answers specific to your franchise system or brokerage."
 >
-    <SiteHeader />
-    <!-- Start of Meetings Embed Script -->
-    <div class="meetings-iframe-container" data-src="https://meetings.hubspot.com/rebecca12/website?embed=true"></div>
-    <script type="text/javascript" src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"></script>
-    <!-- End of Meetings Embed Script -->
+  <SiteHeader />
+
+  <main class="bg-white">
+    <section class="border-b border-[#d1d4dd] bg-[#f4f5f7] py-10 md:py-12">
+      <div class="section-shell max-w-3xl">
+        <p class="section-eyebrow">Demo</p>
+        <h1 class="page-title mt-4">Book a demo of Zorakle.</h1>
+        <p class="mt-4 text-base leading-relaxed text-[#3b3e47] md:text-lg">
+          In about 30 minutes we'll walk you through the SpotOn! assessment, the Eclipse Profile,
+          and the reports your team uses to award or match candidates with confidence. Pick a time
+          that works for you and tell us a little about your franchise system or brokerage.
+        </p>
+      </div>
+    </section>
+
+    <section class="py-10 md:py-14">
+      <div class="section-shell">
+        <!-- Start of Meetings Embed Script -->
+        <div
+          class="meetings-iframe-container"
+          data-src="https://meetings.hubspot.com/rebecca12/website?embed=true"
+        ></div>
+        <script
+          type="text/javascript"
+          src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"
+        ></script>
+        <!-- End of Meetings Embed Script -->
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter />
 </MainLayout>

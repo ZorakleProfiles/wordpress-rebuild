@@ -7,20 +7,27 @@
 import { urlFor } from "../utils/sanity.ts";
 
 const { node } = Astro.props as { node: Record<string, unknown> };
-const src = urlFor(node).width(1200).fit("max").auto("format").url();
+let src: string | undefined;
+try {
+  src = urlFor(node).width(1200).fit("max").auto("format").url();
+} catch {
+  src = undefined;
+}
 const alt = (node.alt as string) || "";
 const caption = (node.caption as string) || "";
 ---
 
-<figure class="my-8">
-  <img
-    src={src}
-    alt={alt}
-    class="w-full rounded-xl object-cover"
-    loading="lazy"
-    decoding="async"
-  />
-  {caption && (
-    <figcaption class="mt-2 text-center text-sm text-[#56586a]">{caption}</figcaption>
-  )}
-</figure>
+{src && (
+  <figure class="my-8">
+    <img
+      src={src}
+      alt={alt}
+      class="w-full rounded-xl object-cover"
+      loading="lazy"
+      decoding="async"
+    />
+    {caption && (
+      <figcaption class="mt-2 text-center text-sm text-[#56586a]">{caption}</figcaption>
+    )}
+  </figure>
+)}

@@ -7,7 +7,7 @@ export type PricingAudience = "all" | AccountType;
 export type AccountType = "broker" | "franchisor";
 export type TierKey = "match-only" | "emerging" | "established";
 export type BillingKey = "monthly" | "annual" | "paygo";
-export type PartnerKey = "franserve" | "ifpg";
+export type PartnerKey = "franserve" | "ifpg" | "fba";
 
 export type PartnerPromotion =
   | { key: "coupon"; kind: "discount"; percentOff: 20; label: string }
@@ -256,7 +256,7 @@ export function getPartnerPromotion(
       label: "90-day free trial",
     };
   }
-  if (partner === "franserve") {
+  if (partner === "franserve" || partner === "fba") {
     return {
       key: "coupon",
       kind: "discount",

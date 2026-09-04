@@ -1,27 +1,15 @@
 ---
 import BlogList from "../../../components/BlogList.astro";
 import {
-  getPaginatedPostsByCategory,
-  getCategoryPostPageCount,
+  getArchivePaginationPaths,
   type PaginatedPosts
 } from "../../../lib/blog.ts";
 
 export async function getStaticPaths() {
+  // Astro isolates getStaticPaths into its own module scope during
+  // prerendering, so the page size must be defined inside it, not above.
   const newsArchivePageSize = 10;
-  const totalPages = await getCategoryPostPageCount("news", newsArchivePageSize);
-  if (totalPages <= 1) {
-    return [];
-  }
-
-  const pageNumbers = Array.from({ length: totalPages - 1 }, (_unused, index) => index + 2);
-  const pageDataByPage = await Promise.all(
-    pageNumbers.map((pageNumber) => getPaginatedPostsByCategory("news", pageNumber, newsArchivePageSize))
-  );
-
-  return pageNumbers.map((pageNumber, index) => ({
-    params: { page: String(pageNumber) },
-    props: { pageData: pageDataByPage[index] }
-  }));
+  return getArchivePaginationPaths("news", newsArchivePageSize);
 }
 
 interface Props {
@@ -29,7 +17,7 @@ interface Props {
 }
 
 const { pageData } = Astro.props;
-const pageTitle = `News - Page ${pageData.page} | Zorakle`;
+const pageTitle = `Franchise News & Insights - Page ${pageData.page} | Zorakle`;
 ---
 
 <BlogList

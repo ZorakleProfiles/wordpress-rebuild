@@ -1,27 +1,15 @@
 ---
 import BlogList from "../../../components/BlogList.astro";
 import {
-  getPaginatedPostsByCategory,
-  getCategoryPostPageCount,
+  getArchivePaginationPaths,
   type PaginatedPosts
 } from "../../../lib/blog.ts";
 
 export async function getStaticPaths() {
+  // Astro isolates getStaticPaths into its own module scope during
+  // prerendering, so the page size must be defined inside it, not above.
   const webinarsArchivePageSize = 10;
-  const totalPages = await getCategoryPostPageCount("webinars & training", webinarsArchivePageSize);
-  if (totalPages <= 1) {
-    return [];
-  }
-
-  const pageNumbers = Array.from({ length: totalPages - 1 }, (_unused, index) => index + 2);
-  const pageDataByPage = await Promise.all(
-    pageNumbers.map((pageNumber) => getPaginatedPostsByCategory("webinars & training", pageNumber, webinarsArchivePageSize))
-  );
-
-  return pageNumbers.map((pageNumber, index) => ({
-    params: { page: String(pageNumber) },
-    props: { pageData: pageDataByPage[index] }
-  }));
+  return getArchivePaginationPaths("webinars & training", webinarsArchivePageSize);
 }
 
 interface Props {
@@ -29,12 +17,12 @@ interface Props {
 }
 
 const { pageData } = Astro.props;
-const pageTitle = `Webinars - Page ${pageData.page} | Zorakle`;
+const pageTitle = `Franchise Webinars & Training - Page ${pageData.page} | Zorakle`;
 ---
 
 <BlogList
   title={pageTitle}
-  description="Webinars from the Zorakle network."
+  description="On-demand webinars on franchisee selection, assessment science, and franchise development from the Zorakle team."
   heading="Webinars"
   emptyStateMessage="No webinar posts were found."
   basePath="/webinars"

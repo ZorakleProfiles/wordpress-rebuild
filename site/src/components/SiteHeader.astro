@@ -1,6 +1,6 @@
 ---
 import { navLinks } from "../data/site-content";
-const portal_link= import.meta.env.PORTAL_URL+ '/login';
+const portal_link = (import.meta.env.PORTAL_URL ?? "https://portal.zorakle.net") + '/login';
 import Logo from "../assets/logo.png";
 import { Image } from 'astro:assets';
 ---

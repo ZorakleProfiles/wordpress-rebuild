@@ -4,13 +4,13 @@ import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import CtaBand from "../../components/CtaBand.astro";
 import { Image } from "astro:assets";
-import type { ImageMetadata } from "astro";
 import {
   supportArticles,
   type SupportArticle,
   type SupportArticleStep
 } from "../../data/support.ts";
 import Help from "../../components/Help.astro";
+import { screenshotAssets, gifAssets, videoAssets } from "../../lib/support-assets.ts";
 
 interface Props {
   article: SupportArticle;
@@ -24,19 +24,6 @@ export function getStaticPaths() {
 }
 
 const { article } = Astro.props as Props;
-
-const screenshotAssets = import.meta.glob<{ default: ImageMetadata }>(
-  "/src/assets/support/**/*.{png,jpg,jpeg,webp,avif}",
-  { eager: true }
-);
-const gifAssets = import.meta.glob<{ default: string }>(
-  "/src/assets/support/**/*.gif",
-  { eager: true }
-);
-const videoAssets = import.meta.glob<{ default: string }>(
-  "/src/assets/support/**/*.{mp4,webm,mov}",
-  { eager: true }
-);
 
 interface ResolvedStep {
   step: SupportArticleStep;

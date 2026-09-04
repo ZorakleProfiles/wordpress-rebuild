@@ -1,27 +1,15 @@
 ---
 import BlogList from "../../../components/BlogList.astro";
 import {
-  getPaginatedPostsByCategory,
-  getCategoryPostPageCount,
+  getArchivePaginationPaths,
   type PaginatedPosts
 } from "../../../lib/blog.ts";
 
 export async function getStaticPaths() {
+  // Astro isolates getStaticPaths into its own module scope during
+  // prerendering, so the page size must be defined inside it, not above.
   const podcastArchivePageSize = 10;
-  const totalPages = await getCategoryPostPageCount("podcasts", podcastArchivePageSize);
-  if (totalPages <= 1) {
-    return [];
-  }
-
-  const pageNumbers = Array.from({ length: totalPages - 1 }, (_unused, index) => index + 2);
-  const pageDataByPage = await Promise.all(
-    pageNumbers.map((pageNumber) => getPaginatedPostsByCategory("podcasts", pageNumber, podcastArchivePageSize))
-  );
-
-  return pageNumbers.map((pageNumber, index) => ({
-    params: { page: String(pageNumber) },
-    props: { pageData: pageDataByPage[index] }
-  }));
+  return getArchivePaginationPaths("podcasts", podcastArchivePageSize);
 }
 
 interface Props {
@@ -29,12 +17,12 @@ interface Props {
 }
 
 const { pageData } = Astro.props;
-const pageTitle = `Podcasts - Page ${pageData.page} | Zorakle`;
+const pageTitle = `Franchise Development Podcasts - Page ${pageData.page} | Zorakle`;
 ---
 
 <BlogList
   title={pageTitle}
-  description="Podcast episodes and franchise conversations from the Zorakle network."
+  description="Podcast episodes and franchise conversations on franchisee selection, alignment, and what it takes to build a high-performing system, from the Zorakle network."
   heading="Podcasts"
   emptyStateMessage="No podcast posts were found."
   basePath="/podcasts"

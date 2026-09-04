@@ -4,7 +4,14 @@ import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import CtaBand from "../components/CtaBand.astro";
 import { Image } from "astro:assets";
+import TestimonialCard from "../components/TestimonialCard.astro";
+import { testimonials } from "../data/site-content";
 import rebeccaPhoto from "../assets/about-rebecca-monet.png";
+
+const featuredTestimonialNames = ["Marcos Moura", "Gerry Henley", "Kim Marinoff"];
+const featuredTestimonials = featuredTestimonialNames
+  .map((name) => testimonials.find((item) => item.name === name))
+  .filter((item): item is (typeof testimonials)[number] => Boolean(item));
 ---
 
 <MainLayout
@@ -19,11 +26,12 @@ import rebeccaPhoto from "../assets/about-rebecca-monet.png";
     <section class="bg-white pt-14 pb-6 md:pt-20 md:pb-10">
       <div class="section-shell max-w-3xl">
         <p class="section-eyebrow">About Zorakle</p>
-        <h1 class="page-title mt-4">The team behind the franchise alignment science.</h1>
+        <h1 class="page-title mt-4">The team behind the franchise alignment stack.</h1>
         <p class="mt-5 text-base leading-relaxed text-[#3b3e47] md:text-lg">
-          Zorakle was built by psychometricians and franchise development veterans who believe
-          awarding and matching decisions should be grounded in validated science, not gut feel.
-          Meet the people who make that work.
+          Zorakle launched in 2012. Twelve years later, if a report looks off or a candidate's
+          score doesn't add up, you're an email or a Zoom meeting away from the person who built
+          the science, not a ticket queue. They can explain exactly what's behind the result and
+          fix it directly. Meet them below.
         </p>
       </div>
     </section>
@@ -45,7 +53,7 @@ import rebeccaPhoto from "../assets/about-rebecca-monet.png";
             <p class="section-eyebrow">Founder &amp; Chief Scientist</p>
             <h2 class="section-title">Rebecca Monet.</h2>
             <p class="mt-7 max-w-2xl text-base leading-relaxed text-[#3b3e47] md:text-lg">
-              Rebecca has spent more than 30 years at the intersection of psychometrics, performance science, and franchise development. She built Zorakle because she recognized that the industry was making million-dollar decisions with tools designed for a completely different purpose — and she had the scientific background to do something about it. She is also the host of <em>The Franchise Woman Podcast</em> and a frequent voice on franchise development, candidate quality, and what it really takes to build a high-performing system.
+              Rebecca has spent more than 30 years at the intersection of psychometrics, performance science, and franchise development. She founded Zorakle in 2012 because the industry was making million-dollar decisions with tools built for a completely different purpose, and she had the scientific background to fix that. Twelve years later, that same conviction runs the company: awarding decisions deserve better than a gut call. She is also the host of <em>The Franchise Woman Podcast</em> and a frequent voice on franchise development, candidate quality, and what it really takes to build a high-performing system.
             </p>
             <blockquote class="mt-10 border-l-4 border-[#09cc9c] pl-6">
               <p class="font-display text-2xl leading-snug text-[#22252a] md:text-3xl">
@@ -89,6 +97,29 @@ import rebeccaPhoto from "../assets/about-rebecca-monet.png";
         </div>
       </div>
     </section>
+
+    <!-- PROOF -->
+    {featuredTestimonials.length > 0 && (
+      <section class="bg-[#f3f3f3] py-20 md:py-28">
+        <div class="section-shell">
+          <div class="max-w-2xl">
+            <p class="section-eyebrow">In Their Words</p>
+            <h2 class="section-title">Franchisors and brokers who work with us.</h2>
+          </div>
+
+          <div class="mt-12 grid gap-6 md:grid-cols-3">
+            {featuredTestimonials.map((item) => (
+              <TestimonialCard
+                name={item.name}
+                company={item.company}
+                type={item.type}
+                quote={item.quote}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
 
     <CtaBand
       title="Meet with our team."

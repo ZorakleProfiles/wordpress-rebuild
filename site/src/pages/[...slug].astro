@@ -37,28 +37,37 @@ export async function getStaticPaths() {
   }> = [];
   const seenSlugs = new Set<string>();
 
+  // Register every post's own primary slug first, in its own pass, so a
+  // later post's primary route can never be silently dropped just because
+  // an earlier post's legacy alias happens to collide with it below.
   posts.forEach((post) => {
-    const aliases = [post.slug, post.legacySlug].filter(
-      (value): value is string => typeof value === "string" && value.trim().length > 0
-    );
-    const primaryKey = slugKey(post.slug);
+    if (seenSlugs.has(post.slug)) {
+      return;
+    }
+    seenSlugs.add(post.slug);
+    paths.push({ params: { slug: post.slug }, props: { post, isLegacyAlias: false } });
+  });
 
-    aliases.forEach((alias) => {
-      if (seenSlugs.has(alias)) {
-        return;
-      }
-      seenSlugs.add(alias);
+  // Legacy aliases (-> 301) are registered afterward and are skipped if they
+  // collide with any primary slug or another alias already claimed above.
+  posts.forEach((post) => {
+    const alias = post.legacySlug;
+    if (typeof alias !== "string" || alias.trim().length === 0 || alias === post.slug) {
+      return;
+    }
+    if (seenSlugs.has(alias)) {
+      return;
+    }
+    seenSlugs.add(alias);
 
-      // Treat as a legacy alias (-> 301) only when it is a genuinely different
-      // slug. Twins that differ from the primary just by percent-encoding or
-      // invisible characters keep rendering the article; their <link rel=
-      // "canonical"> already points search engines at the primary URL.
-      const isLegacyAlias =
-        alias !== post.slug && slugKey(alias) !== primaryKey;
-      paths.push({
-        params: { slug: alias },
-        props: { post, isLegacyAlias },
-      });
+    // Treat as a legacy alias (-> 301) only when it is a genuinely different
+    // slug. Twins that differ from the primary just by percent-encoding or
+    // invisible characters keep rendering the article; their <link rel=
+    // "canonical"> already points search engines at the primary URL.
+    const isLegacyAlias = slugKey(alias) !== slugKey(post.slug);
+    paths.push({
+      params: { slug: alias },
+      props: { post, isLegacyAlias },
     });
   });
 
@@ -164,12 +173,10 @@ const portableTextComponents = {
       </div>
 
       {
-        post.body.length > 0 ? (
+        post.body.length > 0 && (
           <div class="blog-content mt-8 border-t border-[#d1d4dd] pt-8">
             <PortableText value={post.body as any} components={portableTextComponents as any} />
           </div>
-        ) : (
-          <div class="blog-content mt-8 border-t border-[#d1d4dd] pt-8" set:html={post.contentHtml}></div>
         )
       }
     </article>

@@ -40,7 +40,6 @@ export interface BlogPost {
   slug: string;
   title: string;
   excerpt: string;
-  contentHtml: string;
   body: PortableTextBlock[];
   publishedAt: string;
   updatedAt: string;
@@ -150,7 +149,6 @@ function mapSanityPost(post: SanityPost, index: number): BlogPost {
     slug,
     title,
     excerpt,
-    contentHtml: "",
     body,
     publishedAt,
     updatedAt,
@@ -250,6 +248,35 @@ export async function getPaginatedPostsByCategory(
   pageSize = DEFAULT_ARCHIVE_PAGE_SIZE
 ): Promise<PaginatedPosts> {
   return paginate(await getPostsByCategory(category), page, pageSize);
+}
+
+export interface ArchivePaginationPath {
+  params: { page: string };
+  props: { pageData: PaginatedPosts };
+}
+
+/**
+ * Shared getStaticPaths body for a category's /page/[page] archive: page 1
+ * lives at the category's index route, so this only returns pages 2+.
+ */
+export async function getArchivePaginationPaths(
+  category: string,
+  pageSize = DEFAULT_ARCHIVE_PAGE_SIZE
+): Promise<ArchivePaginationPath[]> {
+  const totalPages = await getCategoryPostPageCount(category, pageSize);
+  if (totalPages <= 1) {
+    return [];
+  }
+
+  const pageNumbers = Array.from({ length: totalPages - 1 }, (_unused, index) => index + 2);
+  const pageDataByPage = await Promise.all(
+    pageNumbers.map((pageNumber) => getPaginatedPostsByCategory(category, pageNumber, pageSize))
+  );
+
+  return pageNumbers.map((pageNumber, index) => ({
+    params: { page: String(pageNumber) },
+    props: { pageData: pageDataByPage[index] }
+  }));
 }
 
 export async function getPostPageCount(pageSize = DEFAULT_ARCHIVE_PAGE_SIZE): Promise<number> {

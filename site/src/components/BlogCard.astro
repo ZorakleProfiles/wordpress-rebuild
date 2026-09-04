@@ -10,7 +10,7 @@ interface Props {
 const { post, basePath = "/blog", isLast = false } = Astro.props;
 
 const publishedDate = new Intl.DateTimeFormat("en-US", {
-  month: "short",
+  month: "long",
   day: "numeric",
   year: "numeric"
 }).format(new Date(post.publishedAt));

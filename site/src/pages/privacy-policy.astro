@@ -1,0 +1,311 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+
+const lastUpdated = "September 4, 2026";
+
+const sections = [
+  { id: "information-collected", title: "A. Information We Collect" },
+  { id: "use-of-information", title: "B. How We Use Information" },
+  { id: "sharing-and-disclosure", title: "C. Sharing and Disclosure" },
+  { id: "children", title: "D. Children's Privacy" },
+  { id: "contact", title: "Contact Us" }
+];
+---
+
+<MainLayout
+  title="Privacy Policy | Zorakle"
+  description="Read the Zorakle privacy policy to learn what information we collect, how we use it, and how we protect it across our websites."
+>
+  <SiteHeader />
+
+  <main>
+    <!-- INTRO -->
+    <section class="bg-white pt-14 pb-6 md:pt-20 md:pb-10">
+      <div class="section-shell max-w-3xl">
+        <p class="section-eyebrow">Legal</p>
+        <h1 class="page-title mt-4">Privacy Policy</h1>
+        <p class="mt-5 text-base leading-relaxed text-[#3b3e47] md:text-lg">
+          This policy explains what information Zorakle collects through our websites, how we use
+          and share it, and the choices you have.
+        </p>
+        <p class="mt-4 text-sm font-semibold uppercase tracking-widest text-[#56586a]">
+          Last updated: {lastUpdated}
+        </p>
+      </div>
+    </section>
+
+    <!-- POLICY BODY -->
+    <section class="bg-white pb-20 md:pb-28">
+      <div class="section-shell">
+        <div class="grid gap-12 lg:grid-cols-[minmax(0,240px)_minmax(0,1fr)] lg:gap-16">
+          <!-- TOC -->
+          <aside class="hidden lg:block">
+            <nav class="sticky top-10 rounded-2xl border border-[#dedede] bg-[#f8f8f8] p-6">
+              <p class="text-xs font-semibold uppercase tracking-widest text-[#56586a]">On this page</p>
+              <ul class="mt-4 space-y-3 text-sm">
+                {sections.map((s) => (
+                  <li>
+                    <a href={`#${s.id}`} class="text-[#3b3e47] transition hover:text-[#087f65]">{s.title}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </aside>
+
+          <!-- CONTENT -->
+          <div class="policy-prose max-w-none">
+            <p>
+              This Privacy Policy applies to the websites owned and operated by Zorakle Profiles, a
+              division of Zorakle LLC ("Zorakle," "we," or "us"), on which this policy is posted
+              (collectively, the "Sites"). This policy does not apply to information collected
+              offline.
+            </p>
+            <p class="policy-callout">
+              By using the Sites, you consent to the terms of this Privacy Policy and to our
+              processing of personal information for the purposes described below. If you do not
+              agree to these terms, please do not use the Sites.
+            </p>
+
+            <h2 id="information-collected">A. Information We Collect</h2>
+            <p>
+              This policy applies only to information collected on the Sites and does not apply to
+              information collected by Zorakle through any other means. For details on information
+              collected from children under the age of 16, see Section D below. We collect two
+              types of information from visitors to the Sites: (1) Personally Identifiable
+              Information, and (2) Non-Personally Identifiable Information, such as your IP address
+              or cookies.
+            </p>
+
+            <h3>1. Personally Identifiable Information</h3>
+            <p>
+              "Personally Identifiable Information" is information that identifies you personally,
+              such as your name, address, telephone number, email address, or company name. Zorakle
+              collects and stores the personally identifiable information you provide to us. Examples
+              of how we may collect this information on the Sites include:
+            </p>
+            <ul>
+              <li>Your email address, name, and phone number if you sign up for our newsletter, request a demo, ask for a sample report, or register for a webinar;</li>
+              <li>Your name, email address, and phone number if you contact us with a question; and</li>
+              <li>Your name, phone number, and email address if you take the Zorakle assessment.</li>
+            </ul>
+            <p>
+              This list is illustrative, not exhaustive. If you do not want Zorakle to collect your
+              personally identifiable information, please do not provide it to us.
+            </p>
+
+            <h3>2. Non-Personally Identifiable Information</h3>
+            <p>
+              "Non-Personally Identifiable Information" is technical or demographic information —
+              such as age, gender, or interests — that does not identify you personally. Examples of
+              non-personally identifiable information collected via the Sites, and how we use it,
+              include:
+            </p>
+            <ul>
+              <li>
+                <strong>IP address.</strong> Your Internet Protocol (IP) address lets computers on the
+                internet know where to send data, such as the webpages you view. We use it to deliver
+                webpages to you, tailor the Sites to our users' interests, and measure Site traffic.
+              </li>
+              <li>
+                <strong>Cookies.</strong> A cookie is a small text file that may collect information
+                about your activity on the Sites. You can set most browsers to notify you when you
+                receive a cookie, or block cookies entirely, though doing so may limit certain
+                personalized features of the Sites.
+              </li>
+              <li>
+                <strong>Web beacons.</strong> Also known as clear GIFs or pixel tags, web beacons are
+                tiny graphics with a unique identifier, similar in function to cookies. We use them to
+                count visitors to certain pages and measure the effectiveness of promotional
+                campaigns. In HTML emails, they can indicate whether and when a message was opened.
+              </li>
+              <li>
+                <strong>Demographic information.</strong> Information such as gender, age, zip code,
+                or interests that you voluntarily provide helps us deliver more relevant services and
+                analyze trends. Aggregated information that does not identify you personally is also
+                treated as non-personally identifiable information.
+              </li>
+            </ul>
+            <p>
+              We collect the non-personally identifiable information described above from all
+              visitors to our Sites. If you do not want Zorakle to have access to this information,
+              please do not visit our Sites.
+            </p>
+
+            <h2 id="use-of-information">B. How We Use Information</h2>
+            <h3>1. Personally Identifiable Information</h3>
+            <p>We use personally identifiable information collected on the Sites primarily to:</p>
+            <ul>
+              <li>Deliver services you request or purchase, such as webinars, information, newsletters, or access to Zorakle tools and assessments;</li>
+              <li>Alert you to special offers, updated information, and other new services from Zorakle;</li>
+              <li>Complete a transaction or service you have requested;</li>
+              <li>Fulfill the terms of a promotion;</li>
+              <li>Ensure the Sites are relevant to your needs and help us create content that matters to you;</li>
+              <li>Notify you of a material change to this Privacy Policy, if necessary;</li>
+              <li>Provide access to limited-entry areas of the Sites; and</li>
+              <li>Respond to inquiries submitted through forms such as Contact Us.</li>
+            </ul>
+
+            <h3>2. Non-Personally Identifiable Information</h3>
+            <p>
+              We use non-personally identifiable information as described above and in other ways
+              permitted by applicable law, including combining it with personally identifiable
+              information — except with respect to non-personally identifiable information collected
+              from children under the age of 16.
+            </p>
+
+            <h2 id="sharing-and-disclosure">C. Sharing and Disclosure of Information</h2>
+            <h3>1. Personally Identifiable Information</h3>
+            <p>We may share or disclose your personally identifiable information in the following circumstances:</p>
+            <ul>
+              <li>
+                <strong>To fulfill a service to you.</strong> For example, if you email us a question,
+                we use your email address to process and respond to it. If you take the Zorakle
+                assessment on behalf of a client such as Your Franchise Is Waiting, we may share your
+                information with that client to complete your profile.
+              </li>
+              <li>
+                <strong>With your permission,</strong> we may provide your information to partners so
+                they can send you relevant franchise or business opportunity information. This occurs
+                only if you specifically opt in to receive partner content.
+              </li>
+              <li>
+                <strong>With service providers</strong> — unaffiliated third parties, agents, or
+                contractors who help us maintain the Sites and provide administrative services (such
+                as order processing and fulfillment, customer service, data maintenance and analysis,
+                customer communications, and assessment data collection) on our behalf. We require
+                that these providers use your information only to perform the services for which
+                they're responsible. If you do not want our service providers to have access to your
+                information, please do not submit personally identifiable information to us.
+              </li>
+              <li>
+                <strong>To comply with the law,</strong> or in the good-faith belief that doing so is
+                necessary to satisfy legal process, protect our rights or property (including that of
+                Zorakle and its family of Sites), or protect the personal safety of our users in
+                urgent circumstances.
+              </li>
+              <li>
+                <strong>As part of a corporate transaction,</strong> including a merger, acquisition,
+                or sale of all or substantially all of our assets.
+              </li>
+              <li>
+                <strong>In aggregate or de-identified form,</strong> to track and analyze non-identifying
+                usage and volume statistics, and to share such information with third parties.
+              </li>
+              <li>
+                <strong>To prevent fraud,</strong> we may verify information collected through the
+                Sites with third parties, and may receive personally identifiable information about
+                you from such services in the process.
+              </li>
+            </ul>
+            <p>
+              Except as described in this Privacy Policy, or at the time we request the information,
+              we do not otherwise use, share, or disclose your personally identifiable information to
+              third parties.
+            </p>
+
+            <h3>2. Non-Personally Identifiable Information</h3>
+            <p>
+              We use non-personally identifiable information collected on the Sites as described in
+              Section A(2) above, and may share this information with third parties.
+            </p>
+
+            <h2 id="children">D. Collection and Use of Information from Children Under 16</h2>
+            <p>
+              We do not knowingly request or collect personal information, online or offline, from
+              users under the age of 16, and we do not knowingly use or share personal information
+              from users under 16 with third parties.
+            </p>
+            <p>
+              If we become aware that we have received information about a child under 16, we will
+              take steps to verify and promptly delete that information.
+            </p>
+
+            <h2 id="contact">Contact Us</h2>
+            <p>Questions regarding this Privacy Policy should be directed to:</p>
+            <address class="policy-address">
+              Zorakle Profiles, LLC<br />
+              8782 S. Park Road<br />
+              Rogers, AR 72756<br />
+              <a href="mailto:info@zorakle.net">info@zorakle.net</a>
+            </address>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter />
+</MainLayout>
+
+<style>
+  .policy-prose {
+    color: #3b3e47;
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .policy-prose h2 {
+    margin-top: 3rem;
+    padding-top: 0.5rem;
+    scroll-margin-top: 6rem;
+    font-family: "MontereyFLF", "Century Gothic", "Avenir Next", sans-serif;
+    font-size: clamp(1.4rem, 1.4vw + 1rem, 1.75rem);
+    font-weight: 700;
+    color: #22252a;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  .policy-prose h2:first-of-type {
+    border-top: none;
+    margin-top: 2rem;
+  }
+
+  .policy-prose h3 {
+    margin-top: 1.75rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #22252a;
+  }
+
+  .policy-prose p {
+    margin-top: 1rem;
+  }
+
+  .policy-prose ul {
+    margin-top: 1rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+
+  .policy-prose li {
+    margin-top: 0.6rem;
+  }
+
+  .policy-prose li strong {
+    color: #22252a;
+  }
+
+  .policy-prose a {
+    color: #087f65;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .policy-callout {
+    margin-top: 1.5rem;
+    border-radius: 0.75rem;
+    background: #f8f8f8;
+    border-left: 4px solid #09cc9c;
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+    color: #22252a;
+  }
+
+  .policy-address {
+    margin-top: 1rem;
+    font-style: normal;
+    line-height: 1.7;
+  }
+</style>

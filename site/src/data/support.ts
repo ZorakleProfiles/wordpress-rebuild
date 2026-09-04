@@ -141,6 +141,16 @@ export const supportArticles: SupportArticle[] = [
           fileName: "generate.png",
           alt: "Generate Blueprint button and approval status"
         }
+      },
+      {
+        title: "Start Sending Assessments to Prospective Franchisees",
+        content:
+            "Begin sharing assessment links with prospective franchisees so you can evaluate fit using your new blueprint and algorithm. See <a href=\"/support/collect-assessments\" class=\"text-[#a8420c] underline hover:no-underline\">Collecting Assessments</a> for how to find and share your link.",
+        media: {
+          type: "screenshot",
+          fileName: "assessments.png",
+          alt: "Placeholder screenshot for sending assessments"
+        }
       }
     ]
   },
@@ -177,7 +187,7 @@ export const supportArticles: SupportArticle[] = [
       {
         title: "Start Sending Assessments to Prospective Franchisees",
         content:
-          "Begin sharing assessment links with prospective franchisees so you can evaluate fit using your new blueprint and algorithm.",
+          "Begin sharing assessment links with prospective franchisees so you can evaluate fit using your new blueprint and algorithm. See <a href=\"/support/collect-assessments\" class=\"text-[#a8420c] underline hover:no-underline\">Collecting Assessments</a> for how to find and share your link.",
         media: {
           type: "screenshot",
           fileName: "03.png",

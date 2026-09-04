@@ -146,13 +146,11 @@ export const footer = {
 
   newsletter: {
     anchorId: "newsletter",
-    heading: "The Franchise Alignment Brief",
-    description: "Research on candidate fit and system alignment. One email, no noise.",
-    // Create a HubSpot form for newsletter signups, then fill in formId.
-    // While formId is empty the footer shows a mailto fallback instead.
+    heading: "Mailing List",
+    description: "Occasional updates from Zorakle. One email, no noise.",
     hubspot: {
       portalId: "2403148",
-      formId: "",
+      formId: "70034db0-b57a-46ee-9e57-589cb90c70a0",
       region: "na1"
     }
   },

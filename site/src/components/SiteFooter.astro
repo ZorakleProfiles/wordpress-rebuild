@@ -15,7 +15,7 @@ const copyright = (footer.copyright ?? "© {year} Zorakle Profiles, LLC. All rig
 );
 
 const resolveHref = (href: string) => (href === "PORTAL_LOGIN" ? portalLogin : href);
-const mailtoSubscribe = `mailto:${footer.email}?subject=Subscribe%3A%20The%20Franchise%20Alignment%20Brief`;
+const mailtoSubscribe = `mailto:${footer.email}?subject=Subscribe%3A%20Mailing%20List`;
 ---
 
 <footer class="relative z-10 rounded-t-[45px] bg-[#22252a] text-white">
@@ -42,17 +42,16 @@ const mailtoSubscribe = `mailto:${footer.email}?subject=Subscribe%3A%20The%20Fra
           <p class="mt-1 text-xs leading-relaxed text-white/55">{nl.description}</p>
           <div class="mt-3">
             {hasHubspotForm ? (
-              <div
-                class="footer-hs-form"
-                data-hs-form
+              <a
+                class="footer-subscribe-btn"
+                href={mailtoSubscribe}
+                data-hs-modal-trigger
                 data-portal-id={hs.portalId}
                 data-form-id={hs.formId}
                 data-region={hs.region ?? "na1"}
               >
-                <noscript>
-                  <a class="footer-subscribe-btn" href={mailtoSubscribe}>Email us to subscribe</a>
-                </noscript>
-              </div>
+                Subscribe by email
+              </a>
             ) : (
               <a class="footer-subscribe-btn" href={mailtoSubscribe}>Subscribe by email</a>
             )}
@@ -103,59 +102,89 @@ const mailtoSubscribe = `mailto:${footer.email}?subject=Subscribe%3A%20The%20Fra
   </div>
 </footer>
 
+{nl && hasHubspotForm && (
+  <div id="newsletter-modal" class="newsletter-modal" hidden aria-hidden="true">
+    <div class="newsletter-modal-backdrop" data-modal-close></div>
+    <div class="newsletter-modal-panel" role="dialog" aria-modal="true" aria-labelledby="newsletter-modal-heading">
+      <button type="button" class="newsletter-modal-close" data-modal-close aria-label="Close">&times;</button>
+      <p id="newsletter-modal-heading" class="newsletter-modal-heading">{nl.heading}</p>
+      <p class="newsletter-modal-description">{nl.description}</p>
+      <div
+        class="newsletter-modal-form"
+        data-hs-form
+        data-portal-id={hs.portalId}
+        data-form-id={hs.formId}
+        data-region={hs.region ?? "na1"}
+      ></div>
+    </div>
+  </div>
+)}
+
 <script>
-  function initFooterHubspot() {
-    const mount = document.querySelector<HTMLElement>("[data-hs-form]");
-    if (!mount || mount.dataset.hsInit === "true") return;
+  function initNewsletterModal() {
+    const modal = document.getElementById("newsletter-modal");
+    const trigger = document.querySelector<HTMLElement>("[data-hs-modal-trigger]");
+    const mount = modal?.querySelector<HTMLElement>("[data-hs-form]");
+    if (!modal || !trigger || !mount || trigger.dataset.hsModalInit === "true") return;
+    trigger.dataset.hsModalInit = "true";
 
     const portalId = mount.dataset.portalId;
     const formId = mount.dataset.formId;
     const region = mount.dataset.region || "na1";
     if (!portalId || !formId) return;
 
-    const build = () => {
+    const buildForm = () => {
       const w = window as any;
       if (!w.hbspt || mount.dataset.hsInit === "true") return;
       mount.dataset.hsInit = "true";
-      w.hbspt.forms.create({ portalId, formId, region, target: "[data-hs-form]" });
+      w.hbspt.forms.create({ portalId, formId, region, target: "#newsletter-modal [data-hs-form]" });
     };
 
-    const load = () => {
+    const loadForm = () => {
       const w = window as any;
-      if (w.hbspt) return build();
+      if (w.hbspt) return buildForm();
       const existing = document.getElementById("hs-forms-embed-v2") as HTMLScriptElement | null;
       if (existing) {
-        existing.addEventListener("load", build);
+        existing.addEventListener("load", buildForm);
         return;
       }
       const s = document.createElement("script");
       s.id = "hs-forms-embed-v2";
       s.src = "https://js.hsforms.net/forms/embed/v2.js";
       s.async = true;
-      s.addEventListener("load", build);
+      s.addEventListener("load", buildForm);
       document.head.appendChild(s);
     };
 
-    if ("IntersectionObserver" in window) {
-      const io = new IntersectionObserver(
-        (entries, obs) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              obs.disconnect();
-              load();
-            }
-          }
-        },
-        { rootMargin: "500px 0px" }
-      );
-      io.observe(mount);
-    } else {
-      load();
-    }
+    const openModal = () => {
+      modal.hidden = false;
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      loadForm();
+    };
+
+    const closeModal = () => {
+      modal.hidden = true;
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    };
+
+    trigger.addEventListener("click", (event) => {
+      event.preventDefault();
+      openModal();
+    });
+
+    modal.querySelectorAll<HTMLElement>("[data-modal-close]").forEach((el) => {
+      el.addEventListener("click", closeModal);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !modal.hidden) closeModal();
+    });
   }
 
-  initFooterHubspot();
-  document.addEventListener("astro:page-load", initFooterHubspot);
+  initNewsletterModal();
+  document.addEventListener("astro:page-load", initNewsletterModal);
 </script>
 
 <style is:global>
@@ -175,44 +204,109 @@ const mailtoSubscribe = `mailto:${footer.email}?subject=Subscribe%3A%20The%20Fra
     filter: brightness(0.95);
   }
 
-  /* Skin the embedded HubSpot form for the dark footer. */
-  .footer-hs-form form {
+  /* Newsletter signup modal, triggered from the footer subscribe button. */
+  .newsletter-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .newsletter-modal[hidden] {
+    display: none;
+  }
+  .newsletter-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 11, 13, 0.72);
+  }
+  .newsletter-modal-panel {
+    position: relative;
+    width: 100%;
+    max-width: 34rem;
+    max-height: calc(100vh - 3rem);
+    overflow-y: auto;
+    border-radius: 1rem;
+    background: #fff;
+    padding: 2rem 2rem 1.75rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  }
+  .newsletter-modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 0;
+    background: #f4f5f7;
+    color: #22252a;
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .newsletter-modal-close:hover {
+    background: #e5e7eb;
+  }
+  .newsletter-modal-heading {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #22252a;
+    padding-right: 1.5rem;
+  }
+  .newsletter-modal-description {
+    margin-top: 0.35rem;
+    font-size: 0.8rem;
+    color: #3b3e47;
+  }
+  .newsletter-modal-form {
+    margin-top: 1.25rem;
+  }
+
+  /* Skin the embedded HubSpot form for the white modal. */
+  .newsletter-modal-form form {
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
   }
-  .footer-hs-form .hs-form-field > label {
+  .newsletter-modal-form .hs-form-field > label {
     display: block;
     margin-bottom: 0.3rem;
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: #3b3e47;
   }
-  .footer-hs-form .hs-form-field > label .hs-form-required {
-    color: #fd7730;
+  .newsletter-modal-form .hs-form-field > label .hs-form-required {
+    color: #a8420c;
   }
-  .footer-hs-form input.hs-input:not([type="checkbox"]):not([type="radio"]),
-  .footer-hs-form select.hs-input,
-  .footer-hs-form textarea.hs-input {
+  .newsletter-modal-form input.hs-input:not([type="checkbox"]):not([type="radio"]),
+  .newsletter-modal-form select.hs-input,
+  .newsletter-modal-form textarea.hs-input {
     width: 100%;
     box-sizing: border-box;
     border-radius: 0.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid #d1d4dd;
+    background: #fff;
     padding: 0.6rem 0.8rem;
     font-size: 0.875rem;
-    color: #fff;
+    color: #22252a;
   }
-  .footer-hs-form input.hs-input::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+  .newsletter-modal-form input.hs-input::placeholder {
+    color: #9aa0ac;
   }
-  .footer-hs-form input.hs-input:focus,
-  .footer-hs-form select.hs-input:focus,
-  .footer-hs-form textarea.hs-input:focus {
+  .newsletter-modal-form input.hs-input:focus,
+  .newsletter-modal-form select.hs-input:focus,
+  .newsletter-modal-form textarea.hs-input:focus {
     outline: none;
     border-color: #09cc9c;
-    box-shadow: 0 0 0 3px rgba(9, 204, 156, 0.25);
+    box-shadow: 0 0 0 3px rgba(9, 204, 156, 0.2);
   }
-  .footer-hs-form .hs-button {
+  .newsletter-modal-form .hs-button {
     align-self: flex-start;
     cursor: pointer;
     border: 0;
@@ -224,27 +318,27 @@ const mailtoSubscribe = `mailto:${footer.email}?subject=Subscribe%3A%20The%20Fra
     color: #22252a;
     transition: filter 0.15s ease;
   }
-  .footer-hs-form .hs-button:hover {
+  .newsletter-modal-form .hs-button:hover {
     filter: brightness(0.95);
   }
-  .footer-hs-form .hs-error-msg,
-  .footer-hs-form .hs-error-msgs label {
-    color: #ffb4a1;
+  .newsletter-modal-form .hs-error-msg,
+  .newsletter-modal-form .hs-error-msgs label {
+    color: #b3261e;
     font-size: 0.75rem;
   }
-  .footer-hs-form .hs-field-desc,
-  .footer-hs-form .legal-consent-container,
-  .footer-hs-form .hs-richtext {
-    color: rgba(255, 255, 255, 0.5);
+  .newsletter-modal-form .hs-field-desc,
+  .newsletter-modal-form .legal-consent-container,
+  .newsletter-modal-form .hs-richtext {
+    color: #6b6f79;
     font-size: 0.7rem;
   }
-  .footer-hs-form .hs-richtext a,
-  .footer-hs-form .legal-consent-container a {
-    color: #09cc9c;
+  .newsletter-modal-form .hs-richtext a,
+  .newsletter-modal-form .legal-consent-container a {
+    color: #a8420c;
     text-decoration: underline;
   }
-  .footer-hs-form .submitted-message {
+  .newsletter-modal-form .submitted-message {
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.85);
+    color: #22252a;
   }
 </style>

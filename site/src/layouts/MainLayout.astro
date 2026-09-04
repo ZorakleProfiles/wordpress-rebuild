@@ -58,6 +58,13 @@ const resolvedOgImage = new URL(ogImage ?? DEFAULT_OG_IMAGE, siteOrigin).href;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Start of HubSpot Embed Code -->
+    {!noindex && (
+      <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/2403148.js"></script>
+    )}
+    <!-- End of HubSpot Embed Code -->
+
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />

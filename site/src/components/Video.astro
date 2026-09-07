@@ -5,7 +5,12 @@ import type { ImageMetadata } from "astro";
 interface Props {
   poster: ImageMetadata;
   posterAlt: string;
-  videoId: string;
+  /** Vimeo video id. Provide this or `videoSrc`. */
+  videoId?: string;
+  /** URL of a local/self-hosted video file (e.g. an imported `.mp4`). Takes precedence over `videoId`. */
+  videoSrc?: string;
+  /** MIME type for the local video source. Defaults to `video/mp4`. */
+  videoType?: string;
   playLabel: string;
   modalTitle: string;
   caption?: string;
@@ -20,6 +25,8 @@ const {
   poster,
   posterAlt,
   videoId,
+  videoSrc,
+  videoType = "video/mp4",
   playLabel,
   modalTitle,
   caption,
@@ -30,14 +37,23 @@ const {
   imageClass = "transition duration-300 group-hover:scale-[1.015]"
 } = Astro.props;
 
-const videoEmbedUrl =
-  `https://player.vimeo.com/video/${videoId}?autoplay=1&title=0&byline=0&portrait=0&dnt=1`;
-const modalTitleId = `video-modal-title-${videoId}`;
+if (!videoId && !videoSrc) {
+  throw new Error("Video.astro requires either `videoId` (Vimeo) or `videoSrc` (local file).");
+}
+
+const videoEmbedUrl = videoId
+  ? `https://player.vimeo.com/video/${videoId}?autoplay=1&title=0&byline=0&portrait=0&dnt=1`
+  : undefined;
+const modalKey = videoSrc ?? videoId;
+const modalTitleId = `video-modal-title-${modalKey?.replace(/[^a-z0-9]+/gi, "-")}`;
 ---
 
 <div
   data-video
   data-video-embed-url={videoEmbedUrl}
+  data-video-src={videoSrc}
+  data-video-src-type={videoType}
+  data-video-poster={poster.src}
   data-video-title={modalTitle}
 >
   <div class:list={["group relative aspect-video overflow-hidden", frameClass]}>
@@ -98,11 +114,21 @@ const modalTitleId = `video-modal-title-${videoId}`;
     const closeButton = video.querySelector("[data-video-close]");
     const playerContainer = video.querySelector("[data-video-player]");
     const videoEmbedUrl = video.dataset.videoEmbedUrl;
+    const videoSrc = video.dataset.videoSrc;
+    const videoSrcType = video.dataset.videoSrcType || "video/mp4";
+    const videoPoster = video.dataset.videoPoster;
     const modalTitle = video.dataset.videoTitle;
 
     let opener: Element | null = null;
 
     const removePlayer = () => {
+      const existing = playerContainer?.querySelector("video");
+      if (existing instanceof HTMLVideoElement) {
+        existing.pause();
+        existing.replaceChildren();
+        existing.removeAttribute("src");
+        existing.load();
+      }
       playerContainer?.replaceChildren();
     };
 
@@ -114,21 +140,41 @@ const modalTitleId = `video-modal-title-${videoId}`;
       if (
         !(modal instanceof HTMLDialogElement) ||
         !playerContainer ||
-        !videoEmbedUrl ||
-        !modalTitle
+        !modalTitle ||
+        (!videoEmbedUrl && !videoSrc)
       ) return;
 
       opener = document.activeElement;
 
-      const iframe = document.createElement("iframe");
-      iframe.src = videoEmbedUrl;
-      iframe.title = modalTitle;
-      iframe.className = "h-full w-full";
-      iframe.allow = "autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share";
-      iframe.referrerPolicy = "strict-origin-when-cross-origin";
-      iframe.allowFullscreen = true;
+      if (videoSrc) {
+        const player = document.createElement("video");
+        player.title = modalTitle;
+        player.className = "h-full w-full bg-black";
+        player.controls = true;
+        player.autoplay = true;
+        player.playsInline = true;
+        player.preload = "auto";
+        if (videoPoster) player.poster = videoPoster;
 
-      playerContainer.replaceChildren(iframe);
+        const source = document.createElement("source");
+        source.src = videoSrc;
+        source.type = videoSrcType;
+        player.append(source);
+
+        playerContainer.replaceChildren(player);
+        void player.play().catch(() => {});
+      } else {
+        const iframe = document.createElement("iframe");
+        iframe.src = videoEmbedUrl as string;
+        iframe.title = modalTitle;
+        iframe.className = "h-full w-full";
+        iframe.allow = "autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share";
+        iframe.referrerPolicy = "strict-origin-when-cross-origin";
+        iframe.allowFullscreen = true;
+
+        playerContainer.replaceChildren(iframe);
+      }
+
       modal.showModal();
       document.body.style.overflow = "hidden";
 

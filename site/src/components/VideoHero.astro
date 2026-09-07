@@ -11,7 +11,12 @@ interface Props {
   secondaryCta?: { href: string; label: string };
   poster: ImageMetadata;
   posterAlt: string;
-  videoId: string;
+  /** Vimeo video id. Provide this or `videoSrc`. */
+  videoId?: string;
+  /** URL of a local/self-hosted video file (e.g. an imported `.mp4`). Takes precedence over `videoId`. */
+  videoSrc?: string;
+  /** MIME type for the local video source. Defaults to `video/mp4`. */
+  videoType?: string;
   playLabel: string;
   modalTitle: string;
   caption?: string;
@@ -27,6 +32,8 @@ const {
   poster,
   posterAlt,
   videoId,
+  videoSrc,
+  videoType,
   playLabel,
   modalTitle,
   caption
@@ -68,6 +75,8 @@ const {
         {poster}
         {posterAlt}
         {videoId}
+        {videoSrc}
+        {videoType}
         {playLabel}
         {modalTitle}
         {caption}

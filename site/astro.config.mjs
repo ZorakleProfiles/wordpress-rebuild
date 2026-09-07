@@ -51,7 +51,7 @@ export default defineConfig({
   },
   stega: {
     enabled: true,
-    studioUrl: 'http://localhost:3333',
+    studioUrl: 'https://admin.zorakleprofiles.com',
   },
   integrations: [
     sanity({
@@ -61,7 +61,7 @@ export default defineConfig({
       // Ensures clickable visual boxes communicate back to your studio port
       stega: {
         enabled: true,
-        studioUrl: 'http://localhost:3333',
+        studioUrl: 'https://admin.zorakleprofiles.com',
       },
     }),
     sitemap({

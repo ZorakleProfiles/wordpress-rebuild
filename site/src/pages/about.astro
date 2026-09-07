@@ -4,14 +4,8 @@ import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import CtaBand from "../components/CtaBand.astro";
 import { Image } from "astro:assets";
-import TestimonialCard from "../components/TestimonialCard.astro";
-import { testimonials } from "../data/site-content";
+import TestimonialCarousel from "../components/TestimonialCarousel.astro";
 import rebeccaPhoto from "../assets/about-rebecca-monet.png";
-
-const featuredTestimonialNames = ["Marcos Moura", "Gerry Henley", "Kim Marinoff"];
-const featuredTestimonials = featuredTestimonialNames
-  .map((name) => testimonials.find((item) => item.name === name))
-  .filter((item): item is (typeof testimonials)[number] => Boolean(item));
 ---
 
 <MainLayout
@@ -99,27 +93,16 @@ const featuredTestimonials = featuredTestimonialNames
     </section>
 
     <!-- PROOF -->
-    {featuredTestimonials.length > 0 && (
-      <section class="bg-[#f3f3f3] py-20 md:py-28">
-        <div class="section-shell">
-          <div class="max-w-2xl">
-            <p class="section-eyebrow">In Their Words</p>
-            <h2 class="section-title">Franchisors and brokers who work with us.</h2>
-          </div>
-
-          <div class="mt-12 grid gap-6 md:grid-cols-3">
-            {featuredTestimonials.map((item) => (
-              <TestimonialCard
-                name={item.name}
-                company={item.company}
-                type={item.type}
-                quote={item.quote}
-              />
-            ))}
-          </div>
+    <section class="bg-[#f3f3f3] py-20 md:py-28">
+      <div class="section-shell">
+        <div class="max-w-2xl">
+          <p class="section-eyebrow">In Their Words</p>
+          <h2 class="section-title">Franchisors and brokers who work with us.</h2>
         </div>
-      </section>
-    )}
+
+        <TestimonialCarousel type={null} />
+      </div>
+    </section>
 
     <CtaBand
       title="Meet with our team."

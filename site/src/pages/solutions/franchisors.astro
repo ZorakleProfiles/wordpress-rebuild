@@ -16,8 +16,14 @@ import spotonReferral from "../../assets/referrall.png";
 import marketingBlueprint from "../../assets/marketing_blueprint.png";
 import alignmentReport from "../../assets/alignment_report.png";
 import heroBackground from "../../assets/franchisor-poster.png";
-import franchisorExplainerVideo from "../../assets/franchisor-explainer.mp4";
 import franchisorModelFitComparison from "../../assets/franchisors.png";
+
+// Hosted on Sanity's file CDN (supports HTTP Range requests, so <video> scrubbing
+// works). Cloudflare Workers static assets serve the whole file with a 200 and no
+// Accept-Ranges, which breaks seeking. Swap back to `videoId` once the overview
+// lives on Vimeo.
+const franchisorExplainerVideo =
+  "https://cdn.sanity.io/files/4kjxjblw/production/676d9e59bc7e318e2e1756be2b170d63faf3d3ca.mp4";
 
 const steps = [
   {

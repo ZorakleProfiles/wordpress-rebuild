@@ -4,16 +4,72 @@ import SiteHeader from "../components/SiteHeader.astro";
 import HeroSection from "../components/HeroSection.astro";
 import ScienceSection from "../components/ScienceSection.astro";
 import LogoCloud from "../components/LogoCloud.astro";
-import PathCards from "../components/PathCards.astro";
-import DifferenceGrid from "../components/DifferenceGrid.astro";
 import AlignmentExplanation from "../components/AlignmentExplanation.astro";
 import AlignmentPainPoints from "../components/AlignmentPainPoints.astro";
 import AlignmentLifecycle from "../components/AlignmentLifecycle.astro";
 import AlignmentStack from "../components/AlignmentStack.astro";
+import ToolsShowcaseSection from "../components/ToolsShowcaseSection.astro";
 import TestimonialGrid from "../components/TestimonialGrid.astro";
 import CtaBand from "../components/CtaBand.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import { footer } from "../data/site-content";
+import idealAlgorithmReport from "../assets/alignment_report.png";
+import blueprintReport from "../assets/blueprint.png";
+import spotOnProfileReport from "../assets/spoton.png";
+import eclipseReport from "../assets/eclipse.png";
+import marketingBlueprintReport from "../assets/marketing_blueprint.png";
+import coachingInsightReport from "../assets/business_builder.png";
+
+const whatYouGet = [
+  {
+    title: "Ideal Franchisee Algorithm",
+    subtitle: "Customized to your brand.",
+    body:
+      "We benchmark your system and your top performers to build a fit model tuned to what actually predicts success in your brand — not a generic personality score.",
+    image: idealAlgorithmReport,
+    imageAlt: "Overall alignment comparison between a franchisor's benchmark and its high performers"
+  },
+  {
+    title: "The SpotOn! Blueprint",
+    subtitle: "Your algorithm, explained.",
+    body:
+      "A plain-language document showing exactly how your fit model was built from benchmark data, top performers, and brand requirements — so selection stays consistent over time.",
+    image: blueprintReport,
+    imageAlt: "SpotOn! Blueprint value-set analysis for high performers"
+  },
+  {
+    title: "Candidate SpotOn! Profiles",
+    subtitle: "Every candidate, decoded.",
+    body:
+      "A franchisor-only readout of each candidate across the seven sciences — values, work style, culture, competencies, and business capacity — on a single page.",
+    image: spotOnProfileReport,
+    imageAlt: "Candidate SpotOn! Profile report"
+  },
+  {
+    title: "Candidate-to-System Eclipse Reports",
+    subtitle: "Fit, scored.",
+    body:
+      "One fit-compatibility score comparing each candidate to your top performers, broken down by dimension so strengths and risk areas are obvious at a glance.",
+    image: eclipseReport,
+    imageAlt: "Eclipse report showing overall fit compatibility score by dimension"
+  },
+  {
+    title: "The Marketing Blueprint",
+    subtitle: "Attract the right owner.",
+    body:
+      "A data-driven guide to reaching your ideal franchisee profile — the messaging, tone, colors, and channels that resonate with the candidates you actually want.",
+    image: marketingBlueprintReport,
+    imageAlt: "Marketing Blueprint profile of an ideal franchisee persona"
+  },
+  {
+    title: "Coaching & Development Insight",
+    subtitle: "Onboard and coach with precision.",
+    body:
+      "Each owner's profile shows how they process information, handle pressure, and respond to accountability — so training and field coaching target the real gaps.",
+    image: coachingInsightReport,
+    imageAlt: "Business Builder report used for franchisee coaching and development"
+  }
+];
 
 const siteHref = Astro.site?.href ?? "https://www.zorakleprofiles.com/";
 const orgId = `${siteHref}#organization`;
@@ -68,12 +124,29 @@ const jsonLd = JSON.stringify({
   <main>
     <HeroSection />
     <LogoCloud />
+    <ToolsShowcaseSection
+      eyebrow="What Franchisors Receive"
+      title="We study your system and franchisees, learn what predicts success in your brand, and compare every candidate to that customized profile."
+      description="That's the whole idea — and these are the concrete deliverables it produces. Not concepts. Reports your team opens the week you start."
+      cards={whatYouGet}
+      sectionClass="border-b border-[#d1d4dd] bg-white py-16 md:py-20"
+      ctaHref="/request-reports"
+      ctaLabel="See Sample Reports"
+    >
+      <p slot="beforeCta" class="mt-10 text-base text-[#3b3e47]">
+        Brokers get a matching toolkit built for candidate-to-brand fit.{" "}
+        <a
+          href="/solutions/brokers"
+          class="font-semibold text-[#a8420c] underline underline-offset-2"
+        >See the broker tools →</a>
+      </p>
+    </ToolsShowcaseSection>
     <AlignmentExplanation />
     <AlignmentPainPoints />
     <AlignmentLifecycle />
     <AlignmentStack />
     <ScienceSection />
-    <TestimonialGrid type={null} bg="f3f3f3" />
+    <TestimonialGrid type={null} bg="f3f3f3" limit={3} />
     <CtaBand
       title="Put the Alignment Stack to work on your next candidate."
       text="You've seen the five layers that predict who will actually execute. See them applied to your system in a live walkthrough, or start building your plan now."

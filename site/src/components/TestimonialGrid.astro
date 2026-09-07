@@ -5,9 +5,10 @@ type TestimonialFilterType = "brokers" | "franchisors" | null;
 
 interface Props {
   type?: TestimonialFilterType;
+  limit?: number;
 }
 
-const { type = null } = Astro.props;
+const { type = null, limit } = Astro.props;
 ---
 
 <section id="testimonials" class="bg-[#f3f3f3] py-20 md:py-24">
@@ -19,6 +20,6 @@ const { type = null } = Astro.props;
     </h2>
     <p class="mt-4 text-base text-[#56586a]">Here's what they're saying.</p>
 
-    <TestimonialCarousel type={type} />
+    <TestimonialCarousel type={type} limit={limit} />
   </div>
 </section>

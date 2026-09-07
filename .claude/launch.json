@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "astro-dev",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["node_modules/.bin/astro", "dev", "--host", "127.0.0.1", "--port", "4399", "--ignore-lock", "--root", "site"],
+      "port": 4399,
+      "autoPort": false
+    }
+  ]
+}

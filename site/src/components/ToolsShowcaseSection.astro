@@ -58,6 +58,8 @@ const {
       ))}
     </div>
 
+    <slot name="beforeCta" />
+
     {ctaHref && ctaLabel && (
       <div class="mt-10">
         <a href={ctaHref} class={ctaClass}>{ctaLabel}</a>

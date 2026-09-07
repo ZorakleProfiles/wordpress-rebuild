@@ -6,16 +6,27 @@ type TestimonialFilterType = "brokers" | "franchisors" | null;
 
 interface Props {
   type?: TestimonialFilterType;
+  limit?: number;
 }
 
-const { type = null } = Astro.props;
+const { type = null, limit } = Astro.props;
 const filterType = type ?? null;
 
-const filteredTestimonials = testimonials.filter((item) => {
+const matchingTestimonials = testimonials.filter((item) => {
   if (filterType === null) return true;
   if (filterType === "brokers") return item.type === "Broker";
   return item.type === "Franchisor";
 });
+
+// When a limit is set (e.g. the homepage shows only a few strong quotes with a
+// "View More" link), lead with the hand-picked `featured` testimonials, then
+// backfill in source order until we hit the cap.
+const filteredTestimonials =
+  typeof limit === "number"
+    ? [...matchingTestimonials]
+        .sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)))
+        .slice(0, limit)
+    : matchingTestimonials;
 
 const totalTestimonials = filteredTestimonials.length;
 const defaultActive = totalTestimonials > 0 ? 0 : 0;

@@ -101,6 +101,31 @@ const resolvedOgImage = new URL(ogImage ?? DEFAULT_OG_IMAGE, siteOrigin).href;
     <slot name="head" />
   </head>
   <body class="antialiased">
-    <slot />
+    <div class="site-page-frame">
+      <slot />
+    </div>
   </body>
 </html>
+
+<style is:global>
+  body {
+    background: #e8efed;
+  }
+
+  .site-page-frame {
+    min-height: 100vh;
+    margin-inline: auto;
+    overflow: clip;
+    width: min(1540px, calc(100% - 2rem));
+    border: 1px solid #c7d3d0;
+    background: white;
+    box-shadow: 0 20px 70px rgba(31, 42, 53, 0.12);
+  }
+
+  @media (max-width: 767px) {
+    .site-page-frame {
+      width: 100%;
+      border-inline: 0;
+    }
+  }
+</style>

@@ -2,53 +2,86 @@
 const alignmentLayers = [
   {
     title: "Values Alignment",
-    body: "Values shape what people pursue, prioritize, and expect from business ownership. When a franchisee's motivations and definition of success align with the brand, commitment is stronger and more likely to endure through the challenges of building the business."
+    body: "Values shape what people pursue, prioritize, and expect from business ownership. When motivations and definitions of success align, commitment is more likely to endure."
   },
   {
     title: "Culture Alignment",
-    body: "Culture determines how decisions are made, expectations are communicated, and people work together. When a franchisee's natural operating style fits the franchisor's culture, communication is easier, trust develops faster, and unnecessary friction is reduced."
+    body: "Culture determines how decisions are made, expectations are communicated, and people work together. The right fit makes communication easier and reduces friction."
   },
   {
     title: "Systems Alignment",
-    body: "Franchise systems require different kinds of owners at different stages of growth. The right franchisee understands the brand's current level of structure, support, and autonomy—and can succeed within the system as it exists today."
+    body: "The right franchisee understands the brand’s current level of structure, support, and autonomy—and can succeed within the system as it exists today."
   },
   {
     title: "Skills Alignment",
-    body: "Success requires more than general business experience; it requires the capabilities a specific franchise model depends on. Skills alignment reveals whether a candidate is naturally equipped to lead, sell, manage, and operate effectively within your system."
+    body: "Skills alignment reveals whether a candidate is equipped to lead, sell, manage, and operate effectively within the specific franchise model."
   },
   {
     title: "Execution Alignment",
-    body: "Execution alignment reveals how a franchisee is likely to behave when facing pressure, uncertainty, and competing demands. Understanding these patterns helps predict whether the candidate will follow the model, maintain standards, and consistently turn potential into performance."
+    body: "Execution alignment reveals how someone responds to pressure, uncertainty, and competing demands—and whether potential will translate into consistent performance."
   }
 ];
 ---
 
-<section class="bg-[#f3f3f3] py-20 md:py-28 overflow-hidden">
+<section class="overflow-hidden bg-[#f4f8f8] py-14 md:py-18">
   <div class="section-shell">
-
-    <!-- Alignment Stack -->
-    <p class="section-eyebrow">Our Methodology</p>
-    <h2 class="section-title mt-2">The Franchise Alignment Stack™</h2>
-    <p class="mt-4 max-w-3xl leading-relaxed text-[#3b3e47] md:text-lg">
+    <h2 class="section-title !mt-0 text-center">
+      The Franchise Alignment Stack™
+    </h2>
+    <p class="mx-auto mt-4 max-w-5xl text-center text-base leading-relaxed text-[#5f6673] md:text-lg">
       Five measurable dimensions reveal how well a candidate is equipped to succeed within your franchise system.
     </p>
 
-    <div class="mt-10 overflow-hidden rounded-[34px] bg-white px-6 py-12 shadow-[0_18px_45px_rgba(34,37,42,0.08)] md:mt-12 md:px-14 md:py-14">
-      <div class="flex flex-wrap justify-center gap-x-8 gap-y-10 lg:gap-x-10">
-        {alignmentLayers.map((layer, index) => (
-          <article class="w-full border-t-2 border-[#09cc9c] pt-4 sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.67rem)]">
-            <h3 class="font-display text-xl font-bold leading-tight text-[#22252a] md:text-[1.6rem]">
-              <span class="text-[#a8420c]">{String(index + 1).padStart(2, "0")}</span>
-              {" "}{layer.title}
-            </h3>
-            <p class="mt-3 leading-relaxed text-[#656a73]">{layer.body}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-
-    <div class="mt-10">
-      <a class="btn-primary" href="/pricing">Get Started Now</a>
+    <div class="alignment-stack-grid mt-10 md:mt-12">
+      {alignmentLayers.map((layer, index) => (
+        <article class="border-t-[3px] border-[#18b9a8] pt-5">
+          <h3 class="text-[1.35rem] font-bold leading-tight text-[#111827] md:text-[1.5rem] font-display">
+            {layer.title}
+          </h3>
+          <p class="mt-4 text-base leading-[1.55] text-[#5f6673] md:text-lg">{layer.body}</p>
+        </article>
+      ))}
     </div>
   </div>
 </section>
+
+<style>
+  .alignment-stack-grid {
+    display: grid;
+    gap: 2.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .alignment-stack-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 2.5rem;
+      row-gap: 2.75rem;
+    }
+
+    .alignment-stack-grid article:last-child {
+      grid-column: 1 / -1;
+      width: calc(50% - 1.25rem);
+      justify-self: center;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .alignment-stack-grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      column-gap: 2.25rem;
+    }
+
+    .alignment-stack-grid article {
+      grid-column: span 2;
+    }
+
+    .alignment-stack-grid article:nth-child(4) {
+      grid-column: 2 / span 2;
+    }
+
+    .alignment-stack-grid article:nth-child(5) {
+      grid-column: 4 / span 2;
+      width: auto;
+    }
+  }
+</style>

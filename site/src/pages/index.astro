@@ -3,14 +3,13 @@ import MainLayout from "../layouts/MainLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import HeroSection from "../components/HeroSection.astro";
 import LogoCloud from "../components/LogoCloud.astro";
-import AlignmentExplanation from "../components/AlignmentExplanation.astro";
+import AudiencePathSection from "../components/AudiencePathSection.astro";
 import AlignmentPainPoints from "../components/AlignmentPainPoints.astro";
 import AlignmentLifecycle from "../components/AlignmentLifecycle.astro";
 import AlignmentStack from "../components/AlignmentStack.astro";
-import ToolsShowcaseSection from "../components/ToolsShowcaseSection.astro";
 import TestimonialGrid from "../components/TestimonialGrid.astro";
-import CtaBand from "../components/CtaBand.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import { Image } from "astro:assets";
 import { footer } from "../data/site-content";
 import idealAlgorithmReport from "../assets/alignment_report.png";
 import blueprintReport from "../assets/blueprint.png";
@@ -121,34 +120,44 @@ const jsonLd = JSON.stringify({
   <script type="application/ld+json" slot="head" set:html={jsonLd} />
   <SiteHeader />
   <main>
-    <HeroSection />
-    <LogoCloud />
-    <ToolsShowcaseSection
-      eyebrow="What Franchisors Receive"
-      title="We study your system and franchisees, learn what predicts success in your brand, and compare every candidate to that customized profile."
-      description="That's the whole idea — and these are the concrete deliverables it produces. Not concepts. Reports your team opens the week you start."
-      cards={whatYouGet}
-      sectionClass="border-b border-[#d1d4dd] bg-white py-16 md:py-20"
-      ctaHref="/request-reports"
-      ctaLabel="See Sample Reports"
-    >
-      <p slot="beforeCta" class="mt-10 text-base text-[#3b3e47]">
-        Brokers get a matching toolkit built for candidate-to-brand fit.{" "}
-        <a
-          href="/solutions/brokers"
-          class="font-semibold text-[#a8420c] underline underline-offset-2"
-        >See the broker tools →</a>
-      </p>
-    </ToolsShowcaseSection>
-    <AlignmentExplanation />
-    <AlignmentPainPoints />
-    <AlignmentLifecycle />
-    <AlignmentStack />
-    <TestimonialGrid type={null} bg="f3f3f3" limit={3} />
-    <CtaBand
-      title="Put the Alignment Stack to work on your next candidate."
-      text="You've seen the five layers that predict who will actually execute. See them applied to your system in a live walkthrough, or start building your plan now."
-    />
+      <HeroSection />
+      <LogoCloud />
+      <AudiencePathSection />
+      <AlignmentPainPoints />
+
+      <aside class="border-y border-[#4b5260] bg-[#30343b] py-9 text-white" aria-label="The cost of misalignment">
+        <p class="section-shell max-w-5xl text-center font-display text-2xl leading-snug text-white md:text-3xl">
+          What looks like a training, performance, or franchisee problem is often a deeper mismatch between the person and the system.
+        </p>
+      </aside>
+
+      <AlignmentStack />
+      <AlignmentLifecycle />
+      <TestimonialGrid type={null} limit={3} />
+
+      <section class="overflow-hidden border-t border-[#dce7e4] bg-[linear-gradient(105deg,#f7fcfb_0%,#eefaf7_100%)] py-14 md:py-18">
+        <div class="section-shell grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
+          <div class="max-w-2xl">
+            <p class="section-eyebrow">Make the next award with confidence</p>
+            <h2 class="section-title">Make your next franchise decision with greater confidence.</h2>
+            <p class="section-copy">
+              See how Zorakle helps you identify candidates who fit your culture, system, and expectations—and gives your team the insight to help them succeed.
+            </p>
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a class="btn-primary" href="/schedule">Book a Consultation</a>
+              <a class="btn-secondary bg-white" href="/pricing">View Plans &amp; Pricing <span class="ml-2" aria-hidden="true">→</span></a>
+            </div>
+          </div>
+          <div class="relative mx-auto h-[360px] w-full max-w-[560px] sm:h-[430px]" aria-label="Sample Zorakle franchisee reports">
+            <div class="absolute left-[5%] top-[8%] w-[48%] rotate-[-5deg] rounded-2xl bg-white p-3 shadow-[0_24px_45px_rgba(23,35,62,0.18)]">
+              <Image src={blueprintReport} alt="SpotOn Blueprint sample report" class="h-auto w-full rounded-xl" />
+            </div>
+            <div class="absolute bottom-[2%] right-[4%] w-[52%] rotate-[4deg] rounded-2xl bg-white p-3 shadow-[0_24px_45px_rgba(23,35,62,0.2)]">
+              <Image src={eclipseReport} alt="Eclipse candidate fit sample report" class="h-auto w-full rounded-xl" />
+            </div>
+          </div>
+        </div>
+      </section>
   </main>
   <SiteFooter />
 </MainLayout>

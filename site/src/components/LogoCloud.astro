@@ -5,24 +5,58 @@ const portalUrl = import.meta.env.PORTAL_URL || "http://localhost:3000";
 
 const imageModules = import.meta.glob('/src/assets/logos/*.{jpeg,jpg,png,gif,webp}', { eager: true });
 
+const franchisorLogos: Record<string, string> = {
+  "4ever-young.png": "4Ever Young",
+  "atwork-group.png": "@WORK Group",
+  "beef-o-bradys.jpg": "Beef 'O' Brady's",
+  "bubbas-famous-ice-cream.jpg": "Bubba's Famous Ice Cream",
+  "caring-transitions.png": "Caring Transitions",
+  "crust-pizza-co.jpg": "Crust Pizza Co.",
+  "ducklings-early-learning-center.png": "Ducklings Early Learning Center",
+  "enviro-master.png": "Enviro-Master",
+  "exclusively-cabinets.png": "Exclusively Cabinets by Cabinetek",
+  "gloria-jeans-coffees.png": "Gloria Jean's Coffees",
+  "house-of-colour.png": "House of Colour",
+  "iboost-talent.png": "iBoost Talent",
+  "integrity-1st-car-pros.png": "Integrity 1st Car Pros",
+  "la-ruta-del-cilantro-taqueria.png": "La Ruta del Cilantro Taqueria",
+  "lice-clinics-of-america.jpg": "Lice Clinics of America",
+  "little-lions-club.png": "Little Lions Club",
+  "naturals-2-go.png": "Naturals2Go",
+  "neuron-garage.png": "Neuron Garage",
+  "pacific-perks.jpg": "Pacific Perks",
+  "prime-senior-placement.png": "Prime Senior Placement",
+  "saras-artisan-gelato.png": "Sara's Artisan Gelato",
+  "sparkle-team.png": "Sparkle Team",
+  "the-brass-tap.jpg": "The Brass Tap",
+  "ultimate-ninjas.jpg": "Ultimate Ninjas",
+  "vella-haus.jpg": "Vella Haus",
+  "wow-1-day-painting.png": "WOW 1 Day Painting"
+};
+
 // Keep both halves of the marquee deterministic and pixel-identical.
 const images = Object.entries(imageModules)
+  .filter(([path]) => Object.hasOwn(franchisorLogos, path.split('/').pop() ?? ""))
   .sort(([firstPath], [secondPath]) => firstPath.localeCompare(secondPath))
-  .map(([, image]) => image);
+  .map(([path, image]) => ({
+    image,
+    alt: franchisorLogos[path.split('/').pop() ?? ""]
+  }));
 ---
 
-<section class="bg-[#f3f3f3] py-8">
+<section class="border-b border-[#e1e8e6] bg-white py-8" aria-labelledby="franchisor-logo-heading">
   <div class="section-shell">
+    <h2 id="franchisor-logo-heading" class="sr-only">Franchise brands that use Zorakle</h2>
     <div class="overflow-hidden">
       <div class="logo-ticker" id="logo-ticker" data-portal-url={portalUrl}>
         <div class="logo-track" aria-label="Trusted brand logos">
 
           {/* Main group for the loop */}
           <div class="logo-group">
-            {images.map((img: any) => (
+            {images.map(({ image: img, alt }: any) => (
                 <div class="logo-item flex items-center justify-center">
                   <div class="flex items-center justify-center p-3 w-full h-full">
-                    <Image src={img.default} alt="Brand logo" class="max-w-full max-h-full object-contain" />
+                    <Image src={img.default} alt={alt} class="max-w-full max-h-full object-contain" />
                   </div>
                 </div>
             ))}
@@ -30,7 +64,7 @@ const images = Object.entries(imageModules)
 
           {/* Identical cloned group for infinite animation tracking */}
           <div class="logo-group" aria-hidden="true">
-            {images.map((img: any) => (
+            {images.map(({ image: img }: any) => (
                 <div class="logo-item flex items-center justify-center">
                   <div class="flex items-center justify-center p-3 w-full h-full">
                     <Image src={img.default} alt="" class="max-w-full max-h-full object-contain" />

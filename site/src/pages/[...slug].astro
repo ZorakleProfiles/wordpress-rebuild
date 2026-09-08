@@ -190,6 +190,10 @@ const portableTextComponents = {
     color: #3b3e47;
     line-height: 1.8;
     font-size: clamp(1rem, 0.25vw + 0.95rem, 1.125rem);
+    /* Long unbroken strings (bare URLs pasted into the WordPress import,
+       long email addresses) must wrap instead of forcing the page wider
+       than the viewport on mobile. */
+    overflow-wrap: break-word;
   }
 
   .blog-content > * + * {
@@ -235,5 +239,18 @@ const portableTextComponents = {
     .blog-content iframe {
       min-height: 420px;
     }
+  }
+
+  /* Keep wide imported content (code blocks, tables) inside the article
+     column and scrollable rather than stretching the page. */
+  .blog-content pre {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  .blog-content table {
+    display: block;
+    overflow-x: auto;
+    max-width: 100%;
   }
 </style>

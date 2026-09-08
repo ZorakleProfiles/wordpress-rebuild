@@ -11,35 +11,46 @@ const sourceUrl = typeof node?.url === "string" ? node.url.trim() : "";
 const title = typeof node?.title === "string" ? node.title.trim() : "";
 const provider = typeof node?.provider === "string" ? node.provider.trim().toLowerCase() : "external";
 
-function toEmbeddableUrl(rawUrl: string): string {
+interface EmbedInfo {
+  embedUrl: string;
+  /** Poster image URL for the facade, when one can be derived without a network call. */
+  posterUrl: string;
+}
+
+function youTubeEmbed(id: string): EmbedInfo {
+  return {
+    embedUrl: `https://www.youtube.com/embed/${id}`,
+    posterUrl: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
+  };
+}
+
+function resolveEmbed(rawUrl: string): EmbedInfo {
   try {
     const parsed = new URL(rawUrl);
     const host = parsed.hostname.replace(/^www\./, "").toLowerCase();
 
-    if (host === "youtube.com" || host === "m.youtube.com") {
-      const id = parsed.searchParams.get("v");
-      if (id) {
-        return `https://www.youtube.com/embed/${id}`;
-      }
+    if (host === "youtube.com" || host === "m.youtube.com" || host === "youtube-nocookie.com") {
+      // watch?v=ID
+      const queryId = parsed.searchParams.get("v");
+      if (queryId) return youTubeEmbed(queryId);
+      // already an /embed/ID (or /v/ID, /shorts/ID) URL
+      const pathMatch = parsed.pathname.match(/\/(?:embed|v|shorts)\/([^/?#]+)/);
+      if (pathMatch) return youTubeEmbed(pathMatch[1]);
     }
 
     if (host === "youtu.be") {
       const id = parsed.pathname.replace("/", "").trim();
-      if (id) {
-        return `https://www.youtube.com/embed/${id}`;
-      }
+      if (id) return youTubeEmbed(id);
     }
 
     if (host === "vimeo.com") {
       const id = parsed.pathname.split("/").filter(Boolean)[0];
-      if (id) {
-        return `https://player.vimeo.com/video/${id}`;
-      }
+      if (id) return { embedUrl: `https://player.vimeo.com/video/${id}`, posterUrl: "" };
     }
 
-    return rawUrl;
+    return { embedUrl: rawUrl, posterUrl: "" };
   } catch {
-    return rawUrl;
+    return { embedUrl: rawUrl, posterUrl: "" };
   }
 }
 
@@ -47,9 +58,10 @@ function isVideoFile(rawUrl: string): boolean {
   return /\.(mp4|webm|ogg|m4v)(\?.*)?$/i.test(rawUrl);
 }
 
-const embedUrl = sourceUrl ? toEmbeddableUrl(sourceUrl) : "";
+const { embedUrl, posterUrl } = sourceUrl ? resolveEmbed(sourceUrl) : { embedUrl: "", posterUrl: "" };
 const isFileVideo = sourceUrl ? isVideoFile(sourceUrl) : false;
 const canUseIframe = ["youtube", "vimeo", "loom", "wistia"].includes(provider);
+const playLabel = title ? `Play video: ${title}` : "Play video";
 ---
 
 {sourceUrl && (
@@ -60,14 +72,35 @@ const canUseIframe = ["youtube", "vimeo", "loom", "wistia"].includes(provider);
         Your browser does not support the video tag.
       </video>
     ) : canUseIframe ? (
-      <iframe
-        src={embedUrl}
-        title={title || "Embedded media"}
-        loading="lazy"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
+      <div
+        class="embed-facade group relative aspect-video w-full overflow-hidden rounded-xl bg-[#111419]"
+        data-embed-facade
+        data-embed-url={embedUrl}
+        data-embed-title={title || "Embedded media"}
+      >
+        {posterUrl && (
+          <img
+            src={posterUrl}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            decoding="async"
+            class="absolute inset-0 h-full w-full object-cover opacity-90 transition duration-300 group-hover:scale-[1.015] group-hover:opacity-100"
+          />
+        )}
+        <button
+          type="button"
+          class="absolute inset-0 flex cursor-pointer items-center justify-center focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-[#09cc9c]"
+          aria-label={playLabel}
+          data-embed-play
+        >
+          <span class="flex h-16 w-16 items-center justify-center rounded-full bg-[#fd7730] text-[#22252a] shadow-xl transition group-hover:scale-105 group-focus-visible:scale-105 md:h-18 md:w-18" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="ml-1 h-7 w-7 fill-current" focusable="false">
+              <path d="M8 5.5v13l10-6.5L8 5.5Z"></path>
+            </svg>
+          </span>
+        </button>
+      </div>
     ) : (
       <a href={sourceUrl} target="_blank" rel="noopener noreferrer" class="text-[#a8420c] underline underline-offset-2">
         {title || "Open embedded media"}
@@ -76,3 +109,41 @@ const canUseIframe = ["youtube", "vimeo", "loom", "wistia"].includes(provider);
     {title && <figcaption class="mt-2 text-center text-sm text-[#56586a]">{title}</figcaption>}
   </figure>
 )}
+
+<script>
+  function initEmbedFacades() {
+    document.querySelectorAll<HTMLElement>("[data-embed-facade]").forEach((facade) => {
+      if (facade.dataset.embedInit === "true") return;
+      facade.dataset.embedInit = "true";
+
+      const playButton = facade.querySelector("[data-embed-play]");
+
+      playButton?.addEventListener("click", () => {
+        const embedUrl = facade.dataset.embedUrl;
+        if (!embedUrl) return;
+
+        const src = new URL(embedUrl);
+        src.searchParams.set("autoplay", "1");
+        if (src.hostname.includes("vimeo.com")) src.searchParams.set("dnt", "1");
+
+        const iframe = document.createElement("iframe");
+        iframe.src = src.toString();
+        iframe.title = facade.dataset.embedTitle || "Embedded media";
+        iframe.loading = "eager";
+        iframe.referrerPolicy = "strict-origin-when-cross-origin";
+        iframe.allow =
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        iframe.allowFullscreen = true;
+        // Beat the global `.blog-content iframe { min-height }` rule so the
+        // iframe fills the 16:9 facade box exactly instead of overflowing it.
+        iframe.style.cssText =
+          "position:absolute;inset:0;width:100%;height:100%;min-height:0;border:0;border-radius:0.75rem;";
+
+        facade.replaceChildren(iframe);
+      });
+    });
+  }
+
+  initEmbedFacades();
+  document.addEventListener("astro:page-load", initEmbedFacades);
+</script>

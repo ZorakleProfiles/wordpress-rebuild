@@ -15,6 +15,17 @@ try {
 }
 const alt = (node.alt as string) || "";
 const caption = (node.caption as string) || "";
+
+// Sanity asset refs encode the source dimensions: `image-<id>-<W>x<H>-<ext>`.
+// Pull them out so the <img> can reserve its space before loading and not
+// shift the rest of the article down when it decodes (CLS).
+const assetRef =
+  (node.asset as { _ref?: string } | undefined)?._ref ??
+  ((node as { _ref?: string })._ref);
+const dimMatch =
+  typeof assetRef === "string" ? assetRef.match(/-(\d+)x(\d+)-/) : null;
+const width = dimMatch ? Number(dimMatch[1]) : undefined;
+const height = dimMatch ? Number(dimMatch[2]) : undefined;
 ---
 
 {src && (
@@ -22,7 +33,9 @@ const caption = (node.caption as string) || "";
     <img
       src={src}
       alt={alt}
-      class="w-full rounded-xl object-cover"
+      width={width}
+      height={height}
+      class="h-auto w-full rounded-xl"
       loading="lazy"
       decoding="async"
     />

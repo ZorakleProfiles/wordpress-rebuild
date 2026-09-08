@@ -8,7 +8,17 @@ import { Image } from 'astro:assets';
 <header class="sticky top-0 z-40 border-b border-[#d1d4dd] bg-white/95 backdrop-blur" data-site-header>
   <div class="section-shell flex h-26 items-center justify-between gap-4">
     <a href="/" class="shrink-0" aria-label="Zorakle home">
-      <Image src={Logo} alt="Zorakle" class="h-18 w-auto" width="2218" height="600" />
+      <Image
+        src={Logo}
+        alt="Zorakle"
+        class="h-18 w-auto"
+        width={266}
+        height={72}
+        widths={[266, 400, 532]}
+        sizes="266px"
+        loading="eager"
+        decoding="async"
+      />
     </a>
 
     <nav aria-label="Primary" class="hidden items-center gap-8 lg:flex">
@@ -41,7 +51,7 @@ import { Image } from 'astro:assets';
     </div>
 
     <button
-      class="lg:hidden p-2 text-[#22252a] hover:text-[#a8420c]"
+      class="-mr-2 flex h-12 w-12 items-center justify-center text-[#22252a] hover:text-[#a8420c] lg:hidden"
       aria-label="Toggle menu"
       data-menu-toggle
     >
@@ -56,30 +66,30 @@ import { Image } from 'astro:assets';
     class="max-h-0 overflow-hidden bg-white transition-all duration-300 lg:hidden"
     data-mobile-menu
   >
-    <div class="section-shell flex flex-col gap-2 py-4">
+    <div class="section-shell flex flex-col gap-1 py-4">
       {navLinks.map((link) => (
         link.items ? (
           <details class="group" data-mobile-dropdown>
-            <summary class="list-none cursor-pointer px-3 py-2 text-base font-bold text-[#22252a] transition hover:text-[#a8420c] [&::-webkit-details-marker]:hidden">
+            <summary class="flex min-h-12 list-none cursor-pointer items-center px-3 text-base font-bold text-[#22252a] transition hover:text-[#a8420c] [&::-webkit-details-marker]:hidden">
               {link.label} <span aria-hidden="true">▾</span>
             </summary>
             <div class="bg-[#f4f6f9] pl-6">
               {link.items.map((item) => (
-                <a href={item.href} class="block px-3 py-2 text-sm font-semibold text-[#22252a] transition hover:text-[#a8420c]">
+                <a href={item.href} class="flex min-h-12 items-center px-3 text-sm font-semibold text-[#22252a] transition hover:text-[#a8420c]">
                   {item.label}
                 </a>
               ))}
             </div>
           </details>
         ) : (
-          <a href={link.href} class="block px-3 py-2 text-base font-bold text-[#22252a] transition hover:text-[#a8420c]">
+          <a href={link.href} class="flex min-h-12 items-center px-3 text-base font-bold text-[#22252a] transition hover:text-[#a8420c]">
             {link.label}
           </a>
         )
       ))}
       <div class="mt-2 flex flex-col gap-2 border-t border-[#d1d4dd] pt-4">
         <a class="btn-secondary border-[#d1d4dd] text-[#22252a] text-center" href="/schedule">Book a Demo</a>
-        <a class="block px-3 py-2 text-center text-base font-bold text-[#22252a] transition hover:text-[#a8420c]"
+        <a class="flex min-h-12 items-center justify-center px-3 text-center text-base font-bold text-[#22252a] transition hover:text-[#a8420c]"
            href={portal_link}
         >Login</a>
       </div>

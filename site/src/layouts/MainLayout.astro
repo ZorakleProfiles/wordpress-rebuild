@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import montereyWoff2 from "../assets/fonts/montereyflf-webfont.woff2";
 
 interface Props {
   title?: string;
@@ -59,11 +60,49 @@ const resolvedOgImage = new URL(ogImage ?? DEFAULT_OG_IMAGE, siteOrigin).href;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    {/* Preload the display face used by every heading so it arrives before
+        first paint and the swap doesn't reflow headings (CLS). */}
+    <link rel="preload" href={montereyWoff2} as="font" type="font/woff2" crossorigin />
+
+
     <!-- Start of HubSpot Embed Code -->
+    {/*
+      HubSpot's tracker chain-loads several more scripts and runs a lot of
+      main-thread work. Loading it during initial page load is the main driver
+      of Total Blocking Time ("page blocked from responding to input"),
+      especially on otherwise-light pages like blog posts. Defer it until the
+      visitor first interacts, with a timed fallback so analytics still fires
+      for people who bounce without interacting.
+    */}
     {!noindex && (
-      <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/2403148.js"></script>
+      <script is:inline>
+        (function () {
+          var loaded = false;
+          var events = ["scroll", "pointerdown", "keydown", "touchstart", "mousemove"];
+          function cleanup() {
+            events.forEach(function (e) { window.removeEventListener(e, load); });
+            clearTimeout(fallback);
+          }
+          function load() {
+            if (loaded) return;
+            loaded = true;
+            cleanup();
+            var s = document.createElement("script");
+            s.type = "text/javascript";
+            s.id = "hs-script-loader";
+            s.async = true;
+            s.defer = true;
+            s.src = "https://js.hs-scripts.com/2403148.js";
+            document.head.appendChild(s);
+          }
+          events.forEach(function (e) { window.addEventListener(e, load, { passive: true }); });
+          // Fallback: load after 10s even with no interaction.
+          var fallback = setTimeout(load, 10000);
+        })();
+      </script>
     )}
     <!-- End of HubSpot Embed Code -->
+
 
     <title>{title}</title>
     <meta name="description" content={description} />

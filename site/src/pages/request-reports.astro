@@ -18,14 +18,17 @@ import SiteFooter from "../components/SiteFooter.astro";
                       Ready to explore? Let us know where to send your copies.
                       </p>
                   </div>
-          <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
-          <script>
-              hbspt.forms.create({
-                  portalId: "2403148",
-                  formId: "f07010b8-8664-4d70-860c-2c0e13e5f880",
-                  region: "na1"
-              });
-          </script>
+                  {/*
+                    Reserve space for the HubSpot form so it doesn't shove the
+                    footer down when it finishes rendering (CLS). Kept slightly
+                    generous on purpose: a little trailing whitespace causes no
+                    layout shift, an under-estimate does.
+                  */}
+                  <div
+                    id="report-request-form"
+                    class="min-h-[580px] sm:min-h-[520px]"
+                    data-hs-form
+                  ></div>
               </div>
           </div>
       </section>
@@ -33,3 +36,27 @@ import SiteFooter from "../components/SiteFooter.astro";
 
     <SiteFooter />
 </MainLayout>
+
+<script is:inline>
+  (function () {
+    var target = "#report-request-form";
+    function build() {
+      if (!window.hbspt) return;
+      var mount = document.querySelector(target);
+      if (!mount || mount.dataset.hsInit === "true") return;
+      mount.dataset.hsInit = "true";
+      window.hbspt.forms.create({
+        portalId: "2403148",
+        formId: "f07010b8-8664-4d70-860c-2c0e13e5f880",
+        region: "na1",
+        target: target
+      });
+    }
+    var s = document.createElement("script");
+    s.src = "https://js.hsforms.net/forms/embed/v2.js";
+    s.async = true;
+    s.defer = true;
+    s.addEventListener("load", build);
+    document.head.appendChild(s);
+  })();
+</script>

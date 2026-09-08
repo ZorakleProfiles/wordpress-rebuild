@@ -34,7 +34,7 @@ const jsonLd = JSON.stringify({
       headline: topic.title,
       description: topic.summary,
       about: "Franchisee assessment science",
-      isPartOf: { "@type": "WebPage", "@id": new URL("/science/", Astro.site ?? siteHref).href },
+      isPartOf: { "@type": "WebPage", "@id": new URL("/sciences/", Astro.site ?? siteHref).href },
       mainEntityOfPage: { "@type": "WebPage", "@id": topicUrl },
       author: { "@id": orgId },
       publisher: { "@id": orgId }
@@ -50,7 +50,7 @@ const jsonLd = JSON.stringify({
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: siteHref },
-        { "@type": "ListItem", position: 2, name: "The Science", item: new URL("/science/", Astro.site ?? siteHref).href },
+        { "@type": "ListItem", position: 2, name: "The Sciences", item: new URL("/sciences/", Astro.site ?? siteHref).href },
         { "@type": "ListItem", position: 3, name: topic.title, item: topicUrl }
       ]
     }
@@ -65,13 +65,13 @@ const jsonLd = JSON.stringify({
   <main>
     <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
       <div class="section-shell">
-        <a href="/science" class="inline-flex items-center gap-2 text-sm font-bold text-[#c84f10] hover:underline">
-          &larr; Back to all science topics
+        <a href="/sciences" class="inline-flex items-center gap-2 text-sm font-bold text-[#c84f10] hover:underline">
+          &larr; Back to The Sciences
         </a>
 
         <div class="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
           <div>
-            <p class="section-eyebrow">The Science</p>
+            <p class="section-eyebrow">The Sciences</p>
             <h1 class="page-title mt-4">{topic.title}</h1>
             <p class="mt-5 max-w-3xl text-lg leading-relaxed text-[#3b3e47]">{topic.summary}</p>
           </div>

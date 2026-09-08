@@ -1,5 +1,26 @@
 ---
-const paths = [
+import VideoModalButton from "./VideoModalButton.astro";
+
+interface PathAction {
+  href?: string;
+  label: string;
+  icon: "download" | "play" | "arrow";
+}
+
+interface Path {
+  role: string;
+  title: string;
+  features: string[];
+  accent: string;
+  buttonBg: string;
+  /** Vimeo id for the explainer video, or set `videoSrc` for a hosted file. */
+  videoId?: string;
+  /** URL of a hosted explainer video file (e.g. Sanity CDN mp4). */
+  videoSrc?: string;
+  actions: PathAction[];
+}
+
+const paths: Path[] = [
   {
     role: "For Franchisors",
     title: "Build a system-specific standard for better awards.",
@@ -9,8 +30,13 @@ const paths = [
       "Insight for onboarding, coaching, and development"
     ],
     accent: "#f2773f",
-    primary: { href: "/pricing/franchisors", label: "Choose a Franchisor Plan" },
-    secondary: { href: "/solutions/franchisors", label: "Explore Franchisor Solutions" }
+    buttonBg: "bg-[#fd7730]",
+    videoSrc: "https://cdn.sanity.io/files/4kjxjblw/production/b7fb473836afb5f23a76446fdaa17d5c96fea4a7.mp4",
+    actions: [
+      { href: "/request-reports", label: "Get Sample Reports", icon: "download" },
+      { label: "Watch How It Works", icon: "play" },
+      { href: "/solutions/franchisors", label: "Explore Franchisor Solutions", icon: "arrow" }
+    ]
   },
   {
     role: "For Brokers",
@@ -21,10 +47,18 @@ const paths = [
       "Stronger insight for discovery and recommendation conversations"
     ],
     accent: "#09a982",
-    primary: { href: "/pricing/brokers", label: "Choose a Broker Plan" },
-    secondary: { href: "/solutions/brokers", label: "Explore Broker Solutions" }
+    buttonBg: "bg-[#09a982]",
+    videoId: "1137519120",
+    actions: [
+      { href: "/request-reports", label: "Get Sample Reports", icon: "download" },
+      { label: "Watch How It Works", icon: "play" },
+      { href: "/solutions/brokers", label: "Explore Broker Solutions", icon: "arrow" }
+    ]
   }
 ];
+
+const secondaryActionClass =
+  "inline-flex items-center justify-center gap-2 rounded-lg border border-[#d4ded9] px-4 py-3 text-sm font-bold text-[#3b3e47] transition hover:border-[#087f65] hover:text-[#087f65]";
 ---
 
 <section id="how-zorakle-works" class="scroll-mt-28 border-b border-[#dbe4e2] bg-[#f8fbfa] py-16 md:py-20">
@@ -35,7 +69,7 @@ const paths = [
     </div>
 
     <div class="mt-12 grid gap-7 lg:grid-cols-2 lg:gap-8">
-      {paths.map((path, index) => (
+      {paths.map((path) => (
         <article
           class="group flex h-full flex-col overflow-hidden rounded-[28px] border border-[#d7e1df] border-t-4 bg-white shadow-[0_16px_42px_rgba(34,37,42,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_52px_rgba(34,37,42,0.13)]"
           style={`border-top-color:${path.accent}`}
@@ -61,22 +95,37 @@ const paths = [
               ))}
             </ul>
 
-            <div class="mt-auto flex flex-col gap-3 pt-8 sm:flex-row sm:items-center">
+            <div class="mt-auto flex flex-col gap-3 pt-8">
               <a
-                href={path.primary.href}
+                href={path.actions[0].href}
                 class:list={[
-                  "inline-flex items-center justify-center rounded-lg px-7 py-3 text-base font-bold transition hover:brightness-95 text-[#22252a]",
-                  index === 0 ? "bg-[#fd7730] " : "bg-[#09a982]"
+                  "inline-flex items-center justify-center gap-2 rounded-lg px-7 py-3 text-base font-bold text-[#22252a] transition hover:brightness-95",
+                  path.buttonBg
                 ]}
               >
-                {path.primary.label} <span class="ml-2" aria-hidden="true">→</span>
+                <svg viewBox="0 0 24 24" class="h-5 w-5 fill-current" aria-hidden="true">
+                  <path d="M12 3a1 1 0 0 1 1 1v9.59l2.3-2.3a1 1 0 1 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.42l2.3 2.3V4a1 1 0 0 1 1-1Zm-7 15a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z" />
+                </svg>
+                {path.actions[0].label}
               </a>
-              <a
-                href={path.secondary.href}
-                class="inline-flex items-center justify-center px-2 py-3 text-sm font-bold text-[#3b3e47] underline decoration-[#b7c7c3] decoration-2 underline-offset-8 transition hover:text-[#087f65]"
-              >
-                {path.secondary.label}
-              </a>
+              <div class="grid gap-3 sm:grid-cols-2">
+                {path.actions.slice(1).map((action) =>
+                  action.icon === "play" ? (
+                    <VideoModalButton
+                      videoId={path.videoId}
+                      videoSrc={path.videoSrc}
+                      label={action.label}
+                      modalTitle={`${path.role} — How Zorakle works`}
+                      class={secondaryActionClass}
+                    />
+                  ) : (
+                    <a href={action.href} class={secondaryActionClass}>
+                      {action.label}
+                      {action.icon === "arrow" && <span aria-hidden="true">→</span>}
+                    </a>
+                  )
+                )}
+              </div>
             </div>
           </div>
         </article>

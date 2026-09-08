@@ -3,7 +3,6 @@ import { Image } from "astro:assets";
 import MainLayout from "../layouts/MainLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
-import CtaBand from "../components/CtaBand.astro";
 import { partnerships } from "../data/site-content";
 import logoFba from "../assets/fba.webp";
 import logoFbr from "../assets/fbr-logo.webp";
@@ -83,10 +82,6 @@ const partnershipsWithLogos = [...partnerships]
       </div>
     </section>
 
-    <CtaBand
-      title="Let's create better franchise outcomes together."
-      text="Partner with Zorakle to bring predictive science, deeper alignment, and more confident decisions to the people and organizations you serve."
-    />
   </main>
 
   <SiteFooter />

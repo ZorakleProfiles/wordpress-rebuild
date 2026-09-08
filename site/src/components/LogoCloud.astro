@@ -1,6 +1,18 @@
 ---
 import { Image } from 'astro:assets';
 
+interface Props {
+  heading?: string;
+  showHeading?: boolean;
+  sectionClass?: string;
+}
+
+const {
+  heading = "Franchise brands that use Zorakle",
+  showHeading = false,
+  sectionClass = "border-b border-[#e1e8e6] bg-white py-8"
+} = Astro.props;
+
 const portalUrl = import.meta.env.PORTAL_URL || "http://localhost:3000";
 
 const imageModules = import.meta.glob('/src/assets/logos/*.{jpeg,jpg,png,gif,webp}', { eager: true });
@@ -44,9 +56,18 @@ const images = Object.entries(imageModules)
   }));
 ---
 
-<section class="border-b border-[#e1e8e6] bg-white py-8" aria-labelledby="franchisor-logo-heading">
+<section class={sectionClass} aria-labelledby="franchisor-logo-heading">
   <div class="section-shell">
-    <h2 id="franchisor-logo-heading" class="sr-only">Franchise brands that use Zorakle</h2>
+    <h2
+      id="franchisor-logo-heading"
+      class:list={[
+        showHeading
+          ? "mb-5 text-center font-display text-xl font-bold text-[#1e2f43] md:text-2xl"
+          : "sr-only"
+      ]}
+    >
+      {heading}
+    </h2>
     <div class="overflow-hidden">
       <div class="logo-ticker" id="logo-ticker" data-portal-url={portalUrl}>
         <div class="logo-track" aria-label="Trusted brand logos">

@@ -3,158 +3,55 @@ import MainLayout from "../../layouts/MainLayout.astro";
 import { Image } from "astro:assets";
 import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
-import VideoHero from "../../components/VideoHero.astro";
+import FranchisorHero from "../../components/FranchisorHero.astro";
+import LogoCloud from "../../components/LogoCloud.astro";
 import TestimonialCarousel from "../../components/TestimonialCarousel.astro";
 import WorkflowStepsSection from "../../components/WorkflowStepsSection.astro";
-import ToolsShowcaseSection from "../../components/ToolsShowcaseSection.astro";
-import MetricsTimelineSection from "../../components/MetricsTimelineSection.astro";
-import spotOnProfileReport from "../../assets/spoton.png";
-import eclipseReport from "../../assets/eclipse.png";
-import blueprintReport from "../../assets/blueprint.png";
-import CtaBand from "../../components/CtaBand.astro";
-import spotonReferral from "../../assets/referrall.png";
-import marketingBlueprint from "../../assets/marketing_blueprint.png";
-import alignmentReport from "../../assets/alignment_report.png";
-import heroBackground from "../../assets/franchisor-poster.png";
+import FranchisorOutcomesSection from "../../components/FranchisorOutcomesSection.astro";
 import franchisorModelFitComparison from "../../assets/franchisors.png";
+import blueprintReport from "../../assets/blueprint.png";
+import eclipseReport from "../../assets/eclipse.png";
 
-// Hosted on Sanity's file CDN (supports HTTP Range requests, so <video> scrubbing
-// works). Cloudflare Workers static assets serve the whole file with a 200 and no
-// Accept-Ranges, which breaks seeking. Swap back to `videoId` once the overview
-// lives on Vimeo.
 const franchisorExplainerVideo =
   "https://cdn.sanity.io/files/4kjxjblw/production/676d9e59bc7e318e2e1756be2b170d63faf3d3ca.mp4";
 
 const steps = [
   {
-    title: "Complete your Franchisor Benchmark Audit.",
+    title: "Build your benchmark.",
     body:
-      "Your team completes an audit of key development and operational metrics to establish a benchmark for your system."
+      "Audit your brand and assess top-performing franchisees to identify the values, behaviors, and operating traits connected to success in your system."
   },
   {
-    title: "Have your franchisees complete research assessments.",
+    title: "Create your fit standard.",
     body:
-      "Franchisees complete a short, validated assessment that measures markers across our 7 sciences. This data is then used to generate your personalized algorithm."
+      "Turn your benchmark data into a custom fit algorithm and SpotOn! Blueprint your development team can apply consistently."
   },
   {
-    title: "Get your assessment link and Blueprint.",
+    title: "Evaluate every candidate.",
     body:
-      "Receive your personalized assessment link and Blueprint, which defines who succeeds in your system based on real data from your operators."
-  },
-  {
-    title: "Send assessments to candidates.",
-    body:
-      "Share your assessment link with prospective franchisees during your development and validation process."
-  },
-  {
-    title: "Review detailed reports for each completed assessment.",
-    body:
-      "Instantly see how well each candidate matches your franchise model, with clear scoring and decision guidance for your team."
+      "Use SpotOn! Profiles and Eclipse reports to see system alignment, compare candidates, and surface potential risk before you award."
   }
 ];
 
-const tools = [
-  {
-    title: "SpotOn! Profile",
-    subtitle: "Candidate breakdown.",
-    body:
-      "SpotOn! Profile gives your team the franchisor-only view of those same 7 sciences, with deeper selection insight so you can compare candidates and make award decisions with confidence.",
-    image: spotOnProfileReport,
-    imageAlt: "SpotOn! Profile"
-  },
-  {
-    title: "SpotOn! Eclipse Report",
-    subtitle: "System fit breakdown.",
-    body:
-      "Eclipse shows overall fit compatibility to your specific system, including how each science contributes to fit, so your team can quickly spot strong alignment and potential risk areas.",
-    image: eclipseReport,
-    imageAlt: "Eclipse report"
-  },
-  {
-    title: "SpotOn! Referrals",
-    subtitle: "Pre-qualified candidates from brokers.",
-    image: spotonReferral,
-    imageAlt: "SpotOn! Referral screenshot",
-    body:
-        "SpotOn! Match runs on the broker side. When brokers assess candidates and find strong system alignment, you receive pre-qualified SpotOn! referrals directly for review."
-  },
-  {
-    title: "SpotOn! Blueprint",
-    subtitle: "Your custom fit algorithm explained.",
-    body:
-      "The SpotOn! Blueprint documents exactly how your custom fit algorithm is built from benchmark data, top performers, and brand requirements so your selection process stays consistent over time.",
-    image: blueprintReport,
-    imageAlt: "SpotOn Blueprint report cover"
-  },
-  {
-    title: "SpotOn! Alignment Report",
-    subtitle: "Audit vs. performance breakdown.",
-    body:
-        "See how your franchisor audit predictions compare to actual franchisee performance. Identify gaps between expectations and outcomes so you can refine your selection model over time.",
-    image: alignmentReport,
-    imageAlt: "SpotOn Alignment Report"
-  },
-  {
-    title: "SpotOn! Marketing Blueprint",
-    subtitle: "Market to your ideal franchisee.",
-    body:
-        "A data-driven breakdown of how to reach and attract your ideal franchisee profile. Includes recommended messaging, tone, fonts, colors, and channels so your recruitment resonates with the right candidates.",
-    image: marketingBlueprint,
-    imageAlt: "SpotOn Marketing Blueprint"
-  },
-
-];
-
-const metrics = [
-  {
-    title: "Stronger Item 19 performance.",
-    body:
-      "Franchisees selected with validated fit indicators tend to ramp faster and execute systems more consistently over time."
-  },
-  {
-    title: "Higher validation scores.",
-    body:
-      "Candidates who are matched to the right brand model hear better stories from operators and move through validation with fewer objections."
-  },
-  {
-    title: "Better retention, fewer transfers.",
-    body:
-      "Reducing bad-fit awards decreases fallout, resale pressure, and support strain across your development and operations teams."
-  },
-  {
-    title: "Reduced cost to support.",
-    body:
-      "When owners align with your model, support teams spend less time on preventable issues and more time on growth."
-  }
-];
 ---
 
 <MainLayout
   title="Franchisee Selection & Assessment Tools for Franchisors | Zorakle"
   description="Predict franchisee fit before you award. Zorakle gives franchisor development teams a validated, repeatable selection framework for stronger owners, better validation, and Item 19 performance."
 >
-  <SiteHeader />
+  <SiteHeader ctaLabel="Book a Consultation" />
 
   <main>
-    <VideoHero
-      titlePrefix="Award franchises"
-      titleHighlight="with the confidence of statistically validated science and data."
-      titleSuffix=""
-      description="Selecting the wrong owner creates expensive downstream friction. Zorakle gives your team a repeatable, validated framework to predict fit before contracts are signed."
-      primaryCta={{ href: "/schedule", label: "Book a Demo" }}
-      secondaryCta={{ href: "/pricing/franchisors", label: "Sign Up Now" }}
-      poster={heroBackground}
-      posterAlt="Franchise owners and operators representing a growing franchise system"
-      videoSrc={franchisorExplainerVideo}
-      playLabel="Play the 5-minute franchisor overview"
-      modalTitle="Zorakle 5-minute franchisor overview"
-      caption="See how Zorakle helps franchisors award stronger owners with confidence."
+    <FranchisorHero />
+
+    <LogoCloud
+      sectionClass="border-b border-[#e1e8e6] bg-white py-8 md:py-10"
     />
 
-    <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
+    <section class="border-b border-[#d1d4dd] bg-[#f3f3f3] py-16 md:py-24">
       <div class="section-shell">
         <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
-          <div class="rounded-2xl bg-transparent p-0">
+          <div class="rounded-3xl bg-white p-4 shadow-[0_18px_45px_rgba(23,35,62,0.08)]">
             <Image
               src={franchisorModelFitComparison}
               alt="Model-fit comparison showing cost risk versus confidence outcomes"
@@ -164,6 +61,7 @@ const metrics = [
           </div>
 
           <div class="">
+            <p class="section-eyebrow">When Alignment Is Off</p>
             <h2 class="section-title max-w-3xl text-[#1f232a] lg:ml-auto">
               The wrong franchisee costs more than the right one earns.
             </h2>
@@ -189,34 +87,38 @@ const metrics = [
       </div>
     </section>
 
+    <aside class="border-y border-[#4b5260] bg-[#30343b] py-9 text-white" aria-label="System-specific franchisee fit">
+      <p class="section-shell max-w-5xl text-center font-display text-2xl leading-snug text-white md:text-3xl">
+        The question is not whether a candidate can own a business. It is whether they can succeed inside your business.
+      </p>
+    </aside>
+
     <WorkflowStepsSection
       variant="franchisor"
       eyebrow="How Zorakle Works"
-      title="A repeatable, science-backed selection process."
-      description="Build one standard across development, leadership, and validation so every candidate is evaluated with the same objective lens."
+      title="From brand insight to confident award in three phases."
+      description="Build one standard across development, leadership, and validation—then apply it consistently to every candidate."
       steps={steps}
-      ctaHref="/pricing/franchisors"
-      ctaLabel="Get Started"
-      ctaId="sample-report"
+      videoSrc={franchisorExplainerVideo}
+      videoLabel="Watch the 5-Minute Overview"
+      videoModalTitle="Zorakle 5-minute franchisor overview"
+      sectionClass="border-b border-[#dce7e4] bg-[#eef7f4] py-16 md:py-24"
     />
 
-    <ToolsShowcaseSection
-      eyebrow="What Every Franchisor Gets"
-      title="Comprehensive tools included with every plan."
-      description="Every franchisor gets both sides of the 7-science assessment (candidate-facing Business Builder and franchisor-facing SpotOn! Profile), Eclipse fit scoring for system alignment, a SpotOn! Blueprint of your custom algorithm, and broker-generated SpotOn! referrals."
-      cards={tools}
-      ctaHref="/request-reports"
-      ctaLabel="Get Sample Reports"
-    />
+    <FranchisorOutcomesSection />
 
-    <MetricsTimelineSection
-      eyebrow="What Franchisors Gain When Awarding Through Data"
-      titlePrefix="The metrics that move when you"
-      titleHighlight=" select with science."
-      items={metrics}
-    />
+    <aside class="border-y border-[#4b5260] bg-[#30343b] py-10 text-white" aria-label="Explore the sciences behind Zorakle">
+      <div class="section-shell flex flex-col items-center gap-6 text-center md:flex-row md:justify-between md:gap-10 md:text-left">
+        <p class="max-w-3xl font-display text-2xl leading-snug text-white md:text-[1.75rem]">
+          Seven validated sciences, one profile: how a person works and how well they fit a franchise system. Not a personality test.
+        </p>
+        <a class="btn-primary shrink-0" href="/sciences">
+          Explore The Sciences <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </aside>
 
-    <section class=" py-16 md:py-20">
+    <section class="border-t border-[#dce7e4] bg-white py-16 md:py-20">
       <div class="section-shell">
         <p class="section-eyebrow">What Franchisors Say</p>
         <h2 class="section-title mt-4 max-w-4xl text-[#1f232a]">
@@ -227,7 +129,51 @@ const metrics = [
       </div>
     </section>
 
-    <CtaBand primaryHref="/pricing/franchisors"/>
+    <section class="overflow-hidden border-t border-[#dce7e4] bg-[#eef7f4] py-14 md:py-18">
+      <div class="section-shell grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
+        <div class="max-w-2xl">
+          <p class="section-eyebrow">From insight to impact</p>
+          <h2 class="font-display text-4xl leading-[1.05] tracking-[-0.02em] text-[#1e2f43] sm:text-5xl lg:text-[3.6rem]">
+            Make your next franchisee decision
+            <span class="text-[#09a985]"> with greater confidence.</span>
+          </h2>
+          <p class="section-copy mt-6 max-w-xl text-[#475569]">
+            See how Zorakle can help you build a fit standard for your system - and apply it consistently to every candidate before you award.
+          </p>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <a class="btn-primary" href="/schedule">Book a Consultation</a>
+            <a class="inline-flex items-center gap-2 text-base font-semibold text-[#1e2f43] transition-colors hover:text-[#23bfa8]" href="/pricing/franchisors">
+              View Franchisor Pricing <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="mx-auto w-full max-w-[620px] lg:max-w-none" aria-label="Sample Zorakle franchisee reports">
+          {/* Small screens: clean side-by-side, no overlap or rotation */}
+          <div class="grid grid-cols-2 items-start gap-4 sm:hidden">
+            <div class="rounded-2xl border border-[#e6eeec] bg-white p-2.5 shadow-[0_16px_32px_rgba(23,35,62,0.14)]">
+              <Image src={blueprintReport} alt="SpotOn Blueprint sample report" class="h-auto w-full rounded-xl" />
+            </div>
+            <div class="mt-8 rounded-2xl border border-[#e6eeec] bg-white p-2.5 shadow-[0_16px_32px_rgba(23,35,62,0.14)]">
+              <Image src={eclipseReport} alt="Eclipse candidate fit sample report" class="h-auto w-full rounded-xl" />
+            </div>
+          </div>
+
+          {/* sm and up: fanned, overlapping cluster with decorative rings */}
+          <div class="relative mx-auto hidden h-[500px] w-full sm:block lg:h-[600px]">
+            <div class="pointer-events-none absolute left-[52%] top-1/2 h-[380px] w-[380px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#c9f0e8]/65 lg:h-[470px] lg:w-[470px]"></div>
+            <div class="pointer-events-none absolute left-[52%] top-1/2 h-[440px] w-[440px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#cfe8e3] lg:h-[550px] lg:w-[550px]"></div>
+
+            <div class="absolute left-[1%] top-[5%] w-[58%] rotate-[-5deg] rounded-2xl border border-[#e6eeec] bg-white p-3 shadow-[0_22px_45px_rgba(23,35,62,0.16)]">
+              <Image src={blueprintReport} alt="SpotOn Blueprint sample report" class="h-auto w-full rounded-xl" />
+            </div>
+            <div class="absolute bottom-[1%] right-0 w-[63%] rotate-[5deg] rounded-2xl border border-[#e6eeec] bg-white p-3 shadow-[0_24px_45px_rgba(23,35,62,0.2)]">
+              <Image src={eclipseReport} alt="Eclipse candidate fit sample report" class="h-auto w-full rounded-xl" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <SiteFooter />

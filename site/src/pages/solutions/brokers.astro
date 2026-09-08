@@ -4,15 +4,15 @@ import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import TestimonialCarousel from "../../components/TestimonialCarousel.astro";
 import WorkflowStepsSection from "../../components/WorkflowStepsSection.astro";
-import ToolsShowcaseSection from "../../components/ToolsShowcaseSection.astro";
-import MetricsTimelineSection from "../../components/MetricsTimelineSection.astro";
-import heroBackground from "../../assets/broker-poster.png";
+import LogoCloud from "../../components/LogoCloud.astro";
+import BrokerHero from "../../components/BrokerHero.astro";
+import BrokerOutcomesSection from "../../components/BrokerOutcomesSection.astro";
 import spotOnProfileReport from "../../assets/spoton.png";
 import spotonMatch from "../../assets/spoton_match.png";
-import CtaBand from "../../components/CtaBand.astro";
 import brokerMathShiftGraphic from "../../assets/brokers.png";
 import {Image} from "astro:assets";
-import VideoHero from "../../components/VideoHero.astro";
+
+const brokerExplainerVideoId = "1137519120";
 
 const steps = [
   {
@@ -37,47 +37,6 @@ const steps = [
   }
 ];
 
-const tools = [
-  {
-    title: "SpotOn! Profile",
-    subtitle: "Your foundation for fit.",
-    body:
-      "Build a complete candidate picture across ownership traits, motivation patterns, and behavioral indicators that matter for franchise success.",
-    image: spotOnProfileReport,
-    imageAlt: "SpotOn! Profile"
-  },
-  {
-    title: "SpotOn! Match",
-    subtitle: "How brokers win with speed.",
-    body:
-      "Match candidates against real franchise requirements in minutes and present ranked recommendations backed by data clients can trust. When matches are strong, send pre-qualified SpotOn! referrals directly to franchisors.",
-    image: spotonMatch,
-    imageAlt: "SpotOn! Referral screenshot"
-  }
-];
-
-const metrics = [
-  {
-    title: "Faster, more confident closes.",
-    body:
-      "Reduce indecision and deal drift by giving clients clear, explainable recommendations tied to their profile results."
-  },
-  {
-    title: "Stronger client retention and referrals.",
-    body:
-      "When clients feel guided by evidence, trust increases and your process becomes a differentiator they talk about."
-  },
-  {
-    title: "Differentiation from the competition.",
-    body:
-      "Lead with a scientific approach that turns your advisory process into a premium experience in crowded markets."
-  },
-  {
-    title: "Pre-qualified leads from franchisors.",
-    body:
-      "Better candidate-brand fit creates cleaner handoffs and stronger collaboration with development teams."
-  }
-];
 ---
 
 <MainLayout
@@ -87,20 +46,12 @@ const metrics = [
   <SiteHeader />
 
   <main>
-    <VideoHero
-        titlePrefix="Match clients to the right brand."
-        titleHighlight="Close more deals doing it."
-        titleSuffix=""
-        description="Clients trust brokers who can explain fit clearly, not just speak in broad probabilities. SpotOn! gives you science-backed candidate-to-brand recommendations so every intro feels grounded and credible."
-        primaryCta={{ href: "/schedule", label: "Book a Demo" }}
-        secondaryCta={{ href: "/pricing/brokers", label: "Sign Up Now" }}
-        poster={heroBackground}
-        posterAlt="Franchise owners and operators representing a growing franchise system"
-        videoId="1137519120"
-        playLabel="Play the 5-minute broker overview"
-        modalTitle="Zorakle 5-minute broker overview"
-        caption="See how Zorakle helps brokers."
+    <BrokerHero />
+
+    <LogoCloud
+      sectionClass="border-b border-[#e1e8e6] bg-white py-8 md:py-10"
     />
+
     <section class="border-b border-[#d1d4dd] bg-white py-16 md:py-20">
       <div class="section-shell grid items-center gap-10 md:grid-cols-[440px_minmax(0,1fr)] md:gap-14">
         <div class="rounded-2xl bg-transparent p-0">
@@ -129,26 +80,26 @@ const metrics = [
       title="From client conversation to confident match in four steps."
       description="Simple for clients and powerful for advisors. The workflow is built to help brokers move quickly without sacrificing quality."
       steps={steps}
-      ctaHref="/pricing/brokers"
-      ctaLabel="Sign Up Now"
+      videoId={brokerExplainerVideoId}
+      videoLabel="Watch the 5-Minute Overview"
+      videoModalTitle="Zorakle 5-minute broker overview"
+      sectionClass="border-b border-[#dce7e4] bg-[#eef7f4] py-16 md:py-24"
     />
 
-    <ToolsShowcaseSection
-      eyebrow="The Broker Toolkit"
-      title="The tools that turn candidates into perfect matches."
-      description="Two connected tools help you understand each client and then map them to the brands where they are most likely to win."
-      cards={tools}
-      ctaHref="/request-reports"
-      ctaLabel="Get Sample Reports"
-    />
+    <BrokerOutcomesSection />
 
-    <MetricsTimelineSection
-      eyebrow="What Happens When You Match With Science"
-      titlePrefix="Better matches. Faster closes. Stronger client relationships."
-      items={metrics}
-    />
+    <aside class="border-y border-[#4b5260] bg-[#30343b] py-10 text-white" aria-label="Explore the sciences behind Zorakle">
+      <div class="section-shell flex flex-col items-center gap-6 text-center md:flex-row md:justify-between md:gap-10 md:text-left">
+        <p class="max-w-3xl font-display text-2xl leading-snug text-white md:text-[1.75rem]">
+          Seven validated sciences, one profile: how a person works and how well they fit a franchise system. Not a personality test.
+        </p>
+        <a class="btn-primary shrink-0" href="/sciences">
+          Explore The Sciences <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </aside>
 
-    <section class=" py-16 md:py-20">
+    <section class="border-t border-[#dce7e4] bg-white py-16 md:py-20">
       <div class="section-shell">
         <p class="section-eyebrow">What Brokers Say</p>
         <h2 class="section-title mt-4 max-w-4xl text-[#1f232a]">
@@ -159,11 +110,51 @@ const metrics = [
       </div>
     </section>
 
+    <section class="overflow-hidden border-t border-[#dce7e4] bg-[#eef7f4] py-14 md:py-18">
+      <div class="section-shell grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
+        <div class="max-w-2xl">
+          <p class="section-eyebrow">From insight to impact</p>
+          <h2 class="font-display text-4xl leading-[1.05] tracking-[-0.02em] text-[#1e2f43] sm:text-5xl lg:text-[3.6rem]">
+            Match your next client
+            <span class="text-[#09a985]"> with greater confidence.</span>
+          </h2>
+          <p class="section-copy mt-6 max-w-xl text-[#475569]">
+            See how SpotOn! turns every client conversation into ranked, evidence-backed brand recommendations you can explain and defend.
+          </p>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <a class="btn-primary" href="/schedule">Book a Demo</a>
+            <a class="inline-flex items-center gap-2 text-base font-semibold text-[#1e2f43] transition-colors hover:text-[#23bfa8]" href="/pricing/brokers">
+              View Broker Pricing <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
 
-    <CtaBand
-    title="Ready to match smarter?"
-    primaryHref="/pricing/franchisors"
-text=""></CtaBand>
+        <div class="mx-auto w-full max-w-[620px] lg:max-w-none" aria-label="Sample Zorakle broker reports">
+          {/* Small screens: clean side-by-side, no overlap or rotation */}
+          <div class="grid grid-cols-2 items-start gap-4 sm:hidden">
+            <div class="rounded-2xl border border-[#e6eeec] bg-white p-2.5 shadow-[0_16px_32px_rgba(23,35,62,0.14)]">
+              <Image src={spotOnProfileReport} alt="SpotOn! Profile sample report" class="h-auto w-full rounded-xl" />
+            </div>
+            <div class="mt-8 rounded-2xl border border-[#e6eeec] bg-white p-2.5 shadow-[0_16px_32px_rgba(23,35,62,0.14)]">
+              <Image src={spotonMatch} alt="SpotOn! Match ranked brand results" class="h-auto w-full rounded-xl" />
+            </div>
+          </div>
+
+          {/* sm and up: fanned, overlapping cluster with decorative rings */}
+          <div class="relative mx-auto hidden h-[500px] w-full sm:block lg:h-[600px]">
+            <div class="pointer-events-none absolute left-[52%] top-1/2 h-[380px] w-[380px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#c9f0e8]/65 lg:h-[470px] lg:w-[470px]"></div>
+            <div class="pointer-events-none absolute left-[52%] top-1/2 h-[440px] w-[440px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#cfe8e3] lg:h-[550px] lg:w-[550px]"></div>
+
+            <div class="absolute left-[1%] top-[5%] w-[58%] rotate-[-5deg] rounded-2xl border border-[#e6eeec] bg-white p-3 shadow-[0_22px_45px_rgba(23,35,62,0.16)]">
+              <Image src={spotOnProfileReport} alt="SpotOn! Profile sample report" class="h-auto w-full rounded-xl" />
+            </div>
+            <div class="absolute bottom-[1%] right-0 w-[63%] rotate-[5deg] rounded-2xl border border-[#e6eeec] bg-white p-3 shadow-[0_24px_45px_rgba(23,35,62,0.2)]">
+              <Image src={spotonMatch} alt="SpotOn! Match ranked brand results" class="h-auto w-full rounded-xl" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <SiteFooter />

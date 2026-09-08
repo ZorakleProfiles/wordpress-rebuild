@@ -1,0 +1,38 @@
+---
+import { Image } from "astro:assets";
+import heroArtwork from "../assets/broker-hero.png";
+---
+
+<section class="relative overflow-hidden border-b border-[#d9e5e2] bg-[#eef7f4]">
+  <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
+    <Image
+      src={heroArtwork}
+      alt=""
+      widths={[640, 960, 1280, 1672]}
+      sizes="100vw"
+      class="h-full w-full object-cover object-[62%_center] sm:object-[58%_center] lg:object-center"
+      priority={true}
+    />
+    <div class="absolute inset-0 bg-gradient-to-r from-[#eef7f4]/98 via-[#eef7f4]/92 to-[#eef7f4]/35 sm:via-[#eef7f4]/82 lg:via-[#eef7f4]/45 lg:to-transparent"></div>
+  </div>
+
+  <div class="section-shell relative z-10 flex items-center py-10 sm:py-12 lg:min-h-[min(680px,calc(100svh-104px))] lg:py-8">
+    <div class="max-w-[620px] rounded-3xl border border-white/80 bg-[#eef7f4]/94 p-6 shadow-[0_18px_50px_rgba(23,35,62,0.12)] backdrop-blur-[2px] sm:p-8 lg:p-9">
+      <p class="font-display text-sm font-bold uppercase tracking-[0.16em] text-[#087f65] sm:text-base">
+        Science-backed franchise matching
+      </p>
+      <h1 class="mt-4 font-display text-[2.5rem] font-bold leading-[1.01] tracking-[-0.03em] text-[#17233e] sm:mt-6 sm:text-[3rem] lg:text-[3.35rem]">
+        Match clients to brands{" "}
+        <span class="block text-[#09a985]">that fit.</span>
+      </h1>
+      <p class="mt-5 max-w-xl text-base leading-relaxed text-[#3b3e47] sm:mt-6 md:text-lg">
+        Clients trust brokers who can explain fit, not just talk in probabilities. SpotOn! gives you science-backed, candidate-to-brand recommendations that make every introduction credible.
+      </p>
+
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+        <a class="btn-primary gap-2" href="/pricing/brokers">Sign Up Now <span aria-hidden="true">&rarr;</span></a>
+        <a class="btn-secondary bg-white/55" href="/schedule">Book a Demo</a>
+      </div>
+    </div>
+  </div>
+</section>

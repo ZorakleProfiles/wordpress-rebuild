@@ -135,24 +135,33 @@ const jsonLd = JSON.stringify({
       <AlignmentLifecycle />
       <TestimonialGrid type={null} limit={3} />
 
-      <section class="overflow-hidden border-t border-[#dce7e4] bg-[linear-gradient(105deg,#f7fcfb_0%,#eefaf7_100%)] py-14 md:py-18">
-        <div class="section-shell grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
+      <section class="overflow-hidden border-t border-[#dce7e4] bg-[#eef7f4] py-14 md:py-18">
+        <div class="section-shell grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
           <div class="max-w-2xl">
-            <p class="section-eyebrow">Make the next award with confidence</p>
-            <h2 class="section-title">Make your next franchise decision with greater confidence.</h2>
-            <p class="section-copy">
-              See how Zorakle helps you identify candidates who fit your culture, system, and expectations—and gives your team the insight to help them succeed.
+            <p class="section-eyebrow">From insight to impact</p>
+            <h2 class="font-display text-4xl leading-[1.05] tracking-[-0.02em] text-[#1e2f43] sm:text-5xl lg:text-[3.6rem]">
+              Make your next franchisee decision
+              <span class="text-[#09a985]"> with greater confidence.</span>
+            </h2>
+            <p class="section-copy mt-6 max-w-xl text-[#475569]">
+              See how Zorakle can help you identify candidates who fit your culture, system, and expectations - and give your team the insight to help them succeed.
             </p>
-            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a class="btn-primary" href="/schedule">Book a Consultation</a>
-              <a class="btn-secondary bg-white" href="/pricing">View Plans &amp; Pricing <span class="ml-2" aria-hidden="true">→</span></a>
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a class="btn-primary" href="/schedule">Book a Blueprint Consultation</a>
+              <a class="inline-flex items-center gap-2 text-base font-semibold text-[#1e2f43] transition-colors hover:text-[#23bfa8]" href="/pricing">
+                View Plans &amp; Pricing <span aria-hidden="true">&rarr;</span>
+              </a>
             </div>
           </div>
-          <div class="relative mx-auto h-[360px] w-full max-w-[560px] sm:h-[430px]" aria-label="Sample Zorakle franchisee reports">
-            <div class="absolute left-[5%] top-[8%] w-[48%] rotate-[-5deg] rounded-2xl bg-white p-3 shadow-[0_24px_45px_rgba(23,35,62,0.18)]">
+
+          <div class="relative mx-auto h-[360px] w-full max-w-[620px] sm:h-[430px]" aria-label="Sample Zorakle franchisee reports">
+            <div class="pointer-events-none absolute left-[52%] top-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#c9f0e8]/65 sm:h-[360px] sm:w-[360px]"></div>
+            <div class="pointer-events-none absolute left-[52%] top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#cfe8e3] sm:h-[420px] sm:w-[420px]"></div>
+
+            <div class="absolute left-[7%] top-[8%] w-[47%] rotate-[-5deg] rounded-2xl border border-[#e6eeec] bg-white p-3 shadow-[0_22px_45px_rgba(23,35,62,0.16)]">
               <Image src={blueprintReport} alt="SpotOn Blueprint sample report" class="h-auto w-full rounded-xl" />
             </div>
-            <div class="absolute bottom-[2%] right-[4%] w-[52%] rotate-[4deg] rounded-2xl bg-white p-3 shadow-[0_24px_45px_rgba(23,35,62,0.2)]">
+            <div class="absolute bottom-[2%] right-[5%] w-[52%] rotate-[5deg] rounded-2xl border border-[#e6eeec] bg-white p-3 shadow-[0_24px_45px_rgba(23,35,62,0.2)]">
               <Image src={eclipseReport} alt="Eclipse candidate fit sample report" class="h-auto w-full rounded-xl" />
             </div>
           </div>

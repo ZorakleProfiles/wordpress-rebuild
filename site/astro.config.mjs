@@ -46,9 +46,6 @@ export default defineConfig({
   site: SITE_ORIGIN,
   base: "/",
   cacheDir: "../node_modules/.astro",
-  redirects: {
-    "/science": "/sciences"
-  },
   devToolbar: {
     enabled: false
   },

@@ -2,16 +2,14 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import HeroSection from "../components/HeroSection.astro";
-import ScienceSection from "../components/ScienceSection.astro";
 import LogoCloud from "../components/LogoCloud.astro";
-import AlignmentExplanation from "../components/AlignmentExplanation.astro";
+import AudiencePathSection from "../components/AudiencePathSection.astro";
 import AlignmentPainPoints from "../components/AlignmentPainPoints.astro";
 import AlignmentLifecycle from "../components/AlignmentLifecycle.astro";
 import AlignmentStack from "../components/AlignmentStack.astro";
-import ToolsShowcaseSection from "../components/ToolsShowcaseSection.astro";
 import TestimonialGrid from "../components/TestimonialGrid.astro";
-import CtaBand from "../components/CtaBand.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import { Image } from "astro:assets";
 import { footer } from "../data/site-content";
 import idealAlgorithmReport from "../assets/alignment_report.png";
 import blueprintReport from "../assets/blueprint.png";
@@ -122,35 +120,78 @@ const jsonLd = JSON.stringify({
   <script type="application/ld+json" slot="head" set:html={jsonLd} />
   <SiteHeader />
   <main>
-    <HeroSection />
-    <LogoCloud />
-    <ToolsShowcaseSection
-      eyebrow="What Franchisors Receive"
-      title="We study your system and franchisees, learn what predicts success in your brand, and compare every candidate to that customized profile."
-      description="That's the whole idea — and these are the concrete deliverables it produces. Not concepts. Reports your team opens the week you start."
-      cards={whatYouGet}
-      sectionClass="border-b border-[#d1d4dd] bg-white py-16 md:py-20"
-      ctaHref="/request-reports"
-      ctaLabel="See Sample Reports"
-    >
-      <p slot="beforeCta" class="mt-10 text-base text-[#3b3e47]">
-        Brokers get a matching toolkit built for candidate-to-brand fit.{" "}
-        <a
-          href="/solutions/brokers"
-          class="font-semibold text-[#a8420c] underline underline-offset-2"
-        >See the broker tools →</a>
-      </p>
-    </ToolsShowcaseSection>
-    <AlignmentExplanation />
-    <AlignmentPainPoints />
-    <AlignmentLifecycle />
-    <AlignmentStack />
-    <ScienceSection />
-    <TestimonialGrid type={null} bg="f3f3f3" limit={3} />
-    <CtaBand
-      title="Put the Alignment Stack to work on your next candidate."
-      text="You've seen the five layers that predict who will actually execute. See them applied to your system in a live walkthrough, or start building your plan now."
-    />
+      <HeroSection />
+      <LogoCloud />
+      <AudiencePathSection />
+      <AlignmentPainPoints />
+
+      <aside class="border-y border-[#4b5260] bg-[#30343b] py-9 text-white" aria-label="The cost of misalignment">
+        <p class="section-shell max-w-5xl text-center font-display text-2xl leading-snug text-white md:text-3xl">
+          What looks like a training, performance, or franchisee problem is often a deeper mismatch between the person and the system.
+        </p>
+      </aside>
+
+      <AlignmentStack />
+      <AlignmentLifecycle />
+
+      <aside class="border-y border-[#4b5260] bg-[#30343b] py-10 text-white" aria-label="Explore the sciences behind Zorakle">
+        <div class="section-shell flex flex-col items-center gap-6 text-center md:flex-row md:justify-between md:gap-10 md:text-left">
+          <p class="max-w-3xl font-display text-2xl leading-snug text-white md:text-[1.75rem]">
+            Seven validated sciences, one profile: how a person works and how well they fit a franchise system. Not a personality test.
+          </p>
+          <a class="btn-primary shrink-0" href="/sciences">
+            Explore The Sciences <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </aside>
+
+      <TestimonialGrid type={null} limit={3} />
+
+      <section class="overflow-hidden border-t border-[#dce7e4] bg-[#eef7f4] py-14 md:py-18">
+        <div class="section-shell grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
+          <div class="max-w-2xl">
+            <p class="section-eyebrow">From insight to impact</p>
+            <h2 class="font-display text-4xl leading-[1.05] tracking-[-0.02em] text-[#1e2f43] sm:text-5xl lg:text-[3.6rem]">
+              Make your next franchisee decision
+              <span class="text-[#09a985]"> with greater confidence.</span>
+            </h2>
+            <p class="section-copy mt-6 max-w-xl text-[#475569]">
+              See how Zorakle can help you identify candidates who fit your culture, system, and expectations - and give your team the insight to help them succeed.
+            </p>
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a class="btn-primary" href="/schedule">Book a Blueprint Consultation</a>
+              <a class="inline-flex items-center gap-2 text-base font-semibold text-[#1e2f43] transition-colors hover:text-[#23bfa8]" href="/pricing">
+                View Plans &amp; Pricing <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="mx-auto w-full max-w-[620px] lg:max-w-none" aria-label="Sample Zorakle franchisee reports">
+            {/* Small screens: clean side-by-side, no overlap or rotation */}
+            <div class="grid grid-cols-2 items-start gap-4 sm:hidden">
+              <div class="rounded-2xl border border-[#e6eeec] bg-white p-2.5 shadow-[0_16px_32px_rgba(23,35,62,0.14)]">
+                <Image src={blueprintReport} alt="SpotOn Blueprint sample report" class="h-auto w-full rounded-xl" />
+              </div>
+              <div class="mt-8 rounded-2xl border border-[#e6eeec] bg-white p-2.5 shadow-[0_16px_32px_rgba(23,35,62,0.14)]">
+                <Image src={eclipseReport} alt="Eclipse candidate fit sample report" class="h-auto w-full rounded-xl" />
+              </div>
+            </div>
+
+            {/* sm and up: fanned, overlapping cluster with decorative rings */}
+            <div class="relative mx-auto hidden h-[500px] w-full sm:block lg:h-[600px]">
+              <div class="pointer-events-none absolute left-[52%] top-1/2 h-[380px] w-[380px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#c9f0e8]/65 lg:h-[470px] lg:w-[470px]"></div>
+              <div class="pointer-events-none absolute left-[52%] top-1/2 h-[440px] w-[440px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#cfe8e3] lg:h-[550px] lg:w-[550px]"></div>
+
+              <div class="absolute left-[1%] top-[5%] w-[58%] rotate-[-5deg] rounded-2xl border border-[#e6eeec] bg-white p-3 shadow-[0_22px_45px_rgba(23,35,62,0.16)]">
+                <Image src={blueprintReport} alt="SpotOn Blueprint sample report" class="h-auto w-full rounded-xl" />
+              </div>
+              <div class="absolute bottom-[1%] right-0 w-[63%] rotate-[5deg] rounded-2xl border border-[#e6eeec] bg-white p-3 shadow-[0_24px_45px_rgba(23,35,62,0.2)]">
+                <Image src={eclipseReport} alt="Eclipse candidate fit sample report" class="h-auto w-full rounded-xl" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
   </main>
   <SiteFooter />
 </MainLayout>

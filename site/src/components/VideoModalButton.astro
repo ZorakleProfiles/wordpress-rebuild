@@ -1,0 +1,163 @@
+---
+interface Props {
+  /** Vimeo video id. Provide this or `videoSrc`. */
+  videoId?: string;
+  /** URL of a hosted video file (e.g. a Sanity CDN `.mp4`). Takes precedence over `videoId`. */
+  videoSrc?: string;
+  /** MIME type for `videoSrc`. Defaults to `video/mp4`. */
+  videoType?: string;
+  /** Button text. */
+  label: string;
+  /** Accessible title for the modal dialog. */
+  modalTitle: string;
+  /** Classes applied to the trigger button. */
+  class?: string;
+}
+
+const {
+  videoId,
+  videoSrc,
+  videoType = "video/mp4",
+  label,
+  modalTitle,
+  class: className = ""
+} = Astro.props;
+
+if (!videoId && !videoSrc) {
+  throw new Error("VideoModalButton requires either `videoId` (Vimeo) or `videoSrc` (file URL).");
+}
+
+const videoEmbedUrl = videoId
+  ? `https://player.vimeo.com/video/${videoId}?autoplay=1&title=0&byline=0&portrait=0&dnt=1`
+  : undefined;
+const key = `vmodal-${Math.random().toString(36).slice(2, 10)}`;
+const modalTitleId = `${key}-title`;
+---
+
+<button type="button" class={className} data-vmodal-open={key}>
+  <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current" aria-hidden="true">
+    <path d="M8 5.5v13l10-6.5L8 5.5Z"></path>
+  </svg>
+  {label}
+</button>
+
+<dialog
+  class="m-auto w-[min(1100px,calc(100%-2rem))] max-w-none overflow-visible bg-transparent p-0 backdrop:bg-[#111419]/85 backdrop:backdrop-blur-sm"
+  aria-labelledby={modalTitleId}
+  data-vmodal={key}
+  data-vmodal-embed-url={videoEmbedUrl}
+  data-vmodal-src={videoSrc}
+  data-vmodal-src-type={videoType}
+  data-vmodal-title={modalTitle}
+>
+  <div class="relative rounded-2xl bg-[#111419] p-2 shadow-2xl ring-1 ring-white/20 sm:p-3">
+    <h2 id={modalTitleId} class="sr-only">{modalTitle}</h2>
+    <button
+      type="button"
+      class="absolute -top-12 right-0 inline-flex h-10 items-center gap-2 rounded-lg bg-white px-4 text-sm font-bold text-[#22252a] shadow-lg transition hover:bg-[#f4f6f9] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#09cc9c]"
+      aria-label={`Close ${modalTitle}`}
+      data-vmodal-close
+    >
+      <span aria-hidden="true">&times;</span>
+      Close
+    </button>
+    <div class="aspect-video w-full overflow-hidden rounded-xl bg-black" data-vmodal-player></div>
+  </div>
+</dialog>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-vmodal-open]").forEach((openButton) => {
+    if (openButton.dataset.vmodalInitialized === "true") return;
+    openButton.dataset.vmodalInitialized = "true";
+
+    const key = openButton.dataset.vmodalOpen;
+    const modal = document.querySelector(`[data-vmodal="${key}"]`);
+    if (!(modal instanceof HTMLDialogElement)) return;
+
+    const closeButton = modal.querySelector("[data-vmodal-close]");
+    const playerContainer = modal.querySelector("[data-vmodal-player]");
+    const videoEmbedUrl = modal.dataset.vmodalEmbedUrl;
+    const videoSrc = modal.dataset.vmodalSrc;
+    const videoSrcType = modal.dataset.vmodalSrcType || "video/mp4";
+    const modalTitle = modal.dataset.vmodalTitle;
+
+    let opener: Element | null = null;
+
+    // Idempotent: safe to call more than once (button click + dialog `close`/`cancel`).
+    const cleanup = () => {
+      const existing = playerContainer?.querySelector("video");
+      if (existing instanceof HTMLVideoElement) {
+        existing.pause();
+        existing.removeAttribute("src");
+        existing.load();
+      }
+      playerContainer?.replaceChildren();
+      document.body.style.overflow = "";
+      if (opener instanceof HTMLElement) opener.focus();
+      opener = null;
+    };
+
+    const closeVideo = () => {
+      if (modal.open) modal.close();
+      cleanup();
+    };
+
+    const openVideo = () => {
+      if (!playerContainer || !modalTitle || modal.open) return;
+      if (!videoSrc && !videoEmbedUrl) return;
+
+      opener = document.activeElement;
+
+      if (videoSrc) {
+        const player = document.createElement("video");
+        player.title = modalTitle;
+        player.className = "h-full w-full bg-black";
+        player.controls = true;
+        player.autoplay = true;
+        player.playsInline = true;
+        player.preload = "auto";
+
+        const source = document.createElement("source");
+        source.src = videoSrc;
+        source.type = videoSrcType;
+        player.append(source);
+
+        playerContainer.replaceChildren(player);
+        void player.play().catch(() => {});
+      } else {
+        const iframe = document.createElement("iframe");
+        iframe.src = videoEmbedUrl as string;
+        iframe.title = modalTitle;
+        iframe.className = "h-full w-full";
+        iframe.allow =
+          "autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share";
+        iframe.referrerPolicy = "strict-origin-when-cross-origin";
+        iframe.allowFullscreen = true;
+
+        playerContainer.replaceChildren(iframe);
+      }
+
+      modal.showModal();
+      document.body.style.overflow = "hidden";
+
+      requestAnimationFrame(() => {
+        if (closeButton instanceof HTMLElement) closeButton.focus();
+      });
+    };
+
+    openButton.addEventListener("click", openVideo);
+    closeButton?.addEventListener("click", closeVideo);
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeVideo();
+    });
+
+    // Native dismissal (Escape). `close`/`cancel` first; the keydown is a
+    // fallback for environments that don't dispatch those on a <dialog>.
+    modal.addEventListener("cancel", cleanup);
+    modal.addEventListener("close", cleanup);
+    modal.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeVideo();
+    });
+  });
+</script>

@@ -1,25 +1,36 @@
 ---
-import heroBackground from "../assets/home-hero.png";
-const hero = {
-    eyebrow: "The Franchise Alignment Experts",
-    titlePrefix: "Franchise Success Is Not Random.",
-    titleAccent: "It’s Aligned.",
-    description:
-        "Zorakle helps franchisors build predictable, scalable franchise systems by aligning culture, values, systems, skills, and execution across the entire franchise lifecycle.",
-    primaryCta: { href: "/solutions/franchisors", label: "I'm a Franchisor →" },
-    secondaryCta: { href: "/solutions/brokers", label: "I'm a Broker →" }
-};
-import PageHero from "./PageHero.astro";
+import { Image } from "astro:assets";
+import heroArtwork from "../assets/home-franchise-fit-hero.png";
 ---
 
-<PageHero
-  eyebrow={hero.eyebrow}
-  titlePrefix={hero.titlePrefix}
-  titleHighlight={hero.titleAccent}
-  description={hero.description}
-  supportingLine={hero.supportingLine}
-  primaryCta={hero.primaryCta}
-  secondaryCta={hero.secondaryCta}
-  backgroundImage={heroBackground}
-  dark={true}
-/>
+<section class="relative overflow-hidden border-b border-[#d9e5e2] bg-[#eef7f4]">
+  <div class="absolute inset-0 overflow-hidden" aria-hidden="true">
+    <Image
+      src={heroArtwork}
+      alt=""
+      widths={[640, 960, 1280, 1536]}
+      sizes="100vw"
+      class="h-full w-full object-cover object-[68%_center] lg:object-center"
+      priority={true}
+    />
+    <div class="absolute inset-0 bg-[#eef7f4]/85 sm:bg-[#eef7f4]/72 lg:bg-transparent"></div>
+  </div>
+
+  <div class="section-shell relative z-10 flex items-center py-10 sm:py-12 lg:min-h-[min(680px,calc(100svh-104px))] lg:py-8">
+    <div class="max-w-[600px] lg:rounded-3xl lg:border lg:border-white/80 lg:bg-[#eef7f4]/95 lg:p-5 lg:shadow-[0_18px_50px_rgba(23,35,62,0.10)] xl:p-6">
+      <p class="font-display text-sm font-bold uppercase tracking-[0.16em] text-[#087f65] sm:text-base">
+        The science of franchisee fit
+      </p>
+      <h1 class="mt-4 font-display text-[2.35rem] font-bold leading-[1.01] tracking-[-0.03em] text-[#17233e] sm:mt-6 sm:text-[2.6rem] lg:text-[3rem] xl:text-[3.25rem]">
+        The Right Franchisee Doesn't Just Look Good on Paper.
+        <span class="block text-[#09a985]">They Fit Your System.</span>
+      </h1>
+      <p class="mt-4 max-w-xl text-base leading-relaxed sm:mt-6 md:text-lg">
+        Zorakle gives franchisors science-based insight into how well each candidate aligns with the culture, expectations, and behaviors associated with success in their organization.
+      </p>
+      <div class="mt-6 flex flex-col gap-3 sm:mt-8 sm:items-start sm:gap-5">
+        <a class="btn-primary" href="/sciences">Book a Consultation <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>

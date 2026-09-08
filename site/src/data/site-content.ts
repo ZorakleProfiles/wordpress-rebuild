@@ -14,13 +14,12 @@ export const navLinks = [
       { href: "/news", label: "News" },
       { href: "/partnerships", label: "Partnerships" },
       { href: "/podcasts", label: "Podcasts" },
-      { href: "/science", label: "The Science" },
       { href: "/support", label: "Support" },
       { href: "/webinars", label: "Webinars" },
 
     ]
   },
-  { href: "/about", label: "About" }
+  { href: "/sciences", label: "The Sciences" }
 ];
 
 export const partnerships = [
@@ -146,8 +145,8 @@ export const footer = {
 
   newsletter: {
     anchorId: "newsletter",
-    heading: "Mailing List",
-    description: "Occasional updates from Zorakle. One email, no noise.",
+    heading: "Franchise Alignment Insights",
+    description: "Insights for selecting, supporting, and developing stronger franchisees.",
     hubspot: {
       portalId: "2403148",
       formId: "70034db0-b57a-46ee-9e57-589cb90c70a0",
@@ -160,7 +159,7 @@ export const footer = {
     { href: "/solutions/brokers", label: "For Brokers" },
     { href: "/pricing", label: "Pricing" },
     { href: "/news", label: "News" },
-    { href: "/science", label: "The Science" },
+    { href: "/sciences", label: "The Sciences" },
     { href: "/support", label: "Support" },
     { href: "/about", label: "About" },
     { href: "/schedule", label: "Book a Demo" },

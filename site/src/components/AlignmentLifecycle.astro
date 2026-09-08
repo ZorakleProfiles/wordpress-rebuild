@@ -1,57 +1,105 @@
 ---
 const lifecycleSteps = [
-  {
-    label: "Recruitment",
-    detail: "Stop guessing on candidate fit. Zorakle surfaces alignment signals early so you attract prospects whose operating style, risk tolerance, and motivational drivers match how your system actually runs — before you've invested discovery days or franchise fees.",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 md:w-9 md:h-9"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>`,
-    accent: "#09cc9c",
-  },
-  {
-    label: "Development",
-    detail: "The signing decision is your highest-leverage moment. Alignment data gives development teams a clear, objective picture of how a candidate's profile maps to your top performers — so you approve owners with confidence, not just optimism.",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 md:w-9 md:h-9"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
-    accent: "#3971c1",
-  },
-  {
-    label: "Training",
-    detail: "Generic onboarding creates inconsistent operators. When you know how a franchisee processes information, handles ambiguity, and responds to accountability, you can sequence training to match — accelerating time-to-competency and reducing costly early-stage mistakes.",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 md:w-9 md:h-9"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
-    accent: "#fd7730",
-  },
-  {
-    label: "Coaching",
-    detail: "Field coaches can't be everywhere — so every conversation needs to count. Alignment profiles show exactly where each owner's execution gaps are rooted, turning reactive check-ins into targeted interventions that actually move performance metrics.",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 md:w-9 md:h-9"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
-    accent: "#a259ff",
-  },
+  { label: "Recruit", detail: "Attract people aligned with your brand.", icon: "recruit", color: "#0a8a67", background: "#dcf7ee" },
+  { label: "Select", detail: "Identify right-fit candidates with greater confidence.", icon: "select", color: "#0868c9", background: "#e5f3fc" },
+  { label: "Onboard", detail: "Understand how each franchisee learns and operates.", icon: "onboard", color: "#f06a09", background: "#fff1df" },
+  { label: "Coach", detail: "Tailor communication, support, and development.", icon: "coach", color: "#4820be", background: "#eee9ff" },
+  { label: "Strengthen", detail: "Improve performance, relationships, and system health.", icon: "strengthen", color: "#0a8a67", background: "#e6f7e9" }
 ];
-
 ---
 
-<section class="bg-white py-20 md:py-28 overflow-hidden">
+<section class="overflow-hidden bg-[#fbfdfd] py-16 md:py-20">
   <div class="section-shell">
-
-    <!-- Lifecycle step flow -->
-    <div>
-      <p class="section-eyebrow">Where Zorakle Helps</p>
-      <h2 class="section-title">Alignment intelligence across the lifecycle.</h2>
-      <p class="section-copy max-w-3xl">
-        From first conversation to long-term performance, alignment data drives smarter decisions at every stage.
+    <div class="text-center">
+      <h2 class="section-title !mt-0">Alignment Intelligence at Every Stage</h2>
+      <p class="mx-auto mt-4 max-w-3xl text-[#56586a] md:text-lg">
+        From the first conversation to long-term growth, Zorakle helps you attract, select, onboard, coach, and strengthen franchisees who are built to succeed.
       </p>
-
-      <div class="mt-10">
-        {lifecycleSteps.map((step) => (
-          <div class="group grid grid-cols-[auto_1fr] items-start gap-x-5 gap-y-3 border-t border-[#d1d4dd] py-10 md:grid-cols-[2.5rem_minmax(0,1fr)_minmax(0,2fr)] md:items-center md:gap-x-10 lg:py-12">
-            <div class="row-span-2 pt-1 transition-transform duration-300 group-hover:scale-110 md:row-span-1 md:pt-0" style={`color:${step.accent}`}>
-              <Fragment set:html={step.icon} />
-            </div>
-            <h3 class="text-2xl font-bold text-[#22252a] md:text-3xl font-display">{step.label}</h3>
-            <p class="col-start-2 leading-relaxed text-[#3b3e47] md:col-start-3 md:row-start-1">{step.detail}</p>
-          </div>
-        ))}
-        <div class="border-t border-[#d1d4dd]"></div>
-      </div>
     </div>
 
+    <div class="lifecycle-flow mt-10 md:mt-12">
+      {lifecycleSteps.map((step, index) => (
+        <Fragment>
+          <article class="text-center">
+            <div
+              class="mx-auto flex h-36 w-36 flex-col items-center justify-center rounded-full"
+              style={`color:${step.color};background:${step.background}`}
+            >
+              <span class="text-3xl font-bold leading-none">{String(index + 1).padStart(2, "0")}</span>
+
+              {step.icon === "recruit" && (
+                <svg class="mt-3 h-12 w-16" viewBox="0 0 64 48" fill="currentColor" aria-hidden="true">
+                  <circle cx="32" cy="13" r="9" opacity=".95"/><circle cx="14" cy="18" r="7" opacity=".72"/><circle cx="50" cy="18" r="7" opacity=".72"/>
+                  <path d="M17 43c0-11 6-18 15-18s15 7 15 18H17Z"/><path d="M1 43c0-9 5-15 13-15 4 0 7 2 9 4-3 3-5 7-6 11H1ZM47 43c-1-4-3-8-6-11 2-2 5-4 9-4 8 0 13 6 13 15H47Z" opacity=".72"/>
+                </svg>
+              )}
+              {step.icon === "select" && (
+                <svg class="mt-3 h-12 w-12" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" aria-hidden="true">
+                  <circle cx="20" cy="20" r="14"/><path d="m31 31 13 13" stroke-linecap="round"/>
+                </svg>
+              )}
+              {step.icon === "onboard" && (
+                <svg class="mt-3 h-12 w-14" viewBox="0 0 56 48" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
+                  <rect x="4" y="2" width="35" height="42" rx="4"/><path d="M13 13h3m5 0h10M13 22h3m5 0h10M13 31h3m5 0h8" stroke-linecap="round"/>
+                  <circle cx="42" cy="35" r="11" fill="currentColor" stroke="none"/><path d="m37 35 3 3 7-8" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              )}
+              {step.icon === "coach" && (
+                <svg class="mt-3 h-12 w-15" viewBox="0 0 60 48" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
+                  <circle cx="20" cy="12" r="8"/><path d="M5 42c1-11 6-17 15-17 5 0 9 2 12 6" stroke-linecap="round"/>
+                  <path d="M35 42V31h6v11m4 0V24h6v18m4 0V17h4v25" stroke-linejoin="round"/>
+                </svg>
+              )}
+              {step.icon === "strengthen" && (
+                <svg class="mt-3 h-12 w-14" viewBox="0 0 56 48" fill="currentColor" aria-hidden="true">
+                  <rect x="5" y="31" width="10" height="13" rx="1" opacity=".55"/><rect x="22" y="23" width="10" height="21" rx="1" opacity=".75"/><rect x="39" y="12" width="10" height="32" rx="1"/>
+                  <path d="M7 24 19 13l7 5L42 3v8h4V0H35v4h5L25 15l-7-5L4 22l3 2Z"/>
+                </svg>
+              )}
+            </div>
+            <h3 class="mt-4 text-2xl font-bold text-[#111827]">{step.label}</h3>
+            <p class="mx-auto mt-2 max-w-[14rem] text-base leading-snug text-[#5f6d84] md:text-lg">{step.detail}</p>
+          </article>
+
+          {index < lifecycleSteps.length - 1 && (
+            <svg class="lifecycle-arrow" viewBox="0 0 72 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+              <path d="M1 12h66M59 4l8 8-8 8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          )}
+        </Fragment>
+      ))}
+    </div>
+
+    <div class="mx-auto mt-6 max-w-4xl border-t border-[#cdd5da] pt-4">
+      <p class="text-center text-xs font-medium uppercase tracking-[0.35em] text-[#8a97aa]">People aligned. Franchises stronger.</p>
+    </div>
   </div>
 </section>
+
+<style>
+  .lifecycle-flow {
+    display: grid;
+    justify-items: center;
+    gap: 1.5rem;
+  }
+
+  .lifecycle-arrow {
+    width: 4rem;
+    color: #8391a6;
+    transform: rotate(90deg);
+  }
+
+  @media (min-width: 1024px) {
+    .lifecycle-flow {
+      grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr) 4rem minmax(0, 1fr) 4rem minmax(0, 1fr) 4rem minmax(0, 1fr);
+      align-items: start;
+      gap: 0.6rem;
+    }
+
+    .lifecycle-arrow {
+      align-self: start;
+      margin-top: 4.4rem;
+      transform: none;
+    }
+  }
+</style>

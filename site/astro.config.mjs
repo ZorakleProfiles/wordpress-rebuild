@@ -30,7 +30,7 @@ function getBlogLastmodMap() {
 /** Assign a crawl priority from the URL shape. */
 function priorityForPath(pathname) {
   if (pathname === "/") return 1.0;
-  if (/^\/(solutions\/|pricing\/?$|science\/?$|about\/?$)/.test(pathname)) return 0.8;
+  if (/^\/(solutions\/|pricing\/?$|sciences\/?$|about\/?$)/.test(pathname)) return 0.8;
   if (/\/page\/\d+\/?$/.test(pathname)) return 0.3;
   if (/^\/(news|podcasts|webinars|sciences|support)/.test(pathname)) return 0.6;
   return 0.5;
@@ -46,6 +46,9 @@ export default defineConfig({
   site: SITE_ORIGIN,
   base: "/",
   cacheDir: "../node_modules/.astro",
+  redirects: {
+    "/science": "/sciences"
+  },
   devToolbar: {
     enabled: false
   },

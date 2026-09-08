@@ -7,10 +7,10 @@
 /lesson/emulator /sciences/values 301
 /lesson/achiever /sciences/values 301
 /lesson/societal /sciences/values 301
-/lesson/* /science 301
-/courses-overview /science 301
-/my-courses /science 301
-/training /science 301
-/sciences /science 301
+/lesson/* /sciences 301
+/courses-overview /sciences 301
+/my-courses /sciences 301
+/training /sciences 301
+/science /sciences 301
 /home / 301
 /blog /news 301

@@ -66,12 +66,19 @@ const canonicalUrl = isPartnerPage ? "/pricing/" : undefined;
   >
     <div class="mx-auto w-[min(1400px,calc(100%-2rem))] py-12">
       <header class="mb-12 border-b border-[#d1d4dd] pb-10">
-        <div class="max-w-3xl">
-          {partnerMeta?.logo && <Image src={partnerMeta.logo} alt={partnerMeta.logoAlt} class="mb-6 h-14 w-auto object-contain object-left" />}
+        <div class="flex items-center justify-between gap-6">
+          <div>
+
           <p class="section-eyebrow">{partner ? "Partner offer" : "Pricing"}</p>
           <h1 class="page-title mt-3">{pageMeta.heading}</h1>
           <p class="section-copy max-w-2xl">{pageMeta.description}</p>
+          </div>
+          <div class="flex flex-1 justify-center">
+
+          {partnerMeta?.logo && <Image src={partnerMeta.logo} alt={partnerMeta.logoAlt} class="h-16 w-auto object-cover" />}
+          </div>
         </div>
+
       </header>
 
       <div class="grid grid-cols-1 gap-12 lg:grid-cols-3">

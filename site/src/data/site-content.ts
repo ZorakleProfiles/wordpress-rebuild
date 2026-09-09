@@ -207,21 +207,20 @@ export const testimonials: Testimonial[] = [
     "quote": "Zorakle Profiles offers greater insight into more strategically choosing a candidate because the assessment measures key categories with surgical accuracy. It also compares the candidate to so many of the important qualities possessed by the most successful franchisees in the system. I recommend investing the time to speak with Zorakle Profiles and discover how this valuable assessment tool can assist you and your company in finding, the right fit candidate for your system.",
     "name": "Jeffrey Polino",
     "company": "TAB",
-    "type": "Franchisor"
+    "type": "Franchisor",
+    "featured": true
   },
   {
     "quote": "Zorakle Profiles has been a game changer for our business. This powerful tool has helped us find more precise franchise matches for our clients that fit “their why”. Additionally, Zorakle gives us keen insight into how to best work with our clients in terms of their pace and how they will react in different situations, thereby increasing our chances to bring the deal home. This tool is worth 100x what we pay for it.",
     "name": "Jack & Jill Johnson",
     "company": "Franchise Insiders",
-    "type": "Broker",
-    "featured": true
+    "type": "Broker"
   },
   {
     "quote": "Zorakle’s products have enabled us to target, attract, and motivate the right franchise partners to inquire about our franchise opportunity. I can’t imagine growing our system without Rebecca Monet’s influence and expertise. Awarding franchises is too big of a decision to leave to chance and a “gut feeling”. With Zorakle, we’re able to make the decision to award a franchise based on fit, values, and aptitude – this alone has had a hugely positive effect on our franchisee validation and our strong Item 19 performance.",
     "name": "Marcos Moura",
     "company": "Amada Senior Care",
-    "type": "Franchisor",
-    "featured": true
+    "type": "Franchisor"
   },
   {
     "quote": "Zorakle has increased our ability to have an open discussion on values, skills and vision with candidates and our franchisees. The SpotOn! Profiling Tool provides key elements that we use to build stronger partnerships. Zorakle team, simply thank you for your support.",
@@ -239,8 +238,7 @@ export const testimonials: Testimonial[] = [
     "quote": "You guys have given me the tools to see the inner workings of our franchise candidates. I had the “gut” but the unbiased, scientific data gives us direction. I believe in this stuff. It gives me control to create my corporate culture and that leads to every kind of success. Zorakle Profiles is like the key to reading a foreign language of personality.",
     "name": "Sean Hart",
     "company": "American Family Care",
-    "type": "Franchisor",
-    "featured": true
+    "type": "Franchisor"
   },
   {
     "quote": "We’ve been using Zorakle SpotOn! reports for years. We recently decided to take our candidate analysis to the next level with the Eclipse Reports. The benchmarking was extremely insightful and accurate!",
@@ -252,13 +250,15 @@ export const testimonials: Testimonial[] = [
     "quote": "Zorakle is an incredible tool for a franchise system. Finding the right fit is the most crucial piece of our qualification process. I am amazed at how accurate the SpotOn! Profile is.",
     "name": "Gerry Henley",
     "company": "Office Pride",
-    "type": "Franchisor"
+    "type": "Franchisor",
+    "featured": true
   },
   {
     "quote": "The SpotOn! Profile is an instrumental objective tool in my arsenal. It provides tremendous insight into my candidates and differentiates me from my competitors.",
     "name": "Seth Lederman",
     "company": "FranNexus",
-    "type": "Broker"
+    "type": "Broker",
+    "featured": true
   },
   {
     "quote": "Rebecca Monet is an amazing scientist who has the unique ability take complex information and present it in an engaging way that is understandable, applicable and fun. We’ve worked together implementing the Zorakle tool into our organization, which has added tremendous value to how we recruit franchisees. Additionally, she is an incredible resource, providing guidance to ensure maximum ROI.",

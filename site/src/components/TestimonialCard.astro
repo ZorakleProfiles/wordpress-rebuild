@@ -9,15 +9,21 @@ interface Props {
   company: string;
   type: string;
   quote: string;
+  variant?: "default" | "showcase";
+  expanded?: boolean;
   class?: string;
   dataIndex?: number;
 }
 
-const { name, company, type, quote, class: className = "", dataIndex } = Astro.props;
+const { name, company, type, quote, variant = "showcase", expanded = false, class: className = "", dataIndex } = Astro.props;
 const typeModifier = type.trim().toLowerCase() === "broker" ? "is-broker" : "is-franchisor";
+const variantModifier = variant === "showcase" ? "is-showcase" : "";
+const expandedModifier = expanded ? "is-expanded" : "";
 ---
 
-<article class:list={["testimonial-card", typeModifier, className]} data-index={dataIndex}>
+<article class:list={["testimonial-card", typeModifier, variantModifier, expandedModifier, className]} data-index={dataIndex}>
+
+  {variant === "showcase" && <span class="testimonial-quote-mark" aria-hidden="true">“</span>}
 
   <div class="testimonial-card-head">
     <div class="min-w-0">
@@ -30,7 +36,7 @@ const typeModifier = type.trim().toLowerCase() === "broker" ? "is-broker" : "is-
   <p class="testimonial-quote mt-4 text-base leading-relaxed text-[#22252a]">{quote}</p>
 </article>
 
-<style>
+<style is:global>
   .testimonial-card {
     position: relative;
     overflow: hidden;
@@ -90,6 +96,83 @@ const typeModifier = type.trim().toLowerCase() === "broker" ? "is-broker" : "is-
 
   .testimonial-quote {
     position: relative;
+  }
+
+  .testimonial-card.is-showcase {
+    display: flex;
+    min-height: 16.5rem;
+    flex-direction: column;
+    border-right: 1px solid #dde7e4;
+    border-bottom: 1px solid #dde7e4;
+    border-left: 1px solid #dde7e4;
+    border-radius: 0.75rem;
+    padding: 1.65rem 1.65rem 1.45rem 3.85rem;
+    box-shadow: 0 12px 30px rgba(43, 75, 67, 0.07);
+  }
+
+  .is-showcase .testimonial-quote-mark {
+    position: absolute;
+    left: 1.25rem;
+    top: 0.9rem;
+    color: #bcebe2;
+    font-family: Georgia, serif;
+    font-size: 4.4rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .is-showcase .testimonial-quote {
+    order: 1;
+    display: -webkit-box;
+    margin-top: 0;
+    overflow: hidden;
+    color: #4d587d;
+    font-size: 1rem;
+    line-height: 1.45;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+  }
+
+  .is-showcase.is-expanded .testimonial-quote {
+    display: block;
+    overflow: visible;
+    -webkit-line-clamp: unset;
+  }
+
+  .is-showcase .testimonial-card-head {
+    order: 2;
+    display: flex;
+    margin-top: auto;
+    padding-top: 1.2rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.55rem;
+  }
+
+  .is-showcase .testimonial-card-head > div p:first-child {
+    color: #171b2c;
+    font-size: 1rem;
+  }
+
+  .is-showcase .testimonial-card-head > div p:last-child {
+    color: #59617c;
+  }
+
+  .is-showcase .testimonial-type {
+    border: 0;
+    padding: 0.32rem 1.15rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.13em;
+  }
+
+  .is-showcase .testimonial-type.is-broker {
+    background: #d5f4ed;
+    color: #078d73;
+  }
+
+  .is-showcase .testimonial-type.is-franchisor {
+    background: #fff0e8;
+    color: #e85d1a;
   }
 
   @media (min-width: 1024px) {

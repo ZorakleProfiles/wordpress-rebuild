@@ -7,9 +7,10 @@ type TestimonialFilterType = "brokers" | "franchisors" | null;
 interface Props {
   type?: TestimonialFilterType;
   limit?: number;
+  variant?: "default" | "showcase";
 }
 
-const { type = null, limit } = Astro.props;
+const { type = null, limit, variant = "showcase" } = Astro.props;
 const filterType = type ?? null;
 
 const matchingTestimonials = testimonials.filter((item) => {
@@ -44,7 +45,7 @@ function getInitialCardClass(idx: number) {
 {totalTestimonials === 0 ? (
   <p class="mt-10 text-base text-[#56586a]">No testimonials available for this audience yet.</p>
 ) : (
-  <div class="mt-10 md:mt-12" data-testimonial-carousel tabindex="0" aria-label="Testimonials carousel">
+  <div class="mt-7 md:mt-8" data-testimonial-carousel data-variant={variant} tabindex="0" aria-label="Testimonials carousel">
     <div class="testimonial-stage">
       {filteredTestimonials.map((item, idx) => (
         <TestimonialCard
@@ -52,6 +53,7 @@ function getInitialCardClass(idx: number) {
           company={item.company}
           type={item.type}
           quote={item.quote}
+          variant={variant}
           class={getInitialCardClass(idx)}
           dataIndex={idx}
         />
@@ -61,7 +63,10 @@ function getInitialCardClass(idx: number) {
     {totalTestimonials > 1 && (
       <div class="mt-12 flex items-center justify-center gap-8">
         <!--<button type="button" class="carousel-arrow" data-prev aria-label="Previous testimonial">&larr;</button>-->
-        <a href="/testimonials" class="carousel-view-more">View More</a>
+        <a href="/testimonials" class="carousel-view-more">
+          {variant === "showcase" ? "View More Success Stories" : "View More"}
+          {variant === "showcase" && <span aria-hidden="true">&rarr;</span>}
+        </a>
         <!--<button type="button" class="carousel-arrow" data-next aria-label="Next testimonial">&rarr;</button>-->
       </div>
     )}
@@ -289,6 +294,37 @@ function getInitialCardClass(idx: number) {
     background-color: #ecfdf8;
   }
 
+  [data-testimonial-carousel][data-variant="showcase"] .testimonial-stage {
+    gap: 1.25rem;
+    min-height: 16.5rem;
+  }
+
+  [data-testimonial-carousel][data-variant="showcase"] .testimonial-card.is-active {
+    display: flex;
+  }
+
+  [data-testimonial-carousel][data-variant="showcase"] .carousel-view-more {
+    gap: 0.7rem;
+    border: 0;
+    border-bottom: 1px solid #09a985;
+    border-radius: 0;
+    padding: 0 0.25rem 0.45rem;
+    color: #078d73;
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  [data-testimonial-carousel][data-variant="showcase"] .carousel-view-more:hover {
+    border-color: #087f65;
+    background: transparent;
+    color: #087f65;
+  }
+
+  [data-testimonial-carousel][data-variant="showcase"] > div:last-child {
+    margin-top: 1.75rem;
+  }
+
   [data-testimonial-carousel]:focus-visible {
     outline: 2px solid #09cc9c;
     outline-offset: 8px;
@@ -306,6 +342,15 @@ function getInitialCardClass(idx: number) {
     [data-testimonial-carousel] .testimonial-card.is-left,
     [data-testimonial-carousel] .testimonial-card.is-right {
       display: block;
+    }
+
+    [data-testimonial-carousel][data-variant="showcase"] .testimonial-stage {
+      min-height: 16.5rem;
+    }
+
+    [data-testimonial-carousel][data-variant="showcase"] .testimonial-card.is-left,
+    [data-testimonial-carousel][data-variant="showcase"] .testimonial-card.is-right {
+      display: flex;
     }
   }
 </style>

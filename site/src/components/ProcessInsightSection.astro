@@ -1,0 +1,115 @@
+---
+import Video from "./Video.astro";
+import processPoster from "../assets/how-zorakle-works-poster.png";
+
+const steps = [
+  {
+    number: "01",
+    accent: "#09a985",
+    title: "Understand Your System",
+    body: "Audit culture, values, systems and expectations."
+  },
+  {
+    number: "02",
+    accent: "#fd7730",
+    title: "Study Franchisee Performance",
+    body: "Identify the patterns associated with success."
+  },
+  {
+    number: "03",
+    accent: "#09a985",
+    title: "Build Your Custom Blueprint",
+    body: "Turn the findings into a custom fit algorithm."
+  }
+];
+---
+
+<section id="how-zorakle-produces-insight" class="overflow-hidden bg-[#f7fbfa] py-14 md:py-20">
+  <div class="section-shell">
+    <header class="mx-auto max-w-10xl text-center">
+      <p class="section-eyebrow">How Zorakle Produces the Insight</p>
+      <h2 class="section-title text-center">
+        A Fit Standard Built Around Your Franchise System.
+      </h2>
+      <p class="section-copy mx-auto max-w-3xl text-center">
+        See how Zorakle studies your organization, identifies the characteristics associated with success, and turns that intelligence into better franchisee decisions.
+      </p>
+    </header>
+
+    <div class="mt-10 grid items-center gap-9 md:mt-12 lg:grid-cols-[minmax(0,1.68fr)_minmax(355px,0.72fr)] lg:gap-10">
+      <div class="process-video relative overflow-hidden rounded-[18px] bg-[#111419] shadow-[0_18px_45px_rgba(25,47,42,0.16)]">
+        <Video
+          poster={processPoster}
+          posterAlt="Business leaders discussing franchise performance in a bright conference room"
+          videoSrc="https://cdn.sanity.io/files/4kjxjblw/production/b7fb473836afb5f23a76446fdaa17d5c96fea4a7.mp4"
+          playLabel="Play the explainer video"
+          modalTitle="How Zorakle produces the insight"
+          loading="eager"
+          fetchpriority="high"
+          sizes="(max-width: 1023px) calc(100vw - 2.5rem), 62vw"
+          frameClass="rounded-[18px] bg-[#111419] shadow-none ring-0"
+          imageClass="h-full w-full object-cover"
+        />
+
+        <a
+          href="/solutions/franchisors"
+          class="group absolute bottom-4 left-4 z-10 flex max-w-[calc(100%-2rem)] items-center gap-3 rounded-xl bg-[#111419]/95 py-2.5 pl-2.5 pr-4 text-white shadow-[0_12px_30px_rgba(0,0,0,0.4)] ring-1 ring-white/20 backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-[#111419] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#09cc9c] sm:bottom-5 sm:left-5"
+        >
+          <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#09cc9c]/20 text-[#3fe0c9]" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="h-[18px] w-[18px]" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 1 4 17.5v-12Z" />
+              <path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 0 1.5-1.5v-12Z" />
+            </svg>
+          </span>
+          <span class="min-w-0">
+            <span class="block text-[0.65rem] font-medium leading-tight text-white/65 sm:text-xs">Prefer to read, or learn more?</span>
+            <span class="mt-0.5 flex items-center gap-1.5 text-[0.8rem] font-bold leading-tight sm:text-sm">
+              Explore franchisor solutions
+              <span aria-hidden="true" class="text-[#3fe0c9] transition-transform group-hover:translate-x-0.5">&rarr;</span>
+            </span>
+          </span>
+        </a>
+      </div>
+
+      <div class="relative">
+        <div class="absolute bottom-12 left-8 top-12 hidden w-px bg-[#d8e4e1] sm:block" aria-hidden="true"></div>
+
+        <div class="space-y-5 sm:space-y-6">
+          {steps.map((step) => (
+            <article class="relative grid items-center gap-4 sm:grid-cols-[64px_minmax(0,1fr)] sm:gap-5">
+              <div
+                class="relative z-10 flex h-16 w-16 items-center justify-center rounded-full border-[3px] bg-[#f7fbfa] text-xl font-bold"
+                style={`border-color:${step.accent}; color:${step.accent};`}
+                aria-hidden="true"
+              >
+                {step.number}
+              </div>
+              <div class="rounded-xl border border-[#dfe8e5] bg-white px-6 py-5 shadow-[0_8px_22px_rgba(35,57,51,0.04)] sm:min-h-[124px] sm:px-6 sm:py-5">
+                <h3 class="text-lg font-bold leading-tight text-[#171b29] sm:text-xl">
+                  {step.title}
+                </h3>
+                <p class="mt-2 text-base leading-relaxed text-[#6a6f7d] sm:text-[1.05rem]">
+                  {step.body}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .process-video :global([data-video-open] > span) {
+    border: 3px solid white;
+    color: white;
+  }
+
+  @media (max-width: 639px) {
+    article > div:last-child {
+      margin-top: -2.6rem;
+      padding-left: 5.25rem;
+    }
+  }
+</style>

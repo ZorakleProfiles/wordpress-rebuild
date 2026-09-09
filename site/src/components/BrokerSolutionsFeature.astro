@@ -1,0 +1,107 @@
+---
+import { Image } from "astro:assets";
+import VideoModalButton from "./VideoModalButton.astro";
+import brokerConsultation from "../assets/home-broker-consultation.png";
+
+const fitBars = [76, 66, 50, 72, 58];
+---
+
+<section class="broker-feature relative overflow-hidden border-y border-[#d8ebe7] bg-[#f2fbf9] py-14 md:py-18" aria-labelledby="broker-feature-title">
+  <svg class="pointer-events-none absolute -left-10 -top-8 h-44 w-52 text-[#54cbbb] opacity-25" viewBox="0 0 220 170" fill="none" aria-hidden="true">
+    <g stroke="currentColor" stroke-width="1.5"><path d="M7 115 42 70l44 20 35-45 42-7 28 31"/><path d="m42 70 4-37m40 57 19 38m16-83-15-34"/></g>
+    <g fill="currentColor"><circle cx="7" cy="115" r="9"/><circle cx="42" cy="70" r="11"/><circle cx="46" cy="33" r="10"/><circle cx="86" cy="90" r="10"/><circle cx="105" cy="128" r="7"/><circle cx="121" cy="45" r="11"/><circle cx="106" cy="11" r="7"/><circle cx="163" cy="38" r="10"/><circle cx="191" cy="69" r="8"/></g>
+  </svg>
+  <svg class="pointer-events-none absolute -right-12 top-1 h-48 w-48 rotate-12 text-[#54cbbb] opacity-25" viewBox="0 0 200 190" fill="none" aria-hidden="true">
+    <g stroke="currentColor" stroke-width="1.5"><path d="m24 23 38 47 38-24 36 43 49-8M62 70l-12 54m50-78 8-37m28 80 12 47m-12-47-36 47"/></g>
+    <g fill="currentColor"><circle cx="24" cy="23" r="8"/><circle cx="62" cy="70" r="11"/><circle cx="50" cy="124" r="8"/><circle cx="100" cy="46" r="9"/><circle cx="108" cy="9" r="7"/><circle cx="136" cy="89" r="12"/><circle cx="148" cy="136" r="8"/><circle cx="100" cy="136" r="7"/><circle cx="185" cy="81" r="10"/></g>
+  </svg>
+
+  <div class="section-shell relative z-10 grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 xl:gap-16">
+    <div class="max-w-[610px]">
+      <p class="section-eyebrow">For Franchise Brokers</p>
+      <h2 id="broker-feature-title" class="section-title">
+        Help Candidates Find the Right Franchise—Not Just a Franchise.
+      </h2>
+      <p class="section-copy max-w-[590px]">
+        Understand how a candidate is wired, identify compatible franchise opportunities, and lead more confident recommendation conversations.
+      </p>
+
+      <div class="mt-6 grid gap-4 border-[#9fcfc7] sm:grid-cols-3 sm:gap-0">
+        <div class="flex items-center gap-3 sm:border-r sm:pr-4">
+          <svg class="h-10 w-10 shrink-0 text-[#16b49a]" viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="20" cy="12" r="6" stroke="currentColor" stroke-width="2.5"/><path d="M9 36v-5c0-6 4-10 11-10s11 4 11 10v5M7 36h26M36 18v18M42 25v11M31 30v6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+          <span class="text-[0.66rem] font-bold uppercase leading-snug tracking-[0.04em] text-[#344568]">Understand<br />the candidate</span>
+        </div>
+        <div class="flex items-center gap-3 sm:border-r sm:px-4">
+          <svg class="h-10 w-10 shrink-0 text-[#16b49a]" viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="23" cy="25" r="15" stroke="currentColor" stroke-width="2.5"/><circle cx="23" cy="25" r="8" stroke="currentColor" stroke-width="2.5"/><path d="m23 25 14-14m0 0v8m0-8h-8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="text-[0.66rem] font-bold uppercase leading-snug tracking-[0.04em] text-[#344568]">Identify<br />better-fit brands</span>
+        </div>
+        <div class="flex items-center gap-3 sm:pl-4">
+          <svg class="h-10 w-10 shrink-0 text-[#16b49a]" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M7 10h23a7 7 0 0 1 7 7v7a7 7 0 0 1-7 7h-8l-8 7v-7h-1a6 6 0 0 1-6-6V10Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M34 20h3a6 6 0 0 1 6 6v7h-3v6l-7-6h-4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="text-[0.66rem] font-bold uppercase leading-snug tracking-[0.04em] text-[#344568]">Guide confident<br />conversations</span>
+        </div>
+      </div>
+
+      <div class="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <a href="/solutions/brokers" class="inline-flex min-h-12 items-center justify-center gap-4 rounded-lg bg-gradient-to-r from-[#27b79f] to-[#12a68c] px-7 py-3 text-xs font-bold uppercase tracking-[0.16em] text-white transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#9be3d7]">
+          Explore Broker Solutions <span class="text-lg leading-none" aria-hidden="true">&rarr;</span>
+        </a>
+        <VideoModalButton
+          videoId="1137519120"
+          label="Watch how it works"
+          modalTitle="How Zorakle helps franchise brokers"
+          class="broker-video-button inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.04em] text-[#3f4b73] underline decoration-[#3f4b73] underline-offset-4 transition hover:text-[#0a9f86]"
+        />
+      </div>
+    </div>
+
+    <div class="relative mx-auto hidden w-full max-w-[660px] overflow-hidden rounded-xl border border-[#9ed4c9] bg-white lg:block">
+      <Image src={brokerConsultation} alt="A franchise consultant speaking with a prospective franchise owner" class="aspect-[1.18/1] h-full w-full object-cover object-center" widths={[540, 720, 960, 1200]} sizes="(min-width: 1024px) 50vw, 92vw" />
+
+      <div class="candidate-card absolute left-1/2 top-4 w-[45%] min-w-[205px] max-w-[270px] -translate-x-1/2 rounded-lg bg-white/95 p-3 text-[#263556] ring-1 ring-[#dce9e7] backdrop-blur-sm sm:top-5 sm:p-4" aria-hidden="true">
+        <div class="flex items-center gap-2 border-b border-[#c8d7da] pb-2">
+          <span class="flex h-6 w-6 items-center justify-center rounded-full bg-[#18ad93]/12 text-[#18ad93]">
+            <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current"><circle cx="12" cy="7" r="4"/><path d="M4 21a8 8 0 0 1 16 0H4Z"/></svg>
+          </span>
+          <span class="text-[0.61rem] font-bold sm:text-[0.7rem]">Candidate Insight</span>
+        </div>
+        <div class="mt-2 space-y-1.5">
+          {['Leadership', 'People Focus', 'Risk Tolerance', 'Financial Discipline', 'Growth Mindset'].map((label, index) => (
+            <div class="grid grid-cols-[1fr_1.25fr] items-center gap-2">
+              <span class="text-[0.42rem] leading-none sm:text-[0.52rem]">{label}</span>
+              <span class="h-1.5 bg-[#e8eeee]"><span class="block h-full bg-gradient-to-r from-[#21b49b] to-[#6bcbba]" style={`width:${fitBars[index]}%`}></span></span>
+            </div>
+          ))}
+        </div>
+        <p class="mt-3 border-t border-[#c8d7da] pt-2 text-center text-[0.48rem] font-bold sm:text-[0.58rem]">Top Franchise Matches</p>
+        <div class="relative mt-2 grid grid-cols-3 gap-1.5 pt-4">
+          <svg class="absolute inset-x-3 top-0 h-5 w-[calc(100%-1.5rem)] text-[#22af98]" viewBox="0 0 180 22" fill="none"><path d="M90 1c0 10-59 6-59 20M90 1c0 10 59 6 59 20M90 1v20" stroke="currentColor"/></svg>
+          {['Fitness', 'Home', 'Healthy Living'].map((label, index) => (
+            <div class:list={["rounded-md bg-white p-1.5 text-center ring-1", index === 2 ? "ring-[#13b89b]" : "ring-[#d7e6e4]"]}>
+              <span class:list={["mx-auto block h-3 w-3 rounded-full", index === 2 ? "bg-[#19b89b]" : "bg-[#9eafb2]"]}></span>
+              <span class="mt-1 block text-[0.36rem] font-bold leading-tight sm:text-[0.44rem]">{label}</span>
+              <span class:list={["mx-auto mt-1 block h-1 w-3/4 rounded", index === 2 ? "bg-[#20b69b]" : "bg-[#d7e1e2]"]}></span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .broker-video-button :global(svg) {
+    box-sizing: content-box;
+    border: 2px solid #16b49a;
+    border-radius: 9999px;
+    color: #16b49a;
+    padding: 0.28rem;
+  }
+
+  .candidate-card {
+    box-shadow: 0 10px 28px rgba(24, 73, 70, 0.14);
+  }
+
+  @media (max-width: 390px) {
+    .candidate-card { transform: translateX(-50%) scale(0.84); transform-origin: top center; }
+  }
+</style>

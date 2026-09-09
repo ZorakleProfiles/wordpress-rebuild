@@ -290,7 +290,7 @@ export const Partners = {
   },
   franserve:{
     title: "FranServe Member Offer | Zorakle",
-    heading: "20% off for FranServe members",
+    heading: "20% off for FranServe brokers",
     description: "FranServe brokers receive 20% off their plan. FranServe franchisors receive 20% off subscription billing after research; the one-time research fee is not discounted.",
     logo: franserveLogo,
     logoAlt: "FranServe",

@@ -89,6 +89,19 @@ p {
   width: min(1240px, calc(100% - 2.5rem));
 }
 
+/* Homepage vertical rhythm: content sections, narrow bands, and the closing CTA. */
+.home-section {
+  @apply py-12 md:py-14;
+}
+
+.home-section-band {
+  @apply py-8;
+}
+
+.home-section-cta {
+  @apply py-12;
+}
+
 .btn-primary {
   @apply inline-flex items-center justify-center rounded-lg bg-[#fd7730] px-7 py-3 text-base font-bold text-[#22252a] transition hover:brightness-95 whitespace-nowrap;
 }

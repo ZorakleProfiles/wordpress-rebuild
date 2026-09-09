@@ -11,18 +11,17 @@ interface Props {
 const { type = null, limit } = Astro.props;
 ---
 
-<section id="testimonials" class="bg-[#f7fbfa] py-16 md:py-20">
+<section id="testimonials" class="home-section bg-[#f7fbfa]">
   <div class="section-shell">
-    <div class="text-center">
-      <p class="text-xs font-bold uppercase tracking-[0.3em] text-[#07977d] sm:text-sm">Real Systems. Real Results.</p>
-      <span class="mx-auto mt-3 block h-px w-11 bg-[#09a985]" aria-hidden="true"></span>
+    <div class="max-w-152.5 text-left">
+      <p class="section-eyebrow">Real Systems. Real Results.</p>
+      <h2 class="section-title">
+        Franchise Leaders Use Zorakle to Make Their Biggest Decisions.
+      </h2>
+      <p class="section-copy max-w-147.5">
+        See what greater clarity and stronger alignment look like in practice.
+      </p>
     </div>
-    <h2 class="mx-auto mt-4 max-w-6xl text-center font-display text-[clamp(2.25rem,4vw,3.8rem)] leading-[1.04] tracking-[-0.025em] text-[#171b2c]">
-      Franchise Leaders Use Zorakle to Make Their Biggest Decisions.
-    </h2>
-    <p class="mt-2 text-center text-base text-[#59617c] sm:text-lg">
-      See what greater clarity and stronger alignment look like in practice.
-    </p>
 
     <TestimonialCarousel type={type} limit={limit} variant="showcase" />
   </div>

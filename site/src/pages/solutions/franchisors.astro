@@ -13,7 +13,7 @@ import FranchisorClosingCta from "../../components/FranchisorClosingCta.astro";
   title="Franchisee Selection & Assessment Tools for Franchisors | Zorakle"
   description="Build a stronger franchise system with objective insight into candidate alignment, validation, support needs, and execution fit."
 >
-  <SiteHeader ctaLabel="Book a Consultation" wide={true} />
+  <SiteHeader ctaLabel="Book a Consultation" />
 
   <main>
     <FranchisorHero />
@@ -23,5 +23,27 @@ import FranchisorClosingCta from "../../components/FranchisorClosingCta.astro";
     <FranchisorClosingCta />
   </main>
 
-  <SiteFooter />
+  <div class="footer-flush">
+    <SiteFooter />
+  </div>
 </MainLayout>
+
+<style>
+  /* The closing section ends on #eefaf8; paint the same colour behind the
+     footer so its rounded top corners don't reveal a lighter notch. */
+  .footer-flush {
+    background: #eefaf8;
+  }
+
+  /* The "Book a Consultation" CTA is wider than the default header CTA, so the
+     full inline nav + actions overflow the shell between lg (1024px) and
+     ~1180px. Keep the compact (hamburger) header until there is room for it. */
+  @media (min-width: 1024px) and (max-width: 1179px) {
+    :global([data-site-header] nav[aria-label="Primary"]) {
+      display: none;
+    }
+    :global([data-site-header] [data-menu-toggle]) {
+      display: flex;
+    }
+  }
+</style>

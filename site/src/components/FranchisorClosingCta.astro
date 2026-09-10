@@ -18,7 +18,7 @@ import meetingArtwork from "../assets/franchisor-closing-alignment-v2.png";
   <div class="closing-shell">
     <div class="closing-copy">
       <p class="eyebrow">People Aligned. Franchises Stronger.</p>
-      <h2 id="franchisor-closing-title">Build Your Franchise System<br />Around Better-Fit People.</h2>
+      <h2 id="franchisor-closing-title">Build Your Franchise System{" "}<br />Around Better-Fit People.</h2>
       <p class="supporting-copy">
         See how Zorakle can help you establish a system-specific standard for selecting, supporting, and developing franchisees.
       </p>
@@ -159,20 +159,21 @@ import meetingArtwork from "../assets/franchisor-closing-alignment-v2.png";
   }
 
   @media (max-width: 720px) {
-    .closing-cta { min-height: 610px; }
-    .closing-art { height: 300px; }
-    .closing-art :global(.closing-image) { object-position: 69% center; }
+    /* Text overlays the full-bleed image (same treatment as the hero) rather
+       than stacking below an image band. */
+    .closing-cta { min-height: 540px; }
+    .closing-art :global(.closing-image) { object-position: 62% center; }
     .closing-wash {
-      background: linear-gradient(180deg, rgba(242,251,250,.02) 0%, rgba(242,251,250,.12) 32%, #f2fbfa 49%, #f2fbfa 100%);
+      background: linear-gradient(180deg, rgba(242,251,250,.58) 0%, rgba(242,251,250,.8) 46%, rgba(242,251,250,.92) 100%);
     }
     .closing-shell {
       width: min(100% - 2rem, 580px);
-      min-height: 610px;
-      align-items: flex-end;
+      min-height: 540px;
+      align-items: center;
     }
     .closing-copy {
       width: 100%;
-      padding: 260px 0 38px;
+      padding: 52px 0;
     }
     .eyebrow { font-size: 11px; }
     h2 { margin-top: 14px; font-size: clamp(2.35rem, 10.6vw, 3.1rem); }

@@ -6,13 +6,14 @@ import { Image } from 'astro:assets';
 
 interface Props {
   ctaLabel?: string;
+  wide?: boolean;
 }
 
-const { ctaLabel = "Book a Demo" } = Astro.props;
+const { ctaLabel = "Book a Demo", wide = false } = Astro.props;
 ---
 
 <header class="sticky top-0 z-40 border-b border-[#d1d4dd] bg-white/95 backdrop-blur" data-site-header>
-  <div class="section-shell flex h-26 items-center justify-between gap-4">
+  <div class:list={["flex h-26 items-center justify-between gap-4", wide ? "site-header-wide" : "section-shell"]}>
     <a href="/" class="shrink-0" aria-label="Zorakle home">
       <Image
         src={Logo}
@@ -201,3 +202,8 @@ const { ctaLabel = "Book a Demo" } = Astro.props;
   initHeader();
   document.addEventListener("astro:page-load", initHeader);
 </script>
+
+<style>
+  .site-header-wide { width: min(1382px, calc(100% - 6rem)); margin-inline: auto; }
+  @media (max-width: 767px) { .site-header-wide { width: calc(100% - 2rem); } }
+</style>

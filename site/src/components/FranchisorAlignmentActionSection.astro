@@ -1,0 +1,149 @@
+---
+const stories = [
+  {
+    brand: "Amada Senior Care",
+    initials: "ASC",
+    tag: "Recruit + Select",
+    accent: "orange",
+    challenge: "Add objective insight to a high-stakes award decision.",
+    insight: "Candidate fit, values, and aptitude added clarity beyond gut feeling.",
+    result: "Greater confidence in awards, validation, and franchisee performance.",
+    quote: "Awarding franchises is too big of a decision to leave to chance and a gut feeling.",
+    attribution: "Marcos Moura",
+  },
+  {
+    brand: "CarePatrol",
+    initials: "CP",
+    tag: "Select + Onboard",
+    accent: "teal",
+    challenge: "Take candidate analysis beyond a general assessment.",
+    insight: "Eclipse benchmarking compared candidates with the system’s success profile.",
+    result: "A deeper, system-specific understanding of candidate alignment.",
+    quote: "The benchmarking was extremely insightful and accurate.",
+    attribution: "Shannon McInnis",
+  },
+  {
+    brand: "Sharkey’s Cuts for Kids",
+    initials: "SC",
+    tag: "Select + Coach",
+    accent: "navy",
+    challenge: "Create more open conversations about values, skills, and vision.",
+    insight: "SpotOn! Profile provided a shared language for understanding the person.",
+    result: "Stronger candidate and franchisee conversations and partnerships.",
+    quote: "The SpotOn! Profile provides key elements that we use to build stronger partnerships.",
+    attribution: "Denis Kurdi",
+  },
+];
+---
+
+<section class="alignment-action">
+  <div class="action-shell">
+    <header class="section-heading">
+      <p>Alignment in Action</p>
+      <span aria-hidden="true"></span>
+      <h2>How Franchisors Put the Insight to Work.</h2>
+      <div>The value of alignment becomes clearest in the decisions, conversations, and systems it improves.</div>
+    </header>
+
+    <div class="story-grid">
+      {stories.map((story) => (
+        <article class:list={["story-card", story.accent]}>
+          <div class="brand-row">
+            <div class="brand-medallion" aria-hidden="true"><span>{story.initials}</span></div>
+            <div class="brand-copy">
+              <h3>{story.brand}</h3>
+              <p>{story.tag}</p>
+            </div>
+          </div>
+
+          <div class="story-points">
+            <div class="point">
+              <div class="point-icon target" aria-hidden="true">
+                <svg viewBox="0 0 34 34"><circle cx="15" cy="18" r="10"/><circle cx="15" cy="18" r="5"/><path d="m15 18 14-14M22 4h7v7"/></svg>
+              </div>
+              <div><h4>Challenge</h4><p>{story.challenge}</p></div>
+            </div>
+            <div class="point">
+              <div class="point-icon search" aria-hidden="true">
+                <svg viewBox="0 0 34 34"><circle cx="14" cy="14" r="10"/><path d="m22 22 9 9"/></svg>
+              </div>
+              <div><h4>Zorakle Insight</h4><p>{story.insight}</p></div>
+            </div>
+            <div class="point">
+              <div class="point-icon result" aria-hidden="true">
+                <svg viewBox="0 0 34 34"><path d="M4 31V23M11 31V18M18 31V12M25 31V5"/></svg>
+              </div>
+              <div><h4>Result</h4><p>{story.result}</p></div>
+            </div>
+          </div>
+
+          <blockquote>
+            <span aria-hidden="true">“</span>
+            <div>
+              <p>“{story.quote}”</p>
+              <cite>— {story.attribution}</cite>
+            </div>
+          </blockquote>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .alignment-action { position: relative; overflow: hidden; border-bottom: 1px solid #dce9e6; background: #f4fbfa; padding: 31px 0 26px; }
+  .action-shell { position: relative; z-index: 1; width: min(1420px, calc(100% - 4rem)); margin-inline: auto; }
+  .section-heading { text-align: center; }
+  .section-heading > p { margin: 0; color: #00a78b; font-size: 14px; font-weight: 700; letter-spacing: .25em; line-height: 1.25; text-transform: uppercase; }
+  .section-heading > span { display: block; width: 62px; height: 2px; margin: 17px auto 23px; background: #00ad91; }
+  .section-heading h2 { margin: 0; color: #07102c; font-family: "MontereyFLF", "Century Gothic", sans-serif; font-size: clamp(2.55rem, 3.4vw, 3.5rem); font-weight: 700; letter-spacing: -.025em; line-height: 1.04; }
+  .section-heading > div { margin: 8px auto 0; color: #526083; font-size: 17px; line-height: 1.45; }
+  .story-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px; margin-top: 21px; }
+  .story-card { --accent: #ff5b18; position: relative; min-height: 603px; overflow: hidden; padding: 20px 34px 22px; border: 1px solid #e1ebe9; border-top: 5px solid var(--accent); border-radius: 18px; background: rgba(255,255,255,.97); box-shadow: 0 11px 30px rgba(28,55,66,.055); }
+  .story-card.teal { --accent: #00b497; }
+  .story-card.navy { --accent: #172b4a; }
+  .brand-row { display: flex; min-height: 104px; align-items: center; gap: 21px; }
+  .brand-medallion { display: grid; flex: 0 0 88px; width: 88px; height: 88px; place-items: center; border: 1px solid rgba(9,33,57,.08); border-radius: 999px; background: linear-gradient(145deg, #f0f4f4, #dbe5e4); box-shadow: inset 0 0 0 6px rgba(255,255,255,.48); color: #0b1837; }
+  .orange .brand-medallion { background: linear-gradient(145deg, #fff1e9, #f8d9cb); color: #d9450d; }
+  .teal .brand-medallion { background: linear-gradient(145deg, #e2fbf6, #beece3); color: #008d76; }
+  .brand-medallion span { font-family: "MontereyFLF", "Century Gothic", sans-serif; font-size: 23px; font-weight: 700; letter-spacing: -.04em; }
+  .brand-copy { min-width: 0; }
+  .brand-copy h3 { margin: 0; color: #0a1737; font-size: 15px; font-weight: 700; letter-spacing: .035em; line-height: 1.2; text-transform: uppercase; }
+  .brand-copy p { display: inline-flex; min-height: 28px; align-items: center; margin: 11px 0 0; padding: 0 24px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 13%, white); color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: .12em; line-height: 1; text-transform: uppercase; }
+  .story-points { margin-top: 13px; }
+  .point { position: relative; display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: 13px; min-height: 104px; }
+  .point:not(:last-child)::after { content: ""; position: absolute; top: 33px; bottom: 4px; left: 15px; width: 1px; background: #d8e3e5; }
+  .point-icon { position: relative; z-index: 1; width: 32px; height: 32px; background: white; color: #00ac91; }
+  .point-icon.target { color: #ff5414; }
+  .point-icon svg { width: 32px; height: 32px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.8; }
+  .point h4 { margin: 1px 0 2px; color: #0a1737; font-size: 16px; font-weight: 700; line-height: 1.2; }
+  .point p { margin: 0; color: #48567b; font-size: 14px; line-height: 1.33; }
+  blockquote { display: grid; grid-template-columns: 53px minmax(0, 1fr); gap: 7px; margin: 2px 0 0; padding: 0; }
+  blockquote > span { height: 50px; color: #bcefe6; font-family: Georgia, serif; font-size: 86px; line-height: .9; }
+  blockquote p { margin: 4px 0 9px; color: #46557b; font-size: 14px; font-style: italic; line-height: 1.35; }
+  blockquote cite { color: #0a1737; font-size: 14px; font-style: normal; font-weight: 700; }
+
+  @media (max-width: 1120px) {
+    .story-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .story-card:last-child { grid-column: 1 / -1; width: calc(50% - 9px); justify-self: center; }
+  }
+  @media (max-width: 760px) {
+    .alignment-action { padding: 45px 0 36px; }
+    .action-shell { width: min(100% - 2rem, 590px); }
+    .section-heading > p { font-size: 11px; }
+    .section-heading > span { margin: 13px auto 18px; }
+    .section-heading h2 { font-size: 2.45rem; }
+    .section-heading > div { margin-top: 12px; font-size: 15px; }
+    .story-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 28px; }
+    .story-card, .story-card:last-child { grid-column: auto; width: auto; min-height: 0; padding: 20px 22px 25px; }
+    .brand-row { gap: 16px; }
+    .brand-medallion { flex-basis: 76px; width: 76px; height: 76px; }
+    .brand-copy p { padding-inline: 16px; }
+    .point { min-height: 110px; }
+    blockquote { margin-top: 7px; }
+  }
+  @media (max-width: 400px) {
+    .brand-copy h3 { font-size: 13px; }
+    .brand-copy p { font-size: 9px; letter-spacing: .09em; }
+  }
+</style>

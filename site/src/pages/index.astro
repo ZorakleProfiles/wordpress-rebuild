@@ -9,6 +9,7 @@ import AlignmentLifecycle from "../components/AlignmentLifecycle.astro";
 import AlignmentStack from "../components/AlignmentStack.astro";
 import TestimonialGrid from "../components/TestimonialGrid.astro";
 import BrokerSolutionsFeature from "../components/BrokerSolutionsFeature.astro";
+import VideoModalButton from "../components/VideoModalButton.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import { Image } from "astro:assets";
 import { footer } from "../data/site-content";
@@ -156,9 +157,12 @@ const jsonLd = JSON.stringify({
           <h2 class="font-display text-[clamp(1.65rem,2.5vw,2.15rem)] leading-tight text-white">
             What Seven Behavioral Sciences Reveal About Franchisee Fit
           </h2>
-          <a class="btn-primary mt-6" href="/sciences">
-            Explore The Sciences <span class="text-lg leading-none" aria-hidden="true">&rarr;</span>
-          </a>
+          <VideoModalButton
+            videoId="1037075151"
+            label="Explore The Sciences"
+            modalTitle="Zorakle science overview"
+            class="btn-primary mt-6"
+          />
         </div>
       </aside>
 

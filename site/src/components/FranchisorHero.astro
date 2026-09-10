@@ -5,6 +5,12 @@ import heroArtwork from "../assets/franchisor-hero-alignment-v2.png";
 
 const explainerVideo =
   "https://cdn.sanity.io/files/4kjxjblw/production/676d9e59bc7e318e2e1756be2b170d63faf3d3ca.mp4";
+
+// Solid teal treatment for the explainer button (a peer to the orange
+// .btn-primary). The [&>svg] rules restyle VideoModalButton's play glyph into a
+// white circular badge.
+const videoButtonClass =
+  "inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-lg bg-[#087f65] py-[11px] pl-[13px] pr-[22px] text-base font-bold text-white shadow-[0_10px_24px_rgba(8,127,101,0.28)] transition hover:-translate-y-px hover:bg-[#066b55] hover:shadow-[0_12px_30px_rgba(8,127,101,0.36)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#09cc9c]/45 [&>svg]:size-[30px] [&>svg]:shrink-0 [&>svg]:rounded-full [&>svg]:bg-white [&>svg]:py-[7px] [&>svg]:pl-[9px] [&>svg]:pr-[7px] [&>svg]:text-[#087f65]";
 ---
 
 <section class="relative overflow-hidden border-b border-[#d9e5e2] bg-[#eef7f4]">
@@ -31,41 +37,15 @@ const explainerVideo =
       <p class="mt-4 max-w-xl text-base leading-relaxed sm:mt-6 md:text-lg">
         Zorakle helps you identify candidates who fit your culture, operating model, and expectations&mdash;and gives your team the insight to help them succeed long after the agreement is signed.
       </p>
-      <div class="mt-6 flex flex-col gap-3 sm:mt-8 sm:items-start sm:gap-5">
+      <div class="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
         <a class="btn-primary" href="/schedule">Book a Consultation <span aria-hidden="true">&rarr;</span></a>
         <VideoModalButton
           videoSrc={explainerVideo}
           label="Watch the 5-Minute Explainer"
           modalTitle="Zorakle 5-minute franchisor explainer"
-          class="hero-video-trigger"
+          class={videoButtonClass}
         />
       </div>
     </div>
   </div>
 </section>
-
-<style>
-  :global(.hero-video-trigger) {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: #21335d;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-  :global(.hero-video-trigger svg) {
-    box-sizing: border-box;
-    width: 44px;
-    height: 44px;
-    padding: 13px 12px 13px 15px;
-    border: 2px solid #00a98d;
-    border-radius: 999px;
-    color: #00a98d;
-  }
-</style>

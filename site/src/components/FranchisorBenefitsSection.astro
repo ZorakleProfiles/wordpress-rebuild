@@ -1,41 +1,79 @@
 ---
-const benefits = [
-  { title: "More Confident Awards", body: "Add objective alignment insight to interviews and professional judgment.", tone: "teal", icon: "people" },
-  { title: "Stronger Validation", body: "Build a network of owners better equipped to succeed and advocate for the brand.", tone: "orange", icon: "validation" },
-  { title: "More Effective Support", body: "Understand how each person communicates, learns, and responds to pressure.", tone: "teal", icon: "support" },
-  { title: "More Consistent Execution", body: "Reduce preventable friction and help franchisees operate the model effectively.", tone: "orange", icon: "chart" }
+const outcomes = [
+  {
+    step: "01",
+    stage: "Award",
+    title: "Award with greater confidence",
+    body: "Add objective insight to interviews and professional judgment.",
+    icon: "award"
+  },
+  {
+    step: "02",
+    stage: "Validate",
+    title: "Build stronger validation",
+    body: "Build owners equipped to succeed and advocate for the brand.",
+    icon: "validation"
+  },
+  {
+    step: "03",
+    stage: "Support",
+    title: "Support each owner effectively",
+    body: "Know how each owner communicates, learns, and handles pressure.",
+    icon: "support"
+  },
+  {
+    step: "04",
+    stage: "Execute",
+    title: "Improve systemwide execution",
+    body: "Reduce friction and improve adherence to the operating model.",
+    icon: "execution"
+  }
 ];
 ---
 
-<section class="benefits-section">
-  <svg class="molecule molecule-left" viewBox="0 0 220 170" fill="none" opacity="0.25" aria-hidden="true">
-    <g stroke="#54cbbb" stroke-width="1.5"><path d="M7 115 42 70l44 20 35-45 42-7 28 31"/><path d="m42 70 4-37m40 57 19 38m16-83-15-34"/></g>
-    <g fill="#54cbbb"><circle cx="7" cy="115" r="9"/><circle cx="42" cy="70" r="11"/><circle cx="46" cy="33" r="10"/><circle cx="86" cy="90" r="10"/><circle cx="105" cy="128" r="7"/><circle cx="121" cy="45" r="11"/><circle cx="106" cy="11" r="7"/><circle cx="163" cy="38" r="10"/><circle cx="191" cy="69" r="8"/></g>
-  </svg>
-  <svg class="molecule molecule-right" viewBox="0 0 200 190" fill="none" opacity="0.25" aria-hidden="true">
-    <g stroke="#54cbbb" stroke-width="1.5"><path d="m24 23 38 47 38-24 36 43 49-8M62 70l-12 54m50-78 8-37m28 80 12 47m-12-47-36 47"/></g>
-    <g fill="#54cbbb"><circle cx="24" cy="23" r="8"/><circle cx="62" cy="70" r="11"/><circle cx="50" cy="124" r="8"/><circle cx="100" cy="46" r="9"/><circle cx="108" cy="9" r="7"/><circle cx="136" cy="89" r="12"/><circle cx="148" cy="136" r="8"/><circle cx="100" cy="136" r="7"/><circle cx="185" cy="81" r="10"/></g>
-  </svg>
+<section class="benefits-section relative overflow-hidden border-b border-[#d7e5e1] bg-[#f4fbfa] py-9 md:py-10" aria-labelledby="benefits-title">
+  <div class="pointer-events-none absolute inset-0 opacity-45" aria-hidden="true">
+    <div class="absolute -left-32 -top-52 size-[30rem] rounded-full border border-[#b8e2d8]"></div>
+    <div class="absolute -left-20 -top-40 size-[21rem] rounded-full border border-[#c4e9e0]"></div>
+    <div class="absolute -right-24 -bottom-52 size-[28rem] rounded-full border border-[#c4e9e0]"></div>
+  </div>
 
-  <div class="benefits-shell">
-    <header class="benefits-heading">
-      <p>What Better Alignment Makes Possible</p>
-      <span aria-hidden="true"></span>
-      <h2>Better-Fit Franchisees Strengthen the Entire System.</h2>
+  <div class="section-shell relative z-10">
+    <header class="text-center">
+      <p class="section-eyebrow">What Better Alignment Makes Possible</p>
+      <h2 id="benefits-title" class="font-display mt-2.5 text-[2.25rem] font-bold leading-[1.03] tracking-[-.03em] text-[#17233e] sm:text-[2.6rem] lg:text-[2.85rem]">
+        Better Fit at the Start.{" "}
+        <span class="text-[#087f65]">A Stronger System at Every Stage.</span>
+      </h2>
+      <p class="mx-auto mt-3 max-w-4xl text-[15px] leading-relaxed text-[#4f5e69] md:text-base">
+        The right franchisee doesn&rsquo;t just make the award easier. They strengthen validation, respond better to support, and execute the model with greater consistency.
+      </p>
     </header>
 
-    <div class="benefits-grid">
-      {benefits.map((benefit) => (
-        <article class:list={["benefit-card", benefit.tone]}>
-          <div class="benefit-icon" aria-hidden="true">
-            {benefit.icon === "people" && <svg viewBox="0 0 48 48"><circle cx="24" cy="14" r="6"/><circle cx="10" cy="20" r="4"/><circle cx="38" cy="20" r="4"/><path d="M14 38v-7c0-6 4-10 10-10s10 4 10 10v7M3 38v-5c0-5 3-8 8-8h3M45 38v-5c0-5-3-8-8-8h-3"/></svg>}
-            {benefit.icon === "validation" && <svg viewBox="0 0 48 48"><circle cx="15" cy="16" r="6"/><circle cx="34" cy="14" r="5"/><path d="M4 39v-7c0-6 4-10 11-10s11 4 11 10v7M28 25c2-3 5-5 8-5 6 0 9 4 9 10v7"/></svg>}
-            {benefit.icon === "support" && <svg viewBox="0 0 48 48"><path d="M8 27v-5c0-9 7-16 16-16s16 7 16 16v5"/><path d="M10 22H7c-3 0-5 2-5 5v5c0 3 2 5 5 5h5V22h-2ZM38 22h3c3 0 5 2 5 5v5c0 3-2 5-5 5h-5V22h2ZM36 36c-2 4-6 6-11 6h-4"/></svg>}
-            {benefit.icon === "chart" && <svg viewBox="0 0 48 48"><path d="M7 41V29M17 41V20M27 41V12M37 41V5"/></svg>}
+    <div class="outcome-rail relative mt-7 grid gap-3 md:grid-cols-4 md:gap-0" aria-label="Award, validate, support, and execute">
+      <span class="rail-line absolute hidden h-px bg-[#9bcfc3] md:block" aria-hidden="true"></span>
+
+      {outcomes.map((outcome, index) => (
+        <article class="outcome relative grid grid-cols-[50px_minmax(0,1fr)] items-center gap-4 rounded-2xl border border-[#d8e7e3] bg-white/90 p-4 shadow-[0_10px_28px_rgba(23,55,62,.055)] md:block md:min-h-[156px] md:rounded-none md:border-y md:border-l-0 md:border-r md:bg-white/75 md:px-4 md:pb-3.5 md:pt-4 md:shadow-none first:md:rounded-l-2xl first:md:border-l last:md:rounded-r-2xl">
+          <div class="step-row contents md:flex md:items-center md:justify-between">
+            <div class="icon-wrap relative z-10 grid size-[50px] place-items-center rounded-xl border border-[#bde2da] bg-[#e2f5f0] text-[#087f65] md:size-10">
+              {outcome.icon === "award" && <svg viewBox="0 0 40 40"><path d="M20 4 24 8l6-.2.2 6L34 18l-3.8 4.2-.2 6-6-.2-4 4-4-4-6 .2-.2-6L6 18l3.8-4.2.2-6 6 .2 4-4Z"/><path d="m14 18 4 4 8-9"/></svg>}
+              {outcome.icon === "validation" && <svg viewBox="0 0 40 40"><circle cx="15" cy="13" r="5"/><circle cx="28" cy="12" r="4"/><path d="M5 33v-6c0-6 4-9 10-9s10 3 10 9v6m1-14c5 0 9 3 9 8v5"/></svg>}
+              {outcome.icon === "support" && <svg viewBox="0 0 40 40"><path d="M7 23v-4c0-8 6-14 13-14s13 6 13 14v4"/><path d="M9 19H6c-2 0-4 2-4 4v4c0 3 2 4 4 4h4V19Zm22 0h3c2 0 4 2 4 4v4c0 3-2 4-4 4h-4V19Zm-1 12c-2 3-5 4-9 4h-3"/></svg>}
+              {outcome.icon === "execution" && <svg viewBox="0 0 40 40"><path d="M5 34V24m10 10V18m10 16V11m10 23V5"/><path d="m5 16 9-5 9 2L35 4"/></svg>}
+            </div>
+            <span class="hidden text-[11px] font-bold tracking-[.16em] text-[#78928c] md:block">{outcome.step}</span>
           </div>
-          <h3>{benefit.title}</h3>
-          <span class="card-rule" aria-hidden="true"></span>
-          <p>{benefit.body}</p>
+
+          <div class="min-w-0 md:mt-2.5">
+            <p class="mb-1 text-[10px] font-bold uppercase leading-none tracking-[.18em] text-[#087f65]">{outcome.stage}</p>
+            <h3 class="font-display text-lg font-bold leading-[1.15] text-[#17233e] md:text-[19px]">{outcome.title}</h3>
+            <p class="mt-1.5 text-[13px] leading-[1.4] text-[#5f6d73]">{outcome.body}</p>
+          </div>
+
+          {index < outcomes.length - 1 && (
+            <span class="flow-arrow absolute -right-3 top-7 z-20 hidden size-6 place-items-center rounded-full border border-[#9bcfc3] bg-[#f4fbfa] text-sm font-bold text-[#087f65] md:grid" aria-hidden="true">&rarr;</span>
+          )}
         </article>
       ))}
     </div>
@@ -43,38 +81,31 @@ const benefits = [
 </section>
 
 <style>
-  .benefits-section { position: relative; overflow: hidden; border-bottom: 1px solid #dce9e6; background: #fff; padding: 58px 0 52px; }
-  .benefits-shell { position: relative; z-index: 1; width: min(1420px, calc(100% - 4rem)); margin-inline: auto; }
-  .benefits-heading { text-align: center; }
-  .benefits-heading p { margin: 0; color: #00a78b; font-size: 14px; font-weight: 700; letter-spacing: .27em; line-height: 1.3; text-transform: uppercase; }
-  .benefits-heading > span { display: block; width: 62px; height: 2px; margin: 18px auto 17px; background: #00ac91; }
-  .benefits-heading h2 { margin: 0; color: #07102c; font-family: "MontereyFLF", "Century Gothic", sans-serif; font-size: clamp(2.55rem, 3.5vw, 3.65rem); font-weight: 700; letter-spacing: -.025em; line-height: 1.05; }
-  .benefits-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-top: 34px; }
-  .benefit-card { min-height: 420px; padding: 27px 28px 31px; border: 1px solid #edf1f2; border-radius: 21px; background: rgba(255,255,255,.96); box-shadow: 0 14px 34px rgba(31,55,67,.06); text-align: center; }
-  .benefit-icon { display: flex; width: 112px; height: 112px; align-items: center; justify-content: center; margin: 0 auto; border-radius: 999px; }
-  .teal .benefit-icon { background: linear-gradient(135deg, #d8fbf5, #c6f4eb); color: #009c7f; }
-  .orange .benefit-icon { background: linear-gradient(135deg, #fff1e8, #fce0d3); color: #ff5414; }
-  .benefit-icon svg { width: 54px; height: 54px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 3; }
-  .benefit-card h3 { max-width: 240px; margin: 23px auto 0; color: #071638; font-size: 17px; font-weight: 700; letter-spacing: .11em; line-height: 1.45; text-transform: uppercase; }
-  .card-rule { display: block; width: 50px; height: 2px; margin: 20px auto 21px; background: currentColor; }
-  .teal .card-rule { color: #00b092; }
-  .orange .card-rule { color: #ff5d17; }
-  .benefit-card p { margin: 0 auto; color: #4e5a7d; font-size: 16px; line-height: 1.45; }
-  .molecule { position: absolute; z-index: 0; width: 208px; pointer-events: none; }
-  .molecule-left { left: -40px; top: -30px; }
-  .molecule-right { right: -48px; top: 3px; width: 192px; transform: rotate(12deg); }
-  @media (max-width: 1050px) { .benefits-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .benefit-card { min-height: 365px; } }
-  @media (max-width: 620px) {
-    .benefits-section { padding: 48px 0; }
-    .benefits-shell { width: min(100% - 2rem, 580px); }
-    .benefits-heading p { font-size: 11px; }
-    .benefits-heading h2 { font-size: 2.45rem; }
-    .benefits-grid { grid-template-columns: 1fr; gap: 16px; }
-    .benefit-card { min-height: 0; padding: 25px 24px 28px; }
-    .benefit-icon { width: 90px; height: 90px; }
-    .benefit-icon svg { width: 46px; height: 46px; }
-    .molecule { width: 145px; }
-    .molecule-left { left: -58px; top: -22px; }
-    .molecule-right { right: -62px; top: 8px; }
+  .icon-wrap :global(svg) {
+    width: 27px;
+    height: 27px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+  }
+
+  @media (min-width: 768px) {
+    .rail-line {
+      top: 3rem;
+      right: 4rem;
+      left: 4rem;
+    }
+
+    .outcome {
+      transition: background-color .2s ease, transform .2s ease;
+    }
+
+    .outcome:hover {
+      z-index: 2;
+      background-color: white;
+      transform: translateY(-3px);
+    }
   }
 </style>

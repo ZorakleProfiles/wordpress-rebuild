@@ -34,54 +34,101 @@ const stories = [
     attribution: "Denis Kurdi",
   },
 ];
+
+const accentClasses = {
+  orange: {
+    top: "border-t-[#ff5b18]",
+    medallion: "bg-gradient-to-br from-[#fff1e9] to-[#f8d9cb] text-[#d9450d]",
+    pill: "bg-[#ffe9df] text-[#d9450d]"
+  },
+  teal: {
+    top: "border-t-[#00b497]",
+    medallion: "bg-gradient-to-br from-[#e2fbf6] to-[#beece3] text-[#008d76]",
+    pill: "bg-[#dff5f0] text-[#008d76]"
+  },
+  navy: {
+    top: "border-t-[#172b4a]",
+    medallion: "bg-gradient-to-br from-[#f0f4f4] to-[#dbe5e4] text-[#0b1837]",
+    pill: "bg-[#e7eaef] text-[#172b4a]"
+  }
+};
+
+const points = [
+  { key: "challenge", label: "Challenge", tone: "text-[#ff5414]" },
+  { key: "insight", label: "Zorakle Insight", tone: "text-[#00ac91]" },
+  { key: "result", label: "Result", tone: "text-[#00ac91]" }
+] as const;
 ---
 
-<section class="alignment-action">
-  <div class="action-shell">
-    <header class="section-heading">
-      <p>Alignment in Action</p>
-      <span aria-hidden="true"></span>
-      <h2>How Franchisors Put the Insight to Work.</h2>
-      <div>The value of alignment becomes clearest in the decisions, conversations, and systems it improves.</div>
+<section class="home-section overflow-hidden border-b border-[#dce9e6] bg-white">
+  <div class="section-shell">
+    <header class="text-center">
+      <p class="section-eyebrow">Alignment in Action</p>
+      <h2 class="section-title text-center">How Franchisors Put the Insight to Work.</h2>
+      <p class="section-copy mx-auto max-w-2xl text-center">
+        The value of alignment becomes clearest in the decisions, conversations, and systems it improves.
+      </p>
     </header>
 
-    <div class="story-grid">
+    <div class="mt-10 grid gap-4 md:mt-12 md:grid-cols-2 xl:grid-cols-3">
       {stories.map((story) => (
-        <article class:list={["story-card", story.accent]}>
-          <div class="brand-row">
-            <div class="brand-medallion" aria-hidden="true"><span>{story.initials}</span></div>
-            <div class="brand-copy">
-              <h3>{story.brand}</h3>
-              <p>{story.tag}</p>
+        <article
+          class:list={[
+            "relative overflow-hidden rounded-2xl border border-t-[5px] border-[#e1ebe9] bg-white/95 px-8 pb-6 pt-5 shadow-[0_11px_30px_rgba(28,55,66,0.055)] max-[400px]:px-6",
+            accentClasses[story.accent].top
+          ]}
+        >
+          <div class="flex min-h-[104px] items-center gap-5">
+            <div
+              class:list={[
+                "grid size-[76px] shrink-0 place-items-center rounded-full border border-[#09213914] shadow-[inset_0_0_0_6px_rgba(255,255,255,0.48)] sm:size-[88px]",
+                accentClasses[story.accent].medallion
+              ]}
+            >
+              <span class="font-display text-[23px] font-bold tracking-[-0.04em]">{story.initials}</span>
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-[15px] font-bold uppercase leading-tight tracking-[0.035em] text-[#0a1737] max-[400px]:text-[13px]">
+                {story.brand}
+              </h3>
+              <p
+                class:list={[
+                  "mt-2.5 inline-flex min-h-[28px] items-center rounded-full px-4 text-[11px] font-bold uppercase leading-none tracking-[0.12em] sm:px-6 max-[400px]:text-[9px] max-[400px]:tracking-[0.09em]",
+                  accentClasses[story.accent].pill
+                ]}
+              >
+                {story.tag}
+              </p>
             </div>
           </div>
 
-          <div class="story-points">
-            <div class="point">
-              <div class="point-icon target" aria-hidden="true">
-                <svg viewBox="0 0 34 34"><circle cx="15" cy="18" r="10"/><circle cx="15" cy="18" r="5"/><path d="m15 18 14-14M22 4h7v7"/></svg>
+          <div class="mt-3">
+            {points.map((point) => (
+              <div class="relative grid min-h-[104px] grid-cols-[2.625rem_minmax(0,1fr)] gap-3 after:absolute after:bottom-1 after:left-[15px] after:top-[33px] after:w-px after:bg-[#d8e3e5] after:content-[''] last:after:hidden max-[760px]:min-h-[110px]">
+                <div
+                  class:list={[
+                    "relative z-[1] size-8 bg-white [&_svg]:size-8 [&_svg]:fill-none [&_svg]:stroke-current [&_svg]:[stroke-linecap:round] [&_svg]:[stroke-linejoin:round] [&_svg]:[stroke-width:2.8]",
+                    point.tone
+                  ]}
+                  aria-hidden="true"
+                >
+                  {point.key === "challenge" && <svg viewBox="0 0 34 34"><circle cx="15" cy="18" r="10"/><circle cx="15" cy="18" r="5"/><path d="m15 18 14-14M22 4h7v7"/></svg>}
+                  {point.key === "insight" && <svg viewBox="0 0 34 34"><circle cx="14" cy="14" r="10"/><path d="m22 22 9 9"/></svg>}
+                  {point.key === "result" && <svg viewBox="0 0 34 34"><path d="M4 31V23M11 31V18M18 31V12M25 31V5"/></svg>}
+                </div>
+                <div>
+                  <h4 class="text-base font-bold leading-tight text-[#0a1737]">{point.label}</h4>
+                  <p class="mt-0.5 text-sm leading-snug text-[#48567b]">{story[point.key]}</p>
+                </div>
               </div>
-              <div><h4>Challenge</h4><p>{story.challenge}</p></div>
-            </div>
-            <div class="point">
-              <div class="point-icon search" aria-hidden="true">
-                <svg viewBox="0 0 34 34"><circle cx="14" cy="14" r="10"/><path d="m22 22 9 9"/></svg>
-              </div>
-              <div><h4>Zorakle Insight</h4><p>{story.insight}</p></div>
-            </div>
-            <div class="point">
-              <div class="point-icon result" aria-hidden="true">
-                <svg viewBox="0 0 34 34"><path d="M4 31V23M11 31V18M18 31V12M25 31V5"/></svg>
-              </div>
-              <div><h4>Result</h4><p>{story.result}</p></div>
-            </div>
+            ))}
           </div>
 
-          <blockquote>
-            <span aria-hidden="true">“</span>
+          <blockquote class="mt-0.5 grid grid-cols-[53px_minmax(0,1fr)] gap-[7px] max-[760px]:mt-2">
+            <span class="h-[50px] font-serif text-[86px] leading-[0.9] text-[#bcefe6]" aria-hidden="true">“</span>
             <div>
-              <p>“{story.quote}”</p>
-              <cite>— {story.attribution}</cite>
+              <p class="mb-2 mt-1 text-sm italic leading-snug text-[#46557b]">“{story.quote}”</p>
+              <cite class="text-sm font-bold not-italic text-[#0a1737]">— {story.attribution}</cite>
             </div>
           </blockquote>
         </article>
@@ -89,61 +136,3 @@ const stories = [
     </div>
   </div>
 </section>
-
-<style>
-  .alignment-action { position: relative; overflow: hidden; border-bottom: 1px solid #dce9e6; background: #f4fbfa; padding: 31px 0 26px; }
-  .action-shell { position: relative; z-index: 1; width: min(1420px, calc(100% - 4rem)); margin-inline: auto; }
-  .section-heading { text-align: center; }
-  .section-heading > p { margin: 0; color: #00a78b; font-size: 14px; font-weight: 700; letter-spacing: .25em; line-height: 1.25; text-transform: uppercase; }
-  .section-heading > span { display: block; width: 62px; height: 2px; margin: 17px auto 23px; background: #00ad91; }
-  .section-heading h2 { margin: 0; color: #07102c; font-family: "MontereyFLF", "Century Gothic", sans-serif; font-size: clamp(2.55rem, 3.4vw, 3.5rem); font-weight: 700; letter-spacing: -.025em; line-height: 1.04; }
-  .section-heading > div { margin: 8px auto 0; color: #526083; font-size: 17px; line-height: 1.45; }
-  .story-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px; margin-top: 21px; }
-  .story-card { --accent: #ff5b18; position: relative; min-height: 603px; overflow: hidden; padding: 20px 34px 22px; border: 1px solid #e1ebe9; border-top: 5px solid var(--accent); border-radius: 18px; background: rgba(255,255,255,.97); box-shadow: 0 11px 30px rgba(28,55,66,.055); }
-  .story-card.teal { --accent: #00b497; }
-  .story-card.navy { --accent: #172b4a; }
-  .brand-row { display: flex; min-height: 104px; align-items: center; gap: 21px; }
-  .brand-medallion { display: grid; flex: 0 0 88px; width: 88px; height: 88px; place-items: center; border: 1px solid rgba(9,33,57,.08); border-radius: 999px; background: linear-gradient(145deg, #f0f4f4, #dbe5e4); box-shadow: inset 0 0 0 6px rgba(255,255,255,.48); color: #0b1837; }
-  .orange .brand-medallion { background: linear-gradient(145deg, #fff1e9, #f8d9cb); color: #d9450d; }
-  .teal .brand-medallion { background: linear-gradient(145deg, #e2fbf6, #beece3); color: #008d76; }
-  .brand-medallion span { font-family: "MontereyFLF", "Century Gothic", sans-serif; font-size: 23px; font-weight: 700; letter-spacing: -.04em; }
-  .brand-copy { min-width: 0; }
-  .brand-copy h3 { margin: 0; color: #0a1737; font-size: 15px; font-weight: 700; letter-spacing: .035em; line-height: 1.2; text-transform: uppercase; }
-  .brand-copy p { display: inline-flex; min-height: 28px; align-items: center; margin: 11px 0 0; padding: 0 24px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 13%, white); color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: .12em; line-height: 1; text-transform: uppercase; }
-  .story-points { margin-top: 13px; }
-  .point { position: relative; display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: 13px; min-height: 104px; }
-  .point:not(:last-child)::after { content: ""; position: absolute; top: 33px; bottom: 4px; left: 15px; width: 1px; background: #d8e3e5; }
-  .point-icon { position: relative; z-index: 1; width: 32px; height: 32px; background: white; color: #00ac91; }
-  .point-icon.target { color: #ff5414; }
-  .point-icon svg { width: 32px; height: 32px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.8; }
-  .point h4 { margin: 1px 0 2px; color: #0a1737; font-size: 16px; font-weight: 700; line-height: 1.2; }
-  .point p { margin: 0; color: #48567b; font-size: 14px; line-height: 1.33; }
-  blockquote { display: grid; grid-template-columns: 53px minmax(0, 1fr); gap: 7px; margin: 2px 0 0; padding: 0; }
-  blockquote > span { height: 50px; color: #bcefe6; font-family: Georgia, serif; font-size: 86px; line-height: .9; }
-  blockquote p { margin: 4px 0 9px; color: #46557b; font-size: 14px; font-style: italic; line-height: 1.35; }
-  blockquote cite { color: #0a1737; font-size: 14px; font-style: normal; font-weight: 700; }
-
-  @media (max-width: 1120px) {
-    .story-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .story-card:last-child { grid-column: 1 / -1; width: calc(50% - 9px); justify-self: center; }
-  }
-  @media (max-width: 760px) {
-    .alignment-action { padding: 45px 0 36px; }
-    .action-shell { width: min(100% - 2rem, 590px); }
-    .section-heading > p { font-size: 11px; }
-    .section-heading > span { margin: 13px auto 18px; }
-    .section-heading h2 { font-size: 2.45rem; }
-    .section-heading > div { margin-top: 12px; font-size: 15px; }
-    .story-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 28px; }
-    .story-card, .story-card:last-child { grid-column: auto; width: auto; min-height: 0; padding: 20px 22px 25px; }
-    .brand-row { gap: 16px; }
-    .brand-medallion { flex-basis: 76px; width: 76px; height: 76px; }
-    .brand-copy p { padding-inline: 16px; }
-    .point { min-height: 110px; }
-    blockquote { margin-top: 7px; }
-  }
-  @media (max-width: 400px) {
-    .brand-copy h3 { font-size: 13px; }
-    .brand-copy p { font-size: 9px; letter-spacing: .09em; }
-  }
-</style>

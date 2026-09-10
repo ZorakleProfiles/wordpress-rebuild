@@ -23,18 +23,14 @@ import FranchisorClosingCta from "../../components/FranchisorClosingCta.astro";
     <FranchisorClosingCta />
   </main>
 
-  <div class="footer-flush">
+  {/* The closing section ends on #eefaf8; paint the same colour behind the
+      footer so its rounded top corners don't reveal a lighter notch. */}
+  <div class="bg-[#eefaf8]">
     <SiteFooter />
   </div>
 </MainLayout>
 
 <style>
-  /* The closing section ends on #eefaf8; paint the same colour behind the
-     footer so its rounded top corners don't reveal a lighter notch. */
-  .footer-flush {
-    background: #eefaf8;
-  }
-
   /* The "Book a Consultation" CTA is wider than the default header CTA, so the
      full inline nav + actions overflow the shell between lg (1024px) and
      ~1180px. Keep the compact (hamburger) header until there is room for it. */

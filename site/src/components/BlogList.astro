@@ -18,6 +18,14 @@ interface Props {
   totalPages: number;
   ctaTitle: string;
   ctaText: string;
+  /**
+   * URL of a JSON search index (see src/pages/search/[category].json.ts). When
+   * set, an in-page search box is rendered that fetches this file on first use
+   * and filters the whole category client-side.
+   */
+  searchEndpoint?: string;
+  /** Accessible label / placeholder for the search box. */
+  searchLabel?: string;
 }
 
 const {
@@ -31,8 +39,15 @@ const {
   currentPage,
   totalPages,
   ctaTitle,
-  ctaText
+  ctaText,
+  searchEndpoint,
+  searchLabel = "Search"
 } = Astro.props;
+
+// When a page supplies `search-aside` content (e.g. the podcasts "Listen on…"
+// card), it sits to the right of the search box on large screens and stacks
+// beneath it on smaller ones.
+const hasSearchAside = Astro.slots.has("search-aside");
 ---
 
 <MainLayout title={title} description={description}>
@@ -43,22 +58,240 @@ const {
       <div class="section-shell">
         <h1 class="page-title">{heading}</h1>
 
+        <slot name="intro" />
+
         {
-          posts.length > 0 ? (
-            <div class="mt-6 rounded-xl bg-white px-6 py-2 shadow-sm md:px-8">
-              {posts.map((post, index) => (
-                <BlogCard post={post} basePath={postBasePath} isLast={index === posts.length - 1} />
-              ))}
+          searchEndpoint && (
+            <div
+              class:list={[
+                "mt-6",
+                hasSearchAside && "flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-6"
+              ]}
+              data-blog-search={searchEndpoint}
+            >
+              <div class:list={[hasSearchAside && "w-full lg:max-w-xl lg:flex-1"]}>
+                <label for="blog-search" class="sr-only">
+                  {searchLabel}
+                </label>
+                <div class:list={["relative", !hasSearchAside && "max-w-xl"]}>
+                  <svg
+                    class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8b8f99]"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <circle cx="9" cy="9" r="6" />
+                    <line x1="14.5" y1="14.5" x2="19" y2="19" stroke-linecap="round" />
+                  </svg>
+                  <input
+                    id="blog-search"
+                    type="search"
+                    autocomplete="off"
+                    placeholder={searchLabel}
+                    class="w-full rounded-lg border border-[#d1d4dd] bg-white py-2.5 pl-10 pr-3 text-base text-[#22252a] shadow-sm outline-none transition placeholder:text-[#8b8f99] focus:border-[#fd7730] focus:ring-2 focus:ring-[#fff2eb]"
+                  />
+                </div>
+              </div>
+
+              {hasSearchAside && (
+                <div class="lg:shrink-0">
+                  <slot name="search-aside" />
+                </div>
+              )}
             </div>
-          ) : (
-            <div class="mt-8 rounded-xl border border-[#d1d4dd] bg-white p-8 text-[#3b3e47]">{emptyStateMessage}</div>
           )
         }
 
-        <PaginationNav basePath={basePath} currentPage={currentPage} totalPages={totalPages} />
+        <div id="blog-default">
+          {
+            posts.length > 0 ? (
+              <div class="mt-6 rounded-xl bg-white px-6 py-2 shadow-sm md:px-8">
+                {posts.map((post, index) => (
+                  <BlogCard post={post} basePath={postBasePath} isLast={index === posts.length - 1} />
+                ))}
+              </div>
+            ) : (
+              <div class="mt-8 rounded-xl border border-[#d1d4dd] bg-white p-8 text-[#3b3e47]">{emptyStateMessage}</div>
+            )
+          }
+
+          <PaginationNav basePath={basePath} currentPage={currentPage} totalPages={totalPages} />
+        </div>
+
+        {
+          searchEndpoint && (
+            <div id="blog-results" hidden>
+              <p id="blog-results-count" class="mt-6 text-sm font-semibold text-[#3b3e47]" aria-live="polite" />
+              <div id="blog-results-list" class="mt-4 rounded-xl bg-white px-6 py-2 shadow-sm md:px-8" />
+              <p id="blog-results-empty" class="mt-4 rounded-xl border border-[#d1d4dd] bg-white p-8 text-[#3b3e47]" hidden>
+                No posts matched your search.
+              </p>
+            </div>
+          )
+        }
       </div>
     </section>
   </main>
 
   <SiteFooter />
 </MainLayout>
+
+{
+  searchEndpoint && (
+    <script is:inline>
+      (function () {
+        var wrap = document.querySelector("[data-blog-search]");
+        var input = document.getElementById("blog-search");
+        var defaultView = document.getElementById("blog-default");
+        var results = document.getElementById("blog-results");
+        var list = document.getElementById("blog-results-list");
+        var count = document.getElementById("blog-results-count");
+        var empty = document.getElementById("blog-results-empty");
+        if (!wrap || !input || !defaultView || !results || !list || !count || !empty) return;
+
+        var endpoint = wrap.getAttribute("data-blog-search");
+        var entries = null;
+        var loadState = "idle"; // idle | loading | ready | error
+
+        function esc(value) {
+          return String(value == null ? "" : value).replace(/[&<>"']/g, function (ch) {
+            return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch];
+          });
+        }
+
+        function cardHtml(entry, isLast) {
+          var url = "/" + entry.slug;
+          var thumb = entry.imageUrl
+            ? '<img src="' + esc(entry.imageUrl) + '" alt="' + esc(entry.imageAlt) +
+              '" class="h-35 w-full object-cover" loading="lazy" decoding="async" />'
+            : '<div class="flex h-35 items-center justify-center text-sm text-[#56586a]">Thumbnail</div>';
+          return (
+            '<article class="grid gap-5 py-8 md:grid-cols-[220px_minmax(0,1fr)] md:items-start' +
+            (isLast ? "" : " border-b border-[#d1d4dd]") +
+            '">' +
+            '<a href="' + url + '" class="block overflow-hidden rounded-sm border border-[#e2e5ec] bg-[#f0f1f5]">' +
+            thumb +
+            "</a>" +
+            "<div>" +
+            '<h2 class="font-display text-[28px] font-semibold leading-[1.15] text-[#22252a] sm:text-[32px] md:text-[38px]">' +
+            '<a href="' + url + '" class="transition hover:text-[#a8420c]">' + esc(entry.title) + "</a></h2>" +
+            (entry.dateLabel
+              ? '<p class="mt-3 text-sm font-semibold text-[#22252a]">Posted on ' + esc(entry.dateLabel) + "</p>"
+              : "") +
+            '<p class="mt-4 text-base leading-relaxed text-[#3b3e47]">' + esc(entry.excerpt) + "</p>" +
+            "</div></article>"
+          );
+        }
+
+        function showDefault() {
+          results.hidden = true;
+          defaultView.hidden = false;
+        }
+
+        function render(query) {
+          var terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+          if (terms.length === 0) {
+            showDefault();
+            return;
+          }
+
+          defaultView.hidden = true;
+          results.hidden = false;
+
+          if (!entries) {
+            count.textContent = loadState === "error" ? "Search is unavailable right now." : "Searching…";
+            list.hidden = true;
+            list.innerHTML = "";
+            empty.hidden = true;
+            return;
+          }
+
+          var matches = entries.filter(function (entry) {
+            var haystack = (entry.title + " " + entry.excerpt).toLowerCase();
+            return terms.every(function (term) {
+              return haystack.indexOf(term) !== -1;
+            });
+          });
+
+          count.textContent =
+            matches.length + (matches.length === 1 ? " result" : " results") + ' for “' + query + '”';
+
+          if (matches.length === 0) {
+            list.hidden = true;
+            list.innerHTML = "";
+            empty.hidden = false;
+            return;
+          }
+
+          empty.hidden = true;
+          list.hidden = false;
+          list.innerHTML = matches
+            .map(function (entry, index) {
+              return cardHtml(entry, index === matches.length - 1);
+            })
+            .join("");
+        }
+
+        function loadIndex() {
+          if (loadState === "loading" || loadState === "ready") return;
+          loadState = "loading";
+          fetch(endpoint, { headers: { Accept: "application/json" } })
+            .then(function (response) {
+              if (!response.ok) throw new Error("HTTP " + response.status);
+              return response.json();
+            })
+            .then(function (data) {
+              entries = Array.isArray(data) ? data : [];
+              loadState = "ready";
+              render(input.value.trim());
+            })
+            .catch(function () {
+              loadState = "error";
+              render(input.value.trim());
+            });
+        }
+
+        function syncUrl(query) {
+          try {
+            var url = new URL(window.location.href);
+            if (query) {
+              url.searchParams.set("q", query);
+            } else {
+              url.searchParams.delete("q");
+            }
+            window.history.replaceState({}, "", url);
+          } catch (err) {
+            /* no-op */
+          }
+        }
+
+        input.addEventListener("focus", loadIndex, { once: true });
+
+        var timer;
+        input.addEventListener("input", function () {
+          loadIndex();
+          window.clearTimeout(timer);
+          timer = window.setTimeout(function () {
+            var query = input.value.trim();
+            render(query);
+            syncUrl(query);
+          }, 120);
+        });
+
+        var initial = "";
+        try {
+          initial = new URL(window.location.href).searchParams.get("q") || "";
+        } catch (err) {
+          initial = "";
+        }
+        if (initial) {
+          input.value = initial;
+          render(initial.trim());
+          loadIndex();
+        }
+      })();
+    </script>
+  )
+}

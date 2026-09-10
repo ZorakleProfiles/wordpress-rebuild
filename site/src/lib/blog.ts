@@ -216,6 +216,41 @@ export async function getPostsByCategory(category: string): Promise<BlogPost[]> 
   return postsPromise;
 }
 
+export interface BlogSearchEntry {
+  slug: string;
+  title: string;
+  excerpt: string;
+  dateLabel: string;
+  imageUrl?: string;
+  imageAlt: string;
+}
+
+const searchDateFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric"
+});
+
+/**
+ * Lightweight, client-shippable index of every post in a category, used to
+ * power the in-page search box on the archive routes. Kept small on purpose:
+ * excerpts are already capped at 280 chars upstream and the body is dropped.
+ */
+export async function getCategorySearchIndex(category: string): Promise<BlogSearchEntry[]> {
+  const posts = await getPostsByCategory(category);
+  return posts.map((post) => {
+    const parsedDate = new Date(post.publishedAt);
+    return {
+      slug: post.slug.replace("wordpress-import/", ""),
+      title: post.title,
+      excerpt: post.excerpt,
+      dateLabel: Number.isNaN(parsedDate.valueOf()) ? "" : searchDateFormatter.format(parsedDate),
+      imageUrl: post.featuredImageUrl,
+      imageAlt: post.featuredImageAlt || post.title
+    };
+  });
+}
+
 export async function getCategoryPostPageCount(
   category: string,
   pageSize = DEFAULT_ARCHIVE_PAGE_SIZE

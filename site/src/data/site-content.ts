@@ -19,7 +19,7 @@ export const navLinks = [
 
     ]
   },
-  { href: "/sciences", label: "The Sciences" }
+  // { href: "/sciences", label: "The Sciences" }
 ];
 
 export const partnerships = [
@@ -188,6 +188,29 @@ export const footer = {
       href: "https://x.com/ZorakleProfiles",
       label: "X",
       icon: "x"
+    }
+  ]
+};
+
+// Listen-on links for The Franchise Woman Podcast (hosted by Rebecca Monet),
+// shown at the top of /podcasts. Verify each URL before launch.
+export const franchiseWomanPodcast = {
+  name: "The Franchise Woman Podcast",
+  platforms: [
+    {
+      href: "https://open.spotify.com/show/7Jixobe3u1723gC4To0XHi",
+      label: "Spotify",
+      icon: "spotify"
+    },
+    {
+      href: "https://podcasts.apple.com/us/podcast/the-franchise-woman/id1671032385",
+      label: "Apple Podcasts",
+      icon: "apple"
+    },
+    {
+      href: "https://www.youtube.com/channel/UCAm9WVL1862BRRH4Walab-g",
+      label: "YouTube",
+      icon: "youtube"
     }
   ]
 };

@@ -41,47 +41,63 @@ const partnershipsWithLogos = [...partnerships]
 >
   <SiteHeader />
 
-  <main class="bg-white">
-    <section class="py-14 md:py-16">
-      <div class="section-shell">
-        <h1 class="page-title">
-          Partnerships
-        </h1>
-        <p class="mt-5 max-w-3xl text-lg text-[#3b3e47] md:text-xl">
-          We work with broker associations, franchise organizations, technology partners, consultants, researchers, and strategic industry partners to improve decision quality at every stage of the franchise lifecycle.
+  <main>
+    <section class="border-b border-[#dce8e5] bg-[#f3faf8] py-12 md:py-16" aria-labelledby="partnerships-heading">
+      <div class="section-shell grid gap-7 lg:grid-cols-[1.15fr_.85fr] lg:items-end lg:gap-16">
+        <div>
+          <p class="section-eyebrow">Our Ecosystem</p>
+          <h1 id="partnerships-heading" class="page-title mt-3 max-w-3xl">
+            Better Franchise Decisions Are Built Together.
+          </h1>
+        </div>
+        <p class="max-w-xl text-lg leading-relaxed text-[#4d5964] lg:pb-1">
+          We partner with the organizations shaping a smarter, stronger franchise industry—bringing better insight to every decision.
         </p>
-
-        <ul class="mt-10 grid gap-x-10 gap-y-12 md:grid-cols-1">
-          {partnershipsWithLogos.map((partner) => (
-            <li class="relative border-t-2 border-[#d1d4dd] pt-8">
-              <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
-                {partner.logo ? (
-                  <Image
-                    src={partner.logo}
-                    alt={`${partner.name} logo`}
-                    class="self-center md:self-auto h-16 w-auto min-w-48 max-w-48 shrink-0 object-contain"
-                  />
-                ) : (
-                  <span class="self-center md:self-auto font-display text-[44px] leading-none tracking-tight text-[#5a5f69]">
-                    {partner.shortName}
-                  </span>
-                )}
-                <div class="min-w-0 flex-1">
-                  <h2 class="font-display pb-1 text-[22px] font-semibold leading-tight text-[#22252a] md:text-[26px]">
-                    {partner.name}
-                  </h2>
-                  <a href={partner.linkUrl} target="_blank">{partner.linkName}</a>
-                  <p class="mt-4 text-[18px] leading-[1.6] text-[#3b3e47] md:text-[20px]">
-                    {partner.description}
-                  </p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
 
+    <section class="bg-white py-12 md:py-20" aria-labelledby="partner-network-heading">
+      <div class="section-shell">
+
+        <ul class="grid list-none grid-cols-2 gap-x-8 gap-y-12 p-0 md:grid-cols-3 md:gap-y-16 lg:grid-cols-5 lg:gap-x-10">
+          {partnershipsWithLogos.map((partner) => (
+            <li class="group min-w-0">
+              <a
+                href={partner.linkUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Visit ${partner.name}`}
+                class="flex h-full min-h-[150px] flex-col items-center justify-center gap-6 px-2 text-center focus-visible:rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#09a985] md:min-h-[170px]"
+              >
+                <span class="flex min-h-[82px] w-full items-center justify-center">
+                  {partner.logo ? (
+                    <Image
+                      src={partner.logo}
+                      alt={`${partner.name} logo`}
+                      class="h-auto max-h-[72px] w-auto max-w-full object-contain object-center transition duration-200 group-hover:-translate-y-1 group-hover:scale-[1.03]"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <span class="font-display text-2xl font-semibold tracking-tight text-[#213a5a]">
+                      {partner.shortName}
+                    </span>
+                  )}
+                </span>
+
+                <span class="inline-flex max-w-[15rem] items-center justify-center gap-1.5 text-xs font-semibold leading-snug text-[#4d5964] transition-colors group-hover:text-[#087f65]">
+                  <span>{partner.name}</span>
+                  <span class="-translate-x-1 text-sm opacity-0 transition duration-200 group-hover:translate-x-0 group-hover:opacity-100" aria-hidden="true">&#8599;</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <p class="mx-auto mt-9 max-w-2xl text-center text-base leading-relaxed text-[#657078]">
+          One shared goal: helping franchise brands, advisors, and candidates make decisions with greater clarity and confidence.
+        </p>
+      </div>
+    </section>
   </main>
 
   <SiteFooter />

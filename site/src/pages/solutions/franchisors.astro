@@ -24,17 +24,3 @@ import FranchisorClosingCta from "../../components/FranchisorClosingCta.astro";
   </main>
   <SiteFooter />
 </MainLayout>
-
-<style>
-  /* The "Book a Consultation" CTA is wider than the default header CTA, so the
-     full inline nav + actions overflow the shell between lg (1024px) and
-     ~1180px. Keep the compact (hamburger) header until there is room for it. */
-  @media (min-width: 1024px) and (max-width: 1179px) {
-    :global([data-site-header] nav[aria-label="Primary"]) {
-      display: none;
-    }
-    :global([data-site-header] [data-menu-toggle]) {
-      display: flex;
-    }
-  }
-</style>

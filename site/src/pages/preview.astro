@@ -143,7 +143,6 @@ import SiteFooter from "../components/SiteFooter.astro";
         const isFileVideo = /\.(mp4|webm|ogg|m4v)(\?.*)?$/i.test(sourceUrl);
         const canUseIframe = ["youtube", "vimeo", "loom", "wistia"].includes(provider);
         const caption = title ? `<figcaption class="mt-2 text-center text-sm text-[#56586a]">${escapeHtml(title)}</figcaption>` : "";
-console.log(provider);
         if (isFileVideo) {
           return `<figure class="my-8"><video class="w-full rounded-xl" controls preload="metadata"><source src="${escapeHtml(sourceUrl)}" /></video>${caption}</figure>`;
         }

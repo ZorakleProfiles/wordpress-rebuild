@@ -1,6 +1,13 @@
 ---
 import { Image } from "astro:assets";
+import VideoModalButton from "./VideoModalButton.astro";
 import heroArtwork from "../assets/broker-hero.png";
+
+// Solid teal treatment for the explainer button (a peer to the orange
+// .btn-primary), matching the FranchisorHero explainer button. The [&>svg]
+// rules restyle VideoModalButton's play glyph into a white circular badge.
+const videoButtonClass =
+  "inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-lg bg-[#087f65] py-[11px] pl-[13px] pr-[22px] text-base font-bold text-white shadow-[0_10px_24px_rgba(8,127,101,0.28)] transition hover:-translate-y-px hover:bg-[#066b55] hover:shadow-[0_12px_30px_rgba(8,127,101,0.36)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#09cc9c]/45 [&>svg]:size-[30px] [&>svg]:shrink-0 [&>svg]:rounded-full [&>svg]:bg-white [&>svg]:py-[7px] [&>svg]:pl-[9px] [&>svg]:pr-[7px] [&>svg]:text-[#087f65]";
 ---
 
 <section class="relative overflow-hidden border-b border-[#d9e5e2] bg-[#eef7f4]">
@@ -30,7 +37,12 @@ import heroArtwork from "../assets/broker-hero.png";
 
       <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
         <a class="btn-primary gap-2" href="/pricing/brokers">Sign Up Now <span aria-hidden="true">&rarr;</span></a>
-        <a class="btn-secondary bg-white/55" href="/schedule">Book a Demo</a>
+        <VideoModalButton
+          videoId="1137519120"
+          label="Watch the 5-Minute Overview"
+          modalTitle="Zorakle 5-minute broker overview"
+          class={videoButtonClass}
+        />
       </div>
     </div>
   </div>

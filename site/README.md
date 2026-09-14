@@ -1,47 +1,38 @@
-# Astro Starter Kit: Basics
+# Zorakle Marketing Site
 
-```sh
-bun create astro@latest --template basics
-```
+Astro site for [zorakleprofiles.com](https://www.zorakleprofiles.com), backed by Sanity as the content source.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Project Structure
 
 ```text
 /
-├── public/
-│   └── favicon.svg
+├── public/               static files served as-is (favicon, robots.txt, redirects, headers)
 ├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+│   ├── assets/           images and fonts, imported and optimized by Astro
+│   ├── components/       .astro components used across pages
+│   ├── data/             typed content that isn't managed in Sanity (nav, pricing, support articles, testimonials)
+│   ├── layouts/          MainLayout.astro — shared <head>/SEO/meta handling
+│   ├── lib/              Sanity client and content-fetching helpers
+│   ├── pages/            file-based routes, including the [...slug] catch-all for Sanity blog posts
+│   ├── scripts/          client-side scripts imported into pages/components
+│   └── styles/           global CSS
+└── scripts/              one-off Node/Bun scripts (WordPress import, video upload, pricing checks)
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Commands
 
-## 🧞 Commands
+All commands are run from this directory (`site/`):
 
-All commands are run from the root of the project, from a terminal:
+| Command                      | Action                                              |
+| :---------------------------- | :--------------------------------------------------- |
+| `bun install`                 | Install dependencies                                 |
+| `bun run dev`                 | Start local dev server at `localhost:4321`           |
+| `bun run build`                | Build the production site to `./dist/`               |
+| `bun run preview`              | Preview the build locally before deploying           |
+| `bun run test:pricing`         | Run the pricing-configurator verification script     |
+| `bun run import:wordpress:dry` | Dry-run the legacy WordPress content importer        |
+| `bun run import:wordpress`     | Run the WordPress importer and write output          |
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun run dev`             | Starts local dev server at `localhost:4321`      |
-| `bun run build`           | Build your production site to `./dist/`          |
-| `bun run preview`         | Preview your build locally, before deploying     |
-| `bun run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun run astro -- --help` | Get help using the Astro CLI                     |
+## Content
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
+Blog posts, sciences, and support media come from Sanity (`@sanity/astro`, project `4kjxjblw`). Navigation, pricing tiers, testimonials, and support articles that aren't in Sanity live in `src/data/`.

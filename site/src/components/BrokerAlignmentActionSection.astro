@@ -1,0 +1,141 @@
+---
+// Summarized from real broker/consultant testimonials in src/data/site-content.ts
+// (Jack & Jill Johnson, Seth Lederman, Kim Marinoff) — pull quotes are trimmed
+// excerpts from the full quotes, not new statements.
+const stories = [
+  {
+    brand: "Franchise Insiders",
+    initials: "FI",
+    tag: "Match + Close",
+    accent: "orange",
+    challenge: "Find franchise matches that truly fit each client's motivations.",
+    insight: "Precise, evidence-backed matches plus insight into each client's pace and reactions.",
+    result: "More deals brought home with clients matched to the right brand.",
+    quote: "This tool is worth 100x what we pay for it.",
+    attribution: "Jack & Jill Johnson",
+  },
+  {
+    brand: "FranNexus",
+    initials: "FN",
+    tag: "Present + Differentiate",
+    accent: "teal",
+    challenge: "Stand out from other consultants with more than a gut read on candidates.",
+    insight: "SpotOn! Profile delivers an objective, in-depth read on every candidate.",
+    result: "An instrumental tool that differentiates his practice from the competition.",
+    quote: "It provides tremendous insight into my candidates and differentiates me from my competitors.",
+    attribution: "Seth Lederman",
+  },
+  {
+    brand: "The Franchise Explorer",
+    initials: "TFE",
+    tag: "Win + Close",
+    accent: "navy",
+    challenge: "Win a client's trust and business over competing consultants.",
+    insight: "Accurate, credible results clients could see and understand for themselves.",
+    result: "Won the client's business over two other consultants and helped him land a two-territory franchise award.",
+    quote: "He attributed Zorakle as being a key reason he worked with me, over two other consultants.",
+    attribution: "Kim Marinoff",
+  },
+];
+
+const accentClasses = {
+  orange: {
+    top: "border-t-[#ff5b18]",
+    medallion: "bg-gradient-to-br from-[#fff1e9] to-[#f8d9cb] text-[#d9450d]",
+    pill: "bg-[#ffe9df] text-[#d9450d]"
+  },
+  teal: {
+    top: "border-t-[#00b497]",
+    medallion: "bg-gradient-to-br from-[#e2fbf6] to-[#beece3] text-[#008d76]",
+    pill: "bg-[#dff5f0] text-[#008d76]"
+  },
+  navy: {
+    top: "border-t-[#172b4a]",
+    medallion: "bg-gradient-to-br from-[#f0f4f4] to-[#dbe5e4] text-[#0b1837]",
+    pill: "bg-[#e7eaef] text-[#172b4a]"
+  }
+};
+
+const points = [
+  { key: "challenge", label: "Challenge", tone: "text-[#ff5414]" },
+  { key: "insight", label: "Zorakle Insight", tone: "text-[#00ac91]" },
+  { key: "result", label: "Result", tone: "text-[#00ac91]" }
+] as const;
+---
+
+<section class="home-section overflow-hidden border-b border-[#dce9e6] bg-white">
+  <div class="section-shell">
+    <header class="text-center">
+      <p class="section-eyebrow">Matches in Action</p>
+      <h2 class="section-title text-center">How Brokers Put the Insight to Work.</h2>
+      <p class="section-copy mx-auto max-w-2xl text-center">
+        The value of a strong match becomes clearest in the conversations, presentations, and deals it improves.
+      </p>
+    </header>
+
+    <div class="mt-10 grid gap-4 md:mt-12 md:grid-cols-2 xl:grid-cols-3">
+      {stories.map((story) => (
+        <article
+          class:list={[
+            "relative overflow-hidden rounded-2xl border border-t-[5px] border-[#e1ebe9] bg-white/95 px-8 pb-6 pt-5 shadow-[0_11px_30px_rgba(28,55,66,0.055)] max-[400px]:px-6",
+            accentClasses[story.accent].top
+          ]}
+        >
+          <div class="flex min-h-[104px] items-center gap-5">
+            <div
+              class:list={[
+                "grid size-[76px] shrink-0 place-items-center rounded-full border border-[#09213914] shadow-[inset_0_0_0_6px_rgba(255,255,255,0.48)] sm:size-[88px]",
+                accentClasses[story.accent].medallion
+              ]}
+            >
+              <span class="font-display text-[23px] font-bold tracking-[-0.04em]">{story.initials}</span>
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-[15px] font-bold uppercase leading-tight tracking-[0.035em] text-[#0a1737] max-[400px]:text-[13px]">
+                {story.brand}
+              </h3>
+              <p
+                class:list={[
+                  "mt-2.5 inline-flex min-h-[28px] items-center rounded-full px-4 text-[11px] font-bold uppercase leading-none tracking-[0.12em] sm:px-6 max-[400px]:text-[9px] max-[400px]:tracking-[0.09em]",
+                  accentClasses[story.accent].pill
+                ]}
+              >
+                {story.tag}
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            {points.map((point) => (
+              <div class="relative grid min-h-[104px] grid-cols-[2.625rem_minmax(0,1fr)] gap-3 after:absolute after:bottom-1 after:left-[15px] after:top-[33px] after:w-px after:bg-[#d8e3e5] after:content-[''] last:after:hidden max-[760px]:min-h-[110px]">
+                <div
+                  class:list={[
+                    "relative z-[1] size-8 bg-white [&_svg]:size-8 [&_svg]:fill-none [&_svg]:stroke-current [&_svg]:[stroke-linecap:round] [&_svg]:[stroke-linejoin:round] [&_svg]:[stroke-width:2.8]",
+                    point.tone
+                  ]}
+                  aria-hidden="true"
+                >
+                  {point.key === "challenge" && <svg viewBox="0 0 34 34"><circle cx="15" cy="18" r="10"/><circle cx="15" cy="18" r="5"/><path d="m15 18 14-14M22 4h7v7"/></svg>}
+                  {point.key === "insight" && <svg viewBox="0 0 34 34"><circle cx="14" cy="14" r="10"/><path d="m22 22 9 9"/></svg>}
+                  {point.key === "result" && <svg viewBox="0 0 34 34"><path d="M4 31V23M11 31V18M18 31V12M25 31V5"/></svg>}
+                </div>
+                <div>
+                  <h4 class="text-base font-bold leading-tight text-[#0a1737]">{point.label}</h4>
+                  <p class="mt-0.5 text-sm leading-snug text-[#48567b]">{story[point.key]}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <blockquote class="mt-0.5 grid grid-cols-[53px_minmax(0,1fr)] gap-[7px] max-[760px]:mt-2">
+            <span class="h-[50px] font-serif text-[86px] leading-[0.9] text-[#bcefe6]" aria-hidden="true">“</span>
+            <div>
+              <p class="mb-2 mt-1 text-sm italic leading-snug text-[#46557b]">“{story.quote}”</p>
+              <cite class="text-sm font-bold not-italic text-[#0a1737]">— {story.attribution}</cite>
+            </div>
+          </blockquote>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

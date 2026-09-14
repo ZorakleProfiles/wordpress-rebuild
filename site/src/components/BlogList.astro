@@ -45,8 +45,8 @@ const {
 } = Astro.props;
 
 // When a page supplies `search-aside` content (e.g. the podcasts "Listen on…"
-// card), it sits to the right of the search box on large screens and stacks
-// beneath it on smaller ones.
+// card), it sits beside the title on large screens and stacks below it on
+// smaller ones.
 const hasSearchAside = Astro.slots.has("search-aside");
 ---
 
@@ -56,50 +56,46 @@ const hasSearchAside = Astro.slots.has("search-aside");
   <main class="bg-[#f7f8fb]">
     <section class="py-14 md:py-16">
       <div class="section-shell">
-        <h1 class="page-title">{heading}</h1>
+        <div class:list={["flex flex-col gap-4", hasSearchAside && "lg:flex-row lg:items-start lg:justify-between lg:gap-8"]}>
+          <h1 class="page-title">{heading}</h1>
+
+          {hasSearchAside && (
+            <aside
+              class="text-[#2f3340] lg:max-w-sm lg:shrink-0 lg:self-center lg:border-l lg:border-[#f7c3a8] lg:pl-6"
+            >
+              <slot name="search-aside" />
+            </aside>
+          )}
+        </div>
 
         <slot name="intro" />
 
         {
           searchEndpoint && (
-            <div
-              class:list={[
-                "mt-6",
-                hasSearchAside && "flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-6"
-              ]}
-              data-blog-search={searchEndpoint}
-            >
-              <div class:list={[hasSearchAside && "w-full lg:max-w-xl lg:flex-1"]}>
-                <label for="blog-search" class="sr-only">
-                  {searchLabel}
-                </label>
-                <div class:list={["relative", !hasSearchAside && "max-w-xl"]}>
-                  <svg
-                    class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8b8f99]"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    aria-hidden="true"
-                  >
-                    <circle cx="9" cy="9" r="6" />
-                    <line x1="14.5" y1="14.5" x2="19" y2="19" stroke-linecap="round" />
-                  </svg>
-                  <input
-                    id="blog-search"
-                    type="search"
-                    autocomplete="off"
-                    placeholder={searchLabel}
-                    class="w-full rounded-lg border border-[#d1d4dd] bg-white py-2.5 pl-10 pr-3 text-base text-[#22252a] shadow-sm outline-none transition placeholder:text-[#8b8f99] focus:border-[#fd7730] focus:ring-2 focus:ring-[#fff2eb]"
-                  />
-                </div>
+            <div class="mt-6 max-w-xl" data-blog-search={searchEndpoint}>
+              <label for="blog-search" class="sr-only">
+                {searchLabel}
+              </label>
+              <div class="relative">
+                <svg
+                  class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8b8f99]"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <circle cx="9" cy="9" r="6" />
+                  <line x1="14.5" y1="14.5" x2="19" y2="19" stroke-linecap="round" />
+                </svg>
+                <input
+                  id="blog-search"
+                  type="search"
+                  autocomplete="off"
+                  placeholder={searchLabel}
+                  class="w-full rounded-lg border border-[#d1d4dd] bg-white py-2.5 pl-10 pr-3 text-base text-[#22252a] shadow-sm outline-none transition placeholder:text-[#8b8f99] focus:border-[#fd7730] focus:ring-2 focus:ring-[#fff2eb]"
+                />
               </div>
-
-              {hasSearchAside && (
-                <div class="lg:shrink-0">
-                  <slot name="search-aside" />
-                </div>
-              )}
             </div>
           )
         }
@@ -295,3 +291,6 @@ const hasSearchAside = Astro.slots.has("search-aside");
     </script>
   )
 }
+
+
+

@@ -16,10 +16,8 @@ export const navLinks = [
       { href: "/podcasts", label: "Podcasts" },
       { href: "/support", label: "Support" },
       { href: "/webinars", label: "Webinars" },
-
     ]
   },
-  // { href: "/sciences", label: "The Sciences" }
 ];
 
 export const partnerships = [

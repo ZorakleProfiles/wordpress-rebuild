@@ -1,0 +1,111 @@
+---
+const outcomes = [
+  {
+    step: "01",
+    stage: "Assess",
+    title: "Understand every client",
+    body: "Add objective insight to first conversations and professional judgment.",
+    icon: "assess"
+  },
+  {
+    step: "02",
+    stage: "Match",
+    title: "Surface ranked brand fits",
+    body: "Compare each client against real franchise requirements in minutes.",
+    icon: "match"
+  },
+  {
+    step: "03",
+    stage: "Present",
+    title: "Present with confidence",
+    body: "Walk clients through evidence-backed recommendations they can trust.",
+    icon: "present"
+  },
+  {
+    step: "04",
+    stage: "Close",
+    title: "Close more deals faster",
+    body: "Move from interest to a signed agreement with less back-and-forth.",
+    icon: "close"
+  }
+];
+---
+
+<section class="benefits-section relative overflow-hidden border-b border-[#d7e5e1] bg-[#f4fbfa] py-9 md:py-10" aria-labelledby="benefits-title">
+  <div class="pointer-events-none absolute inset-0 opacity-45" aria-hidden="true">
+    <div class="absolute -left-32 -top-52 size-[30rem] rounded-full border border-[#b8e2d8]"></div>
+    <div class="absolute -left-20 -top-40 size-[21rem] rounded-full border border-[#c4e9e0]"></div>
+    <div class="absolute -right-24 -bottom-52 size-[28rem] rounded-full border border-[#c4e9e0]"></div>
+  </div>
+
+  <div class="section-shell relative z-10">
+    <header class="text-center">
+      <p class="section-eyebrow">What Sharper Matches Make Possible</p>
+      <h2 id="benefits-title" class="font-display mt-2.5 text-[2.25rem] font-bold leading-[1.03] tracking-[-.03em] text-[#17233e] sm:text-[2.6rem] lg:text-[2.85rem]">
+        Better Fit at the Table.{" "}
+        <span class="text-[#087f65]">A Stronger Practice With Every Match.</span>
+      </h2>
+      <p class="mx-auto mt-3 max-w-4xl text-[15px] leading-relaxed text-[#4f5e69] md:text-base">
+        The right match doesn&rsquo;t just make the conversation easier. It builds trust, shortens the path to a decision, and turns clients into referrals.
+      </p>
+    </header>
+
+    <div class="outcome-rail relative mt-7 grid gap-3 md:grid-cols-4 md:gap-0" aria-label="Assess, match, present, and close">
+      <span class="rail-line absolute hidden h-px bg-[#9bcfc3] md:block" aria-hidden="true"></span>
+
+      {outcomes.map((outcome, index) => (
+        <article class="outcome relative grid grid-cols-[50px_minmax(0,1fr)] items-center gap-4 rounded-2xl border border-[#d8e7e3] bg-white/90 p-4 shadow-[0_10px_28px_rgba(23,55,62,.055)] md:block md:min-h-[156px] md:rounded-none md:border-y md:border-l-0 md:border-r md:bg-white/75 md:px-4 md:pb-3.5 md:pt-4 md:shadow-none first:md:rounded-l-2xl first:md:border-l last:md:rounded-r-2xl">
+          <div class="step-row contents md:flex md:items-center md:justify-between">
+            <div class="icon-wrap relative z-10 grid size-[50px] place-items-center rounded-xl border border-[#bde2da] bg-[#e2f5f0] text-[#087f65] md:size-10">
+              {outcome.icon === "assess" && <svg viewBox="0 0 40 40"><circle cx="16" cy="14" r="6"/><path d="M6 34v-3c0-6 4-9 10-9s10 3 10 9v1"/><circle cx="28" cy="27" r="7"/><path d="m33 32 5 5"/></svg>}
+              {outcome.icon === "match" && <svg viewBox="0 0 40 40"><circle cx="9" cy="20" r="6"/><circle cx="31" cy="20" r="6"/><path d="M17 20h6m0 0-4-4m4 4-4 4"/></svg>}
+              {outcome.icon === "present" && <svg viewBox="0 0 40 40"><path d="M6 9h28a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H18l-8 7v-7H6a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2Z"/><path d="m11 19 5 5 11-12"/></svg>}
+              {outcome.icon === "close" && <svg viewBox="0 0 40 40"><path d="M9 4h16l7 7v25H9Z"/><path d="M25 4v7h7"/><path d="m14 22 5 5 10-11"/></svg>}
+            </div>
+            <span class="hidden text-[11px] font-bold tracking-[.16em] text-[#78928c] md:block">{outcome.step}</span>
+          </div>
+
+          <div class="min-w-0 md:mt-2.5">
+            <p class="mb-1 text-[10px] font-bold uppercase leading-none tracking-[.18em] text-[#087f65]">{outcome.stage}</p>
+            <h3 class="font-display text-lg font-bold leading-[1.15] text-[#17233e] md:text-[19px]">{outcome.title}</h3>
+            <p class="mt-1.5 text-[13px] leading-[1.4] text-[#5f6d73]">{outcome.body}</p>
+          </div>
+
+          {index < outcomes.length - 1 && (
+            <span class="flow-arrow absolute -right-3 top-7 z-20 hidden size-6 place-items-center rounded-full border border-[#9bcfc3] bg-[#f4fbfa] text-sm font-bold text-[#087f65] md:grid" aria-hidden="true">&rarr;</span>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .icon-wrap :global(svg) {
+    width: 27px;
+    height: 27px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+  }
+
+  @media (min-width: 768px) {
+    .rail-line {
+      top: 3rem;
+      right: 4rem;
+      left: 4rem;
+    }
+
+    .outcome {
+      transition: background-color .2s ease, transform .2s ease;
+    }
+
+    .outcome:hover {
+      z-index: 2;
+      background-color: white;
+      transform: translateY(-3px);
+    }
+  }
+</style>

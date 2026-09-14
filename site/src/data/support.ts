@@ -196,44 +196,6 @@ export const supportArticles: SupportArticle[] = [
       }
     ]
   },
-  // {
-  //   slug: "broker-setup",
-  //   title: "Setting Up Your Broker Account",
-  //   summary:
-  //     "This article covers broker account branding setup so your workspace reflects your firm before sharing assessments with clients.",
-  //   intro:
-  //     "This guide helps brokers and consultants personalize their workspace so everything clients see matches their brand. You will update logo and color settings to create a polished presentation experience before sending links or sharing results. It is a short setup, but it improves trust and consistency across your client interactions.",
-  //   assetDir: "src/assets/support/broker-setup",
-  //   summaryVideo: {
-  //     fileName: "summary.mp4",
-  //     caption: "Quick walkthrough: broker setup and branding"
-  //   },
-  //   type:"Broker",
-  //   steps: [
-  //     {
-  //       title: "Open Logo and Branding Settings",
-  //       content:
-  //           "Click Settings, then navigate to Logo and Branding.",
-  //       media: {
-  //         type: "screenshot",
-  //         fileName: "01.png",
-  //         alt: "Settings menu with Logo and Branding highlighted"
-  //       }
-  //     },
-  //     {
-  //       title: "Upload Your Logo",
-  //       content:
-  //           "Upload your logo file. The system will suggest brand colors automatically. Select one of those or enter a custom hex code for an exact match.",
-  //       tip:
-  //           "If your brand has a specific hex code from your style guide, use the custom hex field to match your brand exactly.",
-  //       media: {
-  //         type: "screenshot",
-  //         fileName: "02.png",
-  //         alt: "Logo upload panel with generated color swatches and hex input"
-  //       }
-  //     },
-  //   ]
-  // },
   {
     slug: "collect-assessments",
     title: "Collecting Assessments",

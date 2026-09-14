@@ -1,0 +1,38 @@
+---
+import { Image } from "astro:assets";
+import meetingArtwork from "../assets/franchisor-closing-alignment-v2.png";
+---
+
+<section class="relative overflow-hidden border-t border-[#d9ebe7] bg-[#eefaf8]" aria-labelledby="broker-closing-title">
+  <div class="absolute inset-0" aria-hidden="true">
+    <Image
+      src={meetingArtwork}
+      alt=""
+      widths={[768, 1200, 1600, 2048]}
+      sizes="100vw"
+      class="h-full w-full object-cover object-[85%_30%] max-[720px]:object-[75%_center]"
+    />
+  </div>
+
+  <div class="section-shell relative z-10 flex min-h-[390px] items-center py-12 max-[720px]:min-h-[540px]">
+    <div class="my-10 w-full rounded-[22px] border border-white/80 bg-[#f0fbf9]/[0.93] p-10 shadow-[0_18px_50px_rgba(23,35,62,0.1)] md:w-[62%] md:max-w-[620px] lg:w-[54%] lg:max-w-[690px] max-[720px]:my-8 max-[720px]:rounded-[18px] max-[720px]:p-6">
+      <p class="section-eyebrow">Clients Matched. Deals Closed.</p>
+      <h2 id="broker-closing-title" class="section-title">
+        Give Every Client Conversation the Weight of Evidence.
+      </h2>
+      <p class="section-copy max-w-[650px]">
+        See how Zorakle can help you match clients to the right franchise brands and close more deals with confidence.
+      </p>
+
+      <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+        <a class="btn-primary" href="/schedule">Book a Demo <span aria-hidden="true">&rarr;</span></a>
+        <a
+          class="inline-flex items-center gap-2 text-base font-semibold text-[#1e2f43] transition-colors hover:text-[#23bfa8]"
+          href="/pricing/brokers"
+        >
+          View Broker Pricing <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

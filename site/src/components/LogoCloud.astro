@@ -17,43 +17,49 @@ const portalUrl = import.meta.env.PORTAL_URL || "http://localhost:3000";
 
 const imageModules = import.meta.glob('/src/assets/logos/*.{jpeg,jpg,png,gif,webp}', { eager: true });
 
-const franchisorLogos: Record<string, string> = {
-  "4ever-young.png": "4Ever Young",
-  "atwork-group.png": "@WORK Group",
-  "beef-o-bradys.jpg": "Beef 'O' Brady's",
-  "bubbas-famous-ice-cream.jpg": "Bubba's Famous Ice Cream",
-  "caring-transitions.png": "Caring Transitions",
-  "crust-pizza-co.jpg": "Crust Pizza Co.",
-  "ducklings-early-learning-center.png": "Ducklings Early Learning Center",
-  "enviro-master.png": "Enviro-Master",
-  "exclusively-cabinets.png": "Exclusively Cabinets by Cabinetek",
-  "gloria-jeans-coffees.png": "Gloria Jean's Coffees",
-  "house-of-colour.png": "House of Colour",
-  "iboost-talent.png": "iBoost Talent",
-  "integrity-1st-car-pros.png": "Integrity 1st Car Pros",
-  "la-ruta-del-cilantro-taqueria.png": "La Ruta del Cilantro Taqueria",
-  "lice-clinics-of-america.jpg": "Lice Clinics of America",
-  "little-lions-club.png": "Little Lions Club",
-  "naturals-2-go.png": "Naturals2Go",
-  "neuron-garage.png": "Neuron Garage",
-  "pacific-perks.jpg": "Pacific Perks",
-  "prime-senior-placement.png": "Prime Senior Placement",
-  "saras-artisan-gelato.png": "Sara's Artisan Gelato",
-  "sparkle-team.png": "Sparkle Team",
-  "the-brass-tap.jpg": "The Brass Tap",
-  "ultimate-ninjas.jpg": "Ultimate Ninjas",
-  "vella-haus.jpg": "Vella Haus",
-  "wow-1-day-painting.png": "WOW 1 Day Painting"
-};
+// Order below is intentional and must be preserved as-given — do not sort or randomize.
+const franchisorLogoOrder: [string, string][] = [
+  ["beef-o-bradys.jpg", "Beef 'O' Brady's"],
+  ["archadeck.png", "Archadeck"],
+  ["dreammaker-kitchen-bath.png", "DreamMaker Kitchen & Bath"],
+  ["office-pride.png", "Office Pride"],
+  ["zaxbys.png", "Zaxby's"],
+  ["tab.png", "TAB"],
+  ["homewell-senior-care.png", "HomeWell Senior Care"],
+  ["4ever-young.png", "4Ever Young"],
+  ["mrs-fields-cookies.png", "Mrs Fields Cookies"],
+  ["any-lab-test-now.png", "Any Lab Test Now"],
+  ["ivy-kids.png", "Ivy Kids"],
+  ["house-of-colour.png", "House of Colour"],
+  ["pacific-perks.jpg", "Pacific Perks"],
+  ["alphagraphics.jpg", "AlphaGraphics"],
+  ["mr-appliance.jpg", "Mr. Appliance"],
+  ["wow-1-day-painting.png", "WOW1 Day Painting"],
+  ["the-brass-tap.jpg", "Brass Tap"],
+  ["milex-mr-transmission.png", "Milex - Mr. Transmission"],
+  ["kidstrong.png", "Kidstrong"],
+  ["voda.jpg", "Voda"],
+  ["tcby.png", "TCBY"],
+  ["squeegee-squad.jpg", "Squeegee Squad"],
+  ["ar-homes.jpeg", "AR Homes"],
+  ["fleet-feet.png", "Fleet Feet"],
+  ["scooters-coffee.png", "Scooter's Coffee"],
+  ["enviro-master.png", "Enviro Master"],
+  ["united-water-restoration.png", "United Water Restoration"],
+  ["arcpoint.png", "ARCPoint"],
+  ["servicemaster.png", "ServiceMaster"]
+];
 
-// Keep both halves of the marquee deterministic and pixel-identical.
-const images = Object.entries(imageModules)
-  .filter(([path]) => Object.hasOwn(franchisorLogos, path.split('/').pop() ?? ""))
-  .sort(([firstPath], [secondPath]) => firstPath.localeCompare(secondPath))
-  .map(([path, image]) => ({
-    image,
-    alt: franchisorLogos[path.split('/').pop() ?? ""]
-  }));
+const imagesByFilename: Record<string, any> = {};
+for (const [path, image] of Object.entries(imageModules)) {
+  imagesByFilename[path.split('/').pop() ?? ""] = image;
+}
+
+// Keep both halves of the marquee identical and in the exact specified order.
+const images = franchisorLogoOrder.map(([filename, alt]) => ({
+  image: imagesByFilename[filename],
+  alt
+}));
 ---
 
 <section class={sectionClass} aria-labelledby="franchisor-logo-heading">

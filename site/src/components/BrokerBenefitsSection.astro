@@ -1,28 +1,32 @@
 ---
+const pillars = [
+  { label: "Enhanced Engagement", icon: "engagement" },
+  { label: "Stronger Credibility", icon: "credibility" },
+  { label: "Added Client Value", icon: "value" },
+  { label: "Science-Based Matches", icon: "science" },
+  { label: "More Deals Closed", icon: "deals" }
+];
+
 const outcomes = [
   {
-    step: "01",
     stage: "Assess",
     title: "Understand every client",
     body: "Add objective insight to first conversations and professional judgment.",
     icon: "assess"
   },
   {
-    step: "02",
     stage: "Match",
     title: "Surface ranked brand fits",
     body: "Compare each client against real franchise requirements in minutes.",
     icon: "match"
   },
   {
-    step: "03",
     stage: "Present",
     title: "Present with confidence",
     body: "Walk clients through evidence-backed recommendations they can trust.",
     icon: "present"
   },
   {
-    step: "04",
     stage: "Close",
     title: "Close more deals faster",
     body: "Move from interest to a signed agreement with less back-and-forth.",
@@ -31,7 +35,7 @@ const outcomes = [
 ];
 ---
 
-<section class="benefits-section relative overflow-hidden border-b border-[#d7e5e1] bg-[#f4fbfa] py-9 md:py-10" aria-labelledby="benefits-title">
+<section class="relative overflow-hidden border-b border-[#d7e5e1] bg-[#f4fbfa] py-14 md:py-18" aria-labelledby="benefits-title">
   <div class="pointer-events-none absolute inset-0 opacity-45" aria-hidden="true">
     <div class="absolute -left-32 -top-52 size-[30rem] rounded-full border border-[#b8e2d8]"></div>
     <div class="absolute -left-20 -top-40 size-[21rem] rounded-full border border-[#c4e9e0]"></div>
@@ -39,73 +43,90 @@ const outcomes = [
   </div>
 
   <div class="section-shell relative z-10">
-    <header class="text-center">
-      <p class="section-eyebrow">What Sharper Matches Make Possible</p>
-      <h2 id="benefits-title" class="font-display mt-2.5 text-[2.25rem] font-bold leading-[1.03] tracking-[-.03em] text-[#17233e] sm:text-[2.6rem] lg:text-[2.85rem]">
+    <header class="mx-auto max-w-3xl text-center">
+      <p class="eyebrow-accent text-sm font-bold uppercase tracking-[0.16em] text-[#087f65]">What Working With Zorakle Makes Possible</p>
+      <h2 id="benefits-title" class="font-display mt-3 text-[2.15rem] font-bold leading-[1.05] tracking-[-.03em] text-[#17233e] sm:text-[2.6rem] lg:text-[2.85rem]">
         Better Fit at the Table.{" "}
         <span class="text-[#087f65]">A Stronger Practice With Every Match.</span>
       </h2>
-      <p class="mx-auto mt-3 max-w-4xl text-[15px] leading-relaxed text-[#4f5e69] md:text-base">
-        The right match doesn&rsquo;t just make the conversation easier. It builds trust, shortens the path to a decision, and turns clients into referrals.
+      <p class="mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-[#4f5e69] md:text-base">
+        It&rsquo;s more than a sharper match. Science-based insight builds trust, shortens the path to a decision, and turns clients into referrals.
       </p>
     </header>
 
-    <div class="outcome-rail relative mt-7 grid gap-3 md:grid-cols-4 md:gap-0" aria-label="Assess, match, present, and close">
-      <span class="rail-line absolute hidden h-px bg-[#9bcfc3] md:block" aria-hidden="true"></span>
-
-      {outcomes.map((outcome, index) => (
-        <article class="outcome relative grid grid-cols-[50px_minmax(0,1fr)] items-center gap-4 rounded-2xl border border-[#d8e7e3] bg-white/90 p-4 shadow-[0_10px_28px_rgba(23,55,62,.055)] md:block md:min-h-[156px] md:rounded-none md:border-y md:border-l-0 md:border-r md:bg-white/75 md:px-4 md:pb-3.5 md:pt-4 md:shadow-none first:md:rounded-l-2xl first:md:border-l last:md:rounded-r-2xl">
-          <div class="step-row contents md:flex md:items-center md:justify-between">
-            <div class="icon-wrap relative z-10 grid size-[50px] place-items-center rounded-xl border border-[#bde2da] bg-[#e2f5f0] text-[#087f65] md:size-10">
-              {outcome.icon === "assess" && <svg viewBox="0 0 40 40"><circle cx="16" cy="14" r="6"/><path d="M6 34v-3c0-6 4-9 10-9s10 3 10 9v1"/><circle cx="28" cy="27" r="7"/><path d="m33 32 5 5"/></svg>}
-              {outcome.icon === "match" && <svg viewBox="0 0 40 40"><circle cx="9" cy="20" r="6"/><circle cx="31" cy="20" r="6"/><path d="M17 20h6m0 0-4-4m4 4-4 4"/></svg>}
-              {outcome.icon === "present" && <svg viewBox="0 0 40 40"><path d="M6 9h28a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H18l-8 7v-7H6a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2Z"/><path d="m11 19 5 5 11-12"/></svg>}
-              {outcome.icon === "close" && <svg viewBox="0 0 40 40"><path d="M9 4h16l7 7v25H9Z"/><path d="M25 4v7h7"/><path d="m14 22 5 5 10-11"/></svg>}
-            </div>
-            <span class="hidden text-[11px] font-bold tracking-[.16em] text-[#78928c] md:block">{outcome.step}</span>
-          </div>
-
-          <div class="min-w-0 md:mt-2.5">
-            <p class="mb-1 text-[10px] font-bold uppercase leading-none tracking-[.18em] text-[#087f65]">{outcome.stage}</p>
-            <h3 class="font-display text-lg font-bold leading-[1.15] text-[#17233e] md:text-[19px]">{outcome.title}</h3>
-            <p class="mt-1.5 text-[13px] leading-[1.4] text-[#5f6d73]">{outcome.body}</p>
-          </div>
-
-          {index < outcomes.length - 1 && (
-            <span class="flow-arrow absolute -right-3 top-7 z-20 hidden size-6 place-items-center rounded-full border border-[#9bcfc3] bg-[#f4fbfa] text-sm font-bold text-[#087f65] md:grid" aria-hidden="true">&rarr;</span>
-          )}
-        </article>
+    <ul
+      class="benefit-ribbon mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-x-4 gap-y-8 border-y border-[#cfe6e0] py-7 sm:grid-cols-3 md:mt-12 md:flex md:flex-nowrap md:items-start md:justify-between md:gap-0 md:py-8"
+      aria-label="Key broker benefits"
+    >
+      {pillars.map((pillar, index) => (
+        <li class:list={["flex flex-col items-center gap-2.5 text-center md:flex-1 md:px-3", index > 0 && "md:border-l md:border-[#cfe6e0]"]}>
+          <span class="grid size-12 place-items-center rounded-full bg-[#e2f5f0] text-[#087f65] shadow-[0_6px_14px_rgba(8,127,101,0.14)] md:size-[50px]">
+            {pillar.icon === "engagement" && <svg viewBox="0 0 32 32"><path d="M5 8h22a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H14l-5 4v-4H5a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2Z"/><path d="M10 14h12M10 18h8"/></svg>}
+            {pillar.icon === "credibility" && <svg viewBox="0 0 32 32"><path d="M16 3 5 7v8c0 7 4.5 11.5 11 14 6.5-2.5 11-7 11-14V7Z"/><path d="m11 15.5 3.5 3.5L21 12"/></svg>}
+            {pillar.icon === "value" && <svg viewBox="0 0 32 32"><path d="M9 5h14l6 8-13 15L3 13Z"/><path d="M3 13h26M12 5l-3 8 7 15M20 5l3 8-7 15"/></svg>}
+            {pillar.icon === "science" && <svg viewBox="0 0 32 32"><circle cx="13" cy="13" r="8"/><path d="m19 19 9 9"/></svg>}
+            {pillar.icon === "deals" && <svg viewBox="0 0 32 32"><path d="M4 27h24M8 27V18M15 27V11M22 27V15"/><path d="m6 15 8-7 5 4 9-8"/></svg>}
+          </span>
+          <span class="text-[11px] font-bold uppercase leading-snug tracking-[.06em] text-[#1e2f43] sm:text-xs">{pillar.label}</span>
+        </li>
       ))}
+    </ul>
+
+    <p class="mt-10 text-center text-[11px] font-bold uppercase tracking-[.22em] text-[#78928c] md:mt-12">How it comes together</p>
+
+    <div class="relative mt-6">
+      <span class="absolute left-[23px] top-1 bottom-1 w-px bg-[#a9d4c9] md:left-0 md:right-0 md:top-[27px] md:bottom-auto md:h-px md:w-auto" aria-hidden="true"></span>
+
+      <ol class="relative grid gap-9 md:grid-cols-4 md:gap-6">
+        {outcomes.map((outcome, index) => {
+          const isClose = outcome.icon === "close";
+          return (
+            <li class="relative flex gap-5 md:block">
+              <div
+                class:list={[
+                  "relative z-10 grid size-[54px] shrink-0 place-items-center rounded-full border-[5px] border-[#f4fbfa] shadow-[0_8px_18px_rgba(23,55,62,.16)]",
+                  isClose ? "bg-[#fd7730] text-white" : "bg-[#09a985] text-white"
+                ]}
+              >
+                {outcome.icon === "assess" && <svg viewBox="0 0 40 40"><circle cx="16" cy="14" r="6"/><path d="M6 34v-3c0-6 4-9 10-9s10 3 10 9v1"/><circle cx="28" cy="27" r="7"/><path d="m33 32 5 5"/></svg>}
+                {outcome.icon === "match" && <svg viewBox="0 0 40 40"><circle cx="9" cy="20" r="6"/><circle cx="31" cy="20" r="6"/><path d="M17 20h6m0 0-4-4m4 4-4 4"/></svg>}
+                {outcome.icon === "present" && <svg viewBox="0 0 40 40"><path d="M6 9h28a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H18l-8 7v-7H6a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2Z"/><path d="m11 19 5 5 11-12"/></svg>}
+                {outcome.icon === "close" && <svg viewBox="0 0 40 40"><path d="M9 4h16l7 7v25H9Z"/><path d="M25 4v7h7"/><path d="m14 22 5 5 10-11"/></svg>}
+              </div>
+
+              <div class="min-w-0 pb-1 md:mt-3.5">
+                <p class:list={["text-[10.5px] font-bold uppercase leading-none tracking-[.2em]", isClose ? "text-[#c8580f]" : "text-[#087f65]"]}>
+                  {outcome.stage}
+                </p>
+                <h3 class="font-display mt-1.5 text-lg font-bold leading-snug text-[#17233e] md:text-[19px]">{outcome.title}</h3>
+                <p class="mt-1.5 max-w-[230px] text-[13px] leading-[1.45] text-[#5f6d73]">{outcome.body}</p>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
     </div>
   </div>
 </section>
 
 <style>
-  .icon-wrap :global(svg) {
-    width: 27px;
-    height: 27px;
+  .benefit-ribbon :global(svg) {
+    width: 21px;
+    height: 21px;
     fill: none;
     stroke: currentColor;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-width: 2;
+    stroke-width: 2.1;
   }
 
-  @media (min-width: 768px) {
-    .rail-line {
-      top: 3rem;
-      right: 4rem;
-      left: 4rem;
-    }
-
-    .outcome {
-      transition: background-color .2s ease, transform .2s ease;
-    }
-
-    .outcome:hover {
-      z-index: 2;
-      background-color: white;
-      transform: translateY(-3px);
-    }
+  ol :global(svg) {
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2.4;
   }
 </style>

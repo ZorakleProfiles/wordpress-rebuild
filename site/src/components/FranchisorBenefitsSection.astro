@@ -1,37 +1,29 @@
 ---
-const outcomes = [
+const benefits = [
   {
-    step: "01",
-    stage: "Award",
-    title: "Award with greater confidence",
-    body: "Add objective insight to interviews and professional judgment.",
-    icon: "award"
+    title: "Fewer Wrong Fits",
+    body: "Screen out mismatches before they ever reach a signed agreement.",
+    icon: "fit",
   },
   {
-    step: "02",
-    stage: "Validate",
-    title: "Build stronger validation",
-    body: "Build owners equipped to succeed and advocate for the brand.",
-    icon: "validation"
+    title: "Faster Time to Profitability",
+    body: "New owners ramp up faster when the role plays to their strengths.",
+    icon: "growth",
   },
   {
-    step: "03",
-    stage: "Support",
-    title: "Support each owner effectively",
-    body: "Know how each owner communicates, learns, and handles pressure.",
-    icon: "support"
+    title: "Stronger Culture Fit",
+    body: "Build a system of owners who reinforce your brand instead of fighting it.",
+    icon: "culture",
   },
   {
-    step: "04",
-    stage: "Execute",
-    title: "Improve systemwide execution",
-    body: "Reduce friction and improve adherence to the operating model.",
-    icon: "execution"
-  }
+    title: "Higher Retention",
+    body: "Owners who fit the model stay longer and reinvest in the system.",
+    icon: "retention",
+  },
 ];
 ---
 
-<section class="benefits-section relative overflow-hidden border-b border-[#d7e5e1] bg-[#f4fbfa] py-9 md:py-10" aria-labelledby="benefits-title">
+<section class="relative overflow-hidden border-b border-[#d7e5e1] bg-[#f4fbfa] py-12 md:py-16" aria-labelledby="benefits-title">
   <div class="pointer-events-none absolute inset-0 opacity-45" aria-hidden="true">
     <div class="absolute -left-32 -top-52 size-[30rem] rounded-full border border-[#b8e2d8]"></div>
     <div class="absolute -left-20 -top-40 size-[21rem] rounded-full border border-[#c4e9e0]"></div>
@@ -39,73 +31,36 @@ const outcomes = [
   </div>
 
   <div class="section-shell relative z-10">
-    <header class="text-center">
-      <p class="section-eyebrow">What Better Alignment Makes Possible</p>
+    <header class="mx-auto max-w-3xl text-center">
+      <p class="section-eyebrow">The Alignment Advantage</p>
       <h2 id="benefits-title" class="font-display mt-2.5 text-[2.25rem] font-bold leading-[1.03] tracking-[-.03em] text-[#17233e] sm:text-[2.6rem] lg:text-[2.85rem]">
-        Better Fit at the Start.{" "}
-        <span class="text-[#087f65]">A Stronger System at Every Stage.</span>
+        Fewer Wrong Fits. Fewer Costly Exits.{" "}
+        <span class="text-[#087f65]">A Stronger System Every Year.</span>
       </h2>
-      <p class="mx-auto mt-3 max-w-4xl text-[15px] leading-relaxed text-[#4f5e69] md:text-base">
-        The right franchisee doesn&rsquo;t just make the award easier. They strengthen validation, respond better to support, and execute the model with greater consistency.
+      <p class="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-[#4f5e69] md:text-base">
+        When candidates are chosen on evidence instead of instinct, the benefits compound&mdash;through the award, the ramp-up, and every year of ownership that follows.
       </p>
     </header>
 
-    <div class="outcome-rail relative mt-7 grid gap-3 md:grid-cols-4 md:gap-0" aria-label="Award, validate, support, and execute">
-      <span class="rail-line absolute hidden h-px bg-[#9bcfc3] md:block" aria-hidden="true"></span>
-
-      {outcomes.map((outcome, index) => (
-        <article class="outcome relative grid grid-cols-[50px_minmax(0,1fr)] items-center gap-4 rounded-2xl border border-[#d8e7e3] bg-white/90 p-4 shadow-[0_10px_28px_rgba(23,55,62,.055)] md:block md:min-h-[156px] md:rounded-none md:border-y md:border-l-0 md:border-r md:bg-white/75 md:px-4 md:pb-3.5 md:pt-4 md:shadow-none first:md:rounded-l-2xl first:md:border-l last:md:rounded-r-2xl">
-          <div class="step-row contents md:flex md:items-center md:justify-between">
-            <div class="icon-wrap relative z-10 grid size-[50px] place-items-center rounded-xl border border-[#bde2da] bg-[#e2f5f0] text-[#087f65] md:size-10">
-              {outcome.icon === "award" && <svg viewBox="0 0 40 40"><path d="M20 4 24 8l6-.2.2 6L34 18l-3.8 4.2-.2 6-6-.2-4 4-4-4-6 .2-.2-6L6 18l3.8-4.2.2-6 6 .2 4-4Z"/><path d="m14 18 4 4 8-9"/></svg>}
-              {outcome.icon === "validation" && <svg viewBox="0 0 40 40"><circle cx="15" cy="13" r="5"/><circle cx="28" cy="12" r="4"/><path d="M5 33v-6c0-6 4-9 10-9s10 3 10 9v6m1-14c5 0 9 3 9 8v5"/></svg>}
-              {outcome.icon === "support" && <svg viewBox="0 0 40 40"><path d="M7 23v-4c0-8 6-14 13-14s13 6 13 14v4"/><path d="M9 19H6c-2 0-4 2-4 4v4c0 3 2 4 4 4h4V19Zm22 0h3c2 0 4 2 4 4v4c0 3-2 4-4 4h-4V19Zm-1 12c-2 3-5 4-9 4h-3"/></svg>}
-              {outcome.icon === "execution" && <svg viewBox="0 0 40 40"><path d="M5 34V24m10 10V18m10 16V11m10 23V5"/><path d="m5 16 9-5 9 2L35 4"/></svg>}
-            </div>
-            <span class="hidden text-[11px] font-bold tracking-[.16em] text-[#78928c] md:block">{outcome.step}</span>
+    <ul class="mx-auto mt-12 flex max-w-5xl flex-col divide-y divide-[#cfe6e0] md:mt-14 md:flex-row md:divide-x md:divide-y-0">
+      {benefits.map((benefit) => (
+        <li class="flex items-start gap-4 py-6 first:pt-0 last:pb-0 md:flex-1 md:flex-col md:items-center md:px-6 md:py-0 md:text-center">
+          <div class="grid size-11 shrink-0 place-items-center rounded-full bg-[#e2f5f0] text-[#087f65] [&_svg]:size-[22px] [&_svg]:fill-none [&_svg]:stroke-current [&_svg]:stroke-[2.2] [&_svg]:[stroke-linecap:round] [&_svg]:[stroke-linejoin:round]">
+            {benefit.icon === "fit" && <svg viewBox="0 0 32 32"><path d="M16 3 5 7v8c0 7 4.5 11.5 11 14 6.5-2.5 11-7 11-14V7Z"/><path d="m11 15.5 3.5 3.5L21 12"/></svg>}
+            {benefit.icon === "growth" && <svg viewBox="0 0 32 32"><path d="M4 27h24M6 27V19l7-3 6 4 8-11"/><path d="M22 9h6v6"/></svg>}
+            {benefit.icon === "culture" && <svg viewBox="0 0 32 32"><circle cx="12" cy="10" r="5"/><circle cx="23" cy="12" r="4"/><path d="M4 29v-4c0-5 3.5-8 8-8s8 3 8 8v4M22 29v-3c0-4 2.5-7 7-7"/></svg>}
+            {benefit.icon === "retention" && <svg viewBox="0 0 32 32"><path d="M27 12a11 11 0 1 0-1.6 8.4"/><path d="M27 5v7h-7"/></svg>}
           </div>
-
-          <div class="min-w-0 md:mt-2.5">
-            <p class="mb-1 text-[10px] font-bold uppercase leading-none tracking-[.18em] text-[#087f65]">{outcome.stage}</p>
-            <h3 class="font-display text-lg font-bold leading-[1.15] text-[#17233e] md:text-[19px]">{outcome.title}</h3>
-            <p class="mt-1.5 text-[13px] leading-[1.4] text-[#5f6d73]">{outcome.body}</p>
+          <div class="md:mt-4">
+            <h3 class="font-display text-lg font-bold leading-snug text-[#17233e]">{benefit.title}</h3>
+            <p class="mt-1.5 text-[13.5px] leading-[1.5] text-[#5f6d73] md:mx-auto md:max-w-[200px]">{benefit.body}</p>
           </div>
-
-          {index < outcomes.length - 1 && (
-            <span class="flow-arrow absolute -right-3 top-7 z-20 hidden size-6 place-items-center rounded-full border border-[#9bcfc3] bg-[#f4fbfa] text-sm font-bold text-[#087f65] md:grid" aria-hidden="true">&rarr;</span>
-          )}
-        </article>
+        </li>
       ))}
-    </div>
+    </ul>
+
+    <p class="mx-auto mt-12 max-w-2xl text-center font-display text-lg font-bold leading-snug text-[#17233e] md:mt-14 md:text-xl">
+      The strongest franchise systems don&rsquo;t leave franchisee fit to chance.
+    </p>
   </div>
 </section>
-
-<style>
-  .icon-wrap :global(svg) {
-    width: 27px;
-    height: 27px;
-    fill: none;
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 2;
-  }
-
-  @media (min-width: 768px) {
-    .rail-line {
-      top: 3rem;
-      right: 4rem;
-      left: 4rem;
-    }
-
-    .outcome {
-      transition: background-color .2s ease, transform .2s ease;
-    }
-
-    .outcome:hover {
-      z-index: 2;
-      background-color: white;
-      transform: translateY(-3px);
-    }
-  }
-</style>

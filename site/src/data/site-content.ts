@@ -225,7 +225,7 @@ interface Testimonial {
 
 export const testimonials: Testimonial[] = [
   {
-    "quote": "Zorakle Profiles offers greater insight into more strategically choosing a candidate because the assessment measures key categories with surgical accuracy. It also compares the candidate to so many of the important qualities possessed by the most successful franchisees in the system. I recommend investing the time to speak with Zorakle Profiles and discover how this valuable assessment tool can assist you and your company in finding, the right fit candidate for your system.",
+    "quote": "Zorakle Profiles measures key categories with surgical accuracy and compares candidates with the qualities of a system’s most successful franchisees, providing deeper insight for strategic candidate selection.",
     "name": "Jeffrey Polino",
     "company": "TAB",
     "type": "Franchisor",

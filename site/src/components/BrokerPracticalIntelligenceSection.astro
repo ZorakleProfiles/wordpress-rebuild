@@ -5,20 +5,42 @@ import spotonMatch from "../assets/spoton_match.png";
 
 const cards = [
   {
-    title: "Candidate Intelligence",
-    body: "Use the SpotOn! Profile to understand every client's fit, temperament, and business-owner potential.",
+    title: "SpotOn! Profile",
+    body: "Understand every client's fit, temperament, and business-owner potential with an objective, science-based read on who they are.",
     tone: "teal",
     icon: "candidate",
     image: spotOnProfileReport,
     imageAlt: "SpotOn! Profile candidate report"
   },
   {
-    title: "Match Intelligence",
-    body: "Use SpotOn! Match to compare clients against real franchise requirements and rank the best-fit brands.",
+    title: "SpotOn! Match",
+    body: "Compare clients against real franchise requirements and rank the best-fit brands in minutes.",
     tone: "orange",
     icon: "match",
     image: spotonMatch,
     imageAlt: "SpotOn! Match ranked brand results"
+  },
+  {
+    title: "Confidential Questionnaire",
+    body: "Get ahead of the hard conversations with a customizable questionnaire that surfaces net worth, liquidity, and background details before you invest more time.",
+    tone: "orange",
+    icon: "questionnaire",
+    details: [
+      "Runs alongside the assessment or as its own link",
+      "Simplified or comprehensive net worth calculator",
+      "Sections and questions you customize to your process"
+    ]
+  },
+  {
+    title: "Broker Branding",
+    body: "Every assessment link and report carries your logo and accent color, so clients see your practice at every step — not a vendor.",
+    tone: "teal",
+    icon: "branding",
+    details: [
+      "Your logo and colors on every candidate report",
+      "Consistent branding across assessment and CQ links",
+      "Reinforces your credibility in every client interaction"
+    ]
   }
 ];
 
@@ -32,10 +54,13 @@ const iconToneClasses = {
   <div class="section-shell">
     <header class="text-center">
       <p class="section-eyebrow">Practical Intelligence</p>
-      <h2 class="section-title text-center">Explore the Insight Behind Every Match.</h2>
+      <h2 class="section-title text-center">Explore the Tools Behind Every Client Relationship.</h2>
+      <p class="section-copy mx-auto max-w-2xl text-center">
+        Matching is just the start. SpotOn! Profile, the Confidential Questionnaire, and your own branding work together on every report your clients see.
+      </p>
     </header>
 
-    <div class="mx-auto mt-10 grid max-w-[720px] gap-5 md:mt-12 lg:max-w-[900px] lg:grid-cols-2">
+    <div class="mx-auto mt-10 grid max-w-[720px] gap-5 sm:grid-cols-2 md:mt-12 lg:max-w-[900px]">
       {cards.map((card) => (
         <article class="group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-[#e2ecea] bg-white/95 px-[18px] pb-[17px] pt-5 shadow-[0_13px_34px_rgba(25,55,70,0.07)] lg:min-h-[485px]">
           <div class="grid min-h-[100px] grid-cols-[66px_minmax(0,1fr)] items-center gap-3 sm:grid-cols-[82px_minmax(0,1fr)] sm:gap-4">
@@ -48,6 +73,8 @@ const iconToneClasses = {
             >
               {card.icon === "candidate" && <svg viewBox="0 0 48 48"><circle cx="24" cy="13" r="6"/><circle cx="10" cy="20" r="4"/><circle cx="38" cy="20" r="4"/><path d="M14 39v-7c0-7 4-11 10-11s10 4 10 11v7M3 38v-5c0-5 3-8 8-8h3M45 38v-5c0-5-3-8-8-8h-3"/></svg>}
               {card.icon === "match" && <svg viewBox="0 0 48 48"><circle cx="10" cy="24" r="6"/><circle cx="38" cy="24" r="6"/><path d="M18 24h12m0 0-5-5m5 5-5 5"/></svg>}
+              {card.icon === "questionnaire" && <svg viewBox="0 0 48 48"><rect x="10" y="7" width="28" height="37" rx="3"/><path d="M18 7V6a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v1"/><path d="M17 20h14M17 27h14M17 34h9"/></svg>}
+              {card.icon === "branding" && <svg viewBox="0 0 48 48"><path d="M6 23 23 6h13a6 6 0 0 1 6 6v13L25 42a3.5 3.5 0 0 1-5 0L6 28a3.5 3.5 0 0 1 0-5Z"/><circle cx="33" cy="15" r="3"/></svg>}
             </div>
             <div>
               <h3 class="font-display text-base font-bold leading-snug text-[#111827] sm:text-lg">{card.title}</h3>
@@ -55,16 +82,27 @@ const iconToneClasses = {
             </div>
           </div>
 
-          <div class="-mx-2 mb-2.5 mt-1.5 flex flex-1 items-end justify-center overflow-hidden rounded-xl bg-[#f8fbfa] lg:min-h-[286px]">
-            <Image
-              src={card.image}
-              alt={card.imageAlt}
-              loading="lazy"
-              widths={[420, 640, 880]}
-              sizes="(max-width: 620px) calc(100vw - 3.75rem), (max-width: 1050px) 650px, 44vw"
-              class="block aspect-[4/3] h-auto w-full object-cover object-center transition-transform duration-[280ms] group-hover:scale-[1.012] motion-reduce:transition-none"
-            />
-          </div>
+          {card.image ? (
+            <div class="-mx-2 mb-2.5 mt-1.5 flex flex-1 items-end justify-center overflow-hidden rounded-xl bg-[#f8fbfa] lg:min-h-[286px]">
+              <Image
+                src={card.image}
+                alt={card.imageAlt}
+                loading="lazy"
+                widths={[420, 640, 880]}
+                sizes="(max-width: 620px) calc(100vw - 3.75rem), (max-width: 1050px) 650px, 44vw"
+                class="block aspect-[4/3] h-auto w-full object-cover object-center transition-transform duration-[280ms] group-hover:scale-[1.012] motion-reduce:transition-none"
+              />
+            </div>
+          ) : (
+            <ul class="detail-list -mx-2 mb-2.5 mt-1.5 flex flex-1 flex-col justify-center gap-3 rounded-xl bg-[#f8fbfa] px-5 py-6 lg:min-h-[286px]">
+              {card.details?.map((detail) => (
+                <li class="flex items-start gap-2.5 text-sm leading-snug text-[#4a5568]">
+                  <svg viewBox="0 0 20 20" class="mt-0.5 size-[18px] shrink-0 text-[#00a88a]" aria-hidden="true"><path d="m4 10.5 4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>{detail}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </article>
       ))}
     </div>

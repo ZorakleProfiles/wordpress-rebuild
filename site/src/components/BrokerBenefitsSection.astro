@@ -1,10 +1,40 @@
 ---
 const pillars = [
-  { label: "Enhanced Engagement", icon: "engagement" },
-  { label: "Stronger Credibility", icon: "credibility" },
-  { label: "Added Client Value", icon: "value" },
-  { label: "Science-Based Matches", icon: "science" },
-  { label: "More Deals Closed", icon: "deals" }
+  {
+    label: "Enhanced Engagement",
+    body: "Turn first conversations into deeper discussions clients actually want to have.",
+    icon: "engagement",
+    color: "#0868c9",
+    background: "#e5f3fc"
+  },
+  {
+    label: "Stronger Credibility",
+    body: "Back every recommendation with objective, science-based evidence clients can trust.",
+    icon: "credibility",
+    color: "#4820be",
+    background: "#eee9ff"
+  },
+  {
+    label: "Added Client Value",
+    body: "Give clients a level of insight no other advisor offers.",
+    icon: "value",
+    color: "#c81e6a",
+    background: "#fdeaf1"
+  },
+  {
+    label: "Science-Based Matches",
+    body: "Rank real franchise fits against validated alignment science, not gut feel.",
+    icon: "science",
+    color: "#087f65",
+    background: "#dcf7ee"
+  },
+  {
+    label: "More Deals Closed",
+    body: "Move from interest to signed agreement with far less back-and-forth.",
+    icon: "deals",
+    color: "#f06a09",
+    background: "#fff1df"
+  }
 ];
 
 const outcomes = [
@@ -55,19 +85,20 @@ const outcomes = [
     </header>
 
     <ul
-      class="benefit-ribbon mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-x-4 gap-y-8 border-y border-[#cfe6e0] py-7 sm:grid-cols-3 md:mt-12 md:flex md:flex-nowrap md:items-start md:justify-between md:gap-0 md:py-8"
+      class="mx-auto mt-10 grid max-w-5xl grid-cols-2 gap-4 sm:grid-cols-3 md:mt-12 lg:grid-cols-5 lg:gap-5"
       aria-label="Key broker benefits"
     >
-      {pillars.map((pillar, index) => (
-        <li class:list={["flex flex-col items-center gap-2.5 text-center md:flex-1 md:px-3", index > 0 && "md:border-l md:border-[#cfe6e0]"]}>
-          <span class="grid size-12 place-items-center rounded-full bg-[#e2f5f0] text-[#087f65] shadow-[0_6px_14px_rgba(8,127,101,0.14)] md:size-[50px]">
+      {pillars.map((pillar) => (
+        <li class="benefit-card" style={`--accent:${pillar.color};--accent-bg:${pillar.background}`}>
+          <span class="benefit-card__icon" aria-hidden="true">
             {pillar.icon === "engagement" && <svg viewBox="0 0 32 32"><path d="M5 8h22a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H14l-5 4v-4H5a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2Z"/><path d="M10 14h12M10 18h8"/></svg>}
             {pillar.icon === "credibility" && <svg viewBox="0 0 32 32"><path d="M16 3 5 7v8c0 7 4.5 11.5 11 14 6.5-2.5 11-7 11-14V7Z"/><path d="m11 15.5 3.5 3.5L21 12"/></svg>}
             {pillar.icon === "value" && <svg viewBox="0 0 32 32"><path d="M9 5h14l6 8-13 15L3 13Z"/><path d="M3 13h26M12 5l-3 8 7 15M20 5l3 8-7 15"/></svg>}
             {pillar.icon === "science" && <svg viewBox="0 0 32 32"><circle cx="13" cy="13" r="8"/><path d="m19 19 9 9"/></svg>}
             {pillar.icon === "deals" && <svg viewBox="0 0 32 32"><path d="M4 27h24M8 27V18M15 27V11M22 27V15"/><path d="m6 15 8-7 5 4 9-8"/></svg>}
           </span>
-          <span class="text-[11px] font-bold uppercase leading-snug tracking-[.06em] text-[#1e2f43] sm:text-xs">{pillar.label}</span>
+          <h3 class="benefit-card__title">{pillar.label}</h3>
+          <p class="benefit-card__body">{pillar.body}</p>
         </li>
       ))}
     </ul>
@@ -110,14 +141,67 @@ const outcomes = [
 </section>
 
 <style>
-  .benefit-ribbon :global(svg) {
-    width: 21px;
-    height: 21px;
+  .benefit-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.65rem;
+    overflow: hidden;
+    border: 1px solid #dce9e6;
+    border-radius: 1.25rem;
+    background: #fff;
+    padding: 1.85rem 1.15rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 10px 26px rgba(23, 35, 62, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .benefit-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: var(--accent);
+  }
+
+  .benefit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(23, 35, 62, 0.14);
+  }
+
+  .benefit-card__icon {
+    display: grid;
+    width: 3.5rem;
+    height: 3.5rem;
+    place-items: center;
+    border-radius: 1rem;
+    background: var(--accent-bg);
+    color: var(--accent);
+  }
+
+  .benefit-card__icon svg {
+    width: 26px;
+    height: 26px;
     fill: none;
     stroke: currentColor;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 2.1;
+  }
+
+  .benefit-card__title {
+    font-family: "MontereyFLF", "Century Gothic", "Avenir Next", sans-serif;
+    font-size: 0.96rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #17233e;
+  }
+
+  .benefit-card__body {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: #56586a;
   }
 
   ol :global(svg) {

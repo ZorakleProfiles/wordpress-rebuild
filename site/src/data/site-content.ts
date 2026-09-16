@@ -50,13 +50,6 @@ export const partnerships = [
     linkUrl: "https://franchisebusinessreview.com"
   },
   {
-    shortName: "BAI",
-    name: "Business Alliance Incorporated",
-    description: "Business Alliance Inc. connects franchise buyers, consultants, brands, and suppliers through an established franchise brokerage network and a structured discovery process. Zorakle adds behavioral and values-based insight to that process, helping consultants move beyond surface-level qualifications to identify opportunities that better fit each candidate.",
-    linkName: "Learn more about BAI →",
-    linkUrl: "https://businessallianceinc.com"
-  },
-  {
     shortName: "FRANSERVE",
     name: "Franserve",
     description: "FranServe is a franchise consulting and expansion network that connects aspiring business owners with vetted opportunities while equipping independent consultants with training, systems, and ongoing support. Zorakle enhances that guided discovery process with predictive insights that help consultants and candidates evaluate alignment with greater clarity and confidence.",
@@ -90,7 +83,14 @@ export const partnerships = [
     description: "The Entrepreneur Authority is a network of experienced franchise professionals that guides prospective owners through a structured process of discovery, evaluation, and selection. Zorakle strengthens that process with objective insights into values, motivations, and business fit, helping candidates explore opportunities that align with both their goals and working style.",
     linkName: "Learn more about The Entrepreneur Authority →",
     linkUrl: "https://www.eAuth.com"
-  }
+  },
+  {
+    shortName: "AC",
+    name: "AC Inc Field Coach Experts",
+    description: "Business Alliance Inc. connects franchise buyers, consultants, brands, and suppliers through an established franchise brokerage network and a structured discovery process. Zorakle adds behavioral and values-based insight to that process, helping consultants move beyond surface-level qualifications to identify opportunities that better fit each candidate.",
+    linkName: "Learn more about BAI →",
+    linkUrl: "https://fieldcoachexperts.com"
+  },
 ];
 
 

@@ -6,7 +6,7 @@ import SiteFooter from "../components/SiteFooter.astro";
 import { partnerships } from "../data/site-content";
 import logoFba from "../assets/fba.webp";
 import logoFbr from "../assets/fbr-logo.webp";
-import logoBai from "../assets/bai-logo.webp";
+import logoAc from "../assets/ac.png";
 import logoIfa from "../assets/logo-ifa-grey.png";
 import logoIfpg from "../assets/ifpg.png";
 import logoFranserve from "../assets/franserve-logo.png";
@@ -17,7 +17,7 @@ import logoOyr from "../assets/oyr-logo.png";
 const partnerLogos = {
   FBA: logoFba,
   FBR: logoFbr,
-  BAI: logoBai,
+  AC: logoAc,
   IFA: logoIfa,
   IFPG: logoIfpg,
   FRANSERVE: logoFranserve,
@@ -28,7 +28,6 @@ const partnerLogos = {
 };
 
 const partnershipsWithLogos = [...partnerships]
-  .sort((a, b) => a.name.localeCompare(b.name, "en", { sensitivity: "base" }))
   .map((partner) => ({
     ...partner,
     logo: partnerLogos[partner.shortName as keyof typeof partnerLogos]

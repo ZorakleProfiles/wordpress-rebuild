@@ -4,9 +4,33 @@ import SiteHeader from "../../components/SiteHeader.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
 import FranchisorHero from "../../components/FranchisorHero.astro";
 import FranchisorBenefitsSection from "../../components/FranchisorBenefitsSection.astro";
-import FranchisorProofSection from "../../components/FranchisorProofSection.astro";
+import AlignmentLifecycle from "../../components/AlignmentLifecycle.astro";
+import WorkflowStepsSection from "../../components/WorkflowStepsSection.astro";
 import FranchisorPracticalIntelligenceSection from "../../components/FranchisorPracticalIntelligenceSection.astro";
 import FranchisorClosingCta from "../../components/FranchisorClosingCta.astro";
+import TestimonialGrid from "../../components/TestimonialGrid.astro";
+import FranchisorAlignmentActionSection from "../../components/FranchisorAlignmentActionSection.astro";
+
+const franchisorExplainerVideo =
+  "https://cdn.sanity.io/files/4kjxjblw/production/676d9e59bc7e318e2e1756be2b170d63faf3d3ca.mp4";
+
+const steps = [
+  {
+    title: "Build your benchmark.",
+    body:
+      "Audit your brand and assess top-performing franchisees to identify the values, behaviors, and operating traits connected to success in your system."
+  },
+  {
+    title: "Create your fit standard.",
+    body:
+      "Turn your benchmark data into a custom fit algorithm and SpotOn! Blueprint your development team can apply consistently."
+  },
+  {
+    title: "Evaluate every candidate.",
+    body:
+      "Use SpotOn! Profiles and Eclipse reports to see system alignment, compare candidates, and surface potential risk before you award."
+  }
+];
 ---
 
 <MainLayout
@@ -18,8 +42,9 @@ import FranchisorClosingCta from "../../components/FranchisorClosingCta.astro";
   <main>
     <FranchisorHero />
     <FranchisorBenefitsSection />
-    {/* FranchisorAlignmentActionSection hidden for now — see FranchisorProofSection for its replacement */}
-    <FranchisorProofSection />
+    <AlignmentLifecycle variant="franchisors" />
+    <!--<FranchisorAlignmentActionSection/>-->
+
     <FranchisorPracticalIntelligenceSection />
     <FranchisorClosingCta />
   </main>

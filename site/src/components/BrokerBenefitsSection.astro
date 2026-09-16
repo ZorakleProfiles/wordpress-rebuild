@@ -72,40 +72,40 @@ const outcomes = [
       ))}
     </ul>
 
-    <p class="mt-10 text-center text-[11px] font-bold uppercase tracking-[.22em] text-[#78928c] md:mt-12">How it comes together</p>
+    <!--<p class="mt-10 text-center text-[11px] font-bold uppercase tracking-[.22em] text-[#78928c] md:mt-12">How it comes together</p>-->
 
-    <div class="relative mt-6">
-      <span class="absolute left-[23px] top-1 bottom-1 w-px bg-[#a9d4c9] md:left-0 md:right-0 md:top-[27px] md:bottom-auto md:h-px md:w-auto" aria-hidden="true"></span>
+    <!--<div class="relative mt-6">-->
+    <!--  <span class="absolute left-[23px] top-1 bottom-1 w-px bg-[#a9d4c9] md:left-0 md:right-0 md:top-[27px] md:bottom-auto md:h-px md:w-auto" aria-hidden="true"></span>-->
 
-      <ol class="relative grid gap-9 md:grid-cols-4 md:gap-6">
-        {outcomes.map((outcome, index) => {
-          const isClose = outcome.icon === "close";
-          return (
-            <li class="relative flex gap-5 md:block">
-              <div
-                class:list={[
-                  "relative z-10 grid size-[54px] shrink-0 place-items-center rounded-full border-[5px] border-[#f4fbfa] shadow-[0_8px_18px_rgba(23,55,62,.16)]",
-                  isClose ? "bg-[#fd7730] text-white" : "bg-[#09a985] text-white"
-                ]}
-              >
-                {outcome.icon === "assess" && <svg viewBox="0 0 40 40"><circle cx="16" cy="14" r="6"/><path d="M6 34v-3c0-6 4-9 10-9s10 3 10 9v1"/><circle cx="28" cy="27" r="7"/><path d="m33 32 5 5"/></svg>}
-                {outcome.icon === "match" && <svg viewBox="0 0 40 40"><circle cx="9" cy="20" r="6"/><circle cx="31" cy="20" r="6"/><path d="M17 20h6m0 0-4-4m4 4-4 4"/></svg>}
-                {outcome.icon === "present" && <svg viewBox="0 0 40 40"><path d="M6 9h28a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H18l-8 7v-7H6a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2Z"/><path d="m11 19 5 5 11-12"/></svg>}
-                {outcome.icon === "close" && <svg viewBox="0 0 40 40"><path d="M9 4h16l7 7v25H9Z"/><path d="M25 4v7h7"/><path d="m14 22 5 5 10-11"/></svg>}
-              </div>
+    <!--  <ol class="relative grid gap-9 md:grid-cols-4 md:gap-6">-->
+    <!--    {outcomes.map((outcome, index) => {-->
+    <!--      const isClose = outcome.icon === "close";-->
+    <!--      return (-->
+    <!--        <li class="relative flex gap-5 md:block">-->
+    <!--          <div-->
+    <!--            class:list={[-->
+    <!--              "relative z-10 grid size-[54px] shrink-0 place-items-center rounded-full border-[5px] border-[#f4fbfa] shadow-[0_8px_18px_rgba(23,55,62,.16)]",-->
+    <!--              isClose ? "bg-[#fd7730] text-white" : "bg-[#09a985] text-white"-->
+    <!--            ]}-->
+    <!--          >-->
+    <!--            {outcome.icon === "assess" && <svg viewBox="0 0 40 40"><circle cx="16" cy="14" r="6"/><path d="M6 34v-3c0-6 4-9 10-9s10 3 10 9v1"/><circle cx="28" cy="27" r="7"/><path d="m33 32 5 5"/></svg>}-->
+    <!--            {outcome.icon === "match" && <svg viewBox="0 0 40 40"><circle cx="9" cy="20" r="6"/><circle cx="31" cy="20" r="6"/><path d="M17 20h6m0 0-4-4m4 4-4 4"/></svg>}-->
+    <!--            {outcome.icon === "present" && <svg viewBox="0 0 40 40"><path d="M6 9h28a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H18l-8 7v-7H6a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2Z"/><path d="m11 19 5 5 11-12"/></svg>}-->
+    <!--            {outcome.icon === "close" && <svg viewBox="0 0 40 40"><path d="M9 4h16l7 7v25H9Z"/><path d="M25 4v7h7"/><path d="m14 22 5 5 10-11"/></svg>}-->
+    <!--          </div>-->
 
-              <div class="min-w-0 pb-1 md:mt-3.5">
-                <p class:list={["text-[10.5px] font-bold uppercase leading-none tracking-[.2em]", isClose ? "text-[#c8580f]" : "text-[#087f65]"]}>
-                  {outcome.stage}
-                </p>
-                <h3 class="font-display mt-1.5 text-lg font-bold leading-snug text-[#17233e] md:text-[19px]">{outcome.title}</h3>
-                <p class="mt-1.5 max-w-[230px] text-[13px] leading-[1.45] text-[#5f6d73]">{outcome.body}</p>
-              </div>
-            </li>
-          );
-        })}
-      </ol>
-    </div>
+    <!--          <div class="min-w-0 pb-1 md:mt-3.5">-->
+    <!--            <p class:list={["text-[10.5px] font-bold uppercase leading-none tracking-[.2em]", isClose ? "text-[#c8580f]" : "text-[#087f65]"]}>-->
+    <!--              {outcome.stage}-->
+    <!--            </p>-->
+    <!--            <h3 class="font-display mt-1.5 text-lg font-bold leading-snug text-[#17233e] md:text-[19px]">{outcome.title}</h3>-->
+    <!--            <p class="mt-1.5 max-w-[230px] text-[13px] leading-[1.45] text-[#5f6d73]">{outcome.body}</p>-->
+    <!--          </div>-->
+    <!--        </li>-->
+    <!--      );-->
+    <!--    })}-->
+    <!--  </ol>-->
+    <!--</div>-->
   </div>
 </section>
 

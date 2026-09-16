@@ -1,66 +1,319 @@
 ---
-const benefits = [
-  {
-    title: "Fewer Wrong Fits",
-    body: "Screen out mismatches before they ever reach a signed agreement.",
-    icon: "fit",
-  },
-  {
-    title: "Faster Time to Profitability",
-    body: "New owners ramp up faster when the role plays to their strengths.",
-    icon: "growth",
-  },
-  {
-    title: "Stronger Culture Fit",
-    body: "Build a system of owners who reinforce your brand instead of fighting it.",
-    icon: "culture",
-  },
-  {
-    title: "Higher Retention",
-    body: "Owners who fit the model stay longer and reinvest in the system.",
-    icon: "retention",
-  },
+import { Image } from "astro:assets";
+import franchiseeOwner from "../assets/business-impact/franchisee-owner-isolated.png";
+import grovanaLogo from "../assets/business-impact/grovana-logo.png";
+
+const franchiseeOutcomes = [
+  { label: "Greater satisfaction", icon: "smile" },
+  { label: "Stronger performance", icon: "chart" },
+  { label: "Better system compliance", icon: "shield" },
+  { label: "More positive validation", icon: "people" },
+  { label: "Greater retention", icon: "leaf" }
+];
+
+const systemOutcomes = [
+  { label: "More focused training", icon: "training" },
+  { label: "More productive coaching", icon: "coaching" },
+  { label: "Fewer recurring support issues", icon: "support" },
+  { label: "Greater system consistency", icon: "target" },
+  { label: "Less operational firefighting", icon: "bolt" }
 ];
 ---
 
-<section class="relative overflow-hidden border-b border-[#d7e5e1] bg-[#f4fbfa] py-12 md:py-16" aria-labelledby="benefits-title">
-  <div class="pointer-events-none absolute inset-0 opacity-45" aria-hidden="true">
-    <div class="absolute -left-32 -top-52 size-[30rem] rounded-full border border-[#b8e2d8]"></div>
-    <div class="absolute -left-20 -top-40 size-[21rem] rounded-full border border-[#c4e9e0]"></div>
-    <div class="absolute -right-24 -bottom-52 size-[28rem] rounded-full border border-[#c4e9e0]"></div>
+<section class="relative overflow-hidden border-b border-[#d7e5e1] bg-white py-12 md:py-16" aria-labelledby="benefits-title">
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <div class="absolute -left-40 top-12 size-[25rem] rounded-full border border-[#d9efea]"></div>
+    <div class="absolute -left-24 top-28 size-[15rem] rounded-full border border-[#e5f4f1]"></div>
+    <div class="absolute -right-44 bottom-10 size-[28rem] rounded-full border border-[#d9efea]"></div>
+    <div class="absolute -right-24 bottom-28 size-[17rem] rounded-full border border-[#e5f4f1]"></div>
   </div>
 
   <div class="section-shell relative z-10">
-    <header class="mx-auto max-w-3xl text-center">
-      <p class="section-eyebrow">The Alignment Advantage</p>
-      <h2 id="benefits-title" class="font-display mt-2.5 text-[2.25rem] font-bold leading-[1.03] tracking-[-.03em] text-[#17233e] sm:text-[2.6rem] lg:text-[2.85rem]">
-        Fewer Wrong Fits. Fewer Costly Exits.{" "}
-        <span class="text-[#087f65]">A Stronger System Every Year.</span>
+    <header class="text-center">
+      <p class="section-eyebrow">The Business Impact of Better Alignment</p>
+      <h2 id="benefits-title" class="font-display mt-3 text-[2.25rem] font-bold leading-[1.04] tracking-[-.03em] text-[#17233e] sm:text-[2.65rem] lg:text-[3rem]">
+        Stronger Franchisees. <span class="text-[#087f65]">A Stronger Franchise System.</span>
       </h2>
-      <p class="mx-auto mt-3 max-w-2xl text-[15px] leading-relaxed text-[#4f5e69] md:text-base">
-        When candidates are chosen on evidence instead of instinct, the benefits compound&mdash;through the award, the ramp-up, and every year of ownership that follows.
+      <p class="mx-auto mt-4 max-w-3xl text-[15px] leading-relaxed text-[#4f5e69] md:text-lg">
+        Zorakle gives franchisors science-based insight to select better-aligned candidates&mdash;and the intelligence to onboard, coach, and support them more effectively.
       </p>
     </header>
 
-    <ul class="mx-auto mt-12 flex max-w-5xl flex-col divide-y divide-[#cfe6e0] md:mt-14 md:flex-row md:divide-x md:divide-y-0">
-      {benefits.map((benefit) => (
-        <li class="flex items-start gap-4 py-6 first:pt-0 last:pb-0 md:flex-1 md:flex-col md:items-center md:px-6 md:py-0 md:text-center">
-          <div class="grid size-11 shrink-0 place-items-center rounded-full bg-[#e2f5f0] text-[#087f65] [&_svg]:size-[22px] [&_svg]:fill-none [&_svg]:stroke-current [&_svg]:stroke-[2.2] [&_svg]:[stroke-linecap:round] [&_svg]:[stroke-linejoin:round]">
-            {benefit.icon === "fit" && <svg viewBox="0 0 32 32"><path d="M16 3 5 7v8c0 7 4.5 11.5 11 14 6.5-2.5 11-7 11-14V7Z"/><path d="m11 15.5 3.5 3.5L21 12"/></svg>}
-            {benefit.icon === "growth" && <svg viewBox="0 0 32 32"><path d="M4 27h24M6 27V19l7-3 6 4 8-11"/><path d="M22 9h6v6"/></svg>}
-            {benefit.icon === "culture" && <svg viewBox="0 0 32 32"><circle cx="12" cy="10" r="5"/><circle cx="23" cy="12" r="4"/><path d="M4 29v-4c0-5 3.5-8 8-8s8 3 8 8v4M22 29v-3c0-4 2.5-7 7-7"/></svg>}
-            {benefit.icon === "retention" && <svg viewBox="0 0 32 32"><path d="M27 12a11 11 0 1 0-1.6 8.4"/><path d="M27 5v7h-7"/></svg>}
+    <div class="relative mx-auto mt-10 grid max-w-[1120px] gap-5 lg:mt-12 lg:grid-cols-[minmax(0,1fr)_4.5rem_minmax(0,1fr)] lg:items-stretch lg:gap-0">
+      <article class="impact-card">
+        <div class="impact-card__header">
+          <div>
+            <p class="impact-card__label">Individual impact</p>
+            <h3 class="impact-card__title">
+              Stronger <br />Franchisee <br />Outcomes
+            </h3>
           </div>
-          <div class="md:mt-4">
-            <h3 class="font-display text-lg font-bold leading-snug text-[#17233e]">{benefit.title}</h3>
-            <p class="mt-1.5 text-[13.5px] leading-[1.5] text-[#5f6d73] md:mx-auto md:max-w-[200px]">{benefit.body}</p>
+          <div class="impact-card__visual impact-card__visual--franchisee">
+            <Image
+              src={franchiseeOwner}
+              alt="Illustration of a confident franchisee holding a tablet"
+              widths={[240, 360]}
+              sizes="(min-width: 1024px) 180px, 140px"
+              loading="lazy"
+            />
           </div>
-        </li>
-      ))}
-    </ul>
+        </div>
 
-    <p class="mx-auto mt-12 max-w-2xl text-center font-display text-lg font-bold leading-snug text-[#17233e] md:mt-14 md:text-xl">
-      The strongest franchise systems don&rsquo;t leave franchisee fit to chance.
-    </p>
+        <ul class="impact-list" aria-label="Benefits for franchisees">
+          {franchiseeOutcomes.map((outcome) => (
+            <li class="impact-list__item">
+              <span class="impact-list__icon" aria-hidden="true">
+                {outcome.icon === "smile" && <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11"/><path d="M11 13h.01M21 13h.01M11.5 19c1.5 2 3 3 4.5 3s3-1 4.5-3"/></svg>}
+                {outcome.icon === "chart" && <svg viewBox="0 0 32 32"><path d="M6 26V16h5v10M14 26V11h5v15M22 26V6h5v20M4 26h25"/></svg>}
+                {outcome.icon === "shield" && <svg viewBox="0 0 32 32"><path d="M16 3 6 7v7c0 7 4 11 10 15 6-4 10-8 10-15V7Z"/><path d="m11 15 3 3 7-7"/></svg>}
+                {outcome.icon === "people" && <svg viewBox="0 0 32 32"><circle cx="12" cy="10" r="4"/><circle cx="23" cy="12" r="3"/><path d="M4 27v-3c0-5 3-8 8-8s8 3 8 8v3M21 19c4 0 7 2 7 6v2"/></svg>}
+                {outcome.icon === "leaf" && <svg viewBox="0 0 32 32"><path d="M27 5C14 5 6 11 6 20c0 4 3 7 7 7 9 0 14-9 14-22Z"/><path d="M5 28c5-8 10-12 18-17"/></svg>}
+              </span>
+              <span>{outcome.label}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+
+      <div class="impact-connector" aria-hidden="true">
+        <span></span>
+        <div>
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M14 7l5 5-5 5"/></svg>
+        </div>
+        <span></span>
+      </div>
+
+      <article class="impact-card impact-card--system">
+        <div class="impact-card__header">
+          <div>
+            <p class="impact-card__label">Systemwide impact</p>
+            <h3 class="impact-card__title">
+              A More <br />Efficient Franchise <br />System
+            </h3>
+          </div>
+          <div class="impact-card__visual impact-card__visual--brand">
+            <Image
+              src={grovanaLogo}
+              alt="Grovana, a fictional healthy café franchise brand"
+              widths={[280, 420]}
+              sizes="(min-width: 1024px) 190px, 150px"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <ul class="impact-list" aria-label="Benefits for the franchise system">
+          {systemOutcomes.map((outcome) => (
+            <li class="impact-list__item">
+              <span class="impact-list__icon" aria-hidden="true">
+                {outcome.icon === "training" && <svg viewBox="0 0 32 32"><path d="m3 11 13-7 13 7-13 7Z"/><path d="M8 15v7c5 4 11 4 16 0v-7M29 12v8"/></svg>}
+                {outcome.icon === "coaching" && <svg viewBox="0 0 32 32"><circle cx="10" cy="9" r="4"/><circle cx="22" cy="9" r="4"/><path d="M3 27v-4c0-5 3-8 7-8s7 3 7 8v4M16 27v-4c0-5 2-8 6-8s7 3 7 8v4"/></svg>}
+                {outcome.icon === "support" && <svg viewBox="0 0 32 32"><path d="M16 5a11 11 0 1 0 11 11"/><path d="M16 9v7l5 3M22 5h5v5"/></svg>}
+                {outcome.icon === "target" && <svg viewBox="0 0 32 32"><circle cx="14" cy="18" r="10"/><circle cx="14" cy="18" r="4"/><path d="m14 18 8-8M21 5h6v6"/></svg>}
+                {outcome.icon === "bolt" && <svg viewBox="0 0 32 32"><path d="m18 3-9 15h7l-2 11 9-16h-7Z"/></svg>}
+              </span>
+              <span>{outcome.label}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </div>
+
+    <div class="mx-auto mt-8 flex max-w-3xl items-start justify-center gap-3 rounded-2xl border border-[#cfe7e1] bg-[#eff9f6] px-5 py-4 text-center sm:items-center md:mt-10 md:px-8">
+      <svg class="mt-0.5 size-5 shrink-0 text-[#087f65] sm:mt-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M4 17 10 11l4 4 6-8" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M15 7h5v5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <p class="font-display text-[15px] font-bold leading-snug text-[#17233e] md:text-lg">
+        Better alignment strengthens franchisee performance, protects the system, and makes sustainable growth easier.
+      </p>
+    </div>
   </div>
 </section>
+
+<style>
+  .impact-card {
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid #dce9e6;
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 18px 48px rgba(23, 35, 62, 0.08);
+  }
+
+  .impact-card__header {
+    position: relative;
+    display: flex;
+    min-height: 11rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid #dce9e6;
+    background: linear-gradient(135deg, #eaf8f4 0%, #f7fcfb 100%);
+    padding: 1.5rem;
+  }
+
+  .impact-card--system .impact-card__header {
+    background: linear-gradient(135deg, #edf4f8 0%, #f8fbfc 100%);
+  }
+
+  .impact-card__label {
+    margin-bottom: 0.45rem;
+    color: #087f65;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .impact-card__title {
+    max-width: 19rem;
+    color: #17233e;
+    font-family: "MontereyFLF", "Century Gothic", "Avenir Next", sans-serif;
+    font-size: clamp(1.45rem, 2.5vw, 1.85rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+  }
+
+  .impact-card__visual {
+    display: flex;
+    width: clamp(7.5rem, 28vw, 10.5rem);
+    height: 9.5rem;
+    flex: 0 0 auto;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .impact-card__visual img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .impact-card__visual--franchisee {
+    align-self: stretch;
+  }
+
+  .impact-card__visual--franchisee img {
+    object-position: center bottom;
+  }
+
+  .impact-card__visual--brand {
+    width: clamp(8.5rem, 30vw, 11.5rem);
+  }
+
+  .impact-card__visual--brand img {
+    filter: drop-shadow(0 10px 18px rgba(23, 35, 62, 0.12));
+  }
+
+  .impact-list {
+    padding: 0.4rem 1.5rem 0.75rem;
+  }
+
+  .impact-list__item {
+    display: flex;
+    min-height: 3.7rem;
+    align-items: center;
+    gap: 0.9rem;
+    border-bottom: 1px solid #e5eeec;
+    color: #334155;
+    font-size: 0.94rem;
+    font-weight: 600;
+    line-height: 1.35;
+    padding: 0.7rem 0;
+  }
+
+  .impact-list__item:last-child {
+    border-bottom: 0;
+  }
+
+  .impact-list__icon {
+    display: grid;
+    width: 2.3rem;
+    height: 2.3rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 9999px;
+    background: #e4f6f1;
+    color: #087f65;
+  }
+
+  .impact-list__icon svg {
+    width: 1.35rem;
+    height: 1.35rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+  }
+
+  .impact-connector {
+    display: flex;
+    height: 3.5rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .impact-connector > span {
+    width: 2rem;
+    height: 1px;
+    background: #8bcdbd;
+  }
+
+  .impact-connector > div {
+    display: grid;
+    width: 2.7rem;
+    height: 2.7rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 9999px;
+    background: #087f65;
+    color: #fff;
+    box-shadow: 0 9px 22px rgba(8, 127, 101, 0.24);
+    transform: rotate(90deg);
+  }
+
+  .impact-connector svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+  }
+
+  @media (min-width: 640px) {
+    .impact-card__header,
+    .impact-list {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
+    .impact-card__header {
+      min-height: 12.25rem;
+    }
+
+    .impact-card__visual {
+      height: 10.75rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .impact-connector {
+      height: auto;
+    }
+
+    .impact-connector > span {
+      width: 0.9rem;
+    }
+
+    .impact-connector > div {
+      transform: none;
+    }
+  }
+</style>

@@ -1,23 +1,43 @@
 ---
-const lifecycleSteps = [
+interface Props {
+  variant?: "home" | "franchisors";
+}
+
+const { variant = "home" } = Astro.props;
+const isFranchisorPage = variant === "franchisors";
+
+const homeLifecycleSteps = [
   { label: "Recruit", detail: "Attract people aligned with your brand.", icon: "recruit", color: "#0a8a67", background: "#dcf7ee" },
   { label: "Select", detail: "Identify right-fit candidates with greater confidence.", icon: "select", color: "#0868c9", background: "#e5f3fc" },
   { label: "Onboard", detail: "Understand how each franchisee learns and operates.", icon: "onboard", color: "#f06a09", background: "#fff1df" },
   { label: "Coach", detail: "Tailor communication, support, and development.", icon: "coach", color: "#4820be", background: "#eee9ff" },
   { label: "Strengthen", detail: "Improve performance, relationships, and system health.", icon: "strengthen", color: "#0a8a67", background: "#e6f7e9" }
 ];
+
+const franchisorLifecycleSteps = [
+  { label: "Recruit", detail: "Focus development efforts on prospects whose values, motivations, and goals align with your brand.", icon: "recruit", color: "#0a8a67", background: "#dcf7ee" },
+  { label: "Select", detail: "Compare candidates against your success profile and make more consistent, evidence-informed award decisions.", icon: "select", color: "#0868c9", background: "#e5f3fc" },
+  { label: "Onboard", detail: "Give new franchisees a more relevant start by understanding how they learn, communicate, and put plans into action.", icon: "onboard", color: "#f06a09", background: "#fff1df" },
+  { label: "Coach", detail: "Equip field teams to adapt communication and support to the needs of each franchisee—not a one-size-fits-all model.", icon: "coach", color: "#4820be", background: "#eee9ff" },
+  { label: "Strengthen", detail: "Turn individual insight into stronger performance, healthier relationships, better validation, and systemwide growth.", icon: "strengthen", color: "#0a8a67", background: "#e6f7e9" }
+];
+
+const lifecycleSteps = isFranchisorPage ? franchisorLifecycleSteps : homeLifecycleSteps;
 ---
 
-<section class="home-section overflow-hidden bg-[#fbfdfd]">
+<section class="home-section overflow-hidden bg-[#f4fbfa]" aria-labelledby={isFranchisorPage ? "franchisor-lifecycle-title" : "lifecycle-title"}>
   <div class="section-shell">
     <div class="text-center">
-      <h2 class="section-title !mt-0">Alignment Intelligence at Every Stage</h2>
-      <p class="mx-auto mt-4 max-w-3xl text-[#56586a] md:text-lg">
-        From the first conversation to long-term growth, Zorakle helps you attract, select, onboard, coach, and strengthen franchisees who are built to succeed.
+      {isFranchisorPage && <p class="section-eyebrow">Beyond the award decision</p>}
+      <h2 id={isFranchisorPage ? "franchisor-lifecycle-title" : "lifecycle-title"} class:list={["section-title", "!mt-0", { "md:!mt-3": isFranchisorPage }]}>Alignment Intelligence at Every Stage</h2>
+      <p class="mx-auto mt-4 max-w-4xl text-[#56586a] md:text-lg">
+        {isFranchisorPage
+          ? "Candidate fit is only the beginning. Zorakle gives your development, training, and operations teams a shared understanding of each franchisee—so the insight behind a better award continues creating value throughout the relationship."
+          : "From the first conversation to long-term growth, Zorakle helps you attract, select, onboard, coach, and strengthen franchisees who are built to succeed."}
       </p>
     </div>
 
-    <div class="lifecycle-flow mt-10 md:mt-12">
+    <div class:list={["lifecycle-flow mt-10 md:mt-12", isFranchisorPage ? "lifecycle-flow--roomy" : "lifecycle-flow--standard"]}>
       {lifecycleSteps.map((step, index) => (
         <Fragment>
           <article class="text-center">
@@ -58,7 +78,7 @@ const lifecycleSteps = [
               )}
             </div>
             <h3 class="mt-4 text-2xl font-bold text-[#111827]">{step.label}</h3>
-            <p class="mx-auto mt-2 max-w-[14rem] text-base leading-snug text-[#5f6d84] md:text-lg">{step.detail}</p>
+            <p class:list={["mx-auto mt-2 text-base leading-snug text-[#5f6d84]", isFranchisorPage ? "max-w-[19rem] md:text-base" : "max-w-[14rem] md:text-lg"]}>{step.detail}</p>
           </article>
 
           {index < lifecycleSteps.length - 1 && (
@@ -72,6 +92,11 @@ const lifecycleSteps = [
 
     <div class="mx-auto mt-6 max-w-4xl border-t border-[#cdd5da] pt-4">
       <p class="text-center text-xs font-medium uppercase tracking-[0.35em] text-[#8a97aa]">People aligned. Franchises stronger.</p>
+      {isFranchisorPage && (
+        <p class="mx-auto mt-4 max-w-3xl text-center text-sm leading-relaxed text-[#5f6d84] md:text-base">
+          One source of alignment intelligence helps every team make better people decisions, deliver more personalized support, and build a franchise system where the right people can thrive.
+        </p>
+      )}
     </div>
   </div>
 </section>
@@ -90,13 +115,29 @@ const lifecycleSteps = [
   }
 
   @media (min-width: 1024px) {
-    .lifecycle-flow {
+    .lifecycle-flow--standard {
       grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr) 4rem minmax(0, 1fr) 4rem minmax(0, 1fr) 4rem minmax(0, 1fr);
       align-items: start;
       gap: 0.6rem;
     }
 
-    .lifecycle-arrow {
+    .lifecycle-flow--standard .lifecycle-arrow {
+      align-self: start;
+      margin-top: 4.4rem;
+      transform: none;
+    }
+  }
+
+  /* Franchisor copy runs longer, so the horizontal five-across layout waits
+     for a wider viewport than the homepage's to give each step room. */
+  @media (min-width: 1280px) {
+    .lifecycle-flow--roomy {
+      grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr) 4rem minmax(0, 1fr) 4rem minmax(0, 1fr) 4rem minmax(0, 1fr);
+      align-items: start;
+      gap: 0.6rem;
+    }
+
+    .lifecycle-flow--roomy .lifecycle-arrow {
       align-self: start;
       margin-top: 4.4rem;
       transform: none;

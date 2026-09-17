@@ -20,7 +20,7 @@ const systemOutcomes = [
 ];
 ---
 
-<section class="relative overflow-hidden border-b border-[#d7e5e1] bg-white py-12 md:py-16" aria-labelledby="benefits-title">
+<section class="home-section relative overflow-hidden border-b border-[#d7e5e1] bg-white" aria-labelledby="benefits-title">
   <div class="pointer-events-none absolute inset-0" aria-hidden="true">
     <div class="absolute -left-40 top-12 size-[25rem] rounded-full border border-[#d9efea]"></div>
     <div class="absolute -left-24 top-28 size-[15rem] rounded-full border border-[#e5f4f1]"></div>
@@ -31,10 +31,10 @@ const systemOutcomes = [
   <div class="section-shell relative z-10">
     <header class="text-center">
       <p class="section-eyebrow">The Business Impact of Better Alignment</p>
-      <h2 id="benefits-title" class="font-display mt-3 text-[2.25rem] font-bold leading-[1.04] tracking-[-.03em] text-[#17233e] sm:text-[2.65rem] lg:text-[3rem]">
+      <h2 id="benefits-title" class="section-title">
         Stronger Franchisees. <span class="text-[#087f65]">A Stronger Franchise System.</span>
       </h2>
-      <p class="mx-auto mt-4 max-w-3xl text-[15px] leading-relaxed text-[#4f5e69] md:text-lg">
+      <p class="section-copy mx-auto max-w-3xl text-center">
         Zorakle gives franchisors science-based insight to select better-aligned candidates&mdash;and the intelligence to onboard, coach, and support them more effectively.
       </p>
     </header>
@@ -43,7 +43,7 @@ const systemOutcomes = [
       <article class="impact-card">
         <div class="impact-card__header">
           <div>
-            <p class="impact-card__label">Individual impact</p>
+            <p class="mb-1.5 text-xs font-bold uppercase leading-tight tracking-[0.13em] text-[#087f65]">Individual impact</p>
             <h3 class="impact-card__title">
               Stronger <br />Franchisee <br />Outcomes
             </h3>
@@ -61,7 +61,7 @@ const systemOutcomes = [
 
         <ul class="impact-list" aria-label="Benefits for franchisees">
           {franchiseeOutcomes.map((outcome) => (
-            <li class="impact-list__item">
+            <li class="impact-list__item text-base font-semibold">
               <span class="impact-list__icon" aria-hidden="true">
                 {outcome.icon === "smile" && <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11"/><path d="M11 13h.01M21 13h.01M11.5 19c1.5 2 3 3 4.5 3s3-1 4.5-3"/></svg>}
                 {outcome.icon === "chart" && <svg viewBox="0 0 32 32"><path d="M6 26V16h5v10M14 26V11h5v15M22 26V6h5v20M4 26h25"/></svg>}
@@ -86,7 +86,7 @@ const systemOutcomes = [
       <article class="impact-card impact-card--system">
         <div class="impact-card__header">
           <div>
-            <p class="impact-card__label">Systemwide impact</p>
+            <p class="mb-1.5 text-xs font-bold uppercase leading-tight tracking-[0.13em] text-[#087f65]">Systemwide impact</p>
             <h3 class="impact-card__title">
               A More <br />Efficient Franchise <br />System
             </h3>
@@ -104,7 +104,7 @@ const systemOutcomes = [
 
         <ul class="impact-list" aria-label="Benefits for the franchise system">
           {systemOutcomes.map((outcome) => (
-            <li class="impact-list__item">
+            <li class="impact-list__item text-base font-semibold">
               <span class="impact-list__icon" aria-hidden="true">
                 {outcome.icon === "training" && <svg viewBox="0 0 32 32"><path d="m3 11 13-7 13 7-13 7Z"/><path d="M8 15v7c5 4 11 4 16 0v-7M29 12v8"/></svg>}
                 {outcome.icon === "coaching" && <svg viewBox="0 0 32 32"><circle cx="10" cy="9" r="4"/><circle cx="22" cy="9" r="4"/><path d="M3 27v-4c0-5 3-8 7-8s7 3 7 8v4M16 27v-4c0-5 2-8 6-8s7 3 7 8v4"/></svg>}
@@ -145,16 +145,6 @@ const systemOutcomes = [
 
   .impact-card--system .impact-card__header {
     background: linear-gradient(135deg, #edf4f8 0%, #f8fbfc 100%);
-  }
-
-  .impact-card__label {
-    margin-bottom: 0.45rem;
-    color: #087f65;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.13em;
-    line-height: 1.3;
-    text-transform: uppercase;
   }
 
   .impact-card__title {
@@ -210,8 +200,6 @@ const systemOutcomes = [
     gap: 0.9rem;
     border-bottom: 1px solid #e5eeec;
     color: #334155;
-    font-size: 0.94rem;
-    font-weight: 600;
     line-height: 1.35;
     padding: 0.7rem 0;
   }

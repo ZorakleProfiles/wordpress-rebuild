@@ -1,5 +1,7 @@
 ---
 import { Image } from "astro:assets";
+import brokerBranding from "../assets/broker-branding.webp";
+import confidentialQuestionnaire from "../assets/confidential-questionnaire.webp";
 import spotOnProfileReport from "../assets/spoton.png";
 import spotonMatch from "../assets/spoton_match.png";
 
@@ -38,7 +40,8 @@ const features = [
     body: "A customizable questionnaire that surfaces net worth, liquidity, and background details before you invest more time.",
     tone: "orange",
     icon: "questionnaire",
-    placeholder: "Screenshot preview — Confidential Questionnaire intake form with net worth calculator and customizable sections",
+    image: confidentialQuestionnaire,
+    imageAlt: "Confidential Questionnaire settings with customizable sections, question counts, and status controls",
     details: [
       "Runs alongside the assessment or as its own link",
       "Simplified or comprehensive net worth calculator",
@@ -51,10 +54,11 @@ const features = [
     body: "Every assessment link and report carries your logo and accent color, so clients see your practice at every step — not a vendor.",
     tone: "teal",
     icon: "branding",
-    placeholder: "Screenshot preview — candidate report and assessment link shown with a broker's own logo and accent color",
+    image: brokerBranding,
+    imageAlt: "Broker branding settings alongside a client assessment customized with the broker's logo and accent color",
     details: [
       "Your logo and colors on every candidate report",
-      "Consistent branding across assessment and CQ links",
+      "Consistent branding across assessment and Confidential Questionnaire links",
       "Reinforces your credibility in every client interaction"
     ]
   }
@@ -76,9 +80,9 @@ const toneClasses = {
       </p>
     </header>
 
-    <div class="mx-auto mt-12 flex max-w-5xl flex-col gap-16 md:mt-16 md:gap-20">
+    <div class="mt-12 flex flex-col gap-16 md:mt-16 md:gap-20">
       {features.map((feature, index) => (
-        <article class:list={["grid items-center gap-8 md:grid-cols-2 md:gap-12", index % 2 === 1 && "md:[&>*:first-child]:order-2"]}>
+        <article class:list={["grid gap-8 md:grid-cols-2 md:gap-12", index % 2 === 1 && "md:[&>*:first-child]:order-2"]}>
           <div class="relative">
             <div class="overflow-hidden rounded-2xl border border-[#e2ecea] bg-white shadow-[0_18px_44px_rgba(25,55,70,0.1)]">
               {feature.image ? (
@@ -89,7 +93,10 @@ const toneClasses = {
                     loading="lazy"
                     widths={[420, 640, 880]}
                     sizes="(max-width: 768px) calc(100vw - 3.75rem), 46vw"
-                    class="block h-full w-full object-contain p-5"
+                    class:list={[
+                      "block h-full w-full object-contain",
+                      feature.icon === "questionnaire" || feature.icon === "branding" ? "p-1 sm:p-2" : "p-5"
+                    ]}
                   />
                 </div>
               ) : (
@@ -98,30 +105,18 @@ const toneClasses = {
                     {feature.icon === "questionnaire" && <svg viewBox="0 0 48 48" class="size-7 fill-none stroke-current [stroke-linecap:round] [stroke-linejoin:round] [stroke-width:2.6]"><rect x="10" y="7" width="28" height="37" rx="3"/><path d="M18 7V6a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v1"/><path d="M17 20h14M17 27h14M17 34h9"/></svg>}
                     {feature.icon === "branding" && <svg viewBox="0 0 48 48" class="size-7 fill-none stroke-current [stroke-linecap:round] [stroke-linejoin:round] [stroke-width:2.6]"><path d="M6 23 23 6h13a6 6 0 0 1 6 6v13L25 42a3.5 3.5 0 0 1-5 0L6 28a3.5 3.5 0 0 1 0-5Z"/><circle cx="33" cy="15" r="3"/></svg>}
                   </span>
-                  <p class="text-[13px] font-medium italic leading-snug text-[#7c8894]">{feature.placeholder}</p>
-                  <span class="rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#9aa5ad] shadow-[0_2px_6px_rgba(23,35,62,0.06)]">Image coming soon</span>
+                  <p class="text-sm font-medium italic leading-snug text-[#7c8894]">{feature.placeholder}</p>
+                  <span class="rounded-full bg-white px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-[#9aa5ad] shadow-[0_2px_6px_rgba(23,35,62,0.06)]">Image coming soon</span>
                 </div>
               )}
             </div>
           </div>
 
           <div>
-            <div
-              class:list={[
-                "flex size-12 items-center justify-center rounded-full [&_svg]:size-6 [&_svg]:fill-none [&_svg]:stroke-current [&_svg]:[stroke-linecap:round] [&_svg]:[stroke-linejoin:round] [&_svg]:[stroke-width:2.8]",
-                toneClasses[feature.tone].icon
-              ]}
-              aria-hidden="true"
-            >
-              {feature.icon === "candidate" && <svg viewBox="0 0 48 48"><circle cx="24" cy="13" r="6"/><circle cx="10" cy="20" r="4"/><circle cx="38" cy="20" r="4"/><path d="M14 39v-7c0-7 4-11 10-11s10 4 10 11v7M3 38v-5c0-5 3-8 8-8h3M45 38v-5c0-5-3-8-8-8h-3"/></svg>}
-              {feature.icon === "match" && <svg viewBox="0 0 48 48"><circle cx="10" cy="24" r="6"/><circle cx="38" cy="24" r="6"/><path d="M18 24h12m0 0-5-5m5 5-5 5"/></svg>}
-              {feature.icon === "questionnaire" && <svg viewBox="0 0 48 48"><rect x="10" y="7" width="28" height="37" rx="3"/><path d="M18 7V6a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v1"/><path d="M17 20h14M17 27h14M17 34h9"/></svg>}
-              {feature.icon === "branding" && <svg viewBox="0 0 48 48"><path d="M6 23 23 6h13a6 6 0 0 1 6 6v13L25 42a3.5 3.5 0 0 1-5 0L6 28a3.5 3.5 0 0 1 0-5Z"/><circle cx="33" cy="15" r="3"/></svg>}
-            </div>
 
-            <p class:list={["mt-4 text-[13px] font-bold uppercase tracking-[0.14em]", toneClasses[feature.tone].label]}>{feature.label}</p>
+            <p class:list={["text-sm font-bold uppercase tracking-[0.14em]", toneClasses[feature.tone].label]}>{feature.label}</p>
             <h3 class="font-display mt-2 text-2xl font-bold leading-tight text-[#17233e] sm:text-[1.75rem]">{feature.title}</h3>
-            <p class="mt-3 text-[15px] leading-relaxed text-[#56586a]">{feature.body}</p>
+            <p class="mt-3 text-base leading-relaxed text-[#56586a]">{feature.body}</p>
 
             <ul class="mt-5 flex flex-col gap-3">
               {feature.details.map((detail) => (
@@ -140,7 +135,7 @@ const toneClasses = {
       <span class="h-px w-[72px] bg-[#8790ad] max-[620px]:w-7" aria-hidden="true"></span>
       <a
         href="/request-reports"
-        class="inline-flex min-h-11 items-center border-b border-[#35466e] pb-1.5 text-[13px] font-extrabold uppercase tracking-[0.12em] text-[#35466e] transition hover:text-[#0a9f86] max-[620px]:text-[11px]"
+        class="inline-flex min-h-11 items-center border-b border-[#35466e] pb-1.5 text-sm font-extrabold uppercase tracking-[0.12em] text-[#35466e] transition hover:text-[#0a9f86]"
       >
         Get Sample Reports <b class="ml-[15px] text-lg font-medium" aria-hidden="true">→</b>
       </a>

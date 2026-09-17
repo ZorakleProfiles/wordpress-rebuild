@@ -30,9 +30,9 @@ function getBlogLastmodMap() {
 /** Assign a crawl priority from the URL shape. */
 function priorityForPath(pathname) {
   if (pathname === "/") return 1.0;
-  if (/^\/(solutions\/|pricing\/?$|sciences\/?$|about\/?$)/.test(pathname)) return 0.8;
+  if (/^\/(solutions\/|pricing\/?$)/.test(pathname)) return 0.8;
   if (/\/page\/\d+\/?$/.test(pathname)) return 0.3;
-  if (/^\/(news|podcasts|webinars|sciences|support)/.test(pathname)) return 0.6;
+  if (/^\/(news|podcasts|webinars|support)/.test(pathname)) return 0.6;
   return 0.5;
 }
 

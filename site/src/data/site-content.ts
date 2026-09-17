@@ -157,9 +157,7 @@ export const footer = {
     { href: "/solutions/brokers", label: "For Brokers" },
     { href: "/pricing", label: "Pricing" },
     { href: "/news", label: "News" },
-    { href: "/sciences", label: "The Sciences" },
     { href: "/support", label: "Support" },
-    { href: "/about", label: "About" },
     { href: "/schedule", label: "Book a Demo" },
     { href: "PORTAL_LOGIN", label: "Client Login" }
   ],

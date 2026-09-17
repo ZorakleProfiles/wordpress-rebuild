@@ -19,6 +19,7 @@ import spotOnProfileReport from "../assets/spoton.png";
 import eclipseReport from "../assets/eclipse.png";
 import marketingBlueprintReport from "../assets/marketing_blueprint.png";
 import coachingInsightReport from "../assets/business_builder.png";
+import heroOgImage from "../assets/home-franchise-fit-hero.png";
 
 const whatYouGet = [
   {
@@ -116,8 +117,10 @@ const jsonLd = JSON.stringify({
 ---
 
 <MainLayout
-  title="Zorakle | Franchisee Assessment Software for Franchisors"
-  description="Zorakle helps franchisors award better-fitting franchisees. The SpotOn! assessment scores candidate fit and performance potential using seven validated sciences."
+  title="Franchisee Fit & Alignment Software | Zorakle"
+  description="Zorakle helps franchisors award better-fitting franchisees, scoring candidate fit and performance potential with seven validated behavioral sciences."
+  ogImage={heroOgImage.src}
+  ogImageAlt="A franchisor reviewing candidate fit reports on a laptop"
 >
   <script type="application/ld+json" slot="head" set:html={jsonLd} />
   <SiteHeader />

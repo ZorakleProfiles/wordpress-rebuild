@@ -23,11 +23,10 @@ const videoButtonClass =
       class="h-full w-full object-cover object-[68%_center] lg:object-center"
       priority={true}
     />
-    <div class="absolute inset-0 bg-[#eef7f4]/85 sm:bg-[#eef7f4]/72 lg:bg-transparent"></div>
   </div>
 
   <div class="section-shell relative z-10 flex items-center py-10 sm:py-12 lg:min-h-[min(680px,calc(100svh-104px))] lg:py-8">
-    <div class="max-w-[600px] lg:rounded-3xl lg:border lg:border-white/80 lg:bg-[#eef7f4]/95 lg:p-5 lg:shadow-[0_18px_50px_rgba(23,35,62,0.10)] xl:p-6">
+    <div class="max-w-[620px] rounded-3xl border border-white/80 bg-[#eef7f4]/94 p-6 shadow-[0_18px_50px_rgba(23,35,62,0.12)] backdrop-blur-[2px] sm:p-8 lg:p-9">
       <p class="font-display text-sm font-bold uppercase tracking-[0.16em] text-[#087f65] sm:text-base">
         For Franchisors
       </p>
@@ -38,7 +37,7 @@ const videoButtonClass =
         Zorakle helps you identify candidates who fit your culture, operating model, and expectations&mdash;and gives your team the insight to help them succeed long after the agreement is signed.
       </p>
       <div class="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-        <a class="btn-primary gap-2" href="/pricing">Sign Up Now <span aria-hidden="true">&rarr;</span></a>
+        <a class="btn-primary gap-2" target="_blank" rel="noopener noreferrer" href="https://www.zorakle.net/assessment-portal/welcome/leadership">Take the Assessment</a>
         <VideoModalButton
           videoSrc={explainerVideo}
           label="Watch the 5-Minute Explainer"

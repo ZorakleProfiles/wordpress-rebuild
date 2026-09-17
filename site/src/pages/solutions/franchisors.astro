@@ -10,6 +10,7 @@ import FranchisorPracticalIntelligenceSection from "../../components/FranchisorP
 import FranchisorClosingCta from "../../components/FranchisorClosingCta.astro";
 import TestimonialGrid from "../../components/TestimonialGrid.astro";
 import FranchisorAlignmentActionSection from "../../components/FranchisorAlignmentActionSection.astro";
+import heroOgImage from "../../assets/franchisor-hero-alignment-v2.png";
 
 const franchisorExplainerVideo =
   "https://cdn.sanity.io/files/4kjxjblw/production/676d9e59bc7e318e2e1756be2b170d63faf3d3ca.mp4";
@@ -31,12 +32,25 @@ const steps = [
       "Use SpotOn! Profiles and Eclipse reports to see system alignment, compare candidates, and surface potential risk before you award."
   }
 ];
+
+const siteHref = Astro.site?.href ?? "https://www.zorakleprofiles.com/";
+const breadcrumbJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: siteHref },
+    { "@type": "ListItem", position: 2, name: "Solutions for Franchisors", item: new URL("/solutions/franchisors/", siteHref).href }
+  ]
+});
 ---
 
 <MainLayout
   title="Franchisee Selection & Assessment Tools for Franchisors | Zorakle"
   description="Build a stronger franchise system with objective insight into candidate alignment, validation, support needs, and execution fit."
+  ogImage={heroOgImage.src}
+  ogImageAlt="A franchisor discussing candidate alignment in a meeting"
 >
+  <script type="application/ld+json" slot="head" set:html={breadcrumbJsonLd} />
   <SiteHeader ctaLabel="Book a Consultation" />
 
   <main>

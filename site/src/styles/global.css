@@ -9,32 +9,37 @@
 
 
 
-html,
-body {
-  margin: 0;
-  background: var(--color-bg);
-  color: var(--color-body);
-  font-family: "Century Gothic", "Avenir Next", Avenir, "Segoe UI", sans-serif;
-}
-
 :root {
   --color-text-strong: #22252a;
   --color-text-body: #3b3e47;
   --color-text-muted: #56586a;
   --color-link-teal: #087f65;
   --color-link-orange: #a8420c;
+  --color-bg: #ffffff;
+  --color-body: var(--color-text-body);
+  --color-heading: var(--color-text-strong);
 }
 
-h1,
-h2,
-h3,
-h4 {
-  color: var(--color-heading);
-  line-height: 1.1;
-}
+@layer base {
+  html,
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-body);
+    font-family: "Century Gothic", "Avenir Next", Avenir, "Segoe UI", sans-serif;
+  }
 
-p {
-  line-height: 1.6;
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-heading);
+    line-height: 1.1;
+  }
+
+  p {
+    line-height: 1.6;
+  }
 }
 
 .font-display {

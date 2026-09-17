@@ -23,6 +23,7 @@ const expandedModifier = expanded ? "is-expanded" : "";
 
 <article class:list={["testimonial-card", typeModifier, variantModifier, expandedModifier, className]} data-index={dataIndex}>
 
+  {/* Purely decorative background glyph (aria-hidden, no informational content) — exempt from text-contrast requirements like the eyebrow accent bar. */}
   {variant === "showcase" && <span class="testimonial-quote-mark" aria-hidden="true">“</span>}
 
   <div class="testimonial-card-head">

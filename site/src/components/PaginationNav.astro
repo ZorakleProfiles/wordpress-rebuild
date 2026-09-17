@@ -36,12 +36,12 @@ for (const page of visiblePages) {
           Previous
         </a>
       ) : (
-        <span class="rounded-md border border-[#e5e8ef] px-3 py-1.5 text-[#8b8f99]">Previous</span>
+        <span class="rounded-md border border-[#e5e8ef] px-3 py-1.5 text-[#6f727a]">Previous</span>
       )}
 
       {pageItems.map((item) =>
         item.type === "gap" ? (
-          <span key={item.value} class="px-2 text-[#8b8f99]">...</span>
+          <span key={item.value} class="px-2 text-[#6f727a]">...</span>
         ) : item.value === currentPage ? (
           <span key={`page-${item.value}`} class="rounded-md border border-[#fd7730] bg-[#fff2eb] px-3 py-1.5 text-[#a8420c]">
             {item.value}
@@ -62,7 +62,7 @@ for (const page of visiblePages) {
           Next
         </a>
       ) : (
-        <span class="rounded-md border border-[#e5e8ef] px-3 py-1.5 text-[#8b8f99]">Next</span>
+        <span class="rounded-md border border-[#e5e8ef] px-3 py-1.5 text-[#6f727a]">Next</span>
       )}
     </nav>
   )

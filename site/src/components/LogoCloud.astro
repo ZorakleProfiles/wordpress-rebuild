@@ -55,11 +55,47 @@ for (const [path, image] of Object.entries(imageModules)) {
   imagesByFilename[path.split('/').pop() ?? ""] = image;
 }
 
+type LogoLimits = {
+  desktop?: [number, number];
+  mobile?: [number, number];
+};
+
+const logoLimits: Record<string, LogoLimits> = {
+  "4ever-young": { desktop: [184, 84], mobile: [128, 62] },
+  "house-of-colour-v2": { desktop: [216, 76], mobile: [152, 56] },
+  "wow-1-day-painting": { desktop: [184, 84], mobile: [128, 62] },
+  "scooters-coffee": { desktop: [184, 84], mobile: [128, 62] },
+  "united-water-restoration": { desktop: [184, 84], mobile: [128, 62] },
+  "ar-homes-v2": { desktop: [200, 76], mobile: [140, 56] },
+  "servicemaster-v2": { desktop: [208, 76], mobile: [144, 56] },
+  "office-pride": { desktop: [160, 76], mobile: [112, 56] },
+  "milex-mr-transmission": { desktop: [164, 76], mobile: [116, 56] },
+  "squeegee-squad": { desktop: [152, 64], mobile: [108, 48] }
+};
+
+function containedSize(width: number, height: number, limits: [number, number]) {
+  const scale = Math.min(limits[0] / width, limits[1] / height);
+  return {
+    width: Math.round(width * scale * 100) / 100,
+    height: Math.round(height * scale * 100) / 100
+  };
+}
+
 // Keep both halves of the marquee identical and in the exact specified order.
-const images = franchisorLogoOrder.map(([filename, alt]) => ({
-  image: imagesByFilename[filename],
-  alt
-}));
+const images = franchisorLogoOrder.map(([filename, alt]) => {
+  const image = imagesByFilename[filename];
+  const key = filename.replace(/\.[^.]+$/, "");
+  const limits = logoLimits[key] ?? {};
+  const desktop = containedSize(image.default.width, image.default.height, limits.desktop ?? [184, 76]);
+  const mobile = containedSize(image.default.width, image.default.height, limits.mobile ?? [128, 56]);
+
+  return {
+    image,
+    alt,
+    key,
+    style: `--logo-width:${desktop.width}px;--logo-render-height:${desktop.height}px;--logo-mobile-width:${mobile.width}px;--logo-mobile-height:${mobile.height}px`
+  };
+});
 ---
 
 <section class={sectionClass} aria-labelledby="franchisor-logo-heading">
@@ -80,10 +116,10 @@ const images = franchisorLogoOrder.map(([filename, alt]) => ({
 
           {/* Main group for the loop */}
           <div class="logo-group">
-            {images.map(({ image: img, alt }: any) => (
-                <div class="logo-item flex items-center justify-center">
-                  <div class="flex items-center justify-center p-3 w-full h-full">
-                    <Image src={img.default} alt={alt} class="max-w-full max-h-full object-contain" />
+            {images.map(({ image: img, alt, key, style }: any) => (
+                <div class="logo-item" data-logo={key} style={style}>
+                  <div class="logo-frame">
+                    <Image src={img.default} alt={alt} class="max-w-full max-h-full object-contain" loading="eager" decoding="sync" />
                   </div>
                 </div>
             ))}
@@ -91,10 +127,10 @@ const images = franchisorLogoOrder.map(([filename, alt]) => ({
 
           {/* Identical cloned group for infinite animation tracking */}
           <div class="logo-group" aria-hidden="true">
-            {images.map(({ image: img }: any) => (
-                <div class="logo-item flex items-center justify-center">
-                  <div class="flex items-center justify-center p-3 w-full h-full">
-                    <Image src={img.default} alt="" class="max-w-full max-h-full object-contain" />
+            {images.map(({ image: img, key, style }: any) => (
+                <div class="logo-item" data-logo={key} style={style}>
+                  <div class="logo-frame">
+                    <Image src={img.default} alt="" class="max-w-full max-h-full object-contain" loading="eager" decoding="sync" />
                   </div>
                 </div>
             ))}
@@ -129,8 +165,7 @@ const images = franchisorLogoOrder.map(([filename, alt]) => ({
 
 <style is:global>
   .logo-ticker {
-    --logo-gap: 1rem;
-    --logo-width: 13rem;
+    --logo-gap: 2rem;
     --logo-height: 6.25rem;
     --ticker-duration: 72s;
     overflow: hidden;
@@ -153,6 +188,7 @@ const images = franchisorLogoOrder.map(([filename, alt]) => ({
 
   .logo-ticker .logo-group {
     display: flex;
+    align-items: center;
     gap: var(--logo-gap);
     padding-inline-end: var(--logo-gap);
     flex-shrink: 0;
@@ -161,7 +197,24 @@ const images = franchisorLogoOrder.map(([filename, alt]) => ({
   .logo-ticker .logo-item {
     width: var(--logo-width);
     height: var(--logo-height);
-    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+  }
+
+  .logo-ticker .logo-frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-ticker .logo-frame img {
+    display: block;
+    width: var(--logo-width);
+    height: var(--logo-render-height);
+    max-width: none;
+    max-height: none;
   }
 
   @keyframes ticker-scroll {
@@ -182,10 +235,18 @@ const images = franchisorLogoOrder.map(([filename, alt]) => ({
 
   @media (max-width: 639px) {
     .logo-ticker {
-      --logo-gap: 0.75rem;
-      --logo-width: 9rem;
+      --logo-gap: 1.5rem;
       --logo-height: 5rem;
       --ticker-duration: 54s;
+    }
+
+    .logo-ticker .logo-item,
+    .logo-ticker .logo-frame img {
+      width: var(--logo-mobile-width);
+    }
+
+    .logo-ticker .logo-frame img {
+      height: var(--logo-mobile-height);
     }
   }
 

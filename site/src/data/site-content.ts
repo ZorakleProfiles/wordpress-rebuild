@@ -135,7 +135,7 @@ export const differenceCards = [
 ];
 
 export const footer = {
-  tagline: "Predictive franchise alignment for franchisors and brokers.",
+  tagline: "An end-to-end franchise intelligence platform driving data-backed recruitment, onboarding, and ongoing operational support.",
   address: "8782 S. Park Road, Rogers, AR 72756",
   email: "support@zorakle.net",
   // "{year}" is replaced with the current year at build time.
@@ -144,7 +144,7 @@ export const footer = {
   newsletter: {
     anchorId: "newsletter",
     heading: "Franchise Alignment Insights",
-    description: "Insights for selecting, supporting, and developing stronger franchisees.",
+    description: "Insights to recruit, select, onboard, train, coach and develop stronger franchisees.",
     hubspot: {
       portalId: "2403148",
       formId: "70034db0-b57a-46ee-9e57-589cb90c70a0",

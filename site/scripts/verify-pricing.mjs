@@ -38,7 +38,12 @@ assert.equal(getPartnerPromotion("ifpg", "broker")?.trialDays, 90);
 assert.equal(getPartnerPromotion("ifpg", "franchisor"), undefined);
 assert.equal(getPartnerPromotion("franserve", "franchisor")?.key, "coupon");
 assert.equal(getPlan("broker", undefined, "paygo")?.key, "broker_pay_as_you_go");
-assert.equal(getPlan("franchisor", "emerging", "paygo")?.amountCents, 6900);
-assert.equal(getPlan("franchisor", "established", "paygo")?.amountCents, 6900);
+assert.equal(getPlan("broker", undefined, "paygo")?.amountCents, 4900);
+for (const tier of ["emerging", "established"]) {
+  const plan = getPlan("franchisor", tier, "paygo");
+  assert.equal(plan?.amountCents, 7900);
+  assert.equal(plan?.key, `${tier}_pay_as_you_go_79`);
+  assert.equal(getPartnerRateCents(plan, franservePromotion), 6320);
+}
 
 console.log(`Pricing catalog verified: ${plans.length} plans`);

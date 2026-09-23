@@ -1,3 +1,4 @@
+import { getPodcastLinks, type PodcastLinks } from "./podcast";
 import { sanityClient } from "./sanity-client";
 import { createImageUrlBuilder } from "@sanity/image-url";
 import { defineQuery } from "groq";
@@ -36,7 +37,7 @@ interface SanityPost {
   wordpressUrl?: string;
 }
 
-export interface BlogPost {
+export interface BlogPost extends PodcastLinks {
   slug: string;
   title: string;
   excerpt: string;
@@ -156,7 +157,8 @@ function mapSanityPost(post: SanityPost, index: number): BlogPost {
     categorySlugs,
     featuredImageUrl: toImageUrl(post.mainImage),
     featuredImageAlt: post.mainImage?.alt,
-    legacySlug: toLegacySlug(post.wordpressUrl)
+    legacySlug: toLegacySlug(post.wordpressUrl),
+    ...getPodcastLinks(body)
   };
 }
 
@@ -216,7 +218,7 @@ export async function getPostsByCategory(category: string): Promise<BlogPost[]> 
   return postsPromise;
 }
 
-export interface BlogSearchEntry {
+export interface BlogSearchEntry extends PodcastLinks {
   slug: string;
   title: string;
   excerpt: string;
@@ -246,7 +248,8 @@ export async function getCategorySearchIndex(category: string): Promise<BlogSear
       excerpt: post.excerpt,
       dateLabel: Number.isNaN(parsedDate.valueOf()) ? "" : searchDateFormatter.format(parsedDate),
       imageUrl: post.featuredImageUrl,
-      imageAlt: post.featuredImageAlt || post.title
+      imageAlt: post.featuredImageAlt || post.title,
+      ...(normalizeCategoryTerm(category) === "podcasts" ? { watchUrl: post.watchUrl, listenUrl: post.listenUrl, spotifyUrl: post.spotifyUrl, appleUrl: post.appleUrl } : {})
     };
   });
 }

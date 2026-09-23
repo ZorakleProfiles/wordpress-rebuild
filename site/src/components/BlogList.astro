@@ -3,6 +3,8 @@ import MainLayout from "../layouts/MainLayout.astro";
 import SiteHeader from "./SiteHeader.astro";
 import SiteFooter from "./SiteFooter.astro";
 import BlogCard from "./BlogCard.astro";
+import PodcastCard from "./PodcastCard.astro";
+import "../styles/podcast-cards.css";
 import PaginationNav from "./PaginationNav.astro";
 import type { BlogPost } from "../lib/blog.ts";
 
@@ -13,6 +15,7 @@ interface Props {
   emptyStateMessage: string;
   basePath: string;
   postBasePath?: string;
+  cardVariant?: "article" | "podcast";
   posts: BlogPost[];
   currentPage: number;
   totalPages: number;
@@ -35,6 +38,7 @@ const {
   emptyStateMessage,
   basePath,
   postBasePath = basePath,
+  cardVariant = "article",
   posts,
   currentPage,
   totalPages,
@@ -103,8 +107,9 @@ const hasSearchAside = Astro.slots.has("search-aside");
         <div id="blog-default">
           {
             posts.length > 0 ? (
-              <div class="mt-6 rounded-xl bg-white px-6 py-2 shadow-sm md:px-8">
+              <div class={cardVariant === "podcast" ? "podcast-grid mt-6" : "mt-6 rounded-xl bg-white px-6 py-2 shadow-sm md:px-8"}>
                 {posts.map((post, index) => (
+                  cardVariant === "podcast" ? <PodcastCard post={post} /> :
                   <BlogCard post={post} basePath={postBasePath} isLast={index === posts.length - 1} />
                 ))}
               </div>
@@ -120,7 +125,7 @@ const hasSearchAside = Astro.slots.has("search-aside");
           searchEndpoint && (
             <div id="blog-results" hidden>
               <p id="blog-results-count" class="mt-6 text-sm font-semibold text-[#3b3e47]" aria-live="polite" />
-              <div id="blog-results-list" class="mt-4 rounded-xl bg-white px-6 py-2 shadow-sm md:px-8" />
+              <div id="blog-results-list" data-card-variant={cardVariant} class={cardVariant === "podcast" ? "podcast-grid mt-4" : "mt-4 rounded-xl bg-white px-6 py-2 shadow-sm md:px-8"} />
               <p id="blog-results-empty" class="mt-4 rounded-xl border border-[#d1d4dd] bg-white p-8 text-[#3b3e47]" hidden>
                 No posts matched your search.
               </p>
@@ -136,7 +141,8 @@ const hasSearchAside = Astro.slots.has("search-aside");
 
 {
   searchEndpoint && (
-    <script is:inline>
+    <script>
+      import { podcastCardHtml } from "../lib/podcast-card";
       (function () {
         var wrap = document.querySelector("[data-blog-search]");
         var input = document.getElementById("blog-search");
@@ -158,6 +164,7 @@ const hasSearchAside = Astro.slots.has("search-aside");
         }
 
         function cardHtml(entry, isLast) {
+          if (list.getAttribute("data-card-variant") === "podcast") return podcastCardHtml(entry);
           var url = "/" + entry.slug;
           var thumb = entry.imageUrl
             ? '<img src="' + esc(entry.imageUrl) + '" alt="' + esc(entry.imageAlt) +

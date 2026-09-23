@@ -47,18 +47,6 @@ export const tiers: ReadonlyArray<{
   setupFeeCents: number;
 }> = [
   {
-    key: "match-only",
-    name: "SpotOn! Match Only",
-    segment: "ANY SYSTEM SIZE",
-    description: "For systems that only need matching for broker- or consultant-referred candidates. We audit your brand and build your blueprint and matching algorithm.",
-    features: [
-      "Access SpotOn! referrals sent by brokers and consultants",
-      "No assessment links or reports",
-      "No setup fee or commitment",
-    ],
-    setupFeeCents: 0,
-  },
-  {
     key: "emerging",
     name: "Emerging Franchisor",
     segment: "UNDER 30 FRANCHISEES",
@@ -82,11 +70,23 @@ export const tiers: ReadonlyArray<{
     ],
     setupFeeCents: 350000,
   },
+  {
+    key: "match-only",
+    name: "SpotOn! Match Only",
+    segment: "ANY SYSTEM SIZE",
+    description: "For systems that only need matching for broker- or consultant-referred candidates. We audit your brand and build your blueprint and matching algorithm.",
+    features: [
+      "Access SpotOn! referrals sent by brokers and consultants",
+      "No assessment links or reports",
+      "No setup fee or commitment",
+    ],
+    setupFeeCents: 0,
+  },
 ];
 
 export const billingOptions: ReadonlyArray<{ key: BillingKey; name: string }> = [
-  { key: "monthly", name: "Monthly" },
-  { key: "annual", name: "Annual" },
+  { key: "monthly", name: "Monthly Unlimited" },
+  { key: "annual", name: "Annual Unlimited" },
   { key: "paygo", name: "Pay as you go" },
 ];
 

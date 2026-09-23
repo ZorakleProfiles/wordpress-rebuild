@@ -14,6 +14,7 @@ const pageData = await getPaginatedPostsByCategory("podcasts", 1, PODCAST_ARCHIV
   emptyStateMessage="No podcast posts were found."
   basePath="/podcasts"
   postBasePath=""
+  cardVariant="podcast"
   posts={pageData.posts}
   currentPage={pageData.page}
   totalPages={pageData.totalPages}

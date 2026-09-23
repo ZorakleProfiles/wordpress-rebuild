@@ -1,0 +1,22 @@
+.podcast-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+.podcast-grid[hidden] { display: none; }
+@media (min-width: 640px) { .podcast-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .podcast-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.podcast-card { min-width: 0; display: flex; flex-direction: column; padding: .75rem; border: 1px solid #e2e5ec; border-radius: 1rem; background: white; box-shadow: 0 3px 15px #22252a05; }
+.podcast-card__image { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; border-radius: .5rem; background: #eef4f2; }
+.podcast-card__image img { width: 100%; height: 100%; object-fit: cover; }
+.podcast-card__placeholder { height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem; gap: 1rem; color: #087f65; font-weight: 600; }
+.podcast-card__placeholder > svg { width: 2rem; height: 2rem; }
+.podcast-card__body { display: flex; flex: 1; flex-direction: column; padding: 1rem .5rem .5rem; }
+.podcast-card__label { margin: 0 0 .5rem; color: #087f65; font-size: .7rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+.podcast-card__title { margin: 0; font-family: inherit; font-size: 1.25rem; font-weight: 650; line-height: 1.3; overflow-wrap: anywhere; }
+.podcast-card__title a:hover { color: #a8420c; }
+.podcast-card__date { margin: .6rem 0 0; color: #56586a; font-size: .875rem; }
+.podcast-card__excerpt { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; margin: .75rem 0 1.25rem; color: #56586a; font-size: .9375rem; line-height: 1.6; }
+.podcast-card__actions { margin-top: auto; padding-top: 1rem; border-top: 1px solid #eef0f4; }
+.podcast-card__listen-label { margin: 0 0 .5rem; color: #56586a; font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+.podcast-card__platforms { display: flex; flex-wrap: wrap; gap: .5rem; }
+.podcast-card__platform { display: inline-flex; align-items: center; justify-content: center; gap: .35rem; min-height: 44px; padding: .5rem .6rem; border: 1px solid #e2e5ec; border-radius: .5rem; background: #fff; color: #3b3e47; font-size: .75rem; font-weight: 600; white-space: nowrap; }
+.podcast-card__platform svg { width: 1rem; height: 1rem; flex-shrink: 0; color: #a8420c; }
+.podcast-card__platform:hover { background: #fff4ed; border-color: #fd7730; color: #a8420c; }
+.podcast-card a:focus-visible { outline: 3px solid #087f65; outline-offset: 4px; }

@@ -1,0 +1,15 @@
+---
+import type { BlogPost } from "../lib/blog";
+import { podcastCardHtml } from "../lib/podcast-card";
+interface Props { post: BlogPost; }
+const { post } = Astro.props;
+const date = new Date(post.publishedAt);
+const html = podcastCardHtml({
+  slug: post.slug, title: post.title, excerpt: post.excerpt,
+  dateLabel: Number.isNaN(date.valueOf()) ? "" : new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric" }).format(date),
+  imageUrl: post.featuredImageUrl, imageAlt: post.featuredImageAlt || post.title,
+  watchUrl: post.watchUrl, listenUrl: post.listenUrl,
+  spotifyUrl: post.spotifyUrl, appleUrl: post.appleUrl
+});
+---
+<Fragment set:html={html} />

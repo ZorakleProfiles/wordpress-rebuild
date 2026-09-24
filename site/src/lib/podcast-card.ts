@@ -16,7 +16,7 @@ const platformIcons: Record<string, string> = {
 
 /** Shared markup keeps paginated cards and search results identical. */
 export function podcastCardHtml(entry: BlogSearchEntry): string {
-  const postUrl = "/" + entry.slug.replace("wordpress-import/", "");
+  const postUrl = "/" + entry.slug.replace("wordpress-import/", "") + "/";
   const thumbnail = entry.imageUrl
     ? `<img src="${esc(entry.imageUrl)}" alt="${esc(entry.imageAlt)}" loading="lazy" decoding="async" width="640" height="360" />`
     : `<span class="podcast-card__placeholder">${headphones}<span>Podcast episode</span></span>`;

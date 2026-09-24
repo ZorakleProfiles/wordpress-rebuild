@@ -165,7 +165,7 @@ const hasSearchAside = Astro.slots.has("search-aside");
 
         function cardHtml(entry, isLast) {
           if (list.getAttribute("data-card-variant") === "podcast") return podcastCardHtml(entry);
-          var url = "/" + entry.slug;
+          var url = "/" + entry.slug + "/";
           var thumb = entry.imageUrl
             ? '<img src="' + esc(entry.imageUrl) + '" alt="' + esc(entry.imageAlt) +
               '" class="h-35 w-full object-cover" loading="lazy" decoding="async" />'

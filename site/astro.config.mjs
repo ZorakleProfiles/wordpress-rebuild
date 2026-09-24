@@ -8,6 +8,10 @@ import { getAllPosts } from "./src/lib/blog.ts";
 const SITE_ORIGIN = "https://www.zorakleprofiles.com";
 const BUILD_DATE = new Date();
 
+// Partner pricing pages render with noindex (see PricingPage.astro); listing
+// them in the sitemap would contradict that.
+const NOINDEX_PATHS = new Set(["/fba/", "/franserve/", "/ifpg/"]);
+
 // Map of blog-post pathname -> last-modified date, built once and reused by
 // the sitemap `serialize` hook so every post URL carries an accurate <lastmod>.
 let blogLastmodPromise;
@@ -69,7 +73,8 @@ export default defineConfig({
         const { pathname } = new URL(page);
         return (
           pathname !== "/preview" &&
-          !pathname.startsWith("/preview/")
+          !pathname.startsWith("/preview/") &&
+          !NOINDEX_PATHS.has(pathname.replace(/\/?$/, "/"))
         );
       },
       serialize: async (item) => {

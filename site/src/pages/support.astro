@@ -68,7 +68,7 @@ const supportArticleTypes = [...new Set(supportArticles.map((article) => article
             <div class="grid gap-6 md:grid-cols-2" data-support-results>
               {supportArticles.map((article) => (
                 <a
-                  href={`/support/${article.slug}`}
+                  href={`/support/${article.slug}/`}
                   class="group rounded-2xl border border-[#d1d4dd] bg-white p-6 transition hover:border-[#09cc9c] hover:shadow-lg"
                   data-support-card
                   data-support-type={article.type}

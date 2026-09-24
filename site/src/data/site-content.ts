@@ -3,19 +3,19 @@ export const navLinks = [
   {
     label: "Solutions",
     items: [
-      { href: "/solutions/franchisors", label: "For Franchisors" },
-      { href: "/solutions/brokers", label: "For Brokers" }
+      { href: "/solutions/franchisors/", label: "For Franchisors" },
+      { href: "/solutions/brokers/", label: "For Brokers" }
     ]
   },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/pricing/", label: "Pricing" },
   {
     label: "Resources",
     items: [
-      { href: "/news", label: "News" },
-      { href: "/partnerships", label: "Partnerships" },
-      { href: "/podcasts", label: "Podcasts" },
-      { href: "/support", label: "Support" },
-      { href: "/webinars", label: "Webinars" },
+      { href: "/news/", label: "News" },
+      { href: "/partnerships/", label: "Partnerships" },
+      { href: "/podcasts/", label: "Podcasts" },
+      { href: "/support/", label: "Support" },
+      { href: "/webinars/", label: "Webinars" },
     ]
   },
 ];
@@ -101,7 +101,7 @@ export const pathCards = [
     description:
       "Predict performance before you sign the agreement. Cut bad-fit awards, raise validation scores, and protect your Item 19.",
     cta: "Solutions for Franchisors →",
-    href: "/solutions/franchisors"
+    href: "/solutions/franchisors/"
   },
   {
     role: "Broker",
@@ -109,7 +109,7 @@ export const pathCards = [
     description:
       "Stop guessing which brands fit your client. Match with data, recommend confidently, and close more deals.",
     cta: "Solutions for Brokers →",
-    href: "/solutions/brokers"
+    href: "/solutions/brokers/"
   }
 ];
 
@@ -153,18 +153,18 @@ export const footer = {
   },
 
   links: [
-    { href: "/solutions/franchisors", label: "For Franchisors" },
-    { href: "/solutions/brokers", label: "For Brokers" },
-    { href: "/pricing", label: "Pricing" },
-    { href: "/news", label: "News" },
-    { href: "/support", label: "Support" },
-    { href: "/schedule", label: "Book a Demo" },
+    { href: "/solutions/franchisors/", label: "For Franchisors" },
+    { href: "/solutions/brokers/", label: "For Brokers" },
+    { href: "/pricing/", label: "Pricing" },
+    { href: "/news/", label: "News" },
+    { href: "/support/", label: "Support" },
+    { href: "/schedule/", label: "Book a Demo" },
     { href: "PORTAL_LOGIN", label: "Client Login" }
   ],
 
   legal: [
-    { href: "/privacy-policy", label: "Privacy Policy" },
-    { href: "/terms", label: "Terms" }
+    { href: "/privacy-policy/", label: "Privacy Policy" },
+    { href: "/terms/", label: "Terms" }
   ],
 
   // Rendered only when populated. Verify the URL before launch.

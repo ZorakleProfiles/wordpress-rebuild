@@ -5,7 +5,9 @@ import SiteFooter from "../components/SiteFooter.astro";
 import { PortableText } from "astro-portabletext";
 import PortableTextImage from "../components/PortableTextImage.astro";
 import PortableTextEmbed from "../components/PortableTextEmbed.astro";
-import { getAllPosts, type BlogPost } from "../lib/blog.ts";
+import { getAllPosts, getPostsByCategory, type BlogPost } from "../lib/blog.ts";
+import { getEmbeddedYouTubeId } from "../lib/podcast.ts";
+import { franchiseWomanPodcast } from "../data/site-content";
 
 export async function getStaticPaths() {
   /**
@@ -97,6 +99,60 @@ const pageDescription = post.excerpt || `Read ${post.title} on Zorakle Blog.`;
 const canonicalUrl = primaryUrl;
 const orgId = `${Astro.site?.href}#organization`;
 
+// Same category matching as the archive routes, so a post gets podcast
+// markup exactly when it is listed on /podcasts.
+const isPodcast = (await getPostsByCategory("podcasts")).some((item) => item.slug === post.slug);
+const isWebinar = (await getPostsByCategory("webinars & training")).some((item) => item.slug === post.slug);
+const section = isPodcast
+  ? { name: "Podcasts", path: "/podcasts/" }
+  : isWebinar
+    ? { name: "Webinars", path: "/webinars/" }
+    : { name: "News", path: "/news/" };
+
+// Only a video actually embedded on the page qualifies for VideoObject; a
+// plain link to YouTube in the body text does not.
+const youTubeId = getEmbeddedYouTubeId(post.body);
+const videoId = `${canonicalUrl}#video`;
+const videoJsonLd = youTubeId
+  ? {
+      "@type": "VideoObject",
+      "@id": videoId,
+      name: post.title,
+      description: pageDescription,
+      thumbnailUrl: [
+        `https://i.ytimg.com/vi/${youTubeId}/hqdefault.jpg`,
+        ...(post.featuredImageUrl ? [post.featuredImageUrl] : [])
+      ],
+      uploadDate: post.publishedAt,
+      embedUrl: `https://www.youtube.com/embed/${youTubeId}`,
+      publisher: { "@id": orgId }
+    }
+  : null;
+
+// The show's home is thefranchisewoman.com, so the series node points there.
+const podcastSeriesUrl = "https://www.zorakleprofiles.com/podcasts/";
+const podcastJsonLd = isPodcast
+  ? [
+      {
+        "@type": "PodcastEpisode",
+        "@id": `${canonicalUrl}#episode`,
+        name: post.title,
+        url: canonicalUrl,
+        description: pageDescription,
+        datePublished: post.publishedAt,
+        ...(videoJsonLd ? { associatedMedia: { "@id": videoId } } : {}),
+        partOfSeries: { "@id": `${podcastSeriesUrl}#series` }
+      },
+      {
+        "@type": "PodcastSeries",
+        "@id": `${podcastSeriesUrl}#series`,
+        name: franchiseWomanPodcast.name,
+        url: podcastSeriesUrl,
+        sameAs: franchiseWomanPodcast.platforms.map((platform) => platform.href)
+      }
+    ]
+  : [];
+
 const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@graph": [
@@ -111,8 +167,11 @@ const jsonLd = JSON.stringify({
         : {}),
       author: { "@id": orgId },
       mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
-      publisher: { "@id": orgId }
+      publisher: { "@id": orgId },
+      ...(videoJsonLd ? { video: { "@id": videoId } } : {})
     },
+    ...(videoJsonLd ? [videoJsonLd] : []),
+    ...podcastJsonLd,
     {
       "@type": "Organization",
       "@id": orgId,
@@ -130,8 +189,8 @@ const jsonLd = JSON.stringify({
         {
           "@type": "ListItem",
           position: 2,
-          name: "News",
-          item: new URL("/news/", Astro.site).href
+          name: section.name,
+          item: new URL(section.path, Astro.site).href
         },
         { "@type": "ListItem", position: 3, name: post.title, item: canonicalUrl }
       ]

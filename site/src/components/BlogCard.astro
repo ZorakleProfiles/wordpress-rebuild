@@ -16,7 +16,7 @@ const publishedDate = new Intl.DateTimeFormat("en-US", {
 }).format(new Date(post.publishedAt));
 
 let slug = post.slug.replace('wordpress-import/', '');
-const postUrl = `/${slug}`;
+const postUrl = `/${slug}/`;
 ---
 
 <article

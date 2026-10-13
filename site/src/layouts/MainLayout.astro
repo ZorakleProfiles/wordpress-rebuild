@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import montereyWoff2 from "../assets/fonts/montereyflf-webfont.woff2";
+import { ceoNode, organizationNode, websiteNode } from "../lib/structured-data";
 
 interface Props {
   title?: string;
@@ -52,6 +53,14 @@ const canonical = canonicalUrl
 const DEFAULT_OG_IMAGE = "/images/og-default.png";
 const usingDefaultOgImage = !ogImage;
 const resolvedOgImage = new URL(ogImage ?? DEFAULT_OG_IMAGE, siteOrigin).href;
+
+// Site-wide publisher entity, emitted on every page so all pages tie back to
+// the same Organization (Zorakle Profiles, LLC) and WebSite @ids.
+const siteHref = siteOrigin.href;
+const siteJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [organizationNode(siteHref), ceoNode(siteHref), websiteNode(siteHref)]
+});
 ---
 
 <!doctype html>
@@ -136,6 +145,9 @@ const resolvedOgImage = new URL(ogImage ?? DEFAULT_OG_IMAGE, siteOrigin).href;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={resolvedOgImage} />
     <meta name="twitter:image:alt" content={ogImageAlt} />
+    <meta name="twitter:site" content="@ZorakleProfiles" />
+
+    <script type="application/ld+json" set:html={siteJsonLd} />
 
     <slot name="head" />
   </head>

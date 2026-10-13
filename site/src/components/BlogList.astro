@@ -52,9 +52,15 @@ const {
 // card), it sits beside the title on large screens and stacks below it on
 // smaller ones.
 const hasSearchAside = Astro.slots.has("search-aside");
+
+// Paginated archive pages otherwise share one meta description; leading
+// with the page number keeps each one unique even when search engines
+// truncate the snippet.
+const metaDescription =
+  currentPage > 1 ? `Page ${currentPage} of ${totalPages}: ${description}` : description;
 ---
 
-<MainLayout title={title} description={description}>
+<MainLayout title={title} description={metaDescription}>
   <SiteHeader />
 
   <main class="bg-[#f7f8fb]">

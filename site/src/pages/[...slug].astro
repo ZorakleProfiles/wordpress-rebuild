@@ -8,6 +8,7 @@ import PortableTextEmbed from "../components/PortableTextEmbed.astro";
 import { getAllPosts, getPostsByCategory, type BlogPost } from "../lib/blog.ts";
 import { getEmbeddedYouTubeId } from "../lib/podcast.ts";
 import { franchiseWomanPodcast } from "../data/site-content";
+import { organizationId, toMetaDescription } from "../lib/structured-data";
 
 export async function getStaticPaths() {
   /**
@@ -94,10 +95,19 @@ const publishedDate = new Intl.DateTimeFormat("en-US", {
   year: "numeric"
 }).format(new Date(post.publishedAt));
 
-const pageDescription = post.excerpt || `Read ${post.title} on Zorakle Blog.`;
+// Meta description only (the visible excerpt on cards is unchanged): drop
+// bare URLs and trim to a word boundary so search snippets read cleanly.
+const pageDescription =
+  toMetaDescription(post.excerpt) || `Read ${post.title} on the Zorakle blog.`;
 
 const canonicalUrl = primaryUrl;
-const orgId = `${Astro.site?.href}#organization`;
+
+// Google truncates titles around 60–65 characters. Keep the brand suffix
+// when it fits; otherwise drop it so the article's own title isn't cut off
+// (the Organization schema and og:site_name still carry the brand).
+const brandedTitle = `${post.title} | Zorakle`;
+const pageTitle = brandedTitle.length <= 65 ? brandedTitle : post.title;
+const orgId = organizationId(Astro.site?.href);
 
 // Same category matching as the archive routes, so a post gets podcast
 // markup exactly when it is listed on /podcasts.
@@ -165,6 +175,8 @@ const jsonLd = JSON.stringify({
       ...(post.featuredImageUrl
         ? { image: { "@type": "ImageObject", url: post.featuredImageUrl, width: 1200 } }
         : {}),
+      url: canonicalUrl,
+      inLanguage: "en-US",
       author: { "@id": orgId },
       mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
       publisher: { "@id": orgId },
@@ -172,16 +184,6 @@ const jsonLd = JSON.stringify({
     },
     ...(videoJsonLd ? [videoJsonLd] : []),
     ...podcastJsonLd,
-    {
-      "@type": "Organization",
-      "@id": orgId,
-      name: "Zorakle",
-      url: Astro.site?.href,
-      logo: {
-        "@type": "ImageObject",
-        url: new URL("/zorakle-logo.png", Astro.site).href
-      }
-    },
     {
       "@type": "BreadcrumbList",
       itemListElement: [
@@ -211,7 +213,7 @@ const portableTextComponents = {
 ---
 
 <MainLayout
-  title={`${post.title} | Zorakle`}
+  title={pageTitle}
   description={pageDescription}
   canonicalUrl={canonicalUrl}
   ogType="article"

@@ -10,6 +10,7 @@ import {
 } from "../../data/support.ts";
 import Help from "../../components/Help.astro";
 import { screenshotAssets, gifAssets, videoAssets } from "../../lib/support-assets.ts";
+import { organizationId, softwareId } from "../../lib/structured-data";
 
 interface Props {
   article: SupportArticle;
@@ -62,11 +63,40 @@ const summaryVideoPosterPath = article.summaryVideo?.posterFileName
 const summaryVideoPosterSrc = summaryVideoPosterPath
   ? screenshotAssets[summaryVideoPosterPath]?.default
   : undefined;
+
+const siteHref = Astro.site?.href ?? "https://www.zorakleprofiles.com/";
+const articleUrl = new URL(`/support/${article.slug}/`, siteHref).href;
+const orgRef = { "@id": organizationId(siteHref) };
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      headline: article.title,
+      description: article.summary,
+      url: articleUrl,
+      mainEntityOfPage: articleUrl,
+      inLanguage: "en-US",
+      author: orgRef,
+      publisher: orgRef,
+      about: { "@id": softwareId(siteHref) }
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: siteHref },
+        { "@type": "ListItem", position: 2, name: "Support", item: new URL("/support/", siteHref).href },
+        { "@type": "ListItem", position: 3, name: article.title, item: articleUrl }
+      ]
+    }
+  ]
+});
 ---
 <MainLayout
   title={`${article.title} | Support | Zorakle`}
   description={article.summary}
 >
+  <script type="application/ld+json" slot="head" set:html={jsonLd} />
   <SiteHeader />
 
   <main>

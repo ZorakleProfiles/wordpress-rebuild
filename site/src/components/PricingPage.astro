@@ -11,6 +11,7 @@ import {
   type PartnerKey,
   type PricingAudience,
 } from "../data/pricing";
+import { softwareApplicationNode } from "../lib/structured-data";
 
 interface Props {
   audience?: PricingAudience;
@@ -21,19 +22,22 @@ const { audience = "all", partner } = Astro.props;
 const isCombined = audience === "all";
 const defaultPageMeta = {
   all: {
-    title: "Pricing | Zorakle",
+    title: "Pricing for Franchisors & Franchise Brokers | Zorakle",
     heading: "Build the plan that fits",
     description: "Start with your role, then choose the account and billing option that work for you.",
+    metaDescription: "Zorakle pricing for franchisors and franchise brokers. Compare monthly unlimited, annual unlimited, and pay-as-you-go plans for science-backed fit assessments.",
   },
   broker: {
-    title: "Broker Pricing | Zorakle",
+    title: "Franchise Broker & Consultant Pricing | Zorakle",
     heading: "Broker plans",
     description: "Choose a subscription or pay only when you run an assessment.",
+    metaDescription: "Zorakle pricing for franchise brokers and consultants. Match clients to the right franchise brands with monthly, annual, or pay-as-you-go client assessments.",
   },
   franchisor: {
-    title: "Franchisor Pricing | Zorakle",
+    title: "Franchisor Pricing: Franchisee Assessment Plans | Zorakle",
     heading: "Franchisor plans",
     description: "Choose the account designed for your system, then select how you want to pay.",
+    metaDescription: "Franchisee assessment pricing for emerging and established franchisors. Choose monthly unlimited, annual unlimited, or pay-as-you-go candidate assessments.",
   },
 }[audience];
 const partnerMeta = Partners[partner ?? ""];
@@ -46,14 +50,38 @@ const couponPreviewUrl = new URL("/api/check-coupon", portalUrl).href;
 // out of the index and point canonical signals at the public pricing page.
 const isPartnerPage = Boolean(partner);
 const canonicalUrl = isPartnerPage ? "/pricing/" : undefined;
+
+// Plan prices as structured data, generated from src/data/pricing.ts. Skipped
+// on noindexed partner pages, whose discounted offers aren't public prices.
+const siteHref = Astro.site?.href ?? "https://www.zorakleprofiles.com/";
+const pageUrl = new URL(audience === "all" ? "/pricing/" : `/pricing/${audience}s/`, siteHref).href;
+const pricingJsonLd = isPartnerPage
+  ? null
+  : JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        softwareApplicationNode(siteHref, audience, pageUrl),
+        {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: siteHref },
+            { "@type": "ListItem", position: 2, name: "Pricing", item: new URL("/pricing/", siteHref).href },
+            ...(audience === "all"
+              ? []
+              : [{ "@type": "ListItem", position: 3, name: audience === "broker" ? "Broker Pricing" : "Franchisor Pricing", item: pageUrl }])
+          ]
+        }
+      ]
+    });
 ---
 
 <MainLayout
   title={pageMeta.title}
-  description={pageMeta.description}
+  description={("metaDescription" in pageMeta && pageMeta.metaDescription) || pageMeta.description}
   noindex={isPartnerPage}
   canonicalUrl={canonicalUrl}
 >
+  {pricingJsonLd && <script type="application/ld+json" slot="head" set:html={pricingJsonLd} />}
   <SiteHeader />
 
   <main

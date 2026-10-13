@@ -18,16 +18,20 @@ const resolveHref = (href: string) => (href === "PORTAL_LOGIN" ? portalLogin : h
 const mailtoSubscribe = `mailto:${footer.email}?subject=Subscribe%3A%20Mailing%20List`;
 ---
 
-<footer class="relative z-10 rounded-t-[45px] bg-[#22252a] text-white">
+{/* data-nosnippet: keep footer boilerplate (copyright, modal close "×")
+    out of Google's search-result snippets. */}
+<footer class="relative z-10 rounded-t-[45px] bg-[#22252a] text-white" data-nosnippet>
   <div class="section-shell py-12 md:py-14">
     <div class="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
       <div class="max-w-sm">
         <img
-          src="/zorakle-logo.png"
+          src="/zorakle-logo-footer.webp"
           alt="Zorakle"
           class="h-8 w-auto object-contain brightness-0 invert"
-          width="2218"
-          height="600"
+          width="480"
+          height="130"
+          loading="lazy"
+          decoding="async"
         />
         {footer.tagline && <p class="mt-3 text-sm text-white/60">{footer.tagline}</p>}
         <p class="mt-3 text-sm text-white/60">{footer.address}</p>
@@ -103,7 +107,7 @@ const mailtoSubscribe = `mailto:${footer.email}?subject=Subscribe%3A%20Mailing%2
 </footer>
 
 {nl && hasHubspotForm && (
-  <div id="newsletter-modal" class="newsletter-modal" hidden aria-hidden="true">
+  <div id="newsletter-modal" class="newsletter-modal" hidden aria-hidden="true" data-nosnippet>
     <div class="newsletter-modal-backdrop" data-modal-close></div>
     <div class="newsletter-modal-panel" role="dialog" aria-modal="true" aria-labelledby="newsletter-modal-heading">
       <button type="button" class="newsletter-modal-close" data-modal-close aria-label="Close">&times;</button>

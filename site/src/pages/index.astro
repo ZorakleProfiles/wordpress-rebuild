@@ -12,7 +12,7 @@ import BrokerSolutionsFeature from "../components/BrokerSolutionsFeature.astro";
 import VideoModalButton from "../components/VideoModalButton.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import { Image } from "astro:assets";
-import { footer } from "../data/site-content";
+import { organizationId, websiteId } from "../lib/structured-data";
 import idealAlgorithmReport from "../assets/alignment_report.png";
 import blueprintReport from "../assets/blueprint.png";
 import spotOnProfileReport from "../assets/spoton.png";
@@ -73,46 +73,19 @@ const whatYouGet = [
 ];
 
 const siteHref = Astro.site?.href ?? "https://www.zorakleprofiles.com/";
-const orgId = `${siteHref}#organization`;
 
-// sameAs: pulled from footer.social. Add YouTube / podcast / X profile URLs there
-// as they become available and they will flow into this schema automatically.
-const sameAs = footer.social.map((profile) => profile.href).filter(Boolean);
-
+// Organization and WebSite nodes are emitted site-wide by MainLayout; the
+// homepage adds the WebPage node that ties itself to them.
 const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": orgId,
-      name: "Zorakle",
-      alternateName: "Zorakle Profiles",
-      url: siteHref,
-      logo: {
-        "@type": "ImageObject",
-        url: new URL("/zorakle-logo.png", siteHref).href
-      },
-      email: footer.email,
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "8782 S. Park Road",
-        addressLocality: "Rogers",
-        addressRegion: "AR",
-        postalCode: "72756",
-        addressCountry: "US"
-      },
-      ...(sameAs.length ? { sameAs } : {}),
-      description:
-        "Science-backed tools for franchise awarding and broker matching decisions."
-    },
-    {
-      "@type": "WebSite",
-      "@id": `${siteHref}#website`,
-      name: "Zorakle",
-      url: siteHref,
-      publisher: { "@id": orgId }
-    }
-  ]
+  "@type": "WebPage",
+  "@id": `${siteHref}#webpage`,
+  url: siteHref,
+  name: "Franchisee Fit & Alignment Software | Zorakle",
+  isPartOf: { "@id": websiteId(siteHref) },
+  about: { "@id": organizationId(siteHref) },
+  publisher: { "@id": organizationId(siteHref) },
+  inLanguage: "en-US"
 });
 ---
 

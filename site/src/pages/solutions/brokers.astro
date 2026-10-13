@@ -8,14 +8,27 @@ import BrokerAlignmentActionSection from "../../components/BrokerAlignmentAction
 import BrokerPracticalIntelligenceSection from "../../components/BrokerPracticalIntelligenceSection.astro";
 import BrokerClosingCta from "../../components/BrokerClosingCta.astro";
 import heroOgImage from "../../assets/broker-hero.png";
+import { serviceNode } from "../../lib/structured-data";
 
 const siteHref = Astro.site?.href ?? "https://www.zorakleprofiles.com/";
+const pageUrl = new URL("/solutions/brokers/", siteHref).href;
 const breadcrumbJsonLd = JSON.stringify({
   "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: siteHref },
-    { "@type": "ListItem", position: 2, name: "Solutions for Brokers", item: new URL("/solutions/brokers/", siteHref).href }
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: siteHref },
+        { "@type": "ListItem", position: 2, name: "Solutions for Brokers", item: new URL("/solutions/brokers/", siteHref).href }
+      ]
+    },
+    serviceNode(siteHref, {
+      url: pageUrl,
+      name: "Franchise Matching for Brokers & Consultants",
+      serviceType: "Franchise candidate matching",
+      audienceType: "Franchise brokers and consultants",
+      description: "Science-backed client assessments that match franchise broker and consultant clients to the franchise brands they best fit, with ranked matches and talking points."
+    })
   ]
 });
 ---

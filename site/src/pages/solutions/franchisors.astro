@@ -9,14 +9,27 @@ import FranchisorPracticalIntelligenceSection from "../../components/FranchisorP
 import FranchisorClosingCta from "../../components/FranchisorClosingCta.astro";
 import FranchisorAlignmentActionSection from "../../components/FranchisorAlignmentActionSection.astro";
 import heroOgImage from "../../assets/franchisor-hero-alignment-v2.png";
+import { serviceNode } from "../../lib/structured-data";
 
 const siteHref = Astro.site?.href ?? "https://www.zorakleprofiles.com/";
+const pageUrl = new URL("/solutions/franchisors/", siteHref).href;
 const breadcrumbJsonLd = JSON.stringify({
   "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: siteHref },
-    { "@type": "ListItem", position: 2, name: "Solutions for Franchisors", item: new URL("/solutions/franchisors/", siteHref).href }
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: siteHref },
+        { "@type": "ListItem", position: 2, name: "Solutions for Franchisors", item: new URL("/solutions/franchisors/", siteHref).href }
+      ]
+    },
+    serviceNode(siteHref, {
+      url: pageUrl,
+      name: "Franchisee Selection & Assessment for Franchisors",
+      serviceType: "Franchisee assessment and selection",
+      audienceType: "Franchisors and franchise development teams",
+      description: "Science-backed franchisee assessment that benchmarks a franchise system's top performers and scores each candidate's fit, alignment, and support needs before an award."
+    })
   ]
 });
 ---

@@ -26,7 +26,7 @@ import SiteFooter from "../components/SiteFooter.astro";
                   */}
                   <div
                     id="report-request-form"
-                    class="min-h-[580px] sm:min-h-[520px]"
+                    class="request-report-form min-h-[580px] sm:min-h-[520px]"
                     data-hs-form
                   ></div>
               </div>
@@ -36,6 +36,212 @@ import SiteFooter from "../components/SiteFooter.astro";
 
     <SiteFooter />
 </MainLayout>
+
+<style is:global>
+  #report-request-form {
+    max-width: 760px;
+    width: 100%;
+  }
+
+  #report-request-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 760px;
+  }
+
+  #report-request-form .hs-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  #report-request-form .hs-form-field > label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #3f4650;
+    line-height: 1.4;
+  }
+
+  #report-request-form .hs-form-field > label .hs-form-required {
+    color: #a8420c;
+  }
+
+  #report-request-form .hs-dependent-field {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  #report-request-form .hs-input:not([type="checkbox"]):not([type="radio"]) {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 0.75rem;
+    border: 1px solid #d5d9e0;
+    background: #ffffff;
+    padding: 0.8rem 0.9rem;
+    font-size: 0.95rem;
+    color: #1f2937;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  #report-request-form .hs-input:not([type="checkbox"]):not([type="radio"]):focus {
+    outline: none;
+    border-color: #fd7b34;
+    box-shadow: 0 0 0 3px rgba(253, 123, 52, 0.18);
+  }
+
+  #report-request-form select.hs-input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 2.8rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6L8 10L12 6' stroke='%235e6471' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    background-size: 0.8rem 0.8rem;
+  }
+
+  #report-request-form select.hs-input.is-placeholder {
+    color: #6b7280;
+  }
+
+  #report-request-form .hs-form-field[hidden],
+  #report-request-form .hs-form-field[style*="display: none"],
+  #report-request-form .hs-form-field[style*="display:none"] {
+    display: none !important;
+  }
+
+  #report-request-form .hs-form-field > .hs-field-desc {
+    display: block;
+    margin-top: -0.2rem;
+  }
+
+  #report-request-form .inputs-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  #report-request-form .inputs-list.multi-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.15rem;
+  }
+
+  #report-request-form .hs-form-checkbox,
+  #report-request-form .hs-form-booleancheckbox {
+    margin: 0;
+  }
+
+  #report-request-form .hs-form-checkbox-display,
+  #report-request-form .hs-form-booleancheckbox-display {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    margin: 0;
+    line-height: 1.4;
+    cursor: pointer;
+  }
+
+  #report-request-form .hs-form-checkbox-display {
+    font-size: 0.95rem;
+    color: #2c3340;
+  }
+
+  #report-request-form .hs-form-booleancheckbox-display {
+    font-size: 0.8rem;
+    color: #3f4650;
+  }
+
+  #report-request-form input[type="checkbox"].hs-input {
+    flex: none;
+    width: 1.05rem;
+    height: 1.05rem;
+    margin: 0.1rem 0 0;
+    accent-color: #fd7b34;
+    cursor: pointer;
+  }
+
+  #report-request-form .hs-form-booleancheckbox-display input[type="checkbox"].hs-input {
+    width: 1rem;
+    height: 1rem;
+    margin-top: 0;
+  }
+
+  #report-request-form .hs-button {
+    align-self: flex-start;
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #fd7b34 0%, #f56121 100%);
+    padding: 0.82rem 1.6rem;
+    min-height: 2.9rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1f2937;
+    cursor: pointer;
+    transition: transform 0.15s ease, filter 0.15s ease;
+  }
+
+  #report-request-form .hs-button:hover {
+    transform: translateY(-1px);
+    filter: brightness(0.97);
+  }
+
+  #report-request-form .hs-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(253, 123, 52, 0.25);
+  }
+
+  #report-request-form .hs-error-msg,
+  #report-request-form .hs-error-msgs label,
+  #report-request-form .hs-form-required {
+    color: #b3261e;
+    font-size: 0.75rem;
+  }
+
+  #report-request-form .field .input {
+    width: 100%;
+  }
+
+  #report-request-form .hs-field-desc,
+  #report-request-form .legal-consent-container,
+  #report-request-form .hs-richtext {
+    color: #5e6471;
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  #report-request-form .legal-consent-container a,
+  #report-request-form .hs-richtext a {
+    color: #a8420c;
+    text-decoration: underline;
+  }
+
+  #report-request-form .submitted-message {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    padding-top: 0.5rem;
+  }
+
+  @media (max-width: 640px) {
+    #report-request-form form {
+      gap: 0.85rem;
+    }
+
+    #report-request-form .hs-button {
+      width: 100%;
+    }
+  }
+</style>
 
 <script is:inline>
   (function () {

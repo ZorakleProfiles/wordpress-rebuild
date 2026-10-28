@@ -84,7 +84,7 @@ const modalTitleId = `video-modal-title-${modalKey?.replace(/[^a-z0-9]+/gi, "-")
   {caption && <p class="mt-4 text-sm font-semibold">{caption}</p>}
 
   <dialog
-    class="m-auto w-[min(1100px,calc(100%-2rem))] max-w-none overflow-visible bg-transparent p-0 backdrop:bg-[#111419]/85 backdrop:backdrop-blur-sm"
+    class="m-auto w-[min(1100px,calc(100%-2rem),calc((100dvh-7rem)*16/9))] max-h-none max-w-none overflow-visible bg-transparent p-0 backdrop:bg-[#111419]/85 backdrop:backdrop-blur-sm"
     aria-labelledby={modalTitleId}
     data-video-modal
   >

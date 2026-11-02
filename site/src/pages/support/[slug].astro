@@ -27,7 +27,7 @@ const { article } = Astro.props as Props;
 
 interface ResolvedStep {
   step: SupportArticleStep;
-  mediaPath: string;
+  mediaPath?: string;
   screenshotSrc?: ImageMetadata;
   gifSrc?: string;
   videoSrc?: string;
@@ -40,6 +40,7 @@ const resolveMediaPath = (assetDir: string, fileName: string) =>
   `${normalizeAssetDir(assetDir)}/${fileName}`;
 
 const resolvedSteps: ResolvedStep[] = article.steps.map((step) => {
+  if (!step.media) return { step };
   const mediaPath = resolveMediaPath(article.assetDir, step.media.fileName);
 
   return {
@@ -157,7 +158,7 @@ const jsonLd = JSON.stringify({
                   </p>
                 ) : null}
 
-                {step.media.type === "screenshot" && screenshotSrc ? (
+                {step.media?.type === "screenshot" && screenshotSrc ? (
                   <figure class="space-y-2">
                     <Image
                       src={screenshotSrc}
@@ -171,7 +172,7 @@ const jsonLd = JSON.stringify({
                   </figure>
                 ) : null}
 
-                {step.media.type === "gif" && gifSrc ? (
+                {step.media?.type === "gif" && gifSrc ? (
                   <figure class="space-y-2">
                     <img
                       src={gifSrc.src}
@@ -184,7 +185,7 @@ const jsonLd = JSON.stringify({
                   </figure>
                 ) : null}
 
-                {step.media.type === "video" && videoSrc ? (
+                {step.media?.type === "video" && videoSrc ? (
                   <figure class="space-y-2">
                     <video
                       class="w-full rounded-lg border border-[#d1d4dd]"
@@ -200,9 +201,9 @@ const jsonLd = JSON.stringify({
                 ) : null}
 
                 {(
-                  (step.media.type === "screenshot" && !screenshotSrc) ||
-                  (step.media.type === "gif" && !gifSrc) ||
-                  (step.media.type === "video" && !videoSrc)
+                  (step.media?.type === "screenshot" && !screenshotSrc) ||
+                  (step.media?.type === "gif" && !gifSrc) ||
+                  (step.media?.type === "video" && !videoSrc)
                 ) ? (
                   <div class="rounded-lg border border-dashed border-[#b7bcc9] bg-[#f4f6f9] p-4">
                     <p class="text-sm font-semibold text-[#22252a]">Missing media file ({step.media.type})</p>

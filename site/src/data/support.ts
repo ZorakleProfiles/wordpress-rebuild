@@ -11,7 +11,7 @@ export interface SupportArticleStep {
   title: string;
   content: string;
   tip?: string;
-  media: SupportStepMedia;
+  media?: SupportStepMedia;
 }
 
 
@@ -31,6 +31,87 @@ export interface SupportArticle {
 }
 
 export const supportArticles: SupportArticle[] = [
+  {
+    "slug": "continue-unfinished-assessment",
+    "title": "Help a Candidate Continue an Unfinished Assessment",
+    "summary": "Check a candidate's progress, share their individual continuation link, and gather useful details when an assessment will not continue.",
+    "intro": "This guide is for brokers and franchisor teams helping a prospective franchisee who has started the Business Builder Assessment. Sign in with access to the candidate's record. For research assessments from existing franchisees, use the tracking area in your Established Franchisor Setup instead.",
+    "assetDir": "src/assets/support",
+    "type": "Everyone",
+    "steps": [
+      {
+        "title": "Find the existing assessment",
+        "content": "Open SpotOn! Reports, change the status filter to In Progress, and search for the candidate by name or email. Review Completion % and Last Activity. If the candidate is not listed, try Both to check whether the assessment has already been completed."
+      },
+      {
+        "title": "Copy the candidate's continuation link",
+        "content": "Open the three-dot Actions menu on the candidate's row and select More Info. In the details window, find Assessment Link and select Copy. Send this individual link directly to the candidate so they can return to their existing assessment.",
+        "tip": "This link is specific to the candidate. Share it privately; use your general Assessment Links page when inviting a different person to start."
+      },
+      {
+        "title": "Check required selections",
+        "content": "If the candidate cannot advance, ask them to read the instructions on the current screen and check that they have made each required selection. Some screens require an explicit choice before the assessment can continue. The completion percentage alone does not identify the cause of an interruption."
+      },
+      {
+        "title": "Contact support if the interruption continues",
+        "content": "If an error appears or the candidate still cannot continue, email <a href=\"mailto:support@zorakle.net\">support@zorakle.net</a>. Include your company name, the candidate's name and assessment email, the section or completion percentage, the exact error message, and the approximate time it appeared. A screenshot can help; hide unrelated personal information.",
+        "tip": "Keep the existing record available while support investigates. Do not create another assessment solely to troubleshoot the interruption."
+      }
+    ]
+  },
+  {
+    "slug": "cancel-subscription",
+    "title": "Cancel Your Zorakle Subscription",
+    "summary": "Find the cancellation controls in Billing, confirm the request, and check the date your subscription access ends.",
+    "intro": "These steps apply to accounts with the standard Subscription controls in Billing. Sign in to the correct account with permission to manage it. If billing is managed centrally, Billing is unavailable, or your screen looks different, contact your account administrator or Zorakle support.",
+    "assetDir": "src/assets/support",
+    "type": "Everyone",
+    "steps": [
+      {
+        "title": "Review the correct subscription",
+        "content": "Select Billing from the main navigation. Review the Subscription section to confirm that you are managing the intended account and plan. If you only want to remove an add-on such as the Confidential Questionnaire while keeping your main subscription, contact support and specify that change instead."
+      },
+      {
+        "title": "Submit the cancellation",
+        "content": "Select Cancel in the Subscription section. Enter a reason if you would like to share feedback; this is optional. Select Cancel Subscription to submit the request. Selecting Keep Subscription closes the window without canceling."
+      },
+      {
+        "title": "Check the confirmation and access end date",
+        "content": "After a successful cancellation, the Subscription section displays a cancellation message and the date access ends. Check that information before leaving the page. If an error appears or you do not see confirmation, contact support to verify the subscription's status.",
+        "tip": "The date shown in your account is the reference for when access ends. Do not assume that an email request has already been processed."
+      },
+      {
+        "title": "Ask for help when you cannot access Billing",
+        "content": "Email <a href=\"mailto:support@zorakle.net\">support@zorakle.net</a> with your company name, account email, and the change you are requesting. Include a recent invoice number if available, and ask the team to confirm the cancellation status and effective date. Do not send your password or full payment card details."
+      }
+    ]
+  },
+  {
+    "slug": "report-missing-pdf-text",
+    "title": "Report Missing or Cut-Off Text in a Report PDF",
+    "summary": "Identify an incomplete report, compare it with the portal version, and send support the details needed to investigate.",
+    "intro": "Use this guide when a completed candidate report contains a blank section, a cut-off paragraph, or missing text. You will need access to the affected report. Contact support before asking the candidate to take another assessment.",
+    "assetDir": "src/assets/support",
+    "type": "Everyone",
+    "steps": [
+      {
+        "title": "Identify the report and affected pages",
+        "content": "Note the report type, candidate, and page numbers where the problem appears. Describe what you can see, such as a paragraph ending unexpectedly or text extending beyond the page. Record whether you opened an email attachment, a saved download, or a report from the portal."
+      },
+      {
+        "title": "Compare the portal version",
+        "content": "Open SpotOn! Reports, find the completed candidate, and use the three-dot Actions menu to open the affected report. Check whether the same section is incomplete in the portal. Tell support whether the issue appears in the PDF, the portal, or both. For help locating reports, see <a href=\"/support/viewing-reports-for-brokers/\">Viewing Reports for Brokers</a> or <a href=\"/support/viewing-reports-for-franchisors/\">Viewing Reports for Franchisors</a>."
+      },
+      {
+        "title": "Send the details privately",
+        "content": "Email <a href=\"mailto:support@zorakle.net\">support@zorakle.net</a> with your company name, the candidate's name and assessment email, the report type, the affected page numbers, and a short description. Include a screenshot of the affected area with unrelated personal information hidden. Keep reports and screenshots private rather than posting them publicly."
+      },
+      {
+        "title": "Check any corrected version",
+        "content": "Follow support's instructions for accessing a corrected report if one is provided. Review the affected pages before sharing it with your team or candidate, and use the corrected version for future conversations."
+      }
+    ]
+  },
 
   {
     slug: "established-franchisor-setup",

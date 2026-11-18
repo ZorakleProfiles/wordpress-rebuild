@@ -841,5 +841,142 @@ export const supportArticles: SupportArticle[] = [
         }
       },
     ]
+  },
+  {
+    slug: "api-keys-setup",
+    title: "Creating an API Key",
+    summary:
+      "Create an API key so your CRM or other tools can read your prospects and send assessments through the Zorakle API.",
+    intro:
+      "The Zorakle API lets your own systems work with your account directly: pull prospects and their results into your CRM, or send an assessment the moment a new lead comes in. Every request needs an API key, which an account admin creates under Settings. Keys belong to your account rather than to the person who made them, so they keep working when people leave your team. For endpoints, fields and code examples, see the <a href=\"https://portal.zorakle.net/developers/api\" target=\"_blank\" rel=\"noopener\" class=\"font-semibold text-[#a8420c] hover:underline\">Zorakle API documentation</a>.",
+    assetDir: "src/assets/support/api-keys-setup",
+    type: "Everyone",
+    steps: [
+      {
+        title: "Open Settings > API & Webhooks",
+        content:
+          "Click <strong>Settings</strong> in the left menu, open the settings menu at the top of the page and choose <strong>API &amp; Webhooks</strong>. Only account admins can manage API keys; other users will see a note asking them to contact their account owner.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Settings menu open with API & Webhooks at the top of the list"
+        }
+      },
+      {
+        title: "Find the API Keys section",
+        content:
+          "The API Keys section lists every key your account has and lets you create new ones. Use the <strong>Read the API documentation</strong> link at any time to see what the API can do.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "API Keys section with the Create a key form and no keys yet"
+        }
+      },
+      {
+        title: "Name the key and choose its permissions",
+        content:
+          "Give the key a name that says where it will be used, such as <em>HubSpot integration</em>, so you can recognise it later. Then pick what it may do:<br><strong>Read prospects</strong> (<code>prospects:read</code>) lets it list your prospects and read their status, reports and results.<br><strong>Send assessments</strong> (<code>assessments:send</code>) lets it create prospects and email them your assessment.<br>Click <strong>Create key</strong>.",
+        tip: "Only give a key the permissions its tool needs. A reporting tool that only reads results doesn't need to send assessments.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "Create a key form filled in with the name HubSpot integration and both permissions checked"
+        }
+      },
+      {
+        title: "Copy your new key",
+        content:
+          "Your new key appears in a green box. Click <strong>Copy</strong> and paste it into the tool you are connecting, or store it in your password manager. <strong>This is the only time the full key is shown.</strong> When you have saved it, click <strong>I've saved it</strong>.",
+        tip: "Treat API keys like passwords: keep them on your server or in your integration's settings, never in website code or a shared document. If you lose a key, revoke it and create a new one.",
+        media: {
+          type: "screenshot",
+          fileName: "04.png",
+          alt: "New API key shown once with a Copy button and an I've saved it link"
+        }
+      },
+      {
+        title: "Manage and revoke keys",
+        content:
+          "Your keys are listed with their permissions, who created them and when they were last used. If a key is no longer needed or may have been exposed, click <strong>Revoke</strong>: it stops working immediately, and any tool using it will need a new key.",
+        media: {
+          type: "screenshot",
+          fileName: "05.png",
+          alt: "API key list showing HubSpot integration with its permissions, created and last used dates, and a Revoke button"
+        }
+      },
+      {
+        title: "Connect your tool with the API documentation",
+        content:
+          "Send the key with every request as a bearer token: <code>Authorization: Bearer YOUR_API_KEY</code>. The <a href=\"https://portal.zorakle.net/developers/api\" target=\"_blank\" rel=\"noopener\" class=\"font-semibold text-[#a8420c] hover:underline\">API documentation</a> has every endpoint, complete example responses for broker and franchisor accounts, and ready-to-use code for keeping your CRM in sync.",
+        media: {
+          type: "screenshot",
+          fileName: "06.png",
+          alt: "Authentication section of the Zorakle API documentation"
+        }
+      }
+    ]
+  },
+  {
+    slug: "webhooks-setup",
+    title: "Setting Up Webhooks",
+    summary:
+      "Have Zorakle notify your own system the moment a prospect signs up or finishes their assessment.",
+    intro:
+      "Webhooks send prospect events straight to a URL you choose, so your CRM or automation tool can react right away instead of checking for changes. Zorakle offers two: <strong>New prospect</strong>, sent when someone starts your assessment through your assessment link, and <strong>Assessment complete</strong>, sent when a prospect finishes, with their results and report links. Broker accounts receive the SpotOn! and Business Builder profiles; franchisor accounts with Eclipse also receive the Eclipse report and fit scores. The <a href=\"https://portal.zorakle.net/developers/api#webhooks\" target=\"_blank\" rel=\"noopener\" class=\"font-semibold text-[#a8420c] hover:underline\">API documentation</a> shows exactly what each event contains.",
+    assetDir: "src/assets/support/webhooks-setup",
+    type: "Everyone",
+    steps: [
+      {
+        title: "Open the Webhooks section",
+        content:
+          "Go to <strong>Settings</strong>, choose <strong>API &amp; Webhooks</strong> from the settings menu and scroll past API Keys to <strong>Webhooks</strong>. Each event has its own URL field. Only account admins can change webhooks.",
+        media: {
+          type: "screenshot",
+          fileName: "01.png",
+          alt: "Webhooks section with empty URL fields for New prospect and Assessment complete"
+        }
+      },
+      {
+        title: "Enter your endpoint URLs",
+        content:
+          "Paste the URL that should receive each event. Your CRM or automation tool (for example Zapier, Make or HubSpot workflows) gives you this URL when you set up an incoming webhook. URLs must start with <code>https://</code> and be reachable from the internet. You can use the same URL for both events, or fill in just one.",
+        media: {
+          type: "screenshot",
+          fileName: "02.png",
+          alt: "Webhook URL fields filled in for both events"
+        }
+      },
+      {
+        title: "Save each webhook",
+        content:
+          "Click <strong>Save</strong> next to each URL. A confirmation appears and a <strong>Remove</strong> button shows next to saved webhooks. To change a URL, edit it and click Save again; to stop an event, click Remove.",
+        media: {
+          type: "screenshot",
+          fileName: "03.png",
+          alt: "Webhook saved confirmation with Remove buttons next to both URLs"
+        }
+      },
+      {
+        title: "Check that deliveries succeed",
+        content:
+          "After the first event is sent, each webhook shows whether its <strong>last delivery succeeded</strong>, with the response code and date. Your endpoint must answer with a success (2xx) status. Failed deliveries are not retried, so if you see a failure, fix your endpoint and use the API to catch up on anything you missed.",
+        tip: "Need Zorakle to include a secret header with every delivery so your endpoint can verify it? Contact support and we'll add it to your account.",
+        media: {
+          type: "screenshot",
+          fileName: "04.png",
+          alt: "Assessment complete webhook showing Last delivery succeeded (200) with the date"
+        }
+      },
+      {
+        title: "See what each event contains",
+        content:
+          "Click <strong>See the payloads</strong> on the settings page, or open the <a href=\"https://portal.zorakle.net/developers/api#webhooks\" target=\"_blank\" rel=\"noopener\" class=\"font-semibold text-[#a8420c] hover:underline\">webhook documentation</a>, for full example payloads for broker and franchisor accounts and sample code for receiving them.",
+        media: {
+          type: "screenshot",
+          fileName: "05.png",
+          alt: "Webhooks section of the Zorakle API documentation"
+        }
+      }
+    ]
   }
 ];

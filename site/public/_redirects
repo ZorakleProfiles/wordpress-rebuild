@@ -29,6 +29,8 @@
 /category/testionials/ /testimonials/ 301
 /category/news /news/ 301
 /category/news/ /news/ 301
+/category/dna-new-clients /announcements/ 301
+/category/dna-new-clients/ /announcements/ 301
 /category/* /news/ 301
 /author/* /news/ 301
 /tag/* /podcasts/ 301

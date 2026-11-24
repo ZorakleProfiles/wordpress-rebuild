@@ -1,0 +1,41 @@
+---
+import BlogList from "../../../components/BlogList.astro";
+import {
+  getArchivePaginationPaths,
+  type PaginatedPosts
+} from "../../../lib/blog.ts";
+
+export async function getStaticPaths() {
+  // Astro isolates getStaticPaths into its own module scope during
+  // prerendering, so the page size must be defined inside it, not above.
+  const announcementsArchivePageSize = 10;
+  return getArchivePaginationPaths("dna-new-clients", announcementsArchivePageSize);
+}
+
+interface Props {
+  pageData: PaginatedPosts;
+}
+
+const { pageData } = Astro.props;
+const pageTitle = `New Client Announcements - Page ${pageData.page} | Zorakle`;
+---
+
+<BlogList
+  title={pageTitle}
+  description="Meet the franchise brands and organizations joining Zorakle. Read new client announcements and see how they use our assessment insights."
+  heading="New Clients"
+  emptyStateMessage="No client announcements have been published yet."
+  basePath="/announcements"
+  postBasePath=""
+  posts={pageData.posts}
+  currentPage={pageData.page}
+  totalPages={pageData.totalPages}
+  searchEndpoint="/search/announcements.json"
+  searchLabel="Search client announcements"
+  ctaTitle="See what better alignment can do."
+  ctaText="Explore how Zorakle helps franchise teams understand candidate fit and make confident decisions."
+>
+  <p slot="intro" class="mt-4 max-w-3xl text-[#3b3e47]">
+    Meet the franchise brands and organizations joining Zorakle and learn how they are putting assessment insights to work.
+  </p>
+</BlogList>

@@ -1,0 +1,27 @@
+---
+import BlogList from "../../components/BlogList.astro";
+import { getPaginatedPostsByCategory } from "../../lib/blog.ts";
+
+const ANNOUNCEMENTS_ARCHIVE_PAGE_SIZE = 10;
+const pageData = await getPaginatedPostsByCategory("dna-new-clients", 1, ANNOUNCEMENTS_ARCHIVE_PAGE_SIZE);
+---
+
+<BlogList
+  title="New Client Announcements | Zorakle"
+  description="Meet the franchise brands and organizations joining Zorakle. Read new client announcements and see how they use our assessment insights."
+  heading="New Clients"
+  emptyStateMessage="No client announcements have been published yet."
+  basePath="/announcements"
+  postBasePath=""
+  posts={pageData.posts}
+  currentPage={pageData.page}
+  totalPages={pageData.totalPages}
+  searchEndpoint="/search/announcements.json"
+  searchLabel="Search client announcements"
+  ctaTitle="See what better alignment can do."
+  ctaText="Explore how Zorakle helps franchise teams understand candidate fit and make confident decisions."
+>
+  <p slot="intro" class="mt-4 max-w-3xl text-[#3b3e47]">
+    Meet the franchise brands and organizations joining Zorakle and learn how they are putting assessment insights to work.
+  </p>
+</BlogList>

@@ -113,11 +113,14 @@ const orgId = organizationId(Astro.site?.href);
 // markup exactly when it is listed on /podcasts.
 const isPodcast = (await getPostsByCategory("podcasts")).some((item) => item.slug === post.slug);
 const isWebinar = (await getPostsByCategory("webinars & training")).some((item) => item.slug === post.slug);
-const section = isPodcast
-  ? { name: "Podcasts", path: "/podcasts/" }
-  : isWebinar
-    ? { name: "Webinars", path: "/webinars/" }
-    : { name: "News", path: "/news/" };
+const isClientAnnouncement = (await getPostsByCategory("dna-new-clients")).some((item) => item.slug === post.slug);
+const section = isClientAnnouncement
+  ? { name: "New Clients", path: "/announcements/" }
+  : isPodcast
+    ? { name: "Podcasts", path: "/podcasts/" }
+    : isWebinar
+      ? { name: "Webinars", path: "/webinars/" }
+      : { name: "News", path: "/news/" };
 
 // Only a video actually embedded on the page qualifies for VideoObject; a
 // plain link to YouTube in the body text does not.

@@ -5,6 +5,7 @@ import { getCategorySearchIndex } from "../../lib/blog.ts";
 // lazily by the in-page search box on first use, so the archive HTML itself
 // stays small even when a category holds hundreds of posts.
 const CATEGORY_BY_SLUG: Record<string, string> = {
+  announcements: "dna-new-clients",
   news: "news",
   podcasts: "podcasts",
   webinars: "webinars & training"

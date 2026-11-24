@@ -11,6 +11,7 @@ export const navLinks = [
   {
     label: "Resources",
     items: [
+      { href: "/announcements/", label: "New Clients" },
       { href: "/news/", label: "News" },
       { href: "/partnerships/", label: "Partnerships" },
       { href: "/podcasts/", label: "Podcasts" },

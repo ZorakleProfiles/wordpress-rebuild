@@ -36,12 +36,12 @@ function priorityForPath(pathname) {
   if (pathname === "/") return 1.0;
   if (/^\/(solutions\/|pricing\/?$)/.test(pathname)) return 0.8;
   if (/\/page\/\d+\/?$/.test(pathname)) return 0.3;
-  if (/^\/(news|podcasts|webinars|support)/.test(pathname)) return 0.6;
+  if (/^\/(announcements|news|podcasts|webinars|support)/.test(pathname)) return 0.6;
   return 0.5;
 }
 
 function changefreqForPath(pathname) {
-  if (pathname === "/" || /^\/(news|podcasts|webinars)\/?$/.test(pathname)) return "weekly";
+  if (pathname === "/" || /^\/(announcements|news|podcasts|webinars)\/?$/.test(pathname)) return "weekly";
   return "monthly";
 }
 
